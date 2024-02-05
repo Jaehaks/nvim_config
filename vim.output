@@ -1,0 +1,70 @@
+
+
+--- Autocommands ---
+luasnip  BufDelete
+    *         <Lua 127: C:/Users/USER/.config/nvim-data/lazy/LuaSnip/lua/luasnip/config.lua:109>
+Trouble  BufEnter
+    *         lua require("trouble").action("on_win_enter")
+NvimTree  BufEnter
+    *         <Lua 177: C:/Users/USER/.config/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree.lua:92>
+    NvimTree_*
+              <Lua 164: C:/Users/USER/.config/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree.lua:264>
+ToggleTermCommands  BufEnter
+    term://*#toggleterm#*
+              <Lua 200: C:/Users/USER/.config/nvim-data/lazy/toggleterm.nvim/lua/toggleterm.lua:98>
+    term://*::toggleterm::*
+              <Lua 201: C:/Users/USER/.config/nvim-data/lazy/toggleterm.nvim/lua/toggleterm.lua:98>
+editorconfig  BufFilePost
+    *         <Lua 226: C:/Users/USER/Neovim/share/nvim/runtime/plugin/editorconfig.lua:4>
+matchparen  BufLeave
+    *         call s:Remove_Matches()
+filetypedetect  BufNewFile
+    *         <Lua 16: C:/Users/USER/Neovim/share/nvim/runtime/filetype.lua:10>
+              if !did_filetype() && expand('<amatch>') !~ g:ft_ignore_pat | runtime! scripts.vim | endif
+NvimTree  BufNewFile
+    *         <Lua 175: C:/Users/USER/.config/nvim-data/lazy/nvim-tree.lua/lua/nvim-tree.lua:92>
+nvim_tree_key  BufNewFile
+    *         echom "Entering nvim-tree"
+editorconfig  BufNewFile
+    *         <Lua 224: C:/Users/USER/Neovim/share/nvim/runtime/plugin/editorconfig.lua:4>
+nvim_terminal  BufReadCmd
+    term://*  if !exists('b:term_title')|call termopen(matchstr(expand("<amatch>"), '\c\mterm://\%(.\{-}//\%(\d\+:\)\?\)\?\zs.*'), {'cwd': expand(get(matchlist(expand("<amatch>"), '\c\mterm://\(.\{-}\)//'), 1, ''))})
+man  BufReadCmd
+    man://*   <Lua 229: C:/Users/USER/Neovim/share/nvim/runtime/plugin/man.lua:31>
+ShaDaCommands  BufReadCmd
+    *.shada   :if !empty(v:cmdarg)|throw '++opt not supported'|endif |call setline('.', shada#get_strings(readfile(expand('<afile>'),'b'))) |setlocal filetype=shada
+    *.shada.tmp.[a-z]
+              :if !empty(v:cmdarg)|throw '++opt not supported'|endif |call setline('.', shada#get_strings(readfile(expand('<afile>'),'b'))) |setlocal filetype=shada
+tar  BufReadCmd
+    tarfile::*
+              call tar#Read(expand("<amatch>"), 1)
+    *.tar.gz  call tar#Browse(expand("<amatch>"))
+    *.tar     call tar#Browse(expand("<amatch>"))
+    *.lrp     call tar#Browse(expand("<amatch>"))
+    *.tar.bz2 call tar#Browse(expand("<amatch>"))
+    *.tar.Z   call tar#Browse(expand("<amatch>"))
+    *.tbz     call tar#Browse(expand("<amatch>"))
+    *.tgz     call tar#Browse(expand("<amatch>"))
+    *.tar.lzma
+              call tar#Browse(expand("<amatch>"))
+    *.tar.xz  call tar#Browse(expand("<amatch>"))
+    *.txz     call tar#Browse(expand("<amatch>"))
+    *.tar.zst call tar#Browse(expand("<amatch>"))
+    *.tzs     call tar#Browse(expand("<amatch>"))
+zip  BufReadCmd
+    zipfile:* call zip#Read(expand("<amatch>"), 1)
+    *.aar     call zip#Browse(expand("<amatch>"))
+    *.apk     call zip#Browse(expand("<amatch>"))
+    *.celzip  call zip#Browse(expand("<amatch>"))
+    *.crtx    call zip#Browse(expand("<amatch>"))
+    *.docm    call zip#Browse(expand("<amatch>"))
+    *.docx    call zip#Browse(expand("<amatch>"))
+    *.dotm    call zip#Browse(expand("<amatch>"))
+    *.dotx    call zip#Browse(expand("<amatch>"))
+    *.ear     call zip#Browse(expand("<amatch>"))
+    *.epub    call zip#Browse(expand("<amatch>"))
+    *.gcsx    call zip#Browse(expand("<amatch>"))
+    *.glox    call zip#Browse(expand("<amatch>"))
+    *.gqsx    call zip#Browse(expand("<amatch>"))
+    *.ja      call zip#Browse(expand("<amatch>"))
+
