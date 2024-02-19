@@ -41,10 +41,12 @@ return{{
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			pattern = "nightfly",
 			callback = function()
+				-- unused variable color = comment in nightfly colorscheme 
 				vim.api.nvim_set_hl(0, "Comment", { fg = "#00FFFF", bold = true })
 				vim.api.nvim_set_hl(0, "LineNr", { fg = "#E0AF68"})
 				vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#E06868", bold = true})
 				vim.api.nvim_set_hl(0, "Function", { fg = "#C587FF"})
+				vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#D6DEEB"})	-- white_blue
 			end,
 			group = custom_highlight,
 		})
