@@ -9,7 +9,7 @@ return {
 				next = 'k',			-- change move key
 				previous = 'j',		-- change move key 
 			},
-			auto_open = true,
+--			auto_open = true,
 		})
 		vim.keymap.set({'n'}, '<leader>xd', function() trouble.toggle('document_diagnostics') end)
 	end

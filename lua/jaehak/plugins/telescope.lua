@@ -14,9 +14,14 @@ return {
 		},
 	},
 	config = function()
+		-- call modules 
 		local telescope = require('telescope')
 		local actions = require('telescope.actions')
 		local actions_fb = require('telescope._extensions.file_browser.actions')
+		local builtin = require('telescope.builtin')
+		local utils = require('telescope.utils')
+
+		-- telescope settings 	
 		telescope.setup({
 			-- ////// default settings //////////
 			defaults = {
@@ -26,9 +31,34 @@ return {
 					height = 0.45,	-- make smaller height 0.9 -> 0.45
 				},
 				mappings = {
+--					i = {
+--						['<C-h>'] = '<Left>',
+--						['<C-l>'] = '<Right>',
+--					},
 					n = {	-- chnage normal mode keymaps
 						['j'] = actions.move_selection_previous,
 						['k'] = actions.move_selection_next,
+						['-'] = function (prompt_bufnr)
+									local current_picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+									local cwd = current_picker.cwd and tostring(current_picker.cwd) or vim.loop.cwd()
+									local parent_dir = vim.fs.dirname(cwd)
+
+									actions.close(prompt_bufnr)
+									builtin.find_files{
+										results_title = vim.fs.basename(parent_dir),
+										cwd = parent_dir,
+									}
+								end,
+						['<C-h>'] = actions.preview_scrolling_left,
+						['<C-j>'] = actions.preview_scrolling_up,
+						['<C-k>'] = actions.preview_scrolling_down,
+						['<C-l>'] = actions.preview_scrolling_right,
+						['<Tab>'] = actions.toggle_selection + actions.move_selection_next,
+						['<S-Tab>'] = actions.toggle_selection + actions.move_selection_previous,
+						['q'] = actions.close,
+						['o'] = actions.select_default,
+
+
 					},
 				},
 				path_display = { truncate = 3 },
@@ -36,15 +66,11 @@ return {
 			pickers = {
 				-- ///////// pikcer : find_files ////////
 				find_files = {
-					search_dirs = {'%:p:h'},
+					initial_mode = 'normal'
 				},
 				-- ///////// pikcer : oldfiles ////////
 				oldfiles = {
 					initial_mode = 'normal'
-				},
-				-- ///////// picker : live_grep /////////
-				live_grep = {
-					search_dirs = {'%:p:h'}			-- only search current folder
 				},
 			},
 			extensions = {
@@ -65,20 +91,31 @@ return {
 					fuzzy = true,
 					override_generic_sorter = true,
 					override_file_sorter = true,
-					case_mode = 'smart_case',
+					case_mode = 'smart_case'
 				}
 			},
 		})
-		telescope.load_extension('fzf')
-		telescope.load_extension('file_browser')
-
 		-- ////// telescope-fzf-navie.nvim //////
 		-- 1) need cmake for windows (cmake windows x64 installer)
 		-- 2) add system path with cmake
+		telescope.load_extension('fzf')
+		telescope.load_extension('file_browser')
 
-		local builtin = require('telescope.builtin')
-		vim.keymap.set('n', '<leader>ff', builtin.find_files,	 	{desc = 'find_files'})
-		vim.keymap.set('n', '<leader>fg', builtin.live_grep, 		{desc = 'live_grep'})		-- live grep
+		TelescopePicker = function(picker)
+			local cur_file 		= vim.fn.expand("%:p")
+			local cur_dir 		= vim.fn.expand("%:p:h")
+			local cur_dir_base	= vim.fs.basename(cur_dir)
+			local cur_cwd 		= vim.fn.getcwd()
+			local cur_cwd_base 	= vim.fs.basename(cur_cwd)
+
+   			if 		picker == 'find_files' 			then 	builtin.find_files{ results_title = cur_dir_base, cwd = cur_dir, }
+			elseif 	picker == 'live_grep' 			then 	builtin.live_grep{ results_title = cur_cwd_base}
+			elseif 	picker == 'live_grep_cur_dir' 	then 	builtin.live_grep{ results_title = cur_dir_base, cwd = cur_dir, }
+			end
+		end
+		vim.keymap.set('n', '<leader>ff', [[<Cmd>lua TelescopePicker('find_files')<CR>]],	 		{desc = 'find_files'})
+		vim.keymap.set('n', '<leader>fg', [[<Cmd>lua TelescopePicker('live_grep_cur_dir')<CR>]],	{desc = 'live_grep current dir'})
+		vim.keymap.set('n', '<leader>fG', [[<Cmd>lua TelescopePicker('live_grep')<CR>]],	 		{desc = 'live_grep'})
 		vim.keymap.set('n', '<leader>fo', builtin.oldfiles, 		{desc = 'recent files'}) 		-- recent files
 		vim.keymap.set('n', '<leader>fb', builtin.buffers, 			{desc = 'buffer list'}) 			-- buffer list 
 		vim.keymap.set('n', '<leader>fc', builtin.command_history, 	{desc = 'command history'}) 	-- command history 
@@ -87,6 +124,5 @@ return {
 		vim.keymap.set('n', '<leader>fs', builtin.current_buffer_fuzzy_find, {desc = 'find in current buffer'}) 	-- search list in current buffer
 
 		vim.keymap.set('n', '<leader>fl', telescope.extensions.file_browser.file_browser, {desc = 'file_browser'})
---		vim.keymap.set('n', '<leader>fl', ':Telescope file_browser path=%:p:h select_buffer=true<CR>', {desc = 'file_browser'})
 	end
 }

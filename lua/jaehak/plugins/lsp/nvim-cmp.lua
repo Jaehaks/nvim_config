@@ -1,14 +1,13 @@
 return {
 	'hrsh7th/nvim-cmp',
---	enabled = false,
 	event = 'InsertEnter',		-- load before starting insert mode / replace mode
+--	event = 'BufRead',		-- load before starting insert mode / replace mode
 	dependencies = {
 		'hrsh7th/cmp-buffer',			-- source for text in buffer
 		'hrsh7th/cmp-path',				-- source for file system path
 		'hrsh7th/cmp-nvim-lsp',
 		'L3MON4D3/LuaSnip',				-- snippet engine
 		'saadparwaiz1/cmp_luasnip',		-- for autocompletion
-		'windwp/nvim-autopairs',		-- autopairs
 	},
 	config = function()
 		local cmp = require('cmp')
@@ -55,10 +54,10 @@ return {
 
 		vim.opt.pumheight = 15			-- maximum item number when show completion
 
-		local capabilities = require('cmp_nvim_lsp').default_capabilities()
-		require('lspconfig').lua_ls.setup({
-			capabilities = capabilities
-		})
+--		local capabilities = require('cmp_nvim_lsp').default_capabilities()
+--		require('lspconfig').lua_ls.setup({
+--			capabilities = capabilities
+--		})
 	end,
 }
 

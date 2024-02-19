@@ -20,13 +20,16 @@ vim.keymap.set({'i','c'}, '<C-e>', '<Del>', opts)
 
 
 -- set edit keys in normal mode
-vim.keymap.set('n', 'ee', 'i<space><esc>', opts)		-- space
+vim.keymap.set('n', 'ww', 'i<space><esc>', opts)		-- space
 vim.keymap.set('n', 'tt', 'i<Tab><esc>', opts)			-- tab
 vim.keymap.set('n', '<S-CR>', 'o<esc>', opts)			-- new line (i heard it works only gui)
 vim.keymap.set('n', 'U', ':redo<CR>', opts)				-- redo
 vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
 
--- set visual mode behavior
-vim.keymap.set('v', '<C-h>', '"hy:s/<C-r>h//gc<Left><Left><Left>', opts)
-vim.keymap.set('n', '<C-h>', 'viw"hy:s/<C-r>h//gc<Left><Left><Left>', opts)
+-- set find/replace behavior
+vim.keymap.set('v', '<C-h>', '"hy:.,$s/<C-r>h//gc<Left><Left><Left>', opts)
+vim.keymap.set('n', '<C-h>', 'viw"hy:.,$s/<C-r>h//gc<Left><Left><Left>', opts)
+vim.keymap.set('v', '<C-f>', '"hy/\\<<C-r>h\\><CR>N', opts)
+vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
+
 

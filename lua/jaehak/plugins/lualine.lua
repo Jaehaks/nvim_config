@@ -1,11 +1,15 @@
 return {
-	'hoob3rt/lualine.nvim',
+	'nvim-lualine/lualine.nvim',
 	dependencies = {
-		'kyazdani42/nvim-web-devicons', opt = true
+		'nvim-tree/nvim-web-devicons'
 	},
 	config = function()
 		require('lualine').setup({
+			options = {
+				disabled_filetypes = {'NvimTree', 'Trouble', 'alpha', 'noice'},
+			},
 			sections = {
+				lualine_b = {'filesize'}
 			}
 		})
 	end
