@@ -26,10 +26,45 @@ vim.keymap.set('n', '<S-CR>', 'o<esc>', opts)			-- new line (i heard it works on
 vim.keymap.set('n', 'U', ':redo<CR>', opts)				-- redo
 vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
 
+
+
 -- set find/replace behavior
 vim.keymap.set('v', '<C-h>', '"hy:.,$s/<C-r>h//gc<Left><Left><Left>', opts)
 vim.keymap.set('n', '<C-h>', 'viw"hy:.,$s/<C-r>h//gc<Left><Left><Left>', opts)
-vim.keymap.set('v', '<C-f>', '"hy/\\<<C-r>h\\><CR>N', opts)
+vim.keymap.set('v', '<C-f>', '"hy/<C-r>h<CR>N', opts)
+vim.keymap.set('n', '<C-f>', 'yiw/\\<C-r>0\\><CR>N', opts)
+vim.keymap.set('n', '*', '*N', opts)
 vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 
+local function table_contains(tbl, x)
+	local found = false
+	for _, v in pairs(tbl) do
+		if v == x then
+			found = true
+		end
+	end
+	return found
+end
+
+--function HighlightWordUnderCursor()
+--	local disabled_ft = {'lir', 'diff', 'fzf', 'TelescopePrompt', 'floatterm', 'help'}
+--	if table_contains(disabled_ft, vim.bo.filtype)
+--		return
+--	end
+--
+--	local cur_word = vim.fn.expand('<cword>')
+--	if vim. 
+
+
+
+
+local aug_WinLeave_Cursor = vim.api.nvim_create_augroup('WinLeave_Cursor', {clear = true})
+vim.api.nvim_create_autocmd({'WinEnter', 'BufRead'}, {
+	group = aug_WinLeave_Cursor,
+	pattern = '*',
+	callback = function() vim.opt_local.cursorline = false end
+})
+
+-- set file managing
+vim.keymap.set('n', '<C-g>', '<Cmd>echom expand("%:p")<CR>', opts)
 

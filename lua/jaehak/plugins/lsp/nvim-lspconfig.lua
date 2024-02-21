@@ -54,7 +54,7 @@ return {
 			settings = {
 				matlab = {
 					indexWorkspace = true,
-					installPath = 'C:\\Program Files\\MATALB\\R2018a',
+					installPath = 'C:\\Program Files\\MATALB\\R2023b',
 					matlabConnectionTiming = 'onStart',
 					telemetry = true,
 				},

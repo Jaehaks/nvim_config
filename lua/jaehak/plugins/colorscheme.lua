@@ -47,6 +47,7 @@ return{{
 				vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#E06868", bold = true})
 				vim.api.nvim_set_hl(0, "Function", { fg = "#C587FF"})
 				vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#D6DEEB"})	-- white_blue
+				vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = '#FFFF00'})	-- white_blue
 			end,
 			group = custom_highlight,
 		})

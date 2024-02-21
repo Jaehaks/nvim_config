@@ -2,12 +2,19 @@ local opt = vim.opt 		-- for conciseness
 
 ------------- font setting -----------------------
 opt.guifont = 'FiraCode Nerd Font Mono:h11'
+opt.fileencodings = {'utf-8', 'cp949'}
 
 
 ------------- file detect -----------------------
---vim.opt.path:prepend('./**10') -- add current subdirectory for gf
 vim.g.python3_host_prog = 'C:\\Users\\USER\\Python\\.Nvim_venv\\scripts\\python'		-- use python support
-vim.g.python_host_prog = 'C:\\Users\\USER\\Python\\Python27\\python'		-- use python support
+opt.autochdir = true	-- change pwd where current buffer is located
+--opt.autoread = true		-- auto reload when file has been changed outside of vim
+local aug_NvimFocus = vim.api.nvim_create_augroup('aug_NvimFocus', {clear = true})
+vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nvim focused
+	group = aug_NvimFocus,
+	pattern = '*',
+	command = 'silent! checktime'
+})
 opt.path:append(vim.fn.stdpath("config") .. "/**10")
 opt.path:append(vim.fn.stdpath("data") .. "/**10")
 --vim.api.nvim_create_autocmd('BufEnter', {
@@ -23,9 +30,9 @@ opt.tabstop = 4				-- set inserted space in TAB
 opt.shiftwidth = 4          -- set indent space 
 opt.autoindent = true 		-- when enter next line, automatically indent from start line
 --opt.smarttab = true
+opt.inccommand = ''			-- disable show effect of substitute
 
 opt.wrap = false			-- disable line wrapping  
-
 
 
 
@@ -44,7 +51,9 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 
 ------------ gui windows ------------------------
 -- show cursorline only current buffer 
+opt.cursorline = true		-- show underline where current cursor is located
 opt.termguicolors = true 	-- change cursor line from line to block 
+-- cursor line in only active window
 local aug_WinLeave_Cursor = vim.api.nvim_create_augroup('WinLeave_Cursor', {clear = true})
 vim.api.nvim_create_autocmd({'BufLeave', 'WinLeave'}, {
 	group = aug_WinLeave_Cursor,
@@ -57,7 +66,6 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 	callback = function() vim.opt_local.cursorline = true end
 })
 
---opt.cursorline = true		-- show underline where current cursor is located
 --opt.signcolumn = 'yes' 	-- show additional gray column on the leftside of line number 
 --vim.cmd[[set mouse=ni]]		-- disable mouse operation
 								-- In neovim, mouse is disabled after entered visual mode, it is weird

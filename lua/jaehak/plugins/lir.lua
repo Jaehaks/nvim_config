@@ -3,7 +3,7 @@ return {{
 	'tamago324/lir.nvim',
 	dependencies = {
 		'nvim-lua/plenary.nvim',
-		'kyazdan142/nvim-web-devicons'
+		'nvim-tree/nvim-web-devicons'
 	},
 	config = function()
 		local actions = require('lir.actions')

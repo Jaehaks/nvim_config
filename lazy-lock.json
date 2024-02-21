@@ -1,4 +1,5 @@
 {
+  "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "LuaSnip": { "branch": "master", "commit": "f3b3d3446bcbfa62d638b1903ff00a78b2b730a1" },
   "alpha-nvim": { "branch": "main", "commit": "1356b9ef31b985d541d94314f2cf73c61124bf1d" },
   "bufferline.nvim": { "branch": "main", "commit": "b15c6daf5a64426c69732b31a951f4e438cb6590" },
@@ -17,11 +18,9 @@
   "mason-lspconfig.nvim": { "branch": "main", "commit": "fe4cce44dec93c69be17dad79b21de867dde118a" },
   "mason-tool-installer.nvim": { "branch": "main", "commit": "1212fb6082b7177dde17ea65e429e027835aeb40" },
   "mason.nvim": { "branch": "main", "commit": "c43eeb5614a09dc17c03a7fb49de2e05de203924" },
-  "noice.nvim": { "branch": "main", "commit": "bf67d70bd7265d075191e7812d8eb42b9791f737" },
-  "nui.nvim": { "branch": "main", "commit": "c3c7fd618dcb5a89e443a2e1033e7d11fdb0596b" },
+  "matlab.vim": { "branch": "master", "commit": "f523a5a6181566afad39cf722f9471f71b715906" },
   "nvim-cmp": { "branch": "main", "commit": "04e0ca376d6abdbfc8b52180f8ea236cbfddf782" },
   "nvim-lspconfig": { "branch": "master", "commit": "d1bab4cf4b69e49d6058028fd933d8ef5e74e680" },
-  "nvim-notify": { "branch": "master", "commit": "5371f4bfc1f6d3adf4fe9d62cd3a9d44356bfd15" },
   "nvim-web-devicons": { "branch": "master", "commit": "14ac5887110b06b89a96881d534230dac3ed134d" },
   "plenary.nvim": { "branch": "master", "commit": "4f71c0c4a196ceb656c824a70792f3df3ce6bb6d" },
   "rainbow": { "branch": "master", "commit": "61f719aebe0dc5c3048330c50db72cfee1afdd34" },
