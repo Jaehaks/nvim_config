@@ -32,6 +32,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "193786e0371e3286d3bc9aa0079da1cd41beaa62" },
   "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
   "ultimate-autopair.nvim": { "branch": "v0.6", "commit": "07c9da3e7722107163b68ecc5e0141fdd825449d" },
+  "vim-illuminate": { "branch": "master", "commit": "305bf07b919ac526deb5193280379e2f8b599926" },
   "vim-nightfly-colors": { "branch": "master", "commit": "56fe47bd16272d9644fd9946a2596fa2c3905c35" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
 }
