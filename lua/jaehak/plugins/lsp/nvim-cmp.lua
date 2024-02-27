@@ -11,6 +11,7 @@ return {
 	},
 	config = function()
 		local cmp = require('cmp')
+		local compare = require('cmp.config.compare')
 
 		require('luasnip.loaders.from_vscode').lazy_load()
 
@@ -18,6 +19,7 @@ return {
 			completion = {
 				-- noselect : do not select a match in the menu 
 				completeopt = 'menu, menuone, preview, noselect',
+				keyword_length = 1,
 			},
 			window = {
 				-- make the completion window bordered
@@ -45,14 +47,36 @@ return {
 				['<CR>']		= cmp.mapping.confirm({select = false}),
 			}),
 			sources = cmp.config.sources({
-				{ name = 'nvim_lsp'},
-				{ name = 'luasnip' },	-- snippets
-				{ name = 'buffer' }, 	-- text within current buffer
-				{ name = 'path'	}, 		-- file system path
+				{
+					name = 'nvim_lsp',
+					priority = 10,
+					max_item_count = 5,
+				},
+			--	{ name = 'luasnip' },	-- snippets
+				{
+					name = 'buffer',
+					priority = 8,
+				}, 	-- text within current buffer
+			--	{ name = 'path'	}, 		-- file system path
 			}),
+			sorting = {
+				priority_weight = 1.0,
+				comparators = {
+					compare.recently_used,
+					compare.locality,
+					compare.score,
+					compare.offset,
+					compare.length,
+					compare.order,
+					compare.kind,
+					compare.exact,
+					compare.offset,
+				}
+
+			}
 		})
 
-		vim.opt.pumheight = 15			-- maximum item number when show completion
+--		vim.opt.pumheight = 15			-- maximum item number when show completion
 
 --		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 --		require('lspconfig').lua_ls.setup({
