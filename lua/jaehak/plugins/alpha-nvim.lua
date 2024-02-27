@@ -9,7 +9,8 @@ return {
 		dashboard.section.buttons.val = {
 			dashboard.button('e', '1 - New file',			':ene<CR>'),
 			dashboard.button('r', '2 - Recent Files', 		'<Cmd>Telescope oldfiles<CR><Esc>'),
-			dashboard.button('c', '3 - Folder : Config',	[[<Cmd>lua require("lir.float").toggle(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>]]) -- open config folder 
+			dashboard.button('c', '3 - Folder : Config',	[[<Cmd>lua require("lir.float").toggle(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>]]), -- open config folder 
+			dashboard.button('d', '4 - Folder : D:\\MATLAB_Project',		[[<Cmd>lua require("lir.float").toggle("D:\\MATLAB_Project")<CR>]]) 		   	  -- open MATLAB Project
 		}
 
         alpha.setup(dashboard.config)	-- setting applyed 
