@@ -26,6 +26,7 @@ return {
 		telescope.setup({
 			-- ////// default settings //////////
 			defaults = {
+				wrap_results = true,
 				path_display = { truncate = 3 },
 				layout_strategy = 'horizontal',
 				layout_config = {
