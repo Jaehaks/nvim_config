@@ -1,5 +1,7 @@
-require("jaehak.core")
-require("jaehak.lazy_manager")
+if vim.g.vscode then		-- vscode config is separated
 
---local builtin = require('telescope.builtin')
---vim.keymap.set('n', '<leader>ff', builtin.find_files({cwd = vim.fn.expand('%:p:h')}),	 	{desc = 'find_files'})
+else
+	require("jaehak.core")
+	require("jaehak.lazy_manager")
+end
+
