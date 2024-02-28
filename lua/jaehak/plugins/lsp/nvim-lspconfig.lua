@@ -66,8 +66,9 @@ return {
 		vim.api.nvim_create_autocmd('LspAttach', {
 			desc = 'lsp keybindings when on_attach',
 			callback = function()
-				local opts = {buffer = true}
-				vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line funciton
+				local opts = {buffer = true, silent = true, noremap = true}
+				--vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line funciton
+				vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line funciton
 				vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
 				vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
 				vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
