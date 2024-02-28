@@ -2,8 +2,8 @@ local opt = vim.opt 		-- for conciseness
 
 ------------- font setting -----------------------
 opt.guifont = 'FiraCode Nerd Font Mono:h11'
-opt.fileencodings = {'utf-8', 'cp949'}
-
+opt.guifontwide = '나눔고딕:h11'
+opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
 
 ------------- file detect -----------------------
 vim.g.python3_host_prog = 'C:\\Users\\USER\\Python\\.Nvim_venv\\scripts\\python'		-- use python support
