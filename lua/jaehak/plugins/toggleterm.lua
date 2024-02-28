@@ -10,7 +10,7 @@ return {
 			shading_factor = -100,	-- make terminal color to black
 			persist_mode = false,	-- don't remember previous terminal mode
 		})
-
+ 
 		-- key mapping in terminal mode
 		function _G.set_terminal_keymaps()
 			local opts = {buffer = 0, noremap = true}
