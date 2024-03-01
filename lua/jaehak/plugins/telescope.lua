@@ -4,7 +4,7 @@ return {
 		'nvim-lua/plenary.nvim',
 		'BurntSushi/ripgrep',
 		'sharkdp/fd',
---		'nvim-treesitter/nvim-tresitter',
+		'nvim-treesitter/nvim-treesitter',
 		'nvim-tree/nvim-web-devicons',
 		{
 		'nvim-telescope/telescope-fzf-native.nvim',
