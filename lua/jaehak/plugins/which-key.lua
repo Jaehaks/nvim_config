@@ -13,7 +13,7 @@ return {
 		wk.setup({
 			plugins = {
 				presets = {
-					operatores = false,
+					operators = false,
 					z = false,
 				}
 			}
