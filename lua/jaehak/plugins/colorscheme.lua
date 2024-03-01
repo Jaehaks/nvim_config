@@ -45,7 +45,7 @@ return{{
 				vim.api.nvim_set_hl(0, "Comment", { fg = "#00FFFF", bold = true })
 				vim.api.nvim_set_hl(0, "LineNr", { fg = "#E0AF68"})
 				vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#E06868", bold = true})
-				vim.api.nvim_set_hl(0, "Function", { fg = "#C587FF"})
+				vim.api.nvim_set_hl(0, "Function", { fg = "#5B8FFF"})
 				vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#D6DEEB"})	-- white_blue
 				vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = '#FFFF00'})	-- white_blue
 				vim.api.nvim_set_hl(0, "IncSearch", { fg = "#000000", bg = '#F78C6C'})	-- orange
