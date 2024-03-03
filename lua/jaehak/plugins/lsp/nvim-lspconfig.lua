@@ -1,20 +1,25 @@
 return {
 	'neovim/nvim-lspconfig',
---	enabled = false,
-	ft = {'lua', 'matlab'},		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
+	lazy = true,		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
 	dependencies = {
---		'folke/neodev.nvim',
+		{
+			'folke/neodev.nvim',
+			ft = {'lua'}
+		},
 		'hrsh7th/cmp-nvim-lsp',
 	},
 	config = function()
-		-- setup neodev configuration 
---		require('neodev').setup({
---			setup_jsonls = false,
---			override = function(root_dir, library)
---				library.enabled = true
---				library.plugins = true
---			end,
---		})
+		-- ######## setup neodev configuration , must be start #######
+		-- feature : vim object completion / require completion
+		require('neodev').setup({
+			setup_jsonls = false,
+			library = {
+				enabled = true,
+				runtime = true,			-- runtime path
+				types = true,			-- vim.api / vim.lsp completion
+				plugins = false,		-- insatlled plugins completion (too long loading time)
+			}
+		})
 
 		local lspconfig = require('lspconfig')
 		local lsp_util = require('lspconfig.util')
@@ -22,14 +27,17 @@ return {
 
 		-- ####### 1) lua language server configuation #########
 		lspconfig.lua_ls.setup({
-			settings = {
+			settings = {	-- settings of lua_ls document
 				Lua = {
---					completion = {
---						callSnippet = 'Replace',	-- neodev.nvim completion
---					},
+					completion = {
+						callSnippet = 'Replace',	-- neodev.nvim completion
+					},
 					diagnostics = {
---						enable = true,
+						disable = {
+							'missing-parameter',	-- disable diagnostics about whether all fields are filled
+						},
 						globals = {'vim'},	-- recognize 'vim' global to language server
+						undefined_global = false,
 					},
 					workspace = {
 						library = {
@@ -47,6 +55,7 @@ return {
 			capabilities = capabilities
 		})
 
+		-- ####### 2) matlab language server configuation #########
 		lspconfig.matlab_ls.setup({
 			cmd = {'matlab-language-server', '--stdio'},
 			filetypes = {'matlab'},
@@ -58,9 +67,18 @@ return {
 					matlabConnectionTiming = 'onStart',
 					telemetry = true,
 				},
-				single_file_support = true,
-			}
+			},
+			single_file_support = true,
 		})
+
+		-- ####### 3) markdown language server configuation #########
+		lspconfig.marksman.setup({
+			cmd = {'marksman', 'server'},
+			filetypes = {'markdown', 'markdown.mdx'},
+			root_dir = lsp_util.root_pattern('*.md'),
+			single_file_support = true,
+		})
+
 
 		-- ####### autocmd key mapping when LspAttach ######
 		vim.api.nvim_create_autocmd('LspAttach', {
@@ -69,7 +87,7 @@ return {
 				local opts = {buffer = true, silent = true, noremap = true}
 				--vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line funciton
 				vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line funciton
-				vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
+--				vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
 				vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
 				vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
 				vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.reference()<cr>', opts)			-- function / var ref
