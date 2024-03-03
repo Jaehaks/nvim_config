@@ -1,4 +1,5 @@
-return {
+return {{
+	enabled = true,
 	'nvim-treesitter/nvim-treesitter',
 	build = ':TSUpdate',
 	config = function()
@@ -6,6 +7,7 @@ return {
 		local installs = require('nvim-treesitter.install')
 		installs.prefer_git = false
 		installs.compilers = {'gcc'}
+
 		configs.setup({
 			ensure_installed = { 'lua', 'luadoc', 'luap', 'luau',
 								 'matlab',
@@ -15,11 +17,12 @@ return {
 								 'diff', 'regex', 'ssh_config'},
 			highlight = {
 				enable = true,
+				additional_vim_regex_highlighting = false,
 			},
 			indent = {
-				enable = true,
+				enable = false,
 			}
 		})
 	end,
+},
 }
-
