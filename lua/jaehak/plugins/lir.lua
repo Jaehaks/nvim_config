@@ -80,7 +80,6 @@ return {{
 --		})
 
 		vim.keymap.set('n', '<leader>ee', '<Cmd>lua require("lir.float").toggle()<CR>', {desc = 'open current buffer folder'})
-		vim.keymap.set('n', '<leader>ef', '<Cmd>lua require("lir.float").toggle("C:/Users")<CR>', {desc = 'open current buffer folder'})
 		vim.keymap.set('n', '<leader>ec', '<Cmd>lua require("lir.float").toggle(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>', {desc = 'open config folder'})
 		vim.keymap.set('n', '<leader>ed', '<Cmd>lua require("lir.float").toggle(vim.fn.stdpath("data") .. "/lazy")<CR>', {desc = 'open config-data folder'})
 	end
