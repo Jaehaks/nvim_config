@@ -1,5 +1,6 @@
 return {
 	'akinsho/toggleterm.nvim',
+	enabled = false,	-- use Lspsaga term_toggle instead of it
 	version = '*',
 	config = function()
 		local toggleterm = require('toggleterm')
@@ -10,15 +11,10 @@ return {
 			shading_factor = -100,	-- make terminal color to black
 			persist_mode = false,	-- don't remember previous terminal mode
 		})
- 
+
 		-- key mapping in terminal mode
 		function _G.set_terminal_keymaps()
 			local opts = {buffer = 0, noremap = true}
-			vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts) 	-- out from terminal mode
-			vim.keymap.set('t', '<C-h>', [[<Left>]], opts)			-- cursor move in terminal mode
-			vim.keymap.set('t', '<C-j>', [[<Up>]], opts)
-			vim.keymap.set('t', '<C-k>', [[<Down>]], opts)
-			vim.keymap.set('t', '<C-l>', [[<Right>]], opts)
 			vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)	-- move other window, <C-w>h, j ,k l, w
 			vim.keymap.set('t', '<C-d>', [[<Esc><Cmd>q!<CR>]], opts)
 		end
