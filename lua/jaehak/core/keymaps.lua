@@ -12,11 +12,14 @@ vim.keymap.set({'i'}, 'jk', '<Esc>', opts)   -- must be lowercase to esc
 
 
 -- set cursor move key in insert mode and command mode
-vim.keymap.set({'i','c'}, '<C-h>', '<Left>', opts)
-vim.keymap.set({'i','c'}, '<C-j>', '<Up>', opts)
-vim.keymap.set({'i','c'}, '<C-k>', '<Down>', opts)
-vim.keymap.set({'i','c'}, '<C-l>', '<Right>', opts)
+vim.keymap.set({'i','c','t'}, '<C-h>', '<Left>', opts)
+vim.keymap.set({'i','c','t'}, '<C-j>', '<Up>', opts)
+vim.keymap.set({'i','c','t'}, '<C-k>', '<Down>', opts)
+vim.keymap.set({'i','c','t'}, '<C-l>', '<Right>', opts)
 vim.keymap.set({'i','c'}, '<C-e>', '<Del>', opts)
+
+-- set action in terminal mode 
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) 	-- out from terminal mode
 
 
 -- set edit keys in normal mode
