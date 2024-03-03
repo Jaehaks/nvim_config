@@ -8,13 +8,13 @@ return {
 		'hrsh7th/cmp-nvim-lsp',
 		'L3MON4D3/LuaSnip',				-- snippet engine
 		'saadparwaiz1/cmp_luasnip',		-- for autocompletion
+		'mstanciu552/cmp-matlab'
 	},
 	config = function()
 		local cmp = require('cmp')
 		local compare = require('cmp.config.compare')
 
 		require('luasnip.loaders.from_vscode').lazy_load()
-
 		cmp.setup({
 			completion = {
 				-- noselect : do not select a match in the menu 
@@ -52,12 +52,11 @@ return {
 					priority = 10,
 					max_item_count = 5,
 				},
-			--	{ name = 'luasnip' },	-- snippets
 				{
 					name = 'buffer',
 					priority = 8,
+					max_item_count = 5,
 				}, 	-- text within current buffer
-			--	{ name = 'path'	}, 		-- file system path
 			}),
 			sorting = {
 				priority_weight = 1.0,
@@ -76,7 +75,16 @@ return {
 			}
 		})
 
---		vim.opt.pumheight = 15			-- maximum item number when show completion
+		cmp.setup.filetype({'matlab'}, {
+			sources = {
+				{name = 'nvim_lsp'},
+				{name = 'cmp_matlab'},
+				{name = 'buffer'},
+			}
+		})
+
+
+		vim.opt.pumheight = 10			-- maximum item number when show completion
 
 --		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 --		require('lspconfig').lua_ls.setup({
