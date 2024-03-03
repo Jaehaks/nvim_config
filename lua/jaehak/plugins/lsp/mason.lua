@@ -24,13 +24,15 @@ return {
 			ensure_installed = {		-- server automatically install if it is not installed
 				'lua_ls',
 				'matlab_ls',
+				'marksman'
 			}
 		})
 
 		mason_tool.setup({
 			ensure_installed = {
 				'lua_ls',
-				'matlab_ls'
+				'matlab_ls',
+				'marksman'
 			},
 			auto_update = true,
 		})
