@@ -16,18 +16,18 @@ return {
 	},
 	config = function()
 		-- call modules 
-		local telescope = require('telescope')
-		local actions = require('telescope.actions')
+		local telescope  = require('telescope')
+		local actions    = require('telescope.actions')
 		local actions_fb = require('telescope._extensions.file_browser.actions')
-		local builtin = require('telescope.builtin')
-		local utils = require('telescope.utils')
+		local builtin    = require('telescope.builtin')
+		local utils      = require('telescope.utils')
 
 		-- telescope settings 	
 		telescope.setup({
 			-- ////// default settings //////////
 			defaults = {
 				initial_mode = 'normal',
-				path_display = { truncate = 3 },
+--				path_display = { truncate = 3 },
 				layout_strategy = 'horizontal',
 				layout_config = {
 					anchor = 'S',	-- show layout window pinned to south (bottom) 
