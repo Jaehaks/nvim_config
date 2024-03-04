@@ -40,7 +40,7 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				['<C-Space>'] 	= cmp.mapping.complete(),
+				['<C-n>'] 	= cmp.mapping.complete(),
 				['<Tab>']		= cmp.mapping.select_next_item(),
 				['<S-Tab>']		= cmp.mapping.select_prev_item(),
 				['<C-e>'] 		= cmp.mapping.abort(),
@@ -71,15 +71,14 @@ return {
 					compare.exact,
 					compare.offset,
 				}
-
 			}
 		})
 
 		cmp.setup.filetype({'matlab'}, {
 			sources = {
-				{name = 'nvim_lsp'},
-				{name = 'cmp_matlab'},
-				{name = 'buffer'},
+				{name = 'cmp_matlab', max_item_count = 10},
+				{name = 'buffer', max_item_count = 10},
+				{name = 'nvim_lsp', max_item_count = 5},
 			}
 		})
 
