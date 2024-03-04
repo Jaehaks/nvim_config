@@ -35,7 +35,8 @@ return {
 			c = { name = 'color' },
 			e = { name = 'nvim-tree' },
 			f = { name = 'telescope' },
-			x = { name = 'trouble' }
+			x = { name = 'trouble' },
+			l = { name = 'lspsaga' }
 		}
 
 
