@@ -36,7 +36,7 @@ vim.keymap.set('v', '<C-h>', '"hy:.,$s/<C-r>h//gc<Left><Left><Left>', opts)
 vim.keymap.set('n', '<C-h>', 'viw"hy:.,$s/<C-r>h//gc<Left><Left><Left>', opts)
 vim.keymap.set('v', '<C-f>', '"hy/<C-r>h<CR>N', opts)
 vim.keymap.set('n', '<C-f>', 'yiw/\\<C-r>0\\><CR>N', opts)
-vim.keymap.set('n', '*', '*N', opts)
+vim.keymap.set({'n','v'}, '*', '*N', opts)
 vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 
 local function table_contains(tbl, x)
