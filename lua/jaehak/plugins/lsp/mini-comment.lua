@@ -1,5 +1,6 @@
 return {
 	'echasnovski/mini.comment',
+	enabled = false,
 	version = '*',
 	event = 'VeryLazy',
 	config = function()
