@@ -35,8 +35,8 @@ return {
 
 		vim.keymap.set('n', '<leader>lo', '<Cmd>Lspsaga outline<CR>', {desc = 'outline', silent = true, noremap = true})
 		vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', {desc = 'hover_doc', silent = true, noremap = true})
-		vim.keymap.set('n', '<C-\\>', '<Cmd>Lspsaga term_toggle<CR>', {desc = 'toggle term', silent = true, noremap = true})
+--		vim.keymap.set('n', '<C-\\>', '<Cmd>Lspsaga term_toggle<CR>', {desc = 'toggle term', silent = true, noremap = true})
 		-- toggle term must close using :q! not :q
-		-- lspsaga toggle term can use after lsp attatch
+		-- lspsaga toggle term can use after lsp attatch only
 	end
 }
