@@ -20,6 +20,12 @@ return {
 				left_margin = 1,
 				right_margin = 1,
 				stick_to_left = 0,
+			},
+			[','] = {				-- add delimiters '%', matlab comment
+				pattern = ',',
+				left_margin = 1,
+				right_margin = 0,
+				stick_to_left = 0,
 			}
 		}
 		vim.keymap.set({'n', 'x'}, '<C-=>', ':EasyAlign ')
