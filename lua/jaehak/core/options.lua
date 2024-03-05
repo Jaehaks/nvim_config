@@ -1,9 +1,49 @@
 local opt = vim.opt 		-- for conciseness 
 
+
+--------- neovide config ------------
+if vim.g.neovide then
+	vim.g.neovide_scroll_animation_length = 0
+	vim.g.neovide_hide_mouse_when_typing = true
+	local function set_ime(args)
+		if args.event:match("Enter$") then
+			vim.g.neovide_input_ime = true
+		else
+			vim.g.neovide_input_ime = false
+		end
+	end
+
+	local ime_input = vim.api.nvim_create_augroup("ime_input", { clear = true })
+
+	vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave" }, {
+		group = ime_input,
+		pattern = "*",
+		callback = set_ime
+	})
+
+	vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave" }, {
+		group = ime_input,
+		pattern = "[/\\?]",
+		callback = set_ime
+	})
+
+	vim.g.neovide_cursor_animation_length = 0
+	vim.g.neovide_cursor_trail_size = 0
+	vim.g.neovide_cusor_antialiasing = false
+	vim.g.neovide_cursor_animate_in_insert_mode = false
+	vim.g.neovide_cursor_animate_command_line = false
+end
+
+
+
+
+
 ------------- font setting -----------------------
 opt.guifont = 'FiraCode Nerd Font Mono:h11'
 opt.guifontwide = '나눔고딕:h11'
 opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
+
+
 
 ------------- file detect -----------------------
 vim.g.python3_host_prog = os.getenv("USERPROFILE") .. '\\Python\\.Nvim_venv\\Scripts\\python'		-- use python support
