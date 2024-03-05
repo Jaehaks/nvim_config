@@ -39,15 +39,15 @@ vim.keymap.set('n', '<C-f>', 'yiw/\\<C-r>0\\><CR>N', opts)
 vim.keymap.set({'n','v'}, '*', '*N', opts)
 vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 
-local function table_contains(tbl, x)
-	local found = false
-	for _, v in pairs(tbl) do
-		if v == x then
-			found = true
-		end
-	end
-	return found
-end
+-- local function table_contains(tbl, x)
+-- 	local found = false
+-- 	for _, v in pairs(tbl) do
+-- 		if v == x then
+-- 			found = true
+-- 		end
+-- 	end
+-- 	return found
+-- end
 
 --function HighlightWordUnderCursor()
 --	local disabled_ft = {'lir', 'diff', 'fzf', 'TelescopePrompt', 'floatterm', 'help'}
@@ -61,11 +61,30 @@ end
 
 
 
-local aug_WinLeave_Cursor = vim.api.nvim_create_augroup('WinLeave_Cursor', {clear = true})
+local aug_User_defined = vim.api.nvim_create_augroup('User_defined', {clear = true})
+-- only show cursorline in current buffer
 vim.api.nvim_create_autocmd({'WinEnter', 'BufRead'}, {
-	group = aug_WinLeave_Cursor,
+	group = aug_User_defined,
 	pattern = '*',
 	callback = function() vim.opt_local.cursorline = false end
+})
+-- use q instead of :q when close some filetype
+vim.api.nvim_create_autocmd({'Filetype'}, {
+	group = aug_User_defined,
+	pattern = '*',
+	callback = function(event)
+		local diable_ft = {'help', 'terminal'}	-- disable filetype list
+		local filetype = vim.bo[event.buf].filetype
+		local ok = nil
+		for _, val in ipairs(diable_ft) do
+			if filetype == val then ok = true end
+		end
+
+		if ok then
+			-- apply to the specific buffer only
+			vim.keymap.set('n', 'q', ':q!<CR>', {silent = true, buffer = 0, noremap = true})
+		end
+	end
 })
 
 -- set file managing
