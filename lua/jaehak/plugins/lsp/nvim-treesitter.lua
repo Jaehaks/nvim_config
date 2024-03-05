@@ -21,6 +21,9 @@ return {{
 			},
 			indent = {
 				enable = false,
+			},
+			matchup = {
+				enable = true,
 			}
 		})
 	end,
