@@ -16,7 +16,8 @@ return {{
 								 'markdown', 'markdown_inline',
 								 'diff', 'regex', 'ssh_config'},
 			highlight = {
-				enable = true,
+				enable = true,  -- if highlight, cannot use rainbow bracket. 
+								-- because treesitter managed highlighting bracket also. 
 				additional_vim_regex_highlighting = false,
 			},
 			indent = {
@@ -26,6 +27,7 @@ return {{
 				enable = true,
 			}
 		})
+
 	end,
 },
 }
