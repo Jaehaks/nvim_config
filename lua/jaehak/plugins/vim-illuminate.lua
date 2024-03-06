@@ -3,20 +3,6 @@ return {
 	event = 'VeryLazy',
 	config = function()
 
---		-- highlight color configuration
---		local bgcolor = '#808080'
---		local highlights = {
---			IlluminatewdWord = {bg = bgcolor},
---			IlluminatewdCurWord = {bg = bgcolor},
---			IlluminatewdWordText = {bg = bgcolor},
---			IlluminatewdWordRead = {bg = bgcolor},
---			IlluminatewdWrite = {bg = bgcolor},
---		}
---		for group,value in pairs(highlights) do 
---			vim.api.nvim_set_hl(0, group, value)
---		end
-
-
 		-- plugin configuration
 		local illuminate = require('illuminate')
 		illuminate.configure({
