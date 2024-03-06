@@ -18,8 +18,10 @@ return {
 },
 {
 	-- auto highlight to brackets
+	-- if you use treesitter highlight, must use the rainbow plugins that uses treesitter grammer, not regex
+	-- I'll make matlab query somedays
 	'HiPhish/rainbow-delimiters.nvim',
-	enabled = false,
+	enabled = true,
 	event = 'VeryLazy',
 	config = function ()
 		-- This module contains a number of default definitions
@@ -30,16 +32,16 @@ return {
 		rainbow_delimiters_setup.setup({
 			strategy = {
 				[''] = rainbow_delimiters.strategy['global'],
-				matlab = rainbow_delimiters.strategy['global'],
+				-- matlab = rainbow_delimiters.strategy['global'],
 			},
 			priority = {
 				[''] = 110,
 				lua = 210,
-				matlab = 310,
+				-- matlab = 310,
 			},
 			query = {
 				[''] = 'rainbow-delimiters',
-				matlab = 'rainbow-delimiters',
+				query = 'rainbow-delimiters',
 			},
 			highlight = {
 				'RainbowDelimiterRed',
@@ -55,13 +57,31 @@ return {
 },
 {
 	'andymass/vim-matchup',
-	enabled = true,
+	enabled = false,
 	event = 'VeryLazy',
 	config = function ()
 		require('match-up').setup({})
 		vim.g.loaded_matchit = 1
 		vim.matchup_matchparen_enabled = 1
 		vim.g.matchup_matchparen_offscreen = {method = 'popup'}
+	end
+},
+{
+	'frazrepo/vim-rainbow',
+	enabled = false,
+	event = 'VeryLazy',
+	config = function()
+
+		vim.g.rainbow_active = 1
+		vim.cmd([[ let g:rainbow_guifgs = ['#333333', '#555555', 'DarkOrchid3', 'FireBrick'] ]])
+		vim.cmd([[ let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta'] ]])
+	end
+},
+{
+	'luochen1990/rainbow',
+	enabled = false,
+	config = function ()
+		vim.g.raibow_active = 1
 	end
 }
 }
