@@ -9,11 +9,10 @@ return {
 					enabled = false,
 				},
 				char = {	-- enhanced f, F, t, T
-					enabled = false,
+					enabled = true,
 				}
 			}
 		})
---		vim.keymap.del({'n','x','o'}, 'f')
-		vim.keymap.set({'n','x','o'}, 'f', flash.jump, {desc = 'flash jump'})
+		vim.keymap.set({'n','x','o'}, 'w', flash.jump, {desc = 'flash jump'})
 	end
 }
