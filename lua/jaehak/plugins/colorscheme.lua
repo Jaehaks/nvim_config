@@ -41,44 +41,24 @@ return{{
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			pattern = "nightfly",
 			callback = function()
-				vim.api.nvim_set_hl(0, "Normal", { bg = "#131313", fg = "#FFFFFF" })   -- background color : black
-				vim.api.nvim_set_hl(0, "SignColumn", { bg = "#131313" })               -- signcolumn : black, default is #011627 but it is more close to blue
-				vim.api.nvim_set_hl(0, "VertSplit", { bg = "#131313", fg = "#131313" })               -- signcolumn : black, default is #011627 but it is more close to blue
-				vim.api.nvim_set_hl(0, "Comment", { fg = "#00FFFF", bold = true })
-				vim.api.nvim_set_hl(0, "LineNr", { fg = "#E0AF68"})
+				vim.api.nvim_set_hl(0, "Normal"      , { bg = "#131313", fg = "#FFFFFF" })   -- background color : black
+				vim.api.nvim_set_hl(0, "SignColumn"  , { bg = "#131313" })               -- signcolumn : black, default is #011627 but it is more close to blue
+				vim.api.nvim_set_hl(0, "VertSplit"   , { bg = "#131313", fg = "#131313" })               -- signcolumn : black, default is #011627 but it is more close to blue
+				vim.api.nvim_set_hl(0, "Comment"     , { fg = "#00FFFF", bold = true })
+				vim.api.nvim_set_hl(0, "LineNr"      , { fg = "#E0AF68"})
 				vim.api.nvim_set_hl(0, "CursorLineNr", { fg = "#E06868", bold = true})
-				vim.api.nvim_set_hl(0, "Function", { fg = "#5B8FFF"})
-				vim.api.nvim_set_hl(0, "Search", { fg = "#000000", bg = '#FFFF00'})    -- white_blue
-				vim.api.nvim_set_hl(0, "IncSearch", { fg = "#000000", bg = '#F78C6C'}) -- orange
-				vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#D6DEEB"})               -- white_blue
-				vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#131313"})               -- black 
+				vim.api.nvim_set_hl(0, "Function"    , { fg = "#5B8FFF"})
+				vim.api.nvim_set_hl(0, "Search"      , { fg = "#000000", bg = '#FFFF00'})    -- white_blue
+				vim.api.nvim_set_hl(0, "IncSearch"   , { fg = "#000000", bg = '#F78C6C'}) -- orange
+				vim.api.nvim_set_hl(0, "FloatBorder" , { fg = "#D6DEEB"})               -- white_blue
+				vim.api.nvim_set_hl(0, "NormalFloat" , { bg = "#131313"})               -- black
+				vim.api.nvim_set_hl(0, "Cursor"      , { bg = "#00FF00"})               -- for normal cursor
+				vim.api.nvim_set_hl(0, "MatchParen"  , { fg = "#000000", bg = "#FE00FF"})               -- for match paren
+
 			end,
 			group = custom_highlight,
 		})
 		vim.cmd([[colorscheme nightfly]])
-	end
-},{
-	'catppuccin/nvim',
-	enabled = false,
-	laxy = false,
-	priority = 1000,
-	name = 'catppuccin',
-	config = function()
-		require('catppuccin').setup({
-			flavour = 'mocha',
-			term_colors = true,
-			no_italic = true,
-			no_underline = true,
-			show_end_of_buffer = true,
-			color_overrides = {
-				mocha = {
-					base = '#000000',
-					mantle = '#000000',
-					crust = '#000000',
-				}
-			}
-		})
-		vim.cmd.colorscheme('catppuccin')
 	end
 }
 }
