@@ -1,10 +1,45 @@
 local opt = vim.opt 		-- for conciseness 
 
 
+-- 1) neovide supports customize cursor highlight 
+-- 2) neovide supports turnon/off IME default
 --------- neovide config ------------
 if vim.g.neovide then
+	-- turn off all animations
 	vim.g.neovide_scroll_animation_length = 0
 	vim.g.neovide_hide_mouse_when_typing = true
+	vim.g.neovide_cursor_animation_length = 0
+	vim.g.neovide_cursor_trail_size = 0
+	vim.g.neovide_cusor_antialiasing = false
+	vim.g.neovide_cursor_animate_in_insert_mode = false
+	vim.g.neovide_cursor_animate_command_line = false
+	-- vim.g.neovide_font_features = {
+	-- 	["FiraCode Nerd Font Mono"] = {
+	-- 		'-liga',
+	-- 		'+ss07',
+	-- 		'calt=0',
+	-- 		'cv49=16',
+	-- 		'cv94=1',
+	-- 		'VXLA=2',
+	-- 		'VXLC=2',
+	-- 		'cv34=12',
+	-- 		'cv31=13',
+	-- 	}
+	-- }
+	-- vim.g.neovide_font_settings ={
+	-- 	['FiraCode Nerd Font Mono'] = {
+	-- 		features = {
+	-- 			'-liga'
+	-- 		},
+	-- 		weight = 'lighter'
+	-- 	}
+	-- }
+
+	-- it works in neovide, but not in nvim, nvim-qt
+	-- connect cursor to highlight group depending mode
+ 	vim.opt.guicursor = "n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor,sm:block-lCursor"
+
+	-- turn on IME to use non-english words in only insert mode 
 	local function set_ime(args)
 		if args.event:match("Enter$") then
 			vim.g.neovide_input_ime = true
@@ -26,12 +61,6 @@ if vim.g.neovide then
 		pattern = "[/\\?]",
 		callback = set_ime
 	})
-
-	vim.g.neovide_cursor_animation_length = 0
-	vim.g.neovide_cursor_trail_size = 0
-	vim.g.neovide_cusor_antialiasing = false
-	vim.g.neovide_cursor_animate_in_insert_mode = false
-	vim.g.neovide_cursor_animate_command_line = false
 end
 
 
@@ -44,6 +73,22 @@ opt.guifontwide = '나눔고딕:h11'
 opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
 
 
+------------ gui windows ------------------------
+-- show cursorline only current buffer 
+opt.cursorline = true		-- show underline where current cursor is located
+opt.termguicolors = true 	-- change cursor line from line to block 
+-- cursor line in only active window
+local aug_WinLeave_Cursor = vim.api.nvim_create_augroup('WinLeave_Cursor', {clear = true})
+vim.api.nvim_create_autocmd({'BufLeave', 'WinLeave'}, {
+	group = aug_WinLeave_Cursor,
+	pattern = '*',
+	callback = function() vim.opt_local.cursorline = false end
+})
+vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
+	group = aug_WinLeave_Cursor,
+	pattern = '*',
+	callback = function() vim.opt_local.cursorline = true end
+})
 
 ------------- file detect -----------------------
 vim.g.python3_host_prog = os.getenv("USERPROFILE") .. '\\Python\\.Nvim_venv\\Scripts\\python'		-- use python support
@@ -89,22 +134,6 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 
 
 
------------- gui windows ------------------------
--- show cursorline only current buffer 
-opt.cursorline = true		-- show underline where current cursor is located
-opt.termguicolors = true 	-- change cursor line from line to block 
--- cursor line in only active window
-local aug_WinLeave_Cursor = vim.api.nvim_create_augroup('WinLeave_Cursor', {clear = true})
-vim.api.nvim_create_autocmd({'BufLeave', 'WinLeave'}, {
-	group = aug_WinLeave_Cursor,
-	pattern = '*',
-	callback = function() vim.opt_local.cursorline = false end
-})
-vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
-	group = aug_WinLeave_Cursor,
-	pattern = '*',
-	callback = function() vim.opt_local.cursorline = true end
-})
 
 --opt.signcolumn = 'yes' 	-- show additional gray column on the leftside of line number 
 --vim.cmd[[set mouse=ni]]		-- disable mouse operation
