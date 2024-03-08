@@ -9,13 +9,13 @@ return {
 				right_margin = 1,
 				stick_to_left = 0,
 			},
-			-- i don't know why it doesn't worked
-			-- ['c'] = {				-- add delimiters '--', lua comment
-			-- 	pattern = '-- ',
-			-- 	left_margin = 1,
-			-- 	right_margin = 1,
-			-- 	stick_to_left = 0,
-			-- },
+			-- it works at home...
+			['c'] = {				-- add delimiters '--', lua comment
+				pattern = '--',
+				left_margin = 1,
+				right_margin = 1,
+				stick_to_left = 0,
+			},
 			['%'] = {				-- add delimiters '%', matlab comment
 				pattern = '%',
 				left_margin = 1,
