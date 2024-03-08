@@ -12,6 +12,13 @@ return {
 				numbers = function(opts)
 					return string.format('%s)',opts.id)	-- but it works
 				end,
+			},
+			highlights = {
+				buffer_selected = { fg = '#FF00FF' },
+				numbers_selected = { fg = '#FF00FF' },
+				buffer_visible = {fg = '#bbbbbb'},
+				numbers = {fg = '#bbbbbb'},
+
 			}
 		})
 	end
