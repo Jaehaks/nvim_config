@@ -18,6 +18,11 @@ return {
 						-- and attempt to open a Detour() float
 						local help_win = vim.api.nvim_get_current_win()
 						local ok = require("detour").Detour()
+						--local ok = require("detour").DetourCurrentWindow()		-- open only current window
+
+						-- DetourCurrentWindow() needs to locate cursor only current window (covered by detour floating window)
+						-- so when I edit the other window buffer, it makes error that must be closed the Detour window first
+
 
  						-- If we successfully create a float of the help file
 						-- Close the split
