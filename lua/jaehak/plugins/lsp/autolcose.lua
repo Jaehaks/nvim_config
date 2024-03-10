@@ -3,6 +3,7 @@ return {
 	-- ultimate-autopair.nvim  : it is too bulky and slow
 	-- autoclose.nvim more simple
 	'm4xshen/autoclose.nvim',
+	enabled = true,
 	event = 'VeryLazy',
 	opts = {
 		keys = {
@@ -29,6 +30,15 @@ return {
 			disable_command_mode = false,
 		},
 	},
+	config = function(_,opts)
+		local autoclose = require('autoclose')
+		autoclose.setup(opts)
+
+		-- Although i don't know why it does,   in the middle of setup, <C-h> keymaps in {'i', 'c'} are disabled,
+		-- so i have to remap these again
+		vim.keymap.set({'i','c'}, '<C-h>', '<Left>', {noremap = true})
+
+	end
 },
 {
 	-- auto highlight to brackets
