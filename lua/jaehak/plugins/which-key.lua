@@ -33,7 +33,7 @@ return {
 		-- mapping 
 		local mappings = {
 			c = { name = 'color' },
-			e = { name = 'nvim-tree' },
+			e = { name = 'file explorer' },
 			f = { name = 'telescope' },
 			x = { name = 'trouble' },
 			l = { name = 'lspsaga' }
