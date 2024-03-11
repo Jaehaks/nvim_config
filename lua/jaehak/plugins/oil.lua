@@ -81,8 +81,6 @@ return {
 
 		})
 
-		local config_dir = vim.fn.stdpath('config') .. "/lua/jaehak/plugins"
-		local data_dir = vim.fn.stdpath('data') .. "/lazy"
 		vim.keymap.set('n', '<leader>ee', oil.open_float, {desc = 'open current buffer dir'}) -- default current buffer cwd
 		vim.keymap.set('n', '<leader>ec', [[<Cmd>lua require('oil').open_float(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>]], {desc = 'open config dir'}) -- default current buffer cwd
 		vim.keymap.set('n', '<leader>ed', [[<Cmd>lua require('oil').open_float(vim.fn.stdpath("data") .. "/lazy")<CR>]], {desc = 'open data dir'}) -- default current buffer cwd

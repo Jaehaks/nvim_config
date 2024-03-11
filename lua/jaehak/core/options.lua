@@ -143,3 +143,4 @@ opt.clipboard:append('unnamedplus')		-- share clipboard between vim and system
 										-- "*p doest not need to paste from system clipboard
 opt.iskeyword:append('-')				-- i don't know 
 
+

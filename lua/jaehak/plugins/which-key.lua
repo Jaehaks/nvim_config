@@ -36,7 +36,9 @@ return {
 			e = { name = 'file explorer' },
 			f = { name = 'telescope' },
 			x = { name = 'trouble' },
-			l = { name = 'lspsaga' }
+			l = { name = 'lspsaga' },
+			-- m = { name = 'markdown-preview' },
+			-- t = { name = 'terminal' }
 		}
 
 

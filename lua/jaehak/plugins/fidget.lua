@@ -7,3 +7,4 @@ return {
 		})
 	end
 }
+-- noice.nvim : it is good, but it makes neovim cursor moving slower / substitute command bug that cannot move cursor
