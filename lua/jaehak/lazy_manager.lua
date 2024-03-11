@@ -15,13 +15,22 @@ vim.opt.rtp:prepend(lazypath)
 -------------------------------------------------------------
 -- lazy.vim plugin manager settings,    plugin list
 -------------------------------------------------------------
-require('lazy').setup({
-	{import = 'jaehak.plugins'},
-	{import = 'jaehak.plugins.lsp'}}, {
-	change_detection = {
---		enabled = false,
-		notify = false,
-	},
-})
-
-
+if vim.g.vscode == nil then
+	require('lazy').setup({
+		{import = 'jaehak.plugins'},
+		{import = 'jaehak.plugins.lsp'}}, {
+			change_detection = {
+				--		enabled = false,
+				notify = false,
+			},
+		})
+else		-- for vscode
+	require('lazy').setup({
+		{import = 'jaehak.plugins.flash'},
+		}, {
+			change_detection = {
+				--		enabled = false,
+				notify = false,
+			},
+		})
+end
