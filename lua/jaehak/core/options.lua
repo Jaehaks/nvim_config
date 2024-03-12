@@ -77,9 +77,13 @@ opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
 -- show cursorline only current buffer 
 opt.cursorline = true		-- show underline where current cursor is located
 opt.termguicolors = true 	-- change cursor line from line to block 
+opt.signcolumn = 'yes' 	-- show additional gray column on the leftside of line number 
+
 -- cursor line in only active window
+-- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window
+-- becase when :bn, BufRead invoked but WinEnter didn't not invoke
 local aug_WinLeave_Cursor = vim.api.nvim_create_augroup('WinLeave_Cursor', {clear = true})
-vim.api.nvim_create_autocmd({'BufLeave', 'WinLeave'}, {
+vim.api.nvim_create_autocmd({'WinLeave'}, {
 	group = aug_WinLeave_Cursor,
 	pattern = '*',
 	callback = function() vim.opt_local.cursorline = false end
@@ -135,7 +139,6 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 
 
 
---opt.signcolumn = 'yes' 	-- show additional gray column on the leftside of line number 
 --vim.cmd[[set mouse=ni]]		-- disable mouse operation
 								-- In neovim, mouse is disabled after entered visual mode, it is weird
 
