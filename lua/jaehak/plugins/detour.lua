@@ -1,5 +1,6 @@
 return {
 	-- provide floating window tool
+	-- it cannot change floating window size, I think I will change to floaterm
 	'carbon-steel/detour.nvim',
 	event = 'VeryLazy',
 	config = function ()
