@@ -37,7 +37,7 @@ return {
 			f = { name = 'telescope' },
 			x = { name = 'trouble' },
 			l = { name = 'lspsaga' },
-			-- m = { name = 'markdown-preview' },
+			m = { name = 'markdown' },
 			-- t = { name = 'terminal' }
 		}
 

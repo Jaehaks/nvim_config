@@ -13,7 +13,7 @@ return {{
 								 'matlab',
 								 'python',
 							 	 'vim', 'vimdoc',
-								 'markdown', 'markdown_inline',
+								 'markdown', 'markdown_inline', 'html',
 								 'diff', 'regex', 'ssh_config'},
 			highlight = {
 				enable = true,  -- if highlight, cannot use rainbow bracket. 
