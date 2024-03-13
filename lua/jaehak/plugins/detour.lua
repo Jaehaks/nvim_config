@@ -35,26 +35,26 @@ return {
 			end,
 		})
 
-		-- open terminal in floating window
-		vim.keymap.set("n", '<leader>t', function ()
-			local ok = require('detour').Detour()  -- open a detour popup
-			if not ok then
-				return
-			end
-
-			vim.cmd.terminal()     -- open a terminal buffer
-			vim.bo.bufhidden = 'delete' -- close the terminal when window closes
-			vim.bo.filetype = 'terminal' -- force filetype to be terminal in normal mode
-			vim.cmd.startinsert() -- go into insert mode
-
-			vim.api.nvim_create_autocmd({"TermClose"}, {
-				buffer = vim.api.nvim_get_current_buf(),
-				callback = function ()
-					-- This automated keypress skips for you the "[Process exited 0]" message
-					-- that the embedded terminal shows.
-					vim.api.nvim_feedkeys('<CR>', 'n', false)
-				end
-			})
-		end)
+		-- -- open terminal in floating window
+		-- vim.keymap.set("n", '<leader>t', function ()
+		-- 	local ok = require('detour').Detour()  -- open a detour popup
+		-- 	if not ok then
+		-- 		return
+		-- 	end
+		--
+		-- 	vim.cmd.terminal()     -- open a terminal buffer
+		-- 	vim.bo.bufhidden = 'delete' -- close the terminal when window closes
+		-- 	vim.bo.filetype = 'terminal' -- force filetype to be terminal in normal mode
+		-- 	vim.cmd.startinsert() -- go into insert mode
+		--
+		-- 	vim.api.nvim_create_autocmd({"TermClose"}, {
+		-- 		buffer = vim.api.nvim_get_current_buf(),
+		-- 		callback = function ()
+		-- 			-- This automated keypress skips for you the "[Process exited 0]" message
+		-- 			-- that the embedded terminal shows.
+		-- 			vim.api.nvim_feedkeys('<CR>', 'n', false)
+		-- 		end
+		-- 	})
+		-- end)
 	end
 }
