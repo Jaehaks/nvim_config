@@ -9,10 +9,9 @@ return {
 		{
 		'nvim-telescope/telescope-fzf-native.nvim',
 		build = 'make'
---			build = [[cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release 
---				   && cmake --build build --config Release 
---				   && cmake --install build --prefix build]],
 		},
+		-- cder.nvim : (extension) change pwd using telescope, not useful to me, and 'ls' has invalid argument error
+		-- 			   it is useful when I want to subdirectories list and files quick
 	},
 	config = function()
 		-- call modules 
@@ -20,7 +19,7 @@ return {
 		local actions    = require('telescope.actions')
 		local actions_fb = require('telescope._extensions.file_browser.actions')
 		local builtin    = require('telescope.builtin')
-		local utils      = require('telescope.utils')
+		-- local utils      = require('telescope.utils')
 
 		-- telescope settings 	
 		telescope.setup({
@@ -119,7 +118,7 @@ return {
 					override_generic_sorter = true,
 					override_file_sorter = true,
 					case_mode = 'smart_case'
-				}
+				},
 			},
 		})
 		-- ////// telescope-fzf-navie.nvim //////
