@@ -57,9 +57,9 @@ return {
 	dependencies = 'nvim-treesitter/nvim-treesitter',
 	config = function ()
 
-		vim.api.nvim_set_hl(0, "Headline1", { bg = "#230C49", bold = true})                  -- for normal cursor
-		vim.api.nvim_set_hl(0, "Headline2", { bg = "#16082D", bold = true})                  -- for normal cursor
-		vim.api.nvim_set_hl(0, "Headline3", { bg = "#0C0518", bold = true})                  -- for normal cursor
+		vim.api.nvim_set_hl(0, "Headline1", { bg = "#6F0957", bold = true})                  -- for normal cursor
+		vim.api.nvim_set_hl(0, "Headline2", { bg = "#4C083C", bold = true})                  -- for normal cursor
+		vim.api.nvim_set_hl(0, "Headline3", { bg = "#310627", bold = true})                  -- for normal cursor
 		vim.api.nvim_set_hl(0, "CodeBlock", { bg = "#202020"})                  -- for normal cursor
 		vim.api.nvim_set_hl(0, "Dash", { fg = "#D19A66"})                  -- for normal cursor
 
@@ -71,6 +71,8 @@ return {
 					'Headline3',
 				},
 				bullets = false,		-- don't use marker
+				dash_string = false,
+				quote_string = false,
 				fat_headlines = false,	-- only highlight the line of headline
 			}
 		})
