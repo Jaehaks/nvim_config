@@ -1,4 +1,5 @@
-return {{
+return {
+{
 	enabled = true,
 	'nvim-treesitter/nvim-treesitter',
 	build = ':TSUpdate',
@@ -23,11 +24,19 @@ return {{
 			indent = {
 				enable = false,
 			},
-			matchup = {
-				enable = true,
+			endwise = {			-- nvim-treesitter-endwise
+				enable = true
 			}
 		})
-
 	end,
+},
+{
+	-- add endwise, i think it would be useful when use language which does not support snippet
+	'RRethy/nvim-treesitter-endwise',
+	dependencies = {
+		'nvim-treesitter/nvim-treesitter'
+	},
+	config = function ()
+	end
 },
 }
