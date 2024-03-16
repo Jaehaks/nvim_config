@@ -1,13 +1,5 @@
 return {
 {
---	'brenoprata10/nvim-highlight-colors',
---	lazy = false,
---	opts = {
---		custom_colors = {
---			{label = "[\"']r[\"']", color = '#FF0000'},
---		}
---	}
---	'r'
 },{
 	'chrisbra/colorizer',
 	event = 'VeryLazy',
@@ -29,10 +21,12 @@ return {
 
 
 },{
+	-- ccc.nvim : if modify some colorscheme, palette lose colors
 	-- bug : if use custom_entries, other highlight are off. 
 	-- I think use it for colorcode only
 	-- other colorpick plugins are not worked in windows
 	'uga-rosa/ccc.nvim',
+	enabled = false,
 	event = 'VeryLazy',
 	config = function()
 		local ccc = require('ccc')
@@ -48,6 +42,7 @@ return {
 },
 }
 
+-- brenoprata10/nvim-highlight-colors : regex pattern is not work properly, like 'r'
 
 
 
