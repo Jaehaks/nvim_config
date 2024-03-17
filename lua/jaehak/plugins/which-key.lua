@@ -39,6 +39,7 @@ return {
 			l = { name = 'lspsaga' },
 			m = { name = 'markdown' },
 			-- t = { name = 'terminal' }
+			h = { name = 'gitsign' }
 		}
 
 
