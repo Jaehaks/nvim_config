@@ -1,43 +1,30 @@
 return {
-{
 	-- ultimate-autopair.nvim  : it is too bulky and slow
-	-- autoclose.nvim more simple
-	'm4xshen/autoclose.nvim',
-	enabled = true,
+	-- m4xshen/autoclose.nvim : more simple, but it cannot ignore like the "'" in "'don't" 
+	-- 							and it change some keymaps in settings automatically
+{
+	-- more simple and smart 
+	'echasnovski/mini.pairs',
+	version = false,
 	event = 'VeryLazy',
-	opts = {
-		keys = {
-			["<"] = { escape = false, close = true, pair = "<>" },
-			["("] = { escape = false, close = true, pair = "()" },
-			["["] = { escape = false, close = true, pair = "[]" },
-			["{"] = { escape = false, close = true, pair = "{}" },
+	config = function ()
+		require('mini.pairs').setup({
+			modes = { insert = true, command = true, terminal = true },
 
-			[">"] = { escape = true, close = false, pair = "<>" },
-			[")"] = { escape = true, close = false, pair = "()" },
-			["]"] = { escape = true, close = false, pair = "[]" },
-			["}"] = { escape = true, close = false, pair = "{}" },
+			mappings = {
+				['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
+				['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
+				['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
 
-			['"'] = { escape = true, close = true, pair = '""' },
-			["'"] = { escape = true, close = true, pair = "''" },
-			["`"] = { escape = true, close = true, pair = "``" },
-		},
-		options = {
-			disabled_filetypes = { "" },
-			disable_when_touch = true,			-- autopair is diabled in front of word(\w)
-			touch_regex = "[%w(%[{#]",
-			pair_spaces = true,
-			auto_indent = true,
-			disable_command_mode = false,
-		},
-	},
-	config = function(_,opts)
-		local autoclose = require('autoclose')
-		autoclose.setup(opts)
+				[')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+				[']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+				['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
 
-		-- Although i don't know why it does,   in the middle of setup, <C-h> keymaps in {'i', 'c'} are disabled,
-		-- so i have to remap these again
-		vim.keymap.set({'i','c'}, '<C-h>', '<Left>', {noremap = true})
-
+				['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
+				["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\].', register = { cr = false } },
+				['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\].', register = { cr = false } },
+			},
+		})
 	end
 },
 {
