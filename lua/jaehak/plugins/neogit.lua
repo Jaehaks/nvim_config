@@ -12,6 +12,9 @@ return {
 		neogit.setup({
 			disable_line_numbers = false,
 			kind = 'tab', -- default window of opening neogit
+			status = {
+				recent_commit_count = 20,
+			},
 			integrations = {
 				telescope = true,
 				diffview = true,
@@ -20,6 +23,5 @@ return {
 		})
 
 		vim.keymap.set('n', '<leader>go', neogit.open, {desc = 'open neogit default'})
-		
 	end
 }
