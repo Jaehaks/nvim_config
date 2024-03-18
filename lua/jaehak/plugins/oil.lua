@@ -89,7 +89,7 @@ return {
 },
 {
 	'refractalize/oil-git-status.nvim',
-	enabled = true, -- it has some bug in windows,   I think the point is path,   in windows c:/Users, not c/
+	enabled = false, -- it has some bug in windows,   I think the point is path,   in windows c:/Users, not c/
 					 -- if it is enabled, autocmd error is invoked whenever i write some file
 	dependencies = {
 		'stevearc/oil.nvim',
@@ -101,6 +101,15 @@ return {
 		})
 	end
 },
+{
+	'SirZenith/oil-vcs-status',
+	config = function ()
+		require('oil-vcs-status').setup({
+
+		})
+	end
+
+}
 }
 
 
