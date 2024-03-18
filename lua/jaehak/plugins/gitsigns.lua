@@ -39,22 +39,15 @@ return {
 				end, {expr=true})
 
 				-- Actions
-				-- map('n', '<leader>hs', gs.stage_hunk)
-				-- map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-				-- map('n', '<leader>hS', gs.stage_buffer)
-				map('n', '<leader>hr', gs.reset_hunk, {desc = 'reset hunk'})
-				map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
-				map('n', '<leader>hu', gs.undo_stage_hunk, {desc = 'undo stage hunk'})
-				map('n', '<leader>hR', gs.reset_buffer, {desc = 'reset buffer'})
 				map('n', '<leader>hp', gs.preview_hunk, {desc = 'preview hunk in current line'})
 				map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc = 'commit message in current line'})
-				-- map('n', '<leader>ht', gs.toggle_current_line_blame)
-				map('n', '<leader>hd', gs.diffthis, {desc = 'diff this'})
-				map('n', '<leader>hD', function() gs.diffthis('~') end, {desc = 'diff this ahd home?'})
-				-- map('n', '<leader>td', gs.toggle_deleted)
+				map('n', '<leader>hl', gs.setloclist, {desc = 'show gitsign list'})
+				map('n', '<leader>hd', gs.toggle_deleted, {desc = 'show all deleted hunks'})
+				map('n', '<leader>hh', gs.toggle_linehl, {desc = 'highlight hunks in addition to signs'})
 
-				-- Text object
-				-- map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+				map('n', '<leader>hs', gs.stage_buffer, {desc = 'stage all hunks in current buffer'}) --  git add this buffer
+				map('n', '<leader>hS', gs.reset_buffer_index, {desc = 'reset staged all hunks in current buffer'}) --  git add this buffer
+
 			end
 		})
 	end
