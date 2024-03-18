@@ -16,7 +16,7 @@ return {
 				recent_commit_count = 20,
 			},
 			integrations = {
-				telescope = true,
+				telescope = false,
 				diffview = true,
 				fzf_lua = false,
 			}
