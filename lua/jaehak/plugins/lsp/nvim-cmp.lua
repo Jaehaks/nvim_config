@@ -3,12 +3,14 @@ return {
 	event = 'InsertEnter',		-- load before starting insert mode / replace mode
 --	event = 'BufRead',		-- load before starting insert mode / replace mode
 	dependencies = {
-		'hrsh7th/cmp-buffer',			-- source for text in buffer
-		'hrsh7th/cmp-path',				-- source for file system path
-		'hrsh7th/cmp-nvim-lsp',
-		'L3MON4D3/LuaSnip',				-- snippet engine
-		'saadparwaiz1/cmp_luasnip',		-- for autocompletion
-		'mstanciu552/cmp-matlab'
+		'hrsh7th/cmp-buffer',       -- source for text in buffer
+		'hrsh7th/cmp-path',         -- source for file system path
+		'hrsh7th/cmp-cmdline',		-- source for commandline 
+		'hrsh7th/cmp-nvim-lsp',     -- using LSP for source
+		'L3MON4D3/LuaSnip',         -- snippet engine
+		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
+		'mstanciu552/cmp-matlab'    -- source of matlab
+
 	},
 	config = function()
 		local cmp = require('cmp')
@@ -36,7 +38,7 @@ return {
 			},
 			snippet = {
 				expand = function(args)
-					require('luasnip').lsp_expand(args.body)
+					require('luasnip').lsp_expand(args.body) -- expand snippet autocomplete in lsp with snippet engine
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
@@ -74,14 +76,49 @@ return {
 			}
 		})
 
+		-- /////// source of matlab
 		cmp.setup.filetype({'matlab'}, {
 			sources = {
-				{name = 'cmp_matlab', max_item_count = 10},
-				{name = 'buffer', max_item_count = 10},
-				{name = 'nvim_lsp', max_item_count = 5},
+				{name = 'cmp_matlab', group_index = 1, max_item_count = 10},
+				{name = 'buffer', group_index = 1, max_item_count = 10},
+				{name = 'nvim_lsp', group_index = 2, max_item_count = 5},
 			}
 		})
 
+		-- /////// source of lua
+		cmp.setup.filetype({'lua'}, {
+			sources = {
+				{name = 'luasnip', group_index = 1, max_item_count = 5},
+				{name = 'nvim_lsp', group_index = 1, max_item_count = 5},
+				{name = 'buffer', group_index = 1, max_item_count = 5},
+			}
+		})
+
+
+		-- /////// source of markdown 
+		cmp.setup.filetype({'markdown'}, {
+			sources = {
+				{name = 'buffer', max_item_count = 5},
+				{name = 'path', max_item_count = 5},
+			}
+		})
+
+		-- /////////`/` cmdline setup. (search)
+		cmp.setup.cmdline('/', {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources ={
+				{name = 'buffer', group_index = 1, max_item_count = 5},
+			}
+		})
+
+		-- /////////`:` cmdline setup. (command)
+		cmp.setup.cmdline(':', {
+			mapping = cmp.mapping.preset.cmdline(),
+			sources ={
+				{name = 'path', group_index = 1, max_item_count = 5},
+				{name = 'cmdline', group_index = 2, max_item_count = 5}
+			}
+		})
 
 		vim.opt.pumheight = 10			-- maximum item number when show completion
 
