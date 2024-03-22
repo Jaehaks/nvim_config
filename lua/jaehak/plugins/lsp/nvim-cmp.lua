@@ -15,6 +15,7 @@ return {
 	config = function()
 		local cmp = require('cmp')
 		local compare = require('cmp.config.compare')
+		local ls = require('luasnip')
 
 		require('luasnip.loaders.from_vscode').lazy_load()
 		cmp.setup({
@@ -43,8 +44,24 @@ return {
 			},
 			mapping = cmp.mapping.preset.insert({
 				['<C-n>'] 	= cmp.mapping.complete(),
-				['<Tab>']		= cmp.mapping.select_next_item(),
-				['<S-Tab>']		= cmp.mapping.select_prev_item(),
+			    ['<Tab>'] = cmp.mapping(function(fallback)
+					if cmp.visible() then -- select next cmp item when visible
+						cmp.select_next_item()
+					elseif ls.expand_or_locally_jumpable() then -- jump next node in snippet region 
+						ls.jump(1)
+					else
+						fallback()
+					end
+			    end, {'i', 's'}),
+			    ['<S-Tab>'] = cmp.mapping(function(fallback)
+					if cmp.visible() then
+						cmp.select_prev_item()
+					elseif ls.expand_or_locally_jumpable() then
+						ls.jump(-1)
+					else
+						fallback()
+					end
+			    end, {'i', 's'}),
 				['<C-e>'] 		= cmp.mapping.abort(),
 				['<CR>']		= cmp.mapping.confirm({select = false}),
 			}),
@@ -60,27 +77,28 @@ return {
 					max_item_count = 5,
 				}, 	-- text within current buffer
 			}),
-			sorting = {
-				priority_weight = 1.0,
-				comparators = {
-					compare.recently_used,
-					compare.locality,
-					compare.score,
-					compare.offset,
-					compare.length,
-					compare.order,
-					compare.kind,
-					compare.exact,
-					compare.offset,
-				}
-			}
+			-- sorting = {
+			-- 	priority_weight = 1.0,
+			-- 	comparators = {
+			-- 		compare.recently_used,
+			-- 		compare.locality,
+			-- 		compare.score,
+			-- 		compare.offset,
+			-- 		compare.length,
+			-- 		compare.order,
+			-- 		compare.kind,
+			-- 		compare.exact,
+			-- 		compare.offset,
+			-- 	}
+			-- }
 		})
 
 		-- /////// source of matlab
 		cmp.setup.filetype({'matlab'}, {
 			sources = {
-				{name = 'cmp_matlab', group_index = 1, max_item_count = 10},
-				{name = 'buffer', group_index = 1, max_item_count = 10},
+				{name = 'luasnip', group_index = 1, max_item_count = 5},
+				{name = 'cmp_matlab', group_index = 1, max_item_count = 5},
+				{name = 'buffer', group_index = 1, max_item_count = 5},
 				{name = 'nvim_lsp', group_index = 2, max_item_count = 5},
 			}
 		})
@@ -115,8 +133,8 @@ return {
 		cmp.setup.cmdline(':', {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources ={
-				{name = 'path', group_index = 1, max_item_count = 5},
-				{name = 'cmdline', group_index = 2, max_item_count = 5}
+				{name = 'path', group_index = 1},
+				{name = 'cmdline', group_index = 2}
 			}
 		})
 
