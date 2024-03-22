@@ -80,6 +80,15 @@ return {
 		})
 
 
+		-- ####### 4) json language server configuation #########
+		lspconfig.jsonls.setup({
+			cmd = {'vscode-json-language-server', '--stdio'},
+			filetypes = {'json', 'jsonc.mdx'},
+			root_dir = lsp_util.root_pattern('*.json'),
+			single_file_support = true,
+		})
+
+
 		-- ####### autocmd key mapping when LspAttach ######
 		vim.api.nvim_create_autocmd('LspAttach', {
 			desc = 'lsp keybindings when on_attach',

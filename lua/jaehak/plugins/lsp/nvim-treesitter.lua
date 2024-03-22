@@ -10,11 +10,12 @@ return {
 		installs.compilers = {'gcc'}
 
 		configs.setup({
+			-- :TSInstall does not work, but :TSInstallSync works
 			ensure_installed = { 'lua', 'luadoc', 'luap', 'luau',
 								 'matlab',
 								 'python',
 							 	 'vim', 'vimdoc',
-								 'markdown', 'markdown_inline', 'html',
+								 'markdown', 'markdown_inline', 'html', 'json',
 								 'diff', 'regex', 'ssh_config'},
 			highlight = {
 				enable = true,  -- if highlight, cannot use rainbow bracket. 
