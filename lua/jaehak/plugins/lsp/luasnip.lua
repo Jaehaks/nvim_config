@@ -3,7 +3,7 @@ return {
 	lazy = true,
 	build = vim.fn.has('win32') ~= 0 and 'make install_jsregexp' or nil,
 	dependencies = {
-		'rafamadriz/friendly-snippets',
+		-- 'rafamadriz/friendly-snippets',
 		'benfowler/telescope-luasnip.nvim'
 	},
 	config = function ()
@@ -52,12 +52,15 @@ return {
 				})
 			end
 		})
+		-- first : firstsecond : secondthird : third
+
+		require('luasnip.loaders.from_lua').lazy_load({paths = './queries/LuaSnip'})
 
 		-- /////// configuration of friendly-snippets //////////////
 		-- ls.filetype_extend('lua', {'luadoc'})
-		ls.filetype_extend('matlab', {'matlab'})
+		-- ls.filetype_extend('matlab', {'matlab'})
 		-- require('luasnip.loaders.from_vscode').load({paths = "c:\\Users\\7106704\\.config\\nvim\\query\\friendly-snippets\\matlab"})
-		require('luasnip.loaders.from_vscode').lazy_load()
+		-- require('luasnip.loaders.from_vscode').lazy_load()
 
 	end
 }

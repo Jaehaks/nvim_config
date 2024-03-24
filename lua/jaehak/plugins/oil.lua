@@ -88,20 +88,6 @@ return {
 
 },
 {
-	'refractalize/oil-git-status.nvim',
-	enabled = false, -- it has some bug in windows,   I think the point is path,   in windows c:/Users, not c/
-					 -- if it is enabled, autocmd error is invoked whenever i write some file
-	dependencies = {
-		'stevearc/oil.nvim',
-	},
-	-- config = true,
-	config = function ()
-		require('oil-git-status').setup({
-			show_ignored = true,
-		})
-	end
-},
-{
 	'SirZenith/oil-vcs-status',
 	config = function ()
 		require('oil-vcs-status').setup({
@@ -111,6 +97,8 @@ return {
 
 }
 }
+-- 'refractalize/oil-git-status.nvim' : autocmd error is invoked whenever i write some file in oil.
+-- 									    it dosn't show git sign. I think it has some bug in windows
 
 
 
