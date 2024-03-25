@@ -120,28 +120,39 @@ ls.add_snippets("lua", {
 })
 
 
-local function copy(args)
-	return args[1]
-end
--- https://www.youtube.com/watch?v=xxNZoFk7jtw
-ls.add_snippets('lua', {
-	s("fn", {
-		-- Simple static text.
-		t("//Parameters: "),
-		-- function, first parameter is the function, second the Placeholders
-		-- whose text it gets as input.
-		f(copy, 2),
-		t({ "", "function " }),
-		-- Placeholder/Insert.
-		i(1),
-		t("("),
-		-- Placeholder with initial text.
-		i(2, "int foo"),
-		-- Linebreak
-		t({ ") {", "\t" }),
-		-- Last Placeholder, exit Point of the snippet.
-		i(0),
-		t({ "", "}" }),
-	}),
+local function add_param(args)
+	local param_str = args[1][1]
+	param_str = param_str:gsub(' ','') 	-- remove blank
+	if param_str == '' then return '' end -- if there is no param, return
 
+	local params = vim.split(param_str, ',') -- make table after spliting parameter
+	local doc_comments = {''}
+	for _, param in ipairs(params) do -- add param string to doc_comments table
+		table.insert(
+			doc_comments,
+			string.format('-- @param %s - type : description', param)
+		)
+	end
+
+	return doc_comments
+end
+
+local func_template = [==[
+-- [[@function : {}]]{}
+function {}({})
+	{}
+end
+]==]
+
+-- https://www.youtube.com/watch?v=xxNZoFk7jtw
+-- it has half funciton, it returns the comment after all parameters are entered, 
+-- need realtime comment
+ls.add_snippets('lua', {
+	s('function () comment',
+		fmt(func_template, {
+			i(1, 'one-line-summary'),
+			f(add_param, {3}),
+			i(2, 'fname'), i(3, 'params'),
+			i(4, '-- code')
+		}))
 })
