@@ -3,14 +3,20 @@ return {
 	lazy = true,
 	build = vim.fn.has('win32') ~= 0 and 'make install_jsregexp' or nil,
 	dependencies = {
-		-- 'rafamadriz/friendly-snippets',
-		'benfowler/telescope-luasnip.nvim'
+		{
+			'benfowler/telescope-luasnip.nvim',
+			dependencies = {
+				'nvim-telescope/telescope.nvim',
+			},
+			module = 'telescope._extensions.luasnip'
+		}
 	},
 	config = function ()
 		-- /////// configuration of luasnip //////////////
 		local ls = require('luasnip')
 		local types = require('luasnip.util.types')
 
+		-- make custom highlight for luasnip
 		vim.api.nvim_set_hl(0, 'LuasnipActive', {bg ='#2A4257', fg = '#CEA274'})
 
 		ls.config.setup({

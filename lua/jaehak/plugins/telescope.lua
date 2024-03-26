@@ -17,8 +17,8 @@ return {
 		-- call modules 
 		local telescope  = require('telescope')
 		local actions    = require('telescope.actions')
-		local actions_fb = require('telescope._extensions.file_browser.actions')
 		local builtin    = require('telescope.builtin')
+		local actions_fb = require('telescope._extensions.file_browser.actions')
 		-- local utils      = require('telescope.utils')
 
 		-- telescope settings 	
@@ -126,6 +126,7 @@ return {
 		-- 2) add system path with cmake
 		telescope.load_extension('fzf')
 		telescope.load_extension('file_browser')
+		telescope.load_extension('luasnip')
 
 
 		-- set line number in preview
@@ -166,6 +167,8 @@ return {
 		vim.keymap.set('n', '<leader>fk', builtin.keymaps, 			{desc = 'keymaps list'})                    -- keymaps list
 		vim.keymap.set('n', '<leader>fv', builtin.vim_options, 		{desc = 'vim options list'})                -- vim options list
 
-		vim.keymap.set('n', '<leader>fl', telescope.extensions.file_browser.file_browser, {desc = 'file_browser'})
+		vim.keymap.set('n', '<leader>fe', telescope.extensions.file_browser.file_browser, {desc = 'file_browser'})
+		vim.keymap.set('n', '<leader>fl', telescope.extensions.luasnip.luasnip, {desc = 'luasnip browser'})
 	end
 }
+-- linrongbin16/fzfx.nvim : too slow starup loading / preview loading than telescope, and many errors in windows
