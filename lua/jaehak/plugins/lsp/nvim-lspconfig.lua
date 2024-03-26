@@ -1,12 +1,13 @@
 return {
 	'neovim/nvim-lspconfig',
-	lazy = true,		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
+	-- lazy = true,		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
 	dependencies = {
 		{
 			'folke/neodev.nvim',
 			ft = {'lua'}
 		},
 		'hrsh7th/cmp-nvim-lsp',
+		'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
 	},
 	config = function()
 		-- ######## setup neodev configuration , must be start #######
