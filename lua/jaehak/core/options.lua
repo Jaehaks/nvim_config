@@ -113,17 +113,15 @@ opt.path:append(vim.fn.stdpath("data") .. "/**10")
 --})
 
 ------------- editing -----------------------
-opt.number = true  			-- set line number 
-opt.relativenumber = true	-- set relative line number
-opt.tabstop = 4				-- set inserted space in TAB
-opt.shiftwidth = 4          -- set indent space 
-opt.autoindent = true 		-- when enter next line, automatically indent from start line
---opt.smarttab = true
-opt.inccommand = ''			-- disable show effect of substitute
+opt.number = true         -- set line number
+opt.relativenumber = true -- set relative line number
+opt.tabstop = 4           -- set inserted space in TAB
+opt.shiftwidth = 4        -- set indent space
+opt.autoindent = true     -- when enter next line, automatically indent from start line
+-- opt.smarttab = true
+opt.inccommand = ''       -- disable show effect of substitute
 
-opt.wrap = false			-- disable line wrapping  
-
-
+opt.wrap = false          -- disable line wrapping
 
 ------------- output file -------------------
 opt.swapfile = false		-- no swap file when file is created 
