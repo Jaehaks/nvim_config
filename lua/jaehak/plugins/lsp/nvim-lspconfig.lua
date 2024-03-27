@@ -18,7 +18,7 @@ return {
 				enabled = true,
 				runtime = true,			-- runtime path
 				types = true,			-- vim.api / vim.lsp completion
-				plugins = false,		-- insatlled plugins completion (too long loading time)
+				plugins = false,		-- installed plugins completion (too long loading time)
 			}
 		})
 
@@ -26,7 +26,8 @@ return {
 		local lsp_util = require('lspconfig.util')
 		local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-		-- ####### 1) lua language server configuation #########
+
+		-- ####### 1) lua language server configuration #########
 		lspconfig.lua_ls.setup({
 			settings = {	-- settings of lua_ls document
 				Lua = {
@@ -56,7 +57,7 @@ return {
 			capabilities = capabilities
 		})
 
-		-- ####### 2) matlab language server configuation #########
+		-- ####### 2) matlab language server configuration #########
 		lspconfig.matlab_ls.setup({
 			cmd = {'matlab-language-server', '--stdio'},
 			filetypes = {'matlab'},
@@ -72,7 +73,7 @@ return {
 			single_file_support = true,
 		})
 
-		-- ####### 3) markdown language server configuation #########
+		-- ####### 3) markdown language server configuration #########
 		lspconfig.marksman.setup({
 			cmd = {'marksman', 'server'},
 			filetypes = {'markdown', 'markdown.mdx'},
@@ -81,7 +82,7 @@ return {
 		})
 
 
-		-- ####### 4) json language server configuation #########
+		-- ####### 4) json language server configuration #########
 		lspconfig.jsonls.setup({
 			cmd = {'vscode-json-language-server', '--stdio'},
 			filetypes = {'json', 'jsonc.mdx'},
@@ -95,8 +96,8 @@ return {
 			desc = 'lsp keybindings when on_attach',
 			callback = function()
 				local opts = {buffer = true, silent = true, noremap = true}
-				--vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line funciton
-				vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line funciton
+				--vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line function
+				vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line function
 --				vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
 				vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
 				vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
@@ -105,7 +106,7 @@ return {
 		})
 
 		-- global mapping for diagnostic
-		vim.keymap.set('n', 'go', vim.diagnostic.open_float)			-- float diagnostic result, not nex the line
+		vim.keymap.set('n', 'go', vim.diagnostic.open_float)			-- float diagnostic result, not next the line
 		vim.keymap.set('n', '[o', vim.diagnostic.goto_prev)
 		vim.keymap.set('n', ']o', vim.diagnostic.goto_next)
 

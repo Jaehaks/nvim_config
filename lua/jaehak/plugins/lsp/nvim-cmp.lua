@@ -1,12 +1,19 @@
 return {
 	'hrsh7th/nvim-cmp',
 	event = 'InsertEnter',		-- load before starting insert mode / replace mode
---	event = 'BufRead',		-- load before starting insert mode / replace mode
+	init = function ()
+		-- spell must be true to use cmp-spell
+		-- changing these option must be out of config function of nvim-cmp
+		-- I have no idea what is the reason, but something turns off this option after setting option
+		vim.opt.spell = true
+		vim.opt.spelllang = {'en_us'}
+	end,
 	dependencies = {
 		'hrsh7th/cmp-buffer',       -- source for text in buffer
 		'hrsh7th/cmp-path',         -- source for file system path
 		'hrsh7th/cmp-cmdline',		-- source for commandline 
 		'hrsh7th/cmp-nvim-lsp',     -- using LSP for source
+		'f3fora/cmp-spell',			-- source for vim's spellsuggest
 		'L3MON4D3/LuaSnip',         -- snippet engine
 		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
 		'mstanciu552/cmp-matlab'    -- source of matlab
@@ -15,8 +22,10 @@ return {
 	config = function()
 		local cmp = require('cmp')
 		local compare = require('cmp.config.compare')
+		local context = require('cmp.config.context')
 		local ls = require('luasnip')
 
+		-- //// nvim-cmp configuration ////////
 		require('luasnip.loaders.from_vscode').lazy_load()
 		cmp.setup({
 			completion = {
@@ -77,26 +86,33 @@ return {
 					max_item_count = 5,
 				}, 	-- text within current buffer
 			}),
-			-- sorting = {
-			-- 	priority_weight = 1.0,
-			-- 	comparators = {
-			-- 		compare.recently_used,
-			-- 		compare.locality,
-			-- 		compare.score,
-			-- 		compare.offset,
-			-- 		compare.length,
-			-- 		compare.order,
-			-- 		compare.kind,
-			-- 		compare.exact,
-			-- 		compare.offset,
-			-- 	}
-			-- }
+			sorting = {
+				priority_weight = 1.0,
+				comparators = {
+					compare.score, -- for spell check
+					compare.recently_used,
+					compare.locality,
+					compare.kind,
+					compare.offset,
+					compare.order,
+					compare.length,
+					compare.exact,
+				}
+			}
 		})
 
 		-- /////// source of matlab
 		cmp.setup.filetype({'matlab'}, {
 			sources = {
 				{name = 'luasnip', group_index = 1, max_item_count = 5},
+				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
+							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
+						end
+					}
+				},
 				{name = 'cmp_matlab', group_index = 1, max_item_count = 5},
 				{name = 'buffer', group_index = 1, max_item_count = 5},
 				{name = 'nvim_lsp', group_index = 2, max_item_count = 5},
@@ -107,16 +123,31 @@ return {
 		cmp.setup.filetype({'lua'}, {
 			sources = {
 				{name = 'luasnip', group_index = 1, max_item_count = 5},
+				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
+							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
+						end
+					}
+				},
 				{name = 'nvim_lsp', group_index = 1, max_item_count = 5},
 				{name = 'buffer', group_index = 1, max_item_count = 5},
 			}
 		})
 
-
 		-- /////// source of markdown 
-		cmp.setup.filetype({'markdown'}, {
+		cmp.setup.filetype({'markdown', 'text'}, {
 			sources = {
 				{name = 'buffer', max_item_count = 5},
+				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+						enable_in_context = function () -- works always
+							return true
+						end
+					}
+				},
 				{name = 'path', max_item_count = 5},
 			}
 		})
