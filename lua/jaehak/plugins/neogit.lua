@@ -1,5 +1,8 @@
 return {
 	"NeogitOrg/neogit",
+	keys = { -- negit loading time is too long
+		{'<leader>go', '<Cmd>Neogit<CR>', desc = 'open neogit default', 'n'}
+	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",         -- required
 		"sindrets/diffview.nvim",        -- optional - Diff integration
@@ -22,6 +25,6 @@ return {
 			}
 		})
 
-		vim.keymap.set('n', '<leader>go', neogit.open, {desc = 'open neogit default'})
+		-- vim.keymap.set('n', '<leader>go', neogit.open, {desc = 'open neogit default'})
 	end
 }
