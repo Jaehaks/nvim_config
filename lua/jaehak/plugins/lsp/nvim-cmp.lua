@@ -31,8 +31,9 @@ return {
 			completion = {
 				-- noselect : do not select a match in the menu 
 				completeopt = 'menu, menuone, preview, noselect',
-				keyword_length = 1,
+				keyword_length = 2,
 			},
+			preselect = cmp.PreselectMode.None, --  do not preselect item
 			window = {
 				-- make the completion window bordered
 				completion = cmp.config.window.bordered(),
@@ -52,7 +53,7 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				['<C-n>'] 	= cmp.mapping.complete(),
+				['<C-n>'] = cmp.mapping.complete(),
 			    ['<Tab>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then -- select next cmp item when visible
 						cmp.select_next_item()
@@ -71,20 +72,27 @@ return {
 						fallback()
 					end
 			    end, {'i', 's'}),
-				['<C-e>'] 		= cmp.mapping.abort(),
-				['<CR>']		= cmp.mapping.confirm({select = false}),
+				['<C-e>'] 	= cmp.mapping.close(),
+				['<CR>']	= cmp.mapping.confirm({select = true,}),
+					-- select:true => select first item if you didn't select any item
 			}),
-			sources = cmp.config.sources({
+			sources = cmp.config.sources(	-- default source which has not identify filetype
+			{ -- group index = 1
 				{
-					name = 'nvim_lsp',
-					priority = 10,
+					name = 'path',
 					max_item_count = 5,
 				},
 				{
+					name = 'spell',
+					max_item_count = 2,
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+					}
+				},
+				{
 					name = 'buffer',
-					priority = 8,
 					max_item_count = 5,
-				}, 	-- text within current buffer
+				},
 			}),
 			sorting = {
 				priority_weight = 1.0,
@@ -101,6 +109,7 @@ return {
 			}
 		})
 
+		-- cmd.setup.filetype overwrites default source settings, not added
 		-- /////// source of matlab
 		cmp.setup.filetype({'matlab'}, {
 			sources = {
@@ -143,9 +152,6 @@ return {
 				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
 					option = {
 						keep_all_entries = true, -- it can show more possible list
-						enable_in_context = function () -- works always
-							return true
-						end
 					}
 				},
 				{name = 'path', max_item_count = 5},
