@@ -28,7 +28,8 @@ vim.keymap.set('n', 'tt', 'i<Tab><esc>', opts)			-- tab
 vim.keymap.set('n', '<S-CR>', 'o<esc>', opts)			-- new line (i heard it works only gui)
 vim.keymap.set('n', 'U', ':redo<CR>', opts)				-- redo
 vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
-
+vim.keymap.set('n', ':', ';',opts)
+vim.keymap.set('n', ';', ':',opts) -- replace ;q instead of :q
 
 
 -- set find/replace behavior
@@ -39,30 +40,11 @@ vim.keymap.set('n', '<C-f>', 'yiw/\\<C-r>0\\><CR>N', opts)
 vim.keymap.set({'n','v'}, '*', '*N', opts)
 vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 
--- local function table_contains(tbl, x)
--- 	local found = false
--- 	for _, v in pairs(tbl) do
--- 		if v == x then
--- 			found = true
--- 		end
--- 	end
--- 	return found
--- end
+-- clear keymap
+-- vim.keymap.set('n', 'q;', '<Nop>', opts) -- q: shortcut cannot change
 
---function HighlightWordUnderCursor()
---	local disabled_ft = {'lir', 'diff', 'fzf', 'TelescopePrompt', 'floatterm', 'help'}
---	if table_contains(disabled_ft, vim.bo.filtype)
---		return
---	end
---
---	local cur_word = vim.fn.expand('<cword>')
---	if vim. 
-
-
-
-
-local aug_User_defined = vim.api.nvim_create_augroup('User_defined', {clear = true})
 -- only show cursorline in current buffer
+local aug_User_defined = vim.api.nvim_create_augroup('User_defined', {clear = true})
 vim.api.nvim_create_autocmd({'WinEnter', 'BufRead'}, {
 	group = aug_User_defined,
 	pattern = '*',
