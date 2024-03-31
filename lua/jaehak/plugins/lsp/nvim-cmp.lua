@@ -17,7 +17,7 @@ return {
 		'f3fora/cmp-spell',			-- source for vim's spellsuggest
 		'L3MON4D3/LuaSnip',         -- snippet engine
 		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
-		'mstanciu552/cmp-matlab'    -- source of matlab
+		'mstanciu552/cmp-matlab',   -- source of matlab
 	},
 	config = function()
 		local cmp = require('cmp')
@@ -88,7 +88,7 @@ return {
 						spell      = '[SPELL]',
 						cmdline    = '[CMD]'
 					}
-					item.kind = menu_icon[entry.source.name] -- change kind field
+					item.menu = menu_icon[entry.source.name] -- change kind field
 					return item
 				end
 			},
