@@ -38,7 +38,6 @@ return {
 			x = { name = 'trouble' },
 			l = { name = 'lspsaga' },
 			m = { name = 'markdown' },
-			-- t = { name = 'terminal' }
 			h = { name = 'gitsign' },
 			g = { name = 'Neogit' }
 		}
