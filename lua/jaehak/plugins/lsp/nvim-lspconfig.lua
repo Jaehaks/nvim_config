@@ -95,20 +95,20 @@ return {
 		vim.api.nvim_create_autocmd('LspAttach', {
 			desc = 'lsp keybindings when on_attach',
 			callback = function()
-				local opts = {buffer = true, silent = true, noremap = true}
-				--vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line function
-				vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line function
---				vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
-				vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
-				vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
-				vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.reference()<cr>', opts)			-- function / var ref
+				-- local opts = {buffer = true, silent = true, noremap = true}
+				-- vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line function
+				-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line function
+				-- vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
+				-- vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
+				-- vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
+				-- vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.reference()<cr>', opts)			-- function / var ref
 			end
 		})
 
 		-- global mapping for diagnostic
-		vim.keymap.set('n', 'go', vim.diagnostic.open_float)			-- float diagnostic result, not next the line
-		vim.keymap.set('n', '[o', vim.diagnostic.goto_prev)
-		vim.keymap.set('n', ']o', vim.diagnostic.goto_next)
+		-- vim.keymap.set('n', 'go', vim.diagnostic.open_float)			-- float diagnostic result, not next the line
+		-- vim.keymap.set('n', '[o', vim.diagnostic.goto_prev)
+		-- vim.keymap.set('n', ']o', vim.diagnostic.goto_next)
 
 		-- other
 		-- 	vim.lsp.buf.code.action  => change parameter order 
