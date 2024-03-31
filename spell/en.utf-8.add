@@ -3,3 +3,10 @@ lua/!
 json
 matlab
 preselect
+filetype
+keymaps
+nvim
+autoclose
+autopair
+m4xshen
+treesitter
