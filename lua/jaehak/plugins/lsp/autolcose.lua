@@ -3,7 +3,7 @@ return {
 	-- m4xshen/autoclose.nvim : more simple, but it cannot ignore like the "'" in "'don't" 
 	-- 							and it change some keymaps in settings automatically
 {
-	-- more simple and smart 
+	-- more simple and smart / but it cannot support filetype
 	'echasnovski/mini.pairs',
 	version = false,
 	event = 'VeryLazy',
