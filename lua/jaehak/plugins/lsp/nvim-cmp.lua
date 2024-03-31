@@ -7,17 +7,17 @@ return {
 		-- I have no idea what is the reason, but something turns off this option after setting option
 		vim.opt.spell = true
 		vim.opt.spelllang = {'en_us'}
+		vim.opt.pumheight = 10			-- maximum item number when show completion
 	end,
 	dependencies = {
 		'hrsh7th/cmp-buffer',       -- source for text in buffer
 		'hrsh7th/cmp-path',         -- source for file system path
-		'hrsh7th/cmp-cmdline',		-- source for commandline 
+		'hrsh7th/cmp-cmdline',		-- source for commandline, [command], [path]
 		'hrsh7th/cmp-nvim-lsp',     -- using LSP for source
 		'f3fora/cmp-spell',			-- source for vim's spellsuggest
 		'L3MON4D3/LuaSnip',         -- snippet engine
 		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
 		'mstanciu552/cmp-matlab'    -- source of matlab
-
 	},
 	config = function()
 		local cmp = require('cmp')
@@ -76,6 +76,22 @@ return {
 				['<CR>']	= cmp.mapping.confirm({select = true,}),
 					-- select:true => select first item if you didn't select any item
 			}),
+			formatting = { -- completion display
+				fields = {'abbr', 'kind', 'menu'}, -- set field order in completion window
+				format = function (entry, item)
+					local menu_icon = {
+						nvim_lsp   = '[LSP]',
+						luasnip    = '[LuaSnip]',
+						buffer     = '[BUF]',
+						path       = '[PATH]',
+						cmp_matlab = '[MATLAB]',
+						spell      = '[SPELL]',
+						cmdline    = '[CMD]'
+					}
+					item.kind = menu_icon[entry.source.name] -- change kind field
+					return item
+				end
+			},
 			sources = cmp.config.sources(	-- default source which has not identify filetype
 			{ -- group index = 1
 				{
@@ -170,17 +186,11 @@ return {
 		cmp.setup.cmdline(':', {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources ={
-				{name = 'path', group_index = 1},
+				-- {name = 'path', group_index = 1},
 				{name = 'cmdline', group_index = 2}
 			}
 		})
 
-		vim.opt.pumheight = 10			-- maximum item number when show completion
-
---		local capabilities = require('cmp_nvim_lsp').default_capabilities()
---		require('lspconfig').lua_ls.setup({
---			capabilities = capabilities
---		})
 	end,
 }
 
