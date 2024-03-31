@@ -46,7 +46,7 @@ return {
 		vim.keymap.set('n', 'gd'        , '<Cmd>Lspsaga peek_definition<CR>'      , {desc = 'peek_definition', silent = true, noremap = true})
 		vim.keymap.set('n', 'gt'        , '<Cmd>Lspsaga peek_type_definition<CR>' , {desc = 'peek_type_definition', silent = true, noremap = true})
 		vim.keymap.set('n', 'gk'        , '<Cmd>Lspsaga diagnostic_jump_next<CR>' , {desc = 'diagnostics_jump_next', silent = true, noremap = true})
-		vim.keymap.set('n', 'gK'        , '<Cmd>Lspsaga diagnostic_jump_prev<CR>' , {desc = 'diagnostics_jump_prev', silent = true, noremap = true})
+		vim.keymap.set('n', 'gK'        , '<Cmd>Lspsaga show_workspace_diagnostics<CR>' , {desc = 'show_workspace_diagnostics', silent = true, noremap = true})
 		-- Lspsaga rename() include all project files, not current buffer
 	end
 },
