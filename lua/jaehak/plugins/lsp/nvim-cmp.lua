@@ -23,6 +23,7 @@ return {
 		local cmp = require('cmp')
 		local compare = require('cmp.config.compare')
 		local context = require('cmp.config.context')
+		-- local types = require('cmp.types')
 		local ls = require('luasnip')
 
 		-- //// nvim-cmp configuration ////////
@@ -92,6 +93,23 @@ return {
 					return item
 				end
 			},
+			sorting = {
+				priority_weight = 1.0,
+				comparators = {
+					compare.exact,
+					compare.recently_used,
+					compare.locality,
+					compare.length
+					-- compare.score, -- for spell check
+					-- compare.recently_used,
+					-- compare.locality,
+					-- compare.kind,
+					-- compare.offset,
+					-- compare.order,
+					-- compare.length,
+					-- compare.exact,
+				}
+			},
 			sources = cmp.config.sources(	-- default source which has not identify filetype
 			{ -- group index = 1
 				{
@@ -110,19 +128,6 @@ return {
 					max_item_count = 5,
 				},
 			}),
-			sorting = {
-				priority_weight = 1.0,
-				comparators = {
-					compare.score, -- for spell check
-					compare.recently_used,
-					compare.locality,
-					compare.kind,
-					compare.offset,
-					compare.order,
-					compare.length,
-					compare.exact,
-				}
-			}
 		})
 
 		-- cmd.setup.filetype overwrites default source settings, not added
@@ -140,14 +145,22 @@ return {
 				},
 				{name = 'cmp_matlab', group_index = 1, max_item_count = 5},
 				{name = 'buffer', group_index = 1, max_item_count = 5},
-				{name = 'nvim_lsp', group_index = 2, max_item_count = 5},
+				{
+					name = 'nvim_lsp',
+					group_index = 2,
+					max_item_count = 5,
+					-- entry_filter = function(entry, ctx) -- it dosen't work
+					-- 	if entry.get_kind() == 15 then
+					-- 		return false
+					-- 	end
+					-- end
+				},
 			}
 		})
 
 		-- /////// source of lua
 		cmp.setup.filetype({'lua'}, {
 			sources = {
-				{name = 'luasnip', group_index = 1, max_item_count = 5},
 				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
 					option = {
 						keep_all_entries = true, -- it can show more possible list
@@ -156,8 +169,13 @@ return {
 						end
 					}
 				},
-				{name = 'nvim_lsp', group_index = 1, max_item_count = 5},
-				{name = 'buffer', group_index = 1, max_item_count = 5},
+				{name = 'luasnip', group_index = 2, max_item_count = 5},
+				{
+					name = 'nvim_lsp',
+					group_index = 2,
+					max_item_count = 5,
+				},
+				{name = 'buffer', group_index = 2, max_item_count = 5},
 			}
 		})
 
