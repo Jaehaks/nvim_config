@@ -29,7 +29,7 @@ vim.keymap.set('n', '<S-CR>', 'o<esc>', opts)			-- new line (i heard it works on
 vim.keymap.set('n', 'U', ':redo<CR>', opts)				-- redo
 vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
 vim.keymap.set('n', ':', ';',opts)
-vim.keymap.set('n', ';', ':',opts) -- replace ;q instead of :q
+vim.keymap.set({'n', 'v'}, ';', ':',opts) -- replace ;q instead of :q
 vim.keymap.set('n', 'zf', 'z=1<CR>', opts) -- replace wrong word to suggested spell
 
 
