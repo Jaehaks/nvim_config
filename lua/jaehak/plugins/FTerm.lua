@@ -16,7 +16,7 @@ return {
 			}
 		})
 
-		vim.keymap.set('n', '<leader>t',fterm.toggle, {desc = 'open FTerm'} )
+		vim.keymap.set('n', '<leader>tt',fterm.toggle, {desc = 'open FTerm'} )
 	end
 },
 -- vim-floaterm : cannot select position in detail, but it seems faster than FTerm

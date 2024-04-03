@@ -19,7 +19,7 @@ return {
 			}
 		})
 
-		-- manually resigster's opts
+		-- manually register's opts
 		local opts = {
 		  mode = "n", -- NORMAL mode
 		  prefix = "<leader>",
@@ -42,9 +42,8 @@ return {
 			g = { name = 'Neogit' },
 			p = { name = 'project'},
 			s = { name = 'nvim-spectre'},
-
+			t = { name = 'terminal / translate'},
 		}
-
 
 		wk.register(mappings, opts)	-- register mappings
 	end
