@@ -135,6 +135,8 @@ return {
 		cmp.setup.filetype({'matlab'}, {
 			sources = {
 				{name = 'luasnip', group_index = 1, max_item_count = 5},
+				{name = 'cmp_matlab', group_index = 1, max_item_count = 5},
+				{name = 'buffer', group_index = 1, max_item_count = 5},
 				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
 					option = {
 						keep_all_entries = true, -- it can show more possible list
@@ -143,8 +145,6 @@ return {
 						end
 					}
 				},
-				{name = 'cmp_matlab', group_index = 1, max_item_count = 5},
-				{name = 'buffer', group_index = 1, max_item_count = 5},
 				{
 					name = 'nvim_lsp',
 					group_index = 2,
@@ -161,7 +161,14 @@ return {
 		-- /////// source of lua
 		cmp.setup.filetype({'lua'}, {
 			sources = {
-				{name = 'spell', group_index = 2, max_item_count = 2,	-- useless under 2nd suggestion
+				{name = 'luasnip', group_index = 1, max_item_count = 5},
+				{
+					name = 'nvim_lsp',
+					group_index = 1,
+					max_item_count = 5,
+				},
+				{name = 'buffer', group_index = 1, max_item_count = 5},
+				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
 					option = {
 						keep_all_entries = true, -- it can show more possible list
 						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
@@ -169,13 +176,6 @@ return {
 						end
 					}
 				},
-				{name = 'luasnip', group_index = 1, max_item_count = 5},
-				{
-					name = 'nvim_lsp',
-					group_index = 1,
-					max_item_count = 5,
-				},
-				{name = 'buffer', group_index = 2, max_item_count = 5},
 			}
 		})
 
