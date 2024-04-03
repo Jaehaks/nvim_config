@@ -1,4 +1,5 @@
 return {
+{
 	'numToStr/Comment.nvim',
 	config = function()
 		local ft = require('Comment.ft')
@@ -22,4 +23,26 @@ return {
 		})
 
 	end
+},
+{
+	-- make text object
+	'chrisgrieser/nvim-various-textobjs',
+	event = 'VeryLazy',
+	config = function ()
+		local textobjs = require('various-textobjs')
+		textobjs.setup({
+			lookForwardSmall = 5,
+			lookForwardBig = 15,
+			useDefaultKeymaps = false, -- not use suggested keymaps, but it does not work
+			disableKeymaps = {},
+		})
+		-- textobject with above/below and blank
+		vim.keymap.set({'o', 'x'}, 'ii', function() textobjs.indentation('inner','inner') end)
+
+		-- textobject in comment block
+		vim.keymap.set({'o', 'x'}, 'ic', function() textobjs.multiCommentedLines() end)
+	end
+
 }
+}
+-- 'nvim-treesitter/nvim-treesitter-textobjects' : it makes textobject with comment line only, not block

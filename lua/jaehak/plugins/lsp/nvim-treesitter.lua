@@ -54,14 +54,5 @@ return {
 	config = function ()
 	end
 },
-{
-	-- make textobject by treesitter, 
-	'nvim-treesitter/nvim-treesitter-textobjects',
-	dependencies = {
-		'nvim-treesitter/nvim-treesitter'
-	},
-	config = function ()
-	end
-}
 }
 -- tpope/vim-endwise : it doesn't work
