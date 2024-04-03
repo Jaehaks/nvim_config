@@ -15,4 +15,5 @@ return {
 		vim.keymap.set('n', '<leader>pa', '<Cmd>ProjectRoot<CR>', {desc = 'set project root'})
 	end
 }
--- ahmedkhalf/project.nvim : it change vim.opt.autochdir option to  false automatically
+-- ahmedkhalf/project.nvim : it change vim.opt.autochdir option to false automatically
+-- 							 it has conflict with this plugin
