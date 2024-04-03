@@ -30,13 +30,13 @@ return {
 					if vim.wo.diff then return ']h' end
 					vim.schedule(function() gs.next_hunk() end)
 					return '<Ignore>'
-				end, {expr=true})
+				end, {expr=true, desc = 'find next hunk'})
 
 				map('n', '[h', function()
-					if vim.wo.diff then return '[h' end
-					vim.schedule(function() gs.prev_hunk() end)
+				if vim.wo.diff then return '[h' end
+				vim.schedule(function() gs.prev_hunk() end)
 					return '<Ignore>'
-				end, {expr=true})
+				end, {expr=true, desc = 'find prev hunk'})
 
 				-- Actions
 				map('n', '<leader>hp', gs.preview_hunk, {desc = 'preview hunk in current line'})
