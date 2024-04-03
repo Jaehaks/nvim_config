@@ -33,13 +33,16 @@ return {
 		-- mapping 
 		local mappings = {
 			c = { name = 'color' },
-			e = { name = 'file explorer' },
+			e = { name = 'oil explorer' },
 			f = { name = 'telescope' },
 			x = { name = 'trouble' },
 			l = { name = 'lspsaga' },
 			m = { name = 'markdown' },
 			h = { name = 'gitsign' },
-			g = { name = 'Neogit' }
+			g = { name = 'Neogit' },
+			p = { name = 'project'},
+			s = { name = 'nvim-spectre'},
+
 		}
 
 
