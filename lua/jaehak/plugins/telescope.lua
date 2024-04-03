@@ -127,6 +127,7 @@ return {
 		telescope.load_extension('fzf')
 		telescope.load_extension('file_browser')
 		telescope.load_extension('luasnip')
+		-- telescope.load_extension('projects')
 
 
 		-- set line number in preview
@@ -169,6 +170,7 @@ return {
 
 		vim.keymap.set('n', '<leader>fe', telescope.extensions.file_browser.file_browser, {desc = 'file_browser'})
 		vim.keymap.set('n', '<leader>fl', telescope.extensions.luasnip.luasnip, {desc = 'luasnip browser'})
+		-- vim.keymap.set('n', '<leader>fp', telescope.extensions.projects.projects, {desc = 'project explorer'})
 	end
 }
 -- linrongbin16/fzfx.nvim : too slow starup loading / preview loading than telescope, and many errors in windows
