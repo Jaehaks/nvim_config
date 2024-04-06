@@ -54,8 +54,8 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				['<C-n>'] = cmp.mapping.complete(),
-			    ['<Tab>'] = cmp.mapping(function(fallback)
+				['<c-n>'] = cmp.mapping.complete(),
+			    ['<tab>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then -- select next cmp item when visible
 						cmp.select_next_item()
 					elseif ls.expand_or_locally_jumpable() then -- jump next node in snippet region 
@@ -64,7 +64,7 @@ return {
 						fallback()
 					end
 			    end, {'i', 's'}),
-			    ['<S-Tab>'] = cmp.mapping(function(fallback)
+			    ['<s-tab>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_prev_item()
 					elseif ls.expand_or_locally_jumpable() then
@@ -73,9 +73,19 @@ return {
 						fallback()
 					end
 			    end, {'i', 's'}),
-				['<C-e>'] 	= cmp.mapping.close(),
-				['<CR>']	= cmp.mapping.confirm({select = false,}),
-					-- select:true => select first item if you didn't select any item
+				['<c-e>'] 	= cmp.mapping.close(),
+				['<cr>']	= cmp.mapping(function (fallback) -- In cmp.mapping, function have to be called without <mapping> field
+					if cmp.visible() then                     -- without this condition, cmp.abort() will be execute multiple times
+						if cmp.get_active_entry() == nil then -- if you don't select, <cr> operate as original function
+							cmp.abort()
+							vim.api.nvim_input('<cr>')
+						else                                  -- if you select, <cr> means complete
+							cmp.confirm({select = false})     -- select:true => select first item if you didn't select any item
+						end
+					else
+						fallback()                            -- if cmp not visible, <cr> operate as original function
+					end
+				end, {'i', 's'}),
 			}),
 			formatting = { -- completion display
 				fields = {'abbr', 'kind', 'menu'}, -- set field order in completion window
@@ -94,20 +104,20 @@ return {
 				end
 			},
 			sorting = {
-				priority_weight = 1.0,
+				priority_weight = 2.0,
 				comparators = {
-					compare.exact,
-					compare.recently_used,
-					compare.locality,
-					compare.length
+					-- compare.exact,
+					-- compare.recently_used,
+					-- compare.locality,
+					-- compare.length
 					-- compare.score, -- for spell check
 					-- compare.recently_used,
 					-- compare.locality,
 					-- compare.kind,
 					-- compare.offset,
-					-- compare.order,
-					-- compare.length,
-					-- compare.exact,
+					compare.order,
+					-- compare.sort_text
+					compare.exact,
 				}
 			},
 			sources = cmp.config.sources(	-- default source which has not identify filetype
@@ -161,14 +171,14 @@ return {
 		-- /////// source of lua
 		cmp.setup.filetype({'lua'}, {
 			sources = {
-				{name = 'luasnip', group_index = 1, max_item_count = 5},
-				{
-					name = 'nvim_lsp',
-					group_index = 1,
-					max_item_count = 5,
-				},
-				{name = 'buffer', group_index = 1, max_item_count = 5},
-				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
+				-- {name = 'luasnip', group_index = 1, max_item_count = 5},
+				-- {
+				-- 	name = 'nvim_lsp',
+				-- 	group_index = 1,
+				-- 	max_item_count = 5,
+				-- },
+				-- {name = 'buffer', group_index = 1, max_item_count = 5},
+				{name = 'spell', group_index = 1, -- max_item_count = 2,	-- useless under 2nd suggestion
 					option = {
 						keep_all_entries = true, -- it can show more possible list
 						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
@@ -176,6 +186,8 @@ return {
 						end
 					}
 				},
+				-- 
+				-- overshot
 			}
 		})
 
