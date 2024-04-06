@@ -35,6 +35,9 @@ return {
 				keyword_length = 2,
 			},
 			preselect = cmp.PreselectMode.None, --  do not preselect item
+			performance = {
+				max_view_ertries = 10, -- can it reduce load delay?
+			},
 			window = {
 				-- make the completion window bordered
 				completion = cmp.config.window.bordered(),
@@ -104,104 +107,118 @@ return {
 				end
 			},
 			sorting = {
-				priority_weight = 2.0,
+				priority_weight = 1.0,
 				comparators = {
-					-- compare.exact,
-					-- compare.recently_used,
-					-- compare.locality,
-					-- compare.length
-					-- compare.score, -- for spell check
-					-- compare.recently_used,
-					-- compare.locality,
-					-- compare.kind,
-					-- compare.offset,
-					compare.order,
-					-- compare.sort_text
-					compare.exact,
+					compare.order, -- to order of spellsuggest for cmp-spell
+					compare.recently_used,
 				}
 			},
-			sources = cmp.config.sources(	-- default source which has not identify filetype
-			{ -- group index = 1
-				{
-					name = 'path',
-					max_item_count = 5,
-				},
+			sources = cmp.config.sources({
 				{
 					name = 'spell',
-					max_item_count = 2,
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
+					priority = 1000,
 					option = {
 						keep_all_entries = true, -- it can show more possible list
-					}
+						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
+							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
+						end
+					},
 				},
 				{
 					name = 'buffer',
 					max_item_count = 5,
+					priority = 500,
 				},
+				{
+					name = 'luasnip',
+					max_item_count = 5,
+					priority = 250,
+				},
+				{
+					name = 'nvim_lsp',
+					max_item_count = 5,
+					priority = 250,
+				},
+				{
+					name = 'path',
+					max_item_count = 5,
+					priority = 100,
+				},
+			},{
+				-- TBD:
 			}),
 		})
 
 		-- cmd.setup.filetype overwrites default source settings, not added
 		-- /////// source of matlab
 		cmp.setup.filetype({'matlab'}, {
-			sources = {
-				{name = 'luasnip', group_index = 1, max_item_count = 5},
-				{name = 'cmp_matlab', group_index = 1, max_item_count = 5},
-				{name = 'buffer', group_index = 1, max_item_count = 5},
-				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
+			sources = cmp.config.sources({
+				{
+					name = 'spell',
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
+					priority = 1000,
 					option = {
 						keep_all_entries = true, -- it can show more possible list
 						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
 							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
 						end
-					}
+					},
+				},
+				{
+					name = 'buffer',
+					max_item_count = 5,
+					priority = 500,
+				},
+				{
+					name = 'luasnip',
+					max_item_count = 5,
+					priority = 250,
+				},
+				{
+					name = 'cmp_matlab',
+					max_item_count = 5,
+					priority = 250,
 				},
 				{
 					name = 'nvim_lsp',
-					group_index = 2,
 					max_item_count = 5,
-					-- entry_filter = function(entry, ctx) -- it dosen't work
-					-- 	if entry.get_kind() == 15 then
-					-- 		return false
-					-- 	end
-					-- end
+					priority = 250,
 				},
-			}
+				{
+					name = 'path',
+					max_item_count = 5,
+					priority = 100,
+				},
+			},{
+				-- TBD:
+			}),
 		})
 
-		-- /////// source of lua
-		cmp.setup.filetype({'lua'}, {
-			sources = {
-				-- {name = 'luasnip', group_index = 1, max_item_count = 5},
-				-- {
-				-- 	name = 'nvim_lsp',
-				-- 	group_index = 1,
-				-- 	max_item_count = 5,
-				-- },
-				-- {name = 'buffer', group_index = 1, max_item_count = 5},
-				{name = 'spell', group_index = 1, -- max_item_count = 2,	-- useless under 2nd suggestion
+		-- /////// source of plain text
+		cmp.setup.filetype({'markdown', 'text', 'oil', 'NeogitCommitMessage'}, {
+			sources = cmp.config.sources({
+				{
+					name = 'spell',
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
+					priority = 1000,
 					option = {
 						keep_all_entries = true, -- it can show more possible list
-						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
-							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
-						end
-					}
+					},
 				},
-				-- 
-				-- overshot
-			}
-		})
-
-		-- /////// source of markdown 
-		cmp.setup.filetype({'markdown', 'text'}, {
-			sources = {
-				{name = 'buffer', max_item_count = 5},
-				{name = 'spell', group_index = 1, max_item_count = 2,	-- useless under 2nd suggestion
-					option = {
-						keep_all_entries = true, -- it can show more possible list
-					}
+				{
+					name = 'buffer',
+					max_item_count = 5,
+					priority = 500,
 				},
-				{name = 'path', max_item_count = 5},
-			}
+				{
+					name = 'path',
+					max_item_count = 5,
+					priority = 250,
+				},
+			},{
+				-- TBD:
+			}),
 		})
 
 		-- /////////`/` cmdline setup. (search)
