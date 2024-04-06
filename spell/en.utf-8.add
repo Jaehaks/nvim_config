@@ -10,3 +10,6 @@ autoclose
 autopair
 m4xshen
 treesitter
+basename
+autochdir
+config
