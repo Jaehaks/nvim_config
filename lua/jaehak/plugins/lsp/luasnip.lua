@@ -62,11 +62,9 @@ return {
 
 		require('luasnip.loaders.from_lua').lazy_load({paths = './queries/LuaSnip'})
 
-		-- /////// configuration of friendly-snippets //////////////
-		-- ls.filetype_extend('lua', {'luadoc'})
-		-- ls.filetype_extend('matlab', {'matlab'})
-		-- require('luasnip.loaders.from_vscode').load({paths = "c:\\Users\\7106704\\.config\\nvim\\query\\friendly-snippets\\matlab"})
-		-- require('luasnip.loaders.from_vscode').lazy_load()
+		------- telescope extension ------------
+		require('telescope').load_extension('luasnip')
+		vim.keymap.set('n', '<leader>fl', require('telescope').extensions.luasnip.luasnip, {desc = 'luasnip browser'})
 
 	end
 }
