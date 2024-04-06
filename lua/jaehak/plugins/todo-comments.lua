@@ -9,18 +9,18 @@ return {
 			signs = false, -- disable icon
 			colors = {
 				error   = {"#DC2626" },
-				warning = {"#FABf24" },
-				info    = {"#2563EB" },
 				hint    = {"#10A981" },
-				default = {"#7C3AED" },
-				test    = {"#FF00FF" }
+				info    = {"#2563EB" },
+				test    = {"#FF00FF" },
+				warning = {"#FABf24" },
+				tbd     = {"#7C3AED" },
 			},
 			keywords = {	-- keywords recognized as todo comments
-			FIX  = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" , "FAILED"},}, -- test failed, to be continue
-			TODO = { icon = " ", color = "hint" , alt = { "WHATFOR", "FOR", "WHAT"}}, -- hint
-			CONF = { icon = " ", color = "info",  alt = { "PASSED", "Confirmed" } },  -- code confirm completed
-			TEST = { icon = "⏲ ", color = "test",  alt = { "TESTING"} },               -- for testing code
-			-- HACK = { icon = " ", color = "warning" },
+			FIX  = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" , "FAILED" }}, -- test failed, to be continue
+			TODO = { icon = " ", color = "hint" , alt = { "WHATFOR", "FOR", "WHAT" }}, -- hint
+			CONF = { icon = " ", color = "info",  alt = { "PASSED", "Confirmed" }},  -- code confirm completed
+			TEST = { icon = "⏲ ", color = "test",  alt = { "TESTING" }},               -- for testing code
+			TBD  = { icon = " ", color = "tbd",   alt = { "LATER" }}, -- to be continue
 			-- WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
 			-- PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
 			},
