@@ -7,8 +7,8 @@ return {
 		'nvim-treesitter/nvim-treesitter',
 		'nvim-tree/nvim-web-devicons',
 		{
-		'nvim-telescope/telescope-fzf-native.nvim',
-		build = 'make'
+			'nvim-telescope/telescope-fzf-native.nvim',
+			build = 'make'
 		},
 		-- cder.nvim : (extension) change pwd using telescope, not useful to me, and 'ls' has invalid argument error
 		-- 			   it is useful when I want to subdirectories list and files quick
@@ -43,10 +43,10 @@ return {
 					'--fixed-strings'  -- do not use regex
 				},
 				mappings = {
---					i = {
---						['<C-h>'] = '<Left>',
---						['<C-l>'] = '<Right>',
---					},
+					i = {
+						['<C-h>'] = function() vim.api.nvim_input('<Left>') end,
+						['<C-l>'] = function() vim.api.nvim_input('<Right>') end,
+					},
 					n = {	-- chnage normal mode keymaps
 						['j'] = actions.move_selection_previous,
 						['k'] = actions.move_selection_next,
@@ -65,14 +65,16 @@ return {
 						['<C-j>']   = actions.preview_scrolling_up,
 						['<C-k>']   = actions.preview_scrolling_down,
 						['<C-l>']   = actions.preview_scrolling_right,
-						['<C-S-h>'] = actions.results_scrolling_left,
-						['<C-S-j>'] = actions.results_scrolling_up,
-						['<C-S-k>'] = actions.results_scrolling_down,
-						['<C-S-l>'] = actions.results_scrolling_right,
+						['<A-h>'] = actions.results_scrolling_left,
+						['<A-j>'] = actions.results_scrolling_up,
+						['<A-k>'] = actions.results_scrolling_down,
+						['<A-l>'] = actions.results_scrolling_right,
 						['<Tab>']   = actions.toggle_selection + actions.move_selection_next,
 						['<S-Tab>'] = actions.toggle_selection + actions.move_selection_previous,
 						['q']       = actions.close,
 						['o']       = actions.select_default,
+						['<C-f>']   = actions.select_horizontal,
+						['<C-v>']   = actions.select_vertical,
 
 
 					},
@@ -126,8 +128,6 @@ return {
 		-- 2) add system path with cmake
 		telescope.load_extension('fzf')
 		telescope.load_extension('file_browser')
-		telescope.load_extension('luasnip')
-		-- telescope.load_extension('projects')
 
 
 		-- set line number in preview
@@ -169,8 +169,6 @@ return {
 		vim.keymap.set('n', '<leader>fv', builtin.vim_options, 		{desc = 'vim options list'})                -- vim options list
 
 		vim.keymap.set('n', '<leader>fe', telescope.extensions.file_browser.file_browser, {desc = 'file_browser'})
-		vim.keymap.set('n', '<leader>fl', telescope.extensions.luasnip.luasnip, {desc = 'luasnip browser'})
-		-- vim.keymap.set('n', '<leader>fp', telescope.extensions.projects.projects, {desc = 'project explorer'})
 	end
 }
 -- linrongbin16/fzfx.nvim : too slow starup loading / preview loading than telescope, and many errors in windows
