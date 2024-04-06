@@ -11,7 +11,7 @@ return {
 			dashboard.button('r', '2 - Recent Files'               , '<Cmd>Telescope oldfiles<CR><Esc>'),
 			dashboard.button('c', '3 - Folder : Config'            , [[<Cmd>lua require("oil").open_float(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>]]), -- open config folder
 			dashboard.button('d', '4 - Folder : D:\\MATLAB_Project', [[<Cmd>lua require("oil").open_float("D:\\MATLAB_Project")<CR>]]),                              -- open MATLAB Project
-			dashboard.button('p', '5 - Project list'               , [[<Cmd>lua require("telescope").extensions.projects.projects()<CR>]]),                             -- open project list
+			dashboard.button('p', '5 - Bookmarks'                  , [[<Cmd>lua require("grapple").toggle_tags()<CR>]]),                             -- open project list
 		}
 
         alpha.setup(dashboard.config)	-- setting applyed 
