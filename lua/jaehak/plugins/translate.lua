@@ -1,5 +1,6 @@
 return {
 	-- translation
+	-- FIXME: it doesn't work at my workplace PC environment, I think it is the HTTP authority problem
 	'uga-rosa/translate.nvim',
 	event = 'VeryLazy',
 	config = function ()
