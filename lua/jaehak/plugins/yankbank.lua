@@ -1,6 +1,7 @@
 return {
 	-- save yank history
 	'ptdewey/yankbank-nvim',
+	event = 'VeryLazy',
 	config = function ()
 
 		local yankbank = require('yankbank')
