@@ -1,50 +1,44 @@
 return {
-	-- translation
-	-- FIXME: it doesn't work at my workplace PC environment, I think it is the HTTP authority problem
-	'uga-rosa/translate.nvim',
-	event = 'VeryLazy',
+{
+	'potamides/pantran.nvim',
+	enabled = false,
 	config = function ()
-		local translate = require('translate')
-		translate.setup({
-			default = {
-				command = 'google',		-- use google translate with curl
-				output = 'floating',
+		local pantran = require('pantran')
+		local actions = require('pantran.ui.actions')
+		pantran.setup({
+			default_engine = 'google',
+			engines = {
+				google = {
+					-- default_source = 'ko',
+					-- default_target = 'en' -- original default setting doesn't work, it will go fallback endpoint
+					fallback = {
+						default_source = 'ko',
+						default_target = 'en'
+					}
+				}
 			},
-			preset = { 					-- preset setting for options
-				output = {
-					floating = {
-						relative = 'cursor',
-						border = 'single'
-					},
+			controls = {
+				mappings = {
+					edit = {
+						n = {
+							['q'] = actions.close,
+							['gr'] = actions.replace_close_translation,
+							['ga'] = actions.append_close_translation,
+							['gs'] = actions.switch_languages,
+
+						}
+					}
 				}
 			}
 
 		})
-
-
-		vim.keymap.set({'n', 'x'},'<leader>te',
-			function()
-				vim.cmd(':Translate EN -output=replace')
-				vim.api.nvim_input('<Esc>')
-			end, {desc = 'translate to english and replace'} )
-
-		vim.keymap.set({'n', 'x'},'<leader>tk',
-			function()
-				vim.cmd(':Translate KO -output=replace')
-				vim.api.nvim_input('<Esc>')
-			end, {desc = 'translate to korean and replace'} )
-
-		vim.keymap.set({'n', 'x'},'<leader>tE',
-			function()
-				vim.cmd(':Translate EN')
-				vim.api.nvim_input('<Esc>')
-			end, {desc = 'translate to english and show'} )
-
-		vim.keymap.set({'n', 'x'},'<leader>tK',
-			function()
-				vim.cmd(':Translate KO')
-				vim.api.nvim_input('<Esc>')
-			end, {desc = 'translate to korean and show'} )
+		-- if you use motion_translate(), expr opts must be true. but it makes the background color noisy temporarily
+		-- use replace mode : interactive mode makes background color noisy when i call Pantran in visual mode
+		local opts = {noremap = true, silent = true, expr = false}
+		vim.keymap.set({'n'}, '<leader>tw', ':Pantran source=ko target=en<CR>', vim.tbl_extend('keep',opts,{desc = 'show translate interactive window'}))
+		vim.keymap.set({'v'}, '<leader>te', ':Pantran source=ko target=en mode=replace<CR>', vim.tbl_extend('keep',opts,{desc = 'translate ko -> en'}))
+		vim.keymap.set({'v'}, '<leader>tk', ':Pantran source=en target=ko mode=replace<CR>', vim.tbl_extend('keep',opts,{desc = 'translate en -> ko'}))
 	end
 }
--- potamides/pantran.nvim : i don't need to translate window yet.
+}
+-- 'uga-rosa/translate.nvim' : pantran.nvim is more faster to translate 
