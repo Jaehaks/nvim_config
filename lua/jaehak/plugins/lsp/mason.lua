@@ -26,6 +26,7 @@ return {
 				'matlab_ls', 			-- after matlab_ls install, copy matlab-language-server.cmd to nvim-data/mason/bin manually
 				'marksman',
 				'jsonls',
+				'ltex' -- grammar check with LanguageTool
 			}
 		})
 
@@ -35,6 +36,7 @@ return {
 				'matlab_ls',
 				'marksman',
 				'jsonls',
+				'ltex'
 			},
 			auto_update = false,
 		})

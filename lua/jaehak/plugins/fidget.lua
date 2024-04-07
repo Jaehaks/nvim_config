@@ -3,6 +3,9 @@ return {
 	'j-hui/fidget.nvim',
 	config = function()
 		require('fidget').setup({
+			progress = {
+				ignore = {'ltex'},		-- because ltex progress always operate when write character
+			}
 
 		})
 	end
