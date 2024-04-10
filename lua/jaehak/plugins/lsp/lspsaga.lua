@@ -40,7 +40,7 @@ return {
 				enable = false,		-- lightbulb makes screen shake, I don't know why
 			},
 		})
-		vim.keymap.set('n', '<leader>lo', '<Cmd>Lspsaga outline<CR>'              , {desc = 'outline', silent = true, noremap = true})
+		vim.keymap.set('n', 'go', '<Cmd>Lspsaga outline<CR>'              , {desc = 'outline', silent = true, noremap = true})
 		vim.keymap.set('n', 'K'         , '<Cmd>Lspsaga hover_doc<CR>'            , {desc = 'hover_doc', silent = true, noremap = true})
 		vim.keymap.set('n', '<C-S-K>'   , '<Cmd>Lspsaga hover_doc ++keep<CR>'     , {desc = 'hover_doc ++keep', silent = true, noremap = true})
 		vim.keymap.set('n', 'gd'        , '<Cmd>Lspsaga peek_definition<CR>'      , {desc = 'peek_definition', silent = true, noremap = true})
