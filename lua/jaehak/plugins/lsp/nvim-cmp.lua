@@ -18,6 +18,7 @@ return {
 		'L3MON4D3/LuaSnip',         -- snippet engine
 		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
 		'mstanciu552/cmp-matlab',   -- source of matlab
+		'micangl/cmp-vimtex', 		-- source of vimtex for latex
 	},
 	config = function()
 		local cmp = require('cmp')
@@ -93,6 +94,7 @@ return {
 			formatting = { -- completion display
 				fields = {'abbr', 'kind', 'menu'}, -- set field order in completion window
 				format = function (entry, item)
+
 					local menu_icon = {
 						nvim_lsp   = '[LSP]',
 						luasnip    = '[LuaSnip]',
@@ -100,9 +102,14 @@ return {
 						path       = '[PATH]',
 						cmp_matlab = '[MATLAB]',
 						spell      = '[SPELL]',
-						cmdline    = '[CMD]'
+						cmdline    = '[CMD]',
+						vimtex     = item.menu, -- show packages as menu
 					}
 					item.menu = menu_icon[entry.source.name] -- change kind field
+
+					-- item.dup make items unique if there are duplicated abbr. 
+					-- but it does not mean sources are not duplicated
+
 					return item
 				end
 			},
@@ -218,6 +225,30 @@ return {
 				},
 			},{
 				-- TBD:
+			}),
+		})
+
+		-- /////// source of latex
+		cmp.setup.filetype({'tex'}, {
+			sources = cmp.config.sources({
+				{
+					name = 'vimtex',
+					priority = 1000,
+				},
+			},{
+				{
+					name = 'spell',
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
+					priority = 500,
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+					},
+				},
+				{
+					name = 'buffer',
+					max_item_count = 5,
+					priority = 500,
+				},
 			}),
 		})
 
