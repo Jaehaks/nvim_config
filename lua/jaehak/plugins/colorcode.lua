@@ -2,6 +2,7 @@ return {
 {
 },{
 	'chrisbra/colorizer',
+	enabled = true,
 	event = 'VeryLazy',
 	config = function()
 		vim.g.colorizer_auto_color = 0
@@ -20,7 +21,28 @@ return {
 	end
 
 
-},{
+},
+{
+	'brenoprata10/nvim-highlight-colors',
+	enabled = false,
+	event = 'VeryLazy',
+	init = function ()
+		vim.opt.termguicolors = true
+	end,
+	config = function ()
+		require('nvim-highlight-colors').setup({
+			render = 'background',
+			enable_named_colors = false, -- colorize with color name, but it needs ':' ahead of the name
+			enable_tailwind = false,
+			custom_colors = { -- this pattern is used for gsub, so it does not same with lua regex pattern, whildcad, [set] doesn't work
+				{ label= "[\'\"]red[\'\"]", color = '#FF0000' },
+			}
+			-- 'red'
+			-- "red"
+		})
+	end
+},
+{
 	-- ccc.nvim : if modify some colorscheme, palette lose colors
 	-- bug : if use custom_entries, other highlight are off. 
 	-- I think use it for colorcode only
