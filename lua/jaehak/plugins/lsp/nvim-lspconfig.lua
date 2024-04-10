@@ -100,7 +100,7 @@ return {
 			settings = {
 				ltex = {
 					-- both 'enabled' and 'filetypes' are listed to check
-					enabled = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
+					enabled = {'gitcommit', 'markdown','tex', 'text', 'NeogitCommitMessage', 'lua'},
 					language = 'en-US',
 					disabledRules = {
 						['en-US'] = {
@@ -109,7 +109,10 @@ return {
 					}
 				}
 			},
-			filetypes = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
+			root_dir = function (fname)
+				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+			end,
+			filetypes = {'gitcommit', 'markdown', 'tex', 'text', 'NeogitCommitMessage', 'lua'},
 			single_file_support = true,
 		})
 		-- grammar-guard.nvim : deprecated
