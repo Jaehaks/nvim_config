@@ -6,6 +6,7 @@ return {
 		'sharkdp/fd',
 		'nvim-treesitter/nvim-treesitter',
 		'nvim-tree/nvim-web-devicons',
+		'catgoose/telescope-helpgrep.nvim',
 		{
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make'
@@ -121,6 +122,20 @@ return {
 					override_file_sorter = true,
 					case_mode = 'smart_case'
 				},
+				-- //////// extensions : helpgrep (find word without tags) ////////////
+				helpgrep = { -- cannot support detour floating window
+					ignore_paths = {
+						vim.fn.stdpath('state') .. '/lazy/readme',
+					},
+					mappings = {
+						n = {
+							['<CR>'] = actions.select_default,
+						},
+						i = {
+							['<CR>'] = actions.select_default,
+						}
+					}
+				}
 			},
 		})
 		-- ////// telescope-fzf-navie.nvim //////
@@ -128,6 +143,7 @@ return {
 		-- 2) add system path with cmake
 		telescope.load_extension('fzf')
 		telescope.load_extension('file_browser')
+		telescope.load_extension('helpgrep')
 
 
 		-- set line number in preview
@@ -169,6 +185,7 @@ return {
 		vim.keymap.set('n', '<leader>fv', builtin.vim_options, 		{desc = 'vim options list'})                -- vim options list
 
 		vim.keymap.set('n', '<leader>fe', telescope.extensions.file_browser.file_browser, {desc = 'file_browser'})
+		vim.keymap.set('n', '<leader>fH', telescope.extensions.helpgrep.helpgrep, {desc = 'help grep'})
 	end
 }
 -- linrongbin16/fzfx.nvim : too slow starup loading / preview loading than telescope, and many errors in windows
