@@ -42,7 +42,8 @@ vim.keymap.set({'n','v'}, '*', '*N', opts)
 vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 
 -- clear keymap
--- vim.keymap.set('n', 'q;', '<Nop>', opts) -- q: shortcut cannot change
+vim.keymap.set({'n'}, '<C-l>', '<Nop>', opts) -- default is redraw (highlight all blank region)
+-- vim.keymap.set('n', [[q:]], '<Nop>', opts) -- q: shortcut cannot change
 
 -- only show cursorline in current buffer
 local aug_User_defined = vim.api.nvim_create_augroup('User_defined', {clear = true})
