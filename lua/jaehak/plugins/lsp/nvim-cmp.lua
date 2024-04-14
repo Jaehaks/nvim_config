@@ -18,7 +18,10 @@ return {
 		'L3MON4D3/LuaSnip',         -- snippet engine
 		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
 		'mstanciu552/cmp-matlab',   -- source of matlab
-		'micangl/cmp-vimtex', 		-- source of vimtex for latex
+		-- 'micangl/cmp-vimtex', 		-- source of vimtex for latex
+		'kdheepak/cmp-latex-symbols' -- source of latex symbol for texlab
+		-- 'uga-rosa/cmp-latex-symbol', -- source of latex symbol for texlab (it insert only symbol, not code)
+		-- 'amarakon/nvim-cmp-lua-latex-symbols', -- source of latex symbol for texlab (it isn't works)
 	},
 	config = function()
 		local cmp = require('cmp')
@@ -103,7 +106,7 @@ return {
 						cmp_matlab = '[MATLAB]',
 						spell      = '[SPELL]',
 						cmdline    = '[CMD]',
-						vimtex     = item.menu, -- show packages as menu
+						-- vimtex     = item.menu, -- show packages as menu
 					}
 					item.menu = menu_icon[entry.source.name] -- change kind field
 
@@ -116,8 +119,9 @@ return {
 			sorting = {
 				priority_weight = 1.0,
 				comparators = {
-					compare.order, -- to order of spellsuggest for cmp-spell
 					compare.recently_used,
+					compare.locality,
+					compare.order, -- to order of spellsuggest for cmp-spell
 				}
 			},
 			sources = cmp.config.sources({
@@ -228,11 +232,42 @@ return {
 			}),
 		})
 
-		-- /////// source of latex
-		cmp.setup.filetype({'tex'}, {
-			sources = cmp.config.sources({
+		-- /////// source of latex using vimtex
+		-- cmp.setup.filetype({'tex'}, {
+		-- 	sources = cmp.config.sources({
+		-- 		{
+		-- 			name = 'vimtex',
+		-- 			priority = 1000,
+		-- 		},
+		-- 	},{
+		-- 		{
+		-- 			name = 'spell',
+		-- 			max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
+		-- 			priority = 500,
+		-- 			option = {
+		-- 				keep_all_entries = true, -- it can show more possible list
+		-- 			},
+		-- 		},
+		-- 		{
+		-- 			name = 'buffer',
+		-- 			max_item_count = 5,
+		-- 			priority = 500,
+		-- 		},
+		-- 	}),
+		-- })
+	
+		
+		-- /////// source of latex using texlab
+		cmp.setup.filetype({'tex', 'plaintex'}, {
+			sources = cmp.config.sources( {
 				{
-					name = 'vimtex',
+					name = 'latex_symbols',
+					priority = 1000,
+					option = { strategy = 2, } -- mixed
+				}
+			}, {
+				{
+					name = 'nvim_lsp',
 					priority = 1000,
 				},
 			},{

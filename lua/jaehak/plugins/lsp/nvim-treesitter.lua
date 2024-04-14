@@ -6,6 +6,8 @@ return {
 	config = function()
 		local configs = require('nvim-treesitter.configs')
 		local installs = require('nvim-treesitter.install')
+		local TShighlight = require('nvim-treesitter.highlight')
+
 		installs.prefer_git = false
 		installs.compilers = {'gcc'}
 
@@ -16,7 +18,9 @@ return {
 								 'python',
 							 	 'vim', 'vimdoc',
 								 'markdown', 'markdown_inline', 'html', 'json',
-								 'diff', 'regex', 'ssh_config'},
+								 'diff', 'regex', 'ssh_config',
+							   	 'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
+			},
 			highlight = {
 				enable = true,  -- if highlight, cannot use rainbow bracket. 
 								-- because treesitter managed highlighting bracket also. 
@@ -43,6 +47,9 @@ return {
 				}
 			}
 		})
+
+		-- custom_captures not work
+		vim.api.nvim_set_hl(0, "@markup.math.latex" , { link = 'NightflyYello'}) -- it has bug. but is the best...
 	end,
 },
 {

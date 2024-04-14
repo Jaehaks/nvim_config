@@ -100,7 +100,7 @@ return {
 			settings = {
 				ltex = {
 					-- both 'enabled' and 'filetypes' are listed to check
-					enabled = {'gitcommit', 'markdown','tex', 'text', 'NeogitCommitMessage', 'lua'},
+					enabled = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
 					language = 'en-US',
 					disabledRules = {
 						['en-US'] = {
@@ -112,30 +112,94 @@ return {
 			root_dir = function (fname)
 				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
 			end,
-			filetypes = {'gitcommit', 'markdown', 'tex', 'text', 'NeogitCommitMessage', 'lua'},
+			filetypes = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
 			single_file_support = true,
 		})
 		-- grammar-guard.nvim : deprecated
 		-- prosesitter : deprecated
+
+
+		-- ####### 6) texlab language server configuration - for latex #########
+		-- install : miktex for latexmk
+		-- install : sumatraPDF for viewer, and add to user path 
+		-- texlab does not support code action. and it is not compatible with lspsaga. 
+		-- lspsaga's function makes error. use default vim.lsp function
+		
+		lspconfig.texlab.setup({
+			cmd = {'texlab'},
+			filetypes = {'tex', 'plaintex'},
+			settings = {
+				texlab = {
+					build = {
+						executable = 'latexmk',
+						args = {'-pdflatex', '-interaction=nonstopmode', '-synctex=1', '%f'},
+						forwardSearchAfter = false, -- show pdfviewer after build
+						onSave = true, -- rebuild automatically after .tex saved
+						-- I want to not focus the viewer whenever rebuild. so forwardSearchAfter is false.
+						-- '-pv' option open default pdf viewer like acrobat
+					},
+					forwardSearch = {
+						executable = 'SumatraPDF',
+						args = {
+							'-reuse-instance',
+							'%p',
+							'-forward-search',
+							'%f',
+							'%l',
+						}
+					},
+					completion = {
+						matcher = 'prefix-ignore-case',
+					}
+					-- chktex performance is not exact
+				}
+			},
+			single_file_support = true,
+		})
+
+
 
 		-- ####### autocmd key mapping when LspAttach ######
 		-- vim.api.nvim_create_autocmd('LspAttach', {
 		-- 	desc = 'lsp keybindings when on_attach',
 		-- 	callback = function()
 		-- 		local opts = {buffer = true, silent = true, noremap = true}
-		-- 		vim.keymap.set('n', '<C-k>', ':lua vim.lsp.buf.signature_help()<cr>', opts)	-- hover current line function
-		-- 		vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line function
+		-- 		-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line function
 		-- 		vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
-		-- 		vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
 		-- 		vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
+		-- 		vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
 		-- 		vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.reference()<cr>', opts)			-- function / var ref
+		-- 		vim.keymap.set('n', 'gs', vim.lsp.buf.code_action)
 		-- 	end
 		-- })
 
 		-- global mapping for diagnostic
-		-- vim.keymap.set('n', 'go', vim.diagnostic.open_float)			-- float diagnostic result, not next the line
-		-- vim.keymap.set('n', '[o', vim.diagnostic.goto_prev)
-		-- vim.keymap.set('n', ']o', vim.diagnostic.goto_next)
+		-- vim.keymap.set('n', 'gk', vim.diagnostic.goto_next) -- show next diagnostic result
+
+
+		-- set keymaps locally for texlab
+		local LaTeXKey = vim.api.nvim_create_augroup('LaTeXKey', {clear = true})
+		vim.api.nvim_create_autocmd('LspAttach', {
+			group = LaTeXKey,
+			callback = function ()
+				if vim.b[0].texlab_attach then
+					return
+				end
+
+				local bufnr = vim.api.nvim_get_current_buf() -- get current buf id
+				local clients = vim.lsp.buf_get_clients(bufnr) -- get lsp table which is attached on current buffer
+				for _, client in pairs(clients) do --  ipairs is effective when table has key from 1
+					if client.name == 'texlab' then
+						vim.b[0].texlab_attach = true
+					end
+				end
+
+				if vim.b[0].texlab_attach then
+					vim.keymap.set('n', '<leader>lv', '<Cmd>TexlabForward<CR>', {noremap = true, buffer = 0, desc = 'latex - forward search'})
+					vim.keymap.set('n', '<leader>ll', '<Cmd>TexlabBuild<CR>', {noremap = true, buffer = 0, desc = 'latex - Build'})
+				end
+			end
+		})
 
 
 		vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(

@@ -40,15 +40,16 @@ return {
 				enable = false,		-- lightbulb makes screen shake, I don't know why
 			},
 		})
-		vim.keymap.set('n', 'go', '<Cmd>Lspsaga outline<CR>'              , {desc = 'outline', silent = true, noremap = true})
-		vim.keymap.set('n', 'K'         , '<Cmd>Lspsaga hover_doc<CR>'            , {desc = 'hover_doc', silent = true, noremap = true})
-		vim.keymap.set('n', '<C-S-K>'   , '<Cmd>Lspsaga hover_doc ++keep<CR>'     , {desc = 'hover_doc ++keep', silent = true, noremap = true})
-		vim.keymap.set('n', 'gd'        , '<Cmd>Lspsaga peek_definition<CR>'      , {desc = 'peek_definition', silent = true, noremap = true})
-		vim.keymap.set('n', 'gt'        , '<Cmd>Lspsaga peek_type_definition<CR>' , {desc = 'peek_type_definition', silent = true, noremap = true})
-		vim.keymap.set('n', 'gk'        , '<Cmd>Lspsaga diagnostic_jump_next<CR>' , {desc = 'diagnostics_jump_next', silent = true, noremap = true})
-		vim.keymap.set('n', 'gK'        , '<Cmd>Lspsaga show_workspace_diagnostics<CR>' , {desc = 'show_workspace_diagnostics', silent = true, noremap = true})
+		vim.keymap.set('n', 'go'     , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
+		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'hover_doc', silent = true, noremap = true})
+		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'hover_doc ++keep', silent = true, noremap = true})
+		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'peek_definition', silent = true, noremap = true})
+		vim.keymap.set('n', 'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , {desc = 'peek_type_definition', silent = true, noremap = true})
+		vim.keymap.set('n', 'gk'     , '<Cmd>Lspsaga diagnostic_jump_next<CR>'      , {desc = 'diagnostics_jump_next', silent = true, noremap = true})
+		vim.keymap.set('n', 'gK'     , '<Cmd>Lspsaga show_workspace_diagnostics<CR>', {desc = 'show_workspace_diagnostics', silent = true, noremap = true})
 		-- Lspsaga rename() include all project files, not current buffer
 	end
+	-- caution!!) lspsga has error for some lsp diagnostic
 },
 {
 	-- show signature help when enter functions
