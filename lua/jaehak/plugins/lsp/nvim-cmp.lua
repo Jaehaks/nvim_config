@@ -263,6 +263,7 @@ return {
 				{
 					name = 'latex_symbols',
 					priority = 1000,
+					max_item_count = 5,
 					option = { strategy = 2, } -- mixed
 				}
 			}, {
