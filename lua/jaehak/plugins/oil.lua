@@ -77,13 +77,22 @@ return {
 					{'name', 'asc'},	-- secondly, sort by name ascending
 				}
 			}
-
-
 		})
 
 		vim.keymap.set('n', '<leader>ee', oil.open_float, {desc = 'open current buffer dir'}) -- default current buffer cwd
 		vim.keymap.set('n', '<leader>ec', [[<Cmd>lua require('oil').open_float(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>]], {desc = 'open config dir'}) -- default current buffer cwd
 		vim.keymap.set('n', '<leader>ed', [[<Cmd>lua require('oil').open_float(vim.fn.stdpath("data") .. "/lazy")<CR>]], {desc = 'open data dir'}) -- default current buffer cwd
+
+		-- local keymap for oil
+		local User_Oil = vim.api.nvim_create_augroup('User_Oil', {clear = true})
+		vim.api.nvim_create_autocmd('FileType', {
+			group = User_Oil,
+			pattern = 'oil',
+			callback = function ()
+				vim.keymap.set('n', '<C-j>', '<Up>', {buffer = 0, noremap = true, desc = 'Up in Oil'})
+				vim.keymap.set('n', '<C-k>', '<Down>', {buffer = 0, noremap = true, desc = 'Down in Oil'})
+			end
+		})
 	end
 
 },
