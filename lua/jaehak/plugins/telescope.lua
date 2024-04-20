@@ -129,10 +129,32 @@ return {
 					},
 					mappings = {
 						n = {
-							['<CR>'] = actions.select_default,
+							-- ['<CR>'] = actions.select_default,
+							['<CR>'] = function()
+								-- select_default() cannot work properly with floating window like detour 
+								-- 1) help file is opened in duplicate (buffer and floating window)
+								-- 2) cursor focus and find detected location in the buffer but not in floating window 
+								-- @catgoose solves the problem using this function
+								local action_state = require("telescope.actions.state")
+								local selection = action_state.get_selected_entry()
+								local fn = vim.fn.fnamemodify(selection.filename, ":t:r") -- you can (:help filename) without the extension
+								vim.cmd.help(fn)
+								local win = vim.api.nvim_get_current_win()
+								vim.api.nvim_win_set_cursor(win, { selection.lnum, selection.col })
+								-- vim.cmd.stopinsert() -- maybe because this was for `i` mode, but I had to call stopinsert or it would help helpfile in insert
+							end
 						},
 						i = {
-							['<CR>'] = actions.select_default,
+							-- ['<CR>'] = actions.select_default,
+							['<CR>'] = function()
+								local action_state = require("telescope.actions.state")
+								local selection = action_state.get_selected_entry()
+								local fn = vim.fn.fnamemodify(selection.filename, ":t:r") -- you can (:help filename) without the extension
+								vim.cmd.help(fn)
+								local win = vim.api.nvim_get_current_win()
+								vim.api.nvim_win_set_cursor(win, { selection.lnum, selection.col })
+								vim.cmd.stopinsert() -- maybe because this was for `i` mode, but I had to call stopinsert or it would help helpfile in insert
+							end
 						}
 					}
 				}
