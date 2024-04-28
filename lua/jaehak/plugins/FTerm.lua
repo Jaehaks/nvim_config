@@ -1,7 +1,7 @@
 return {
 {
 	"numToStr/FTerm.nvim",
-	enabled = true,
+	event = 'BufReadPost', -- Oil execute with BufRead / but Telescope and DashBoard doesn't / DashBoard use BufWinEnter
 	config = function ()
 		local fterm = require('FTerm')
 		fterm.setup({

@@ -6,7 +6,7 @@ return {
 	-- more simple and smart / but it cannot support filetype
 	'echasnovski/mini.pairs',
 	version = false,
-	event = 'VeryLazy',
+	event = 'BufReadPost',
 	config = function ()
 		require('mini.pairs').setup({
 			modes = { insert = true, command = true, terminal = true },

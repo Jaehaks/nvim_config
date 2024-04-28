@@ -1,6 +1,7 @@
 return {
 {
 	'numToStr/Comment.nvim',
+	event = 'BufReadPost',
 	config = function()
 		local ft = require('Comment.ft')
 --		ft.set('matlab', {'%%s', '%{%s%}'})

@@ -3,7 +3,7 @@ return {
 	'echasnovski/mini.indentscope',
 	enabled = true,
 	version = '*',
-	event = {'BufReadPre', 'BufNewFile'},
+	event = {'BufReadPost', 'BufNewFile'},
 	config = function()
 		local indents = require('mini.indentscope')
 		indents.setup({

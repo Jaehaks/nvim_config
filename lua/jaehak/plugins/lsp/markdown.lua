@@ -66,6 +66,8 @@ return {
 {
 	-- cursorline of headline highlight
 	'lukas-reineke/headlines.nvim',
+	enabled = true,
+	ft = {'markdown'},
 	dependencies = 'nvim-treesitter/nvim-treesitter',
 	config = function ()
 

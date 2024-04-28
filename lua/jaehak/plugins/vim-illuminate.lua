@@ -1,6 +1,6 @@
 return {
 	'RRethy/vim-illuminate',
-	event = 'VeryLazy',
+	event = 'BufReadPost',
 	config = function()
 
 		-- plugin configuration

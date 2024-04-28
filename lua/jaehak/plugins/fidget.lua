@@ -1,6 +1,7 @@
 return {
 	-- LSP progess message with mini notifying format
 	'j-hui/fidget.nvim',
+	event = 'LspAttach',
 	config = function()
 		require('fidget').setup({
 			progress = {

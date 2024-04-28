@@ -1,7 +1,7 @@
 return {
 	-- display marks in signcolumn
 	'chentoast/marks.nvim',
-	event = 'VeryLazy',
+	event = 'BufReadPost',
 	config = function ()
 		require('marks').setup({
 

@@ -1,6 +1,6 @@
 return {
 	'folke/flash.nvim',
-	event = 'VeryLazy',
+	event = 'BufReadPost',
 	config = function ()
 		local flash = require('flash')
 		flash.setup({

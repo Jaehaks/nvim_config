@@ -3,7 +3,7 @@ return {
 	-- list up important files (add list to nvim-data/grapple)
 	-- Caution!! : file path must not have white space. But it can accept with non-English directory
 	'cbochs/grapple.nvim',
-	event = 'VeryLazy',
+	event = 'VimEnter',
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 		'nvim-telescope/telescope.nvim'

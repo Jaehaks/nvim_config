@@ -1,7 +1,7 @@
 return {
 {
 	'potamides/pantran.nvim',
-	event = 'VeryLazy',
+	event = 'BufReadPost',
 	config = function ()
 		local pantran = require('pantran')
 		local actions = require('pantran.ui.actions')

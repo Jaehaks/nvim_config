@@ -1,10 +1,11 @@
 return {
 	'nvim-telescope/telescope.nvim',
+	event = 'VeryLazy',
 	dependencies = {
 		'nvim-lua/plenary.nvim',
 		'BurntSushi/ripgrep',
 		'sharkdp/fd',
-		'nvim-treesitter/nvim-treesitter',
+		'nvim-treesitter/nvim-treesitter', -- lazy loading of treesitter makes error in previewer
 		'nvim-tree/nvim-web-devicons',
 		'catgoose/telescope-helpgrep.nvim',
 		{

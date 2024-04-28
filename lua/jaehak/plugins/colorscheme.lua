@@ -1,7 +1,7 @@
 return{{
 	'bluz71/vim-nightfly-colors',
 	enabled = true,
-	lazy = false,
+	lazy = false, -- start
 	priority = 1000,
 	config = function()
 		vim.g.nightflyCursorColor = false

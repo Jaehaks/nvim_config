@@ -1,5 +1,6 @@
 return {
 	'sindrets/diffview.nvim',
+	event = 'BufReadPost',
 	dependencies = {
 		'nvim-tree/nvim-web-devicons'
 	},

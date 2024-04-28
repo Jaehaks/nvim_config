@@ -1,6 +1,6 @@
 return {
 	'junegunn/vim-easy-align',
-	event = 'VeryLazy',
+	event = 'BufReadPost',
 	config = function()
 		vim.g.easy_align_delimiters = {
 			[';'] = {				-- add delimiters ';'

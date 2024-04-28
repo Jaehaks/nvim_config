@@ -2,6 +2,12 @@ return {
 {
 	enabled = true,
 	'nvim-treesitter/nvim-treesitter',
+	-- enabled = false,
+	lazy = true, -- by telescope
+	dependencies = {
+		'HiPhish/rainbow-delimiters.nvim',
+		'RRethy/nvim-treesitter-endwise',
+	},
 	build = ':TSUpdate',
 	config = function()
 		local configs = require('nvim-treesitter.configs')

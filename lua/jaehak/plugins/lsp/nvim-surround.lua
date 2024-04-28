@@ -3,7 +3,7 @@ return {
 	-- quick add/delete/change surrounding pairs
 	'kylechui/nvim-surround',
 	version = '*',
-	event = 'VeryLazy',
+	event = 'BufReadPost',
 	config = function ()
 		require('nvim-surround').setup({
 			keymaps = {
