@@ -3,21 +3,19 @@ return {
 	-- quick add/delete/change surrounding pairs
 	'kylechui/nvim-surround',
 	version = '*',
-	event = 'BufReadPost',
 	config = function ()
 		require('nvim-surround').setup({
 			keymaps = {
-				insert          = "<C-g>s",
-				insert_line     = "<C-g>S",
-				normal          = "sa",		-- [linewise] ysiw"(word), ysl', yst;},(from current to jumpted location)
-				normal_cur      = "sA",		-- [linewise] yss"  (current whole line)
-				normal_line     = "sb",		-- [blockwise] ySiw"(word),
-				normal_cur_line = "sB",		-- [blockwise] ySS" (current whole line), enter " above and below of cur line
-				visual          = "sa",		-- [linewise] (v)S" left and right pairs of visual block
-				visual_line     = "sb",		-- [blockwise] (v)gS" above and below pairs of visual block
-				delete          = "sd",		-- delete
-				change          = "sr",		-- change pairs and remain the linewise
-				change_line     = "sR",		-- change pairs and move to blockwise
+				-- insert / insert_line mode does not work
+				normal          = "fa",		-- [linewise] ysiw"(word), ysl', yst;},(from current to jumpted location)
+				normal_cur      = "fA",		-- [linewise] yss"  (current whole line)
+				normal_line     = "fb",		-- [blockwise] ySiw"(word),
+				normal_cur_line = "fB",		-- [blockwise] ySS" (current whole line), enter " above and below of cur line
+				visual          = "fa",		-- [linewise] (v)S" left and right pairs of visual block
+				visual_line     = "fb",		-- [blockwise] (v)gS" above and below pairs of visual block
+				delete          = "fd",		-- delete
+				change          = "fr",		-- change pairs and remain the linewise
+				change_line     = "fR",		-- change pairs and move to blockwise
 
 				-- all left ([<{  ==> add white space 
 				-- all right )}>] ==> not add white space 

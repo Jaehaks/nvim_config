@@ -4,7 +4,6 @@ return {
 	config = function ()
 		local sub = require('substitute')
 		sub.setup({
-			preserve_cursor_position = true,
 		})
 
 		vim.keymap.set("n", "s" , require('substitute').operator, { noremap = true , desc = 'substitute operator'})
