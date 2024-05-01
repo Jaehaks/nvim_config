@@ -6,7 +6,6 @@ return {
 	event = 'VimEnter',
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
-		'nvim-telescope/telescope.nvim'
 	},
 	config = function ()
 		local grapple = require('grapple')
@@ -16,7 +15,7 @@ return {
 			prune = nil, -- unset prune timer?
 			style = 'basename',
 		})
-		-- telescope extension : it does not apply 'basename' style.
+		-- telescope extension : it does not support 'basename' style. (grapple use grapple's telescope setting)
 
 		vim.keymap.set('n', '<leader>pa', grapple.toggle, {desc = 'add/delete this file to grapple list'})
 		vim.keymap.set('n', '<leader>pf', grapple.toggle_tags, {desc = 'open grapple file list'})
