@@ -74,21 +74,14 @@ return {
 		})
 
 		-- ####### 3) markdown language server configuration #########
-		lspconfig.marksman.setup({
-			cmd = {'marksman', 'server'},
-			filetypes = {'markdown', 'markdown.mdx'},
-			root_dir = lsp_util.root_pattern('*.md'),
-			single_file_support = true,
-		})
+		-- marksman offers very few features. It does not useful as I think. I don't use link works heavily
+		-- lspconfig.marksman.setup({
+		-- 	cmd = {'marksman', 'server'},
+		-- 	filetypes = {'markdown', 'markdown.mdx'},
+		-- 	root_dir = lsp_util.root_pattern('*.md'),
+		-- 	single_file_support = true,
+		-- })
 
-
-		-- ####### 4) json language server configuration #########
-		lspconfig.jsonls.setup({
-			cmd = {'vscode-json-language-server', '--stdio'},
-			filetypes = {'json', 'jsonc.mdx'},
-			root_dir = lsp_util.root_pattern('*.json'),
-			single_file_support = true,
-		})
 
 		-- ####### 5) ltex language server configuration #########
 		-- it need java11(upper class file 55). => scoop install openjdk11
@@ -104,7 +97,8 @@ return {
 					language = 'en-US',
 					disabledRules = {
 						['en-US'] = {
-							'MORFOLOGIK_RULE_EN_US', -- misspell check
+							'MORFOLOGIK_RULE_EN_US',	-- misspell check
+							'WHITESPACE_RULE',			-- check white space in front of line
 						}
 					}
 				}
