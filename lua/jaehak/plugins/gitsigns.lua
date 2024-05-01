@@ -39,6 +39,7 @@ return {
 
 				-- Actions
 				map('n', '<leader>hp', gs.preview_hunk, {desc = 'preview hunk in current line'})
+				map('n', '<leader>hn', gs.next_hunk, {desc = 'go to next hunk in current line'})
 				map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc = 'commit message in current line'})
 				map('n', '<leader>hl', gs.setloclist, {desc = 'show gitsign list'})
 				map('n', '<leader>hd', gs.toggle_deleted, {desc = 'show all deleted hunks'})
