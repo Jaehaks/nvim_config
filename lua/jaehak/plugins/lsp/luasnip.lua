@@ -16,20 +16,15 @@ return {
 		local ls = require('luasnip')
 		local types = require('luasnip.util.types')
 
-		-- make custom highlight for luasnip
-		vim.api.nvim_set_hl(0, 'LuasnipActive', {bg ='#2A4257', fg = '#CEA274'})
-
 		ls.config.setup({
-			-- history = true,
-			-- update_events = {'TextChanged', 'TextChangedI'},
+			update_events = {'TextChanged', 'TextChangedI'}, -- make snippet update whenever key change (default : insertleave)
+			enable_autosnippets = true, --  set autosnippet for autosnippet tables
 			ext_opts = { -- set highlight of snippet globally
 				[types.insertNode] = {
-					active = {hl_group = 'LuasnipActive'},
 					passive = {hl_group = 'Visual'},
 					visited = {hl_group = 'NONE'} -- restore highlight after edit
 				},
 				[types.choiceNode] = {
-					active = {hl_group = 'LuasnipActive'},
 					passive = {hl_group = 'Visual'},
 					visited = {hl_group = 'NONE'} -- restore highlight after edit
 				}
@@ -58,8 +53,8 @@ return {
 				})
 			end
 		})
-		-- first : firstsecond : secondthird : third
 
+		-- load luasnip queries, snippets in [filetype].lua apply to each filetype
 		require('luasnip.loaders.from_lua').lazy_load({paths = './queries/LuaSnip'})
 
 		------- telescope extension ------------
