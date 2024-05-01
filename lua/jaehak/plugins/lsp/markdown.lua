@@ -82,7 +82,8 @@ return {
 				follow_link = nil,
 			},
 			on_attach = function (bufnr)
-				vim.keymap.set('n', '<leader>mh', '<Cmd>MDTocAll<CR>', {noremap = true, buffer = bufnr, desc = 'show contents list'})
+				vim.keymap.set('n', '<leader>mh', '<Cmd>MDTocAll<CR>', {noremap = true, buffer = bufnr, desc = 'show TOC list'})
+				vim.keymap.set('n', '<leader>mH', '<Cmd>MDInsertToc<CR>', {noremap = true, buffer = bufnr, desc = 'Insert TOC list'})
 			end,
 		})
 	end
@@ -100,6 +101,7 @@ return {
 		-- but for me, these are too much, so I disable lots of functions
 --'AntonVanAssche/md-headers.nvim' : make toc list to navigate. it is replaced by markdown.nvim
 		-- it needs long load time
+--'ixru/nvim-markdown' : It dose not have recalculating number list
 {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
