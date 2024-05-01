@@ -61,27 +61,41 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				['<c-n>'] = cmp.mapping.complete(),
-			    ['<tab>'] = cmp.mapping(function(fallback)
+				['<C-n>'] = cmp.mapping.complete(),
+			    ['<TAB>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then -- select next cmp item when visible
 						cmp.select_next_item()
-					elseif ls.expand_or_locally_jumpable() then -- jump next node in snippet region 
-						ls.jump(1)
 					else
 						fallback()
 					end
 			    end, {'i', 's'}),
-			    ['<s-tab>'] = cmp.mapping(function(fallback)
+			    ['<S-TAB>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_prev_item()
-					elseif ls.expand_or_locally_jumpable() then
-						ls.jump(-1)
 					else
 						fallback()
 					end
 			    end, {'i', 's'}),
-				['<c-e>'] 	= cmp.mapping.close(),
-				['<cr>']	= cmp.mapping(function (fallback) -- In cmp.mapping, function have to be called without <mapping> field
+				['<C-p>'] = cmp.mapping(function (fallback)
+					if ls.expand_or_locally_jumpable() then
+						ls.jump(1)
+					elseif ls.expandable() then
+						ls.expand()
+					else
+						fallback()
+					end
+				end, {'i', 's'}),
+				['<C-S-p>'] = cmp.mapping(function (fallback)
+					if ls.expand_or_locally_jumpable() then
+						ls.jump(-1)
+					elseif ls.expandable() then
+						ls.expand()
+					else
+						fallback()
+					end
+				end, {'i', 's'}),
+				['<C-e>'] 	= cmp.mapping.close(),
+				['<CR>']	= cmp.mapping(function (fallback) -- In cmp.mapping, function have to be called without <mapping> field
 					if cmp.visible() then                     -- without this condition, cmp.abort() will be execute multiple times
 						if cmp.get_active_entry() == nil then -- if you don't select, <cr> operate as original function
 							cmp.abort()
@@ -145,6 +159,7 @@ return {
 					name = 'luasnip',
 					max_item_count = 5,
 					priority = 250,
+					-- show_autosnippets : it true, show autosnip, but it is expanded automatically when word selected in cmp window
 				},
 				{
 					name = 'nvim_lsp',
