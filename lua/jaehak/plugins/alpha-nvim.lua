@@ -43,57 +43,49 @@ return {
 				center = {
 					{
 						icon = '',
-						desc = 'New File',
-						desc_hl = 'String',
-						key = 'e',
-						key_hl = 'Number',
-						key_format = '%s',
+						desc = 'New File', desc_hl = 'String',
+						key = 'e', key_hl = 'DashboardShortCut',
 						action = 'ene',
 					},
 					{
 						icon = '',
-						desc = 'Recent Files',
-						desc_hl = 'String',
-						key = 'r',
-						key_hl = 'Number',
-						key_format = '%s',
+						desc = 'Recent Files', desc_hl = 'String',
+						key = 'r', key_hl = 'DashboardShortCut',
 						action = 'Telescope oldfiles',
 					},
 					{
 						icon = '',
-						desc = 'Folder : Config',
-						desc_hl = 'String',
-						key = 'c',
-						key_hl = 'Number',
-						key_format = '%s',
+						desc = 'Folder : Config', desc_hl = 'String',
+						key = 'c', key_hl = 'DashboardShortCut',
 						action = [[lua require("oil").open_float(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")]],
 					},
 					{
 						icon = '',
-						desc = 'Folder : D:\\MATLAB_Project',
-						desc_hl = 'String',
-						key = 'd',
-						key_hl = 'Number',
-						key_format = '%s',
+						desc = 'Folder : D:\\MATLAB_Project', desc_hl = 'String',
+						key = 'd', key_hl = 'DashboardShortCut',
 						action = [[lua require("oil").open_float("D:\\MATLAB_Project")]],
 					},
 					{
 						icon = '',
-						desc = 'Bookmarks',
-						desc_hl = 'String',
-						key = 'p',
-						key_hl = 'Number',
-						key_format = '%s',
+						desc = 'Bookmarks', desc_hl = 'String',
+						key = 'p', key_hl = 'DashboardShortCut',
 						action = [[lua require("grapple").toggle_tags()]],
 					},
 				},
 				footer = function()
 					local stats = require("lazy").stats()
-					-- local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
 					local ms = stats.startuptime
-					-- return { "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms" }
+					local days = {
+						'Monday',
+						'Tuesday',
+						'Wednesday',
+						'Thursday',
+						'Friday',
+						'Saturday',
+						'Sunday',
+					}
 					return {
-						'Today : ' .. os.date('%Y-%m-%d, %a'),
+						'Today : ' .. os.date('%Y-%m-%d %H:%M, ') .. days[tonumber(os.date('%w'))],
 						'Startup Time : ' .. ms .. 'ms',
 						'Plugins : ' .. stats.loaded .. ' loaded / ' .. stats.count .. ' installed'
 					}
@@ -111,7 +103,6 @@ return {
 			})
 		end
 	end,
-
 }
 }
 
