@@ -55,7 +55,7 @@ return {
 },
 {
 	'KeitaNakamura/tex-conceal.vim', -- it must be used with vimtex, not works standalone
-	enabeld = false,
+	enabled = false,
 	ft = {'tex', 'plaintex'},
 	init = function ()
 		vim.g.tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
