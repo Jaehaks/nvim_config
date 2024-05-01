@@ -12,6 +12,7 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make'
 		},
+		'nvim-telescope/telescope-file-browser.nvim',
 		-- cder.nvim : (extension) change pwd using telescope, not useful to me, and 'ls' has invalid argument error
 		-- 			   it is useful when I want to subdirectories list and files quick
 	},
