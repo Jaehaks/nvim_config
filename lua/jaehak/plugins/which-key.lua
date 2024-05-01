@@ -16,6 +16,9 @@ return {
 					operators = false,
 					z = false,
 				}
+			},
+			triggers_blacklist = {
+				i = {'j', 'k', 'f'} -- don't show which key panel when you type this list in 'i' mode
 			}
 		})
 
