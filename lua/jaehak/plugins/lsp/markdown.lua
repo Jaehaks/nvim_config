@@ -105,8 +105,9 @@ return {
 {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
+	-- it doesn't work in filetype 'NeogitCommitMessage' 
 	'gaoDean/autolist.nvim',
-	ft = {'markdown', 'text', 'NeogitCommitMessage'},
+	ft = {'markdown', 'text'},
 	config = function ()
 		local autolist = require('autolist')
 		autolist.setup({
@@ -116,7 +117,7 @@ return {
 		local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
 		vim.api.nvim_create_autocmd('FileType',{
 			group = User_markdown,
-			pattern = {'markdown', 'text', 'NeogitCommitMessage'},
+			pattern = {'markdown', 'text'},
 			callback = function ()
 				local opts = {noremap = true, buffer = 0}
 				vim.keymap.set('i', '<TAB>'     , '<Cmd>AutolistTab<CR>'             , opts)
