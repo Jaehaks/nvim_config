@@ -6,7 +6,6 @@ return {
 	-- more simple and smart / but it cannot support filetype
 	'echasnovski/mini.pairs',
 	version = false,
-	event = 'BufReadPost',
 	config = function ()
 		require('mini.pairs').setup({
 			modes = { insert = true, command = true, terminal = true },
@@ -35,7 +34,7 @@ return {
 	-- I'll make matlab query somedays
 	'HiPhish/rainbow-delimiters.nvim',
 	enabled = true,
-	event = 'VeryLazy',
+	lazy = true, -- from nvim-treesitter
 	config = function ()
 		-- This module contains a number of default definitions
 		local rainbow_delimiters = require('rainbow-delimiters')
@@ -44,7 +43,13 @@ return {
 		-- rainbow_delimiters.config
 		rainbow_delimiters_setup.setup({
 			strategy = {
-				[''] = rainbow_delimiters.strategy['global'],
+				[''] = function(bufnr)
+					local lc = vim.api.nvim_buf_line_count(bufnr)
+					if lc > 5000 then
+						return nil -- although it return nil, delimiters make slow read performance 
+					end
+					return rainbow_delimiters.strategy['global']
+				end,
 			},
 			priority = {
 				[''] = 110,
@@ -67,5 +72,13 @@ return {
 		})
 	end
 },
+{
+	-- add endwise, i think it would be useful when use language which does not support snippet
+	'RRethy/nvim-treesitter-endwise',
+	lazy = true, -- from nvim-treesitter 
+	config = function ()
+	end
+},
+-- tpope/vim-endwise : it doesn't work
 }
 

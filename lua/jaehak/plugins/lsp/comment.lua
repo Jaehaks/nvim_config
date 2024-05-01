@@ -1,7 +1,6 @@
 return {
 {
 	'numToStr/Comment.nvim',
-	event = 'BufReadPost',
 	config = function()
 		local ft = require('Comment.ft')
 --		ft.set('matlab', {'%%s', '%{%s%}'})
@@ -28,7 +27,6 @@ return {
 {
 	-- make text object
 	'chrisgrieser/nvim-various-textobjs',
-	event = 'VeryLazy',
 	config = function ()
 		local textobjs = require('various-textobjs')
 		textobjs.setup({

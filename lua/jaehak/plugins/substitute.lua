@@ -1,7 +1,6 @@
 return {
 	-- substitute contents automatically from default register 
 	'gbprod/substitute.nvim',
-	event = 'BufReadPost',
 	config = function ()
 		local sub = require('substitute')
 		sub.setup({

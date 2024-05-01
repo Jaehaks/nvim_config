@@ -2,7 +2,7 @@ return {
 	-- provide floating window tool
 	-- it cannot change floating window size, I think I will change to floaterm
 	'carbon-steel/detour.nvim',
-	enabled = true, -- floating help is required?
+	enabled = false, -- floating help is required?
 	ft = {'help'}, -- it used for help
 	-- event = 'BufReadPost',
 	config = function ()

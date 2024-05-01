@@ -5,9 +5,9 @@ return {
 	'stevearc/oil.nvim',
 	enabled = true,
 	dependencies = {
-		'nvim-tree/nvim-web-devicons'
+		'nvim-tree/nvim-web-devicons',
+		'SirZenith/oil-vcs-status', -- use default config
 	},
-
 	config = function ()
 		local oil = require('oil')
 		oil.setup({
@@ -96,15 +96,6 @@ return {
 	end
 
 },
-{
-	'SirZenith/oil-vcs-status',
-	config = function ()
-		require('oil-vcs-status').setup({
-
-		})
-	end
-
-}
 }
 -- 'refractalize/oil-git-status.nvim' : autocmd error is invoked whenever i write some file in oil.
 -- 									    it dosn't show git sign. I think it has some bug in windows

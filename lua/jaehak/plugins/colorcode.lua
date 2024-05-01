@@ -3,7 +3,6 @@ return {
 },{
 	'chrisbra/colorizer',
 	enabled = false,
-	event = 'BufReadPost',
 	config = function()
 		vim.g.colorizer_auto_color = 0
 		vim.g.colorizer_custom_colors = {
@@ -25,7 +24,6 @@ return {
 {
 	'brenoprata10/nvim-highlight-colors',
 	enabled = true,
-	event = 'BufReadPost',
 	init = function ()
 		vim.opt.termguicolors = true
 	end,

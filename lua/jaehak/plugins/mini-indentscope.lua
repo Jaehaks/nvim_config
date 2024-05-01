@@ -1,9 +1,7 @@
 return {
 	-- support current indentation only(good), but if there are code in indentline, the line will be  cut
 	'echasnovski/mini.indentscope',
-	enabled = true,
 	version = '*',
-	event = {'BufReadPost', 'BufNewFile'},
 	config = function()
 		local indents = require('mini.indentscope')
 		indents.setup({
