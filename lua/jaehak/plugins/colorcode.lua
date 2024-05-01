@@ -1,68 +1,49 @@
 return {
 {
-},{
-	'chrisbra/colorizer',
-	enabled = false,
-	config = function()
-		vim.g.colorizer_auto_color = 0
-		vim.g.colorizer_custom_colors = {
-			r = '#FF0000',
-			g = '#00FF00',
-			b = '#0000FF',
-			c = '#00FFFF',
-			m = '#FF00FF',
-			y = '#FFFF00',
-			k = '#000000',
-			w = '#FFFFFF'
-		}
-		vim.keymap.set('n','<leader>cc', '<Cmd>ColorToggle<CR>', {desc = 'Show color code toggle'})
-
-	end
-
-
-},
-{
 	'brenoprata10/nvim-highlight-colors',
 	enabled = true,
 	init = function ()
 		vim.opt.termguicolors = true
 	end,
 	config = function ()
-		require('nvim-highlight-colors').setup({
+		local nvim_highlight = require('nvim-highlight-colors')
+		nvim_highlight.setup({
 			render = 'background',
 			enable_named_colors = false, -- colorize with color name, but it needs ':' ahead of the name
 			enable_tailwind = false,
 			custom_colors = { -- this pattern is used for gsub, so it does not same with lua regex pattern, whildcad, [set] doesn't work
-				{ label= "[\'\"]red[\'\"]", color = '#FF0000' },
+				{ label= [['r']], color = '#FF0000' },
+				{ label= [["r"]], color = '#FF0000' },
+				{ label= [['g']], color = '#00FF00' },
+				{ label= [["g"]], color = '#00FF00' },
+				{ label= [['b']], color = '#0000FF' },
+				{ label= [["b"]], color = '#0000FF' },
+				{ label= [['c']], color = '#00FFFF' },
+				{ label= [["c"]], color = '#00FFFF' },
+				{ label= [['m']], color = '#FF00FF' },
+				{ label= [["m"]], color = '#FF00FF' },
+				{ label= [['y']], color = '#FFFF00' },
+				{ label= [["y"]], color = '#FFFF00' },
+				{ label= [['k']], color = '#000000' },
+				{ label= [["k"]], color = '#000000' },
+				{ label= [['w']], color = '#FFFFFF' },
+				{ label= [["w"]], color = '#FFFFFF' },
 			}
-			-- 'red'
-			-- "red"
 		})
-	end
-},
-{
-	-- ccc.nvim : if modify some colorscheme, palette lose colors
-	-- bug : if use custom_entries, other highlight are off. 
-	-- I think use it for colorcode only
-	-- other colorpick plugins are not worked in windows
-	'uga-rosa/ccc.nvim',
-	enabled = false,
-	event = 'VeryLazy',
-	config = function()
-		local ccc = require('ccc')
-		ccc.setup({
-			highlighter = {
-				auto_enable = false,
-				lsp = false,
-			},
-		})
---		vim.keymap.set('n','<leader>cc', '<Cmd>CccHighliterToggle<CR>')
-		vim.keymap.set('n','<leader>cp', '<Cmd>CccPick<CR>', {desc = 'open colorcode palette'})
+		vim.keymap.set('n','<leader>cc', nvim_highlight.toggle, {desc = 'Show color code toggle'})
+
+		nvim_highlight.turnOff() --  turn off initially
 	end
 },
 }
 
--- brenoprata10/nvim-highlight-colors : regex pattern is not work properly, like 'r'
+-- brenoprata10/nvim-highlight-colors : labels for custom_colors are just string, not regex
+-- chrisbra/colorizer : it works very well. but I just want lua plugin
+-- uga-rosa/ccc.nvim : cannot show colors properly Since What I install other plugins. I think it is bug..
+-- 					   if modify some colorscheme, palette lose colors
+-- 					   bug : if use custom_entries, other highlight are off. 
+-- 					   I think use it for colorcode only
+-- 					   other colorpick plugins are not worked in windows
 
 
 
