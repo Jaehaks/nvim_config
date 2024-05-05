@@ -76,16 +76,16 @@ return {
 					local stats = require("lazy").stats()
 					local ms = stats.startuptime
 					local days = {
+						'Sunday',
 						'Monday',
 						'Tuesday',
 						'Wednesday',
 						'Thursday',
 						'Friday',
 						'Saturday',
-						'Sunday',
 					}
 					return {
-						'Today : ' .. os.date('%Y-%m-%d %H:%M, ') .. days[tonumber(os.date('%w'))],
+						'Today : ' .. os.date('%Y-%m-%d %H:%M, ') .. days[tonumber(os.date('%w')+1)],
 						'Startup Time : ' .. ms .. 'ms',
 						'Plugins : ' .. stats.loaded .. ' loaded / ' .. stats.count .. ' installed'
 					}
