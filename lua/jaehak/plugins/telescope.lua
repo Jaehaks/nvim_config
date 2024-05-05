@@ -68,10 +68,10 @@ return {
 						['<C-j>']   = actions.preview_scrolling_up,
 						['<C-k>']   = actions.preview_scrolling_down,
 						['<C-l>']   = actions.preview_scrolling_right,
-						['<A-h>'] = actions.results_scrolling_left,
-						['<A-j>'] = actions.results_scrolling_up,
-						['<A-k>'] = actions.results_scrolling_down,
-						['<A-l>'] = actions.results_scrolling_right,
+						['<A-h>']   = actions.results_scrolling_left,
+						['<A-j>']   = actions.results_scrolling_up,
+						['<A-k>']   = actions.results_scrolling_down,
+						['<A-l>']   = actions.results_scrolling_right,
 						['<Tab>']   = actions.toggle_selection + actions.move_selection_next,
 						['<S-Tab>'] = actions.toggle_selection + actions.move_selection_previous,
 						['q']       = actions.close,
@@ -178,17 +178,44 @@ return {
 
 
 		-- ///// telescope caller ///////
-		TelescopePicker = function(picker)
+		-- TODO: select git directory to use cwd
+		-- @param picker <fun()> : picker when current dir is not in git directory
+		local CheckGitDir = function (picker)
+			-- builtin.git_files() invokes error when it is not git directory
+			-- but find_files ignore also .gitignore file
+			local ignore_patterns = {'slprj\\', '.git\\'}
+			local opts = {}
+
+			opts.cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+			if vim.v.shell_error ~= 0 then -- if it it not git repository, 1) find lsp root_dir 2) find cwd
+				local bufnr = vim.api.nvim_get_current_buf()
+				local clients = vim.lsp.get_active_clients({bufnr = bufnr})
+				for _, client in pairs(clients) do --  assume that filetype lsp will be first
+					opts.cwd = client.config.root_dir
+					break
+				end
+				opts.cwd = vim.fn.getcwd() -- if lsp doesn't exist, use cwd()
+			end
+			opts.title = vim.fs.basename(opts.cwd)
+			picker({
+				results_title = opts.title,
+				cwd = opts.cwd,
+				file_ignore_patterns = ignore_patterns,
+				hidden = true
+			})
+		end
+
+		TelescopePicker = function(pickName)
 			local cur_buf 		= vim.fn.expand("%")
 			local cur_dir 		= vim.fn.expand("%:p:h")
 			local cur_dir_base	= vim.fs.basename(cur_dir)
 
-   			if 		picker == 'find_files' 			then 	builtin.find_files{   results_title = cur_dir_base, cwd = cur_dir, }
-			elseif 	picker == 'live_grep_cur_buf' 	then 	builtin.live_grep{    results_title = cur_buf, 	    cwd = cur_dir, search_dirs = {cur_buf}, sorting_strategy = 'ascending'}
-			elseif 	picker == 'live_grep_cur_dir'	then 	builtin.live_grep{    results_title = cur_dir_base, cwd = cur_dir, }
-			elseif 	picker == 'grep_string_cur_buf'	then 	builtin.grep_string{  results_title = cur_buf, 		cwd = cur_dir, search_dirs = {cur_buf}, sorting_strategy = 'ascending'}
-			elseif 	picker == 'diagnostics_cur_buf'	then 	builtin.diagnostics{  results_title = cur_buf, 	    cwd = cur_dir, bufnr = 0}	-- if buf=0, filename column doesn't be shown
-			elseif 	picker == 'diagnostics_all_buf'	then 	builtin.diagnostics{  results_title = cur_dir_base, cwd = cur_dir, root_dir = true}	-- search only current buffer dir
+   			if 		pickName == 'find_files' 			then 	CheckGitDir(builtin.find_files)
+			elseif 	pickName == 'live_grep_cur_buf' 	then 	builtin.live_grep{    results_title = cur_buf, 	    cwd = cur_dir, search_dirs = {cur_buf}, sorting_strategy = 'ascending'}
+			elseif 	pickName == 'live_grep_cur_dir'		then 	CheckGitDir(builtin.live_grep)
+			elseif 	pickName == 'grep_string_cur_buf'	then 	builtin.grep_string{  results_title = cur_buf, 		cwd = cur_dir, search_dirs = {cur_buf}, sorting_strategy = 'ascending'}
+			elseif 	pickName == 'diagnostics_cur_buf'	then 	builtin.diagnostics{  results_title = cur_buf, 	    cwd = cur_dir, bufnr = 0}	-- if buf=0, filename column doesn't be shown
+			elseif 	pickName == 'diagnostics_all_buf'	then 	builtin.diagnostics{  results_title = cur_dir_base, cwd = cur_dir, root_dir = true}	-- search only current buffer dir
 			end
 		end
 
