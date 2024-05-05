@@ -36,4 +36,5 @@ return {
 -- 										   README said it create project with cwd, but it has some bug with autochdir option.
 -- 										   cannot find cwd properly although :pwd display current file location
 -- 										   it make me very confused
--- ThePrimeagen/harpoon : harpoon list scope is only cwd not global.
+-- ThePrimeagen/harpoon : harpoon list scope is only cwd not global.}
+-- gnikdroy/projections.nvim : I cannot see any project in telescope extension... I don't know how to use this..
