@@ -22,14 +22,21 @@ return {
 		local actions    = require('telescope.actions')
 		local builtin    = require('telescope.builtin')
 		local actions_fb = require('telescope._extensions.file_browser.actions')
-		-- local utils      = require('telescope.utils')
+		local utils      = require('telescope.utils')
 
 		-- telescope settings 	
 		telescope.setup({
 			-- ////// default settings //////////
 			defaults = {
 				initial_mode = 'normal',
---				path_display = { truncate = 3 },
+				path_display = function (opts, path) -- display path only basename
+				   local tail = utils.path_tail(path)
+				   local basename = vim.fs.basename(vim.fs.dirname(path)) .. '/'
+				   if basename == vim.fs.basename(vim.fn.expand('%:p:h')) .. '/' then
+					   basename = ''
+				   end
+				   return string.format('%s%s', basename, tail)
+				end,
 				layout_strategy = 'horizontal',
 				layout_config = {
 					anchor = 'S',	-- show layout window pinned to south (bottom) 
@@ -53,17 +60,6 @@ return {
 					n = {	-- chnage normal mode keymaps
 						['j'] = actions.move_selection_previous,
 						['k'] = actions.move_selection_next,
-						['-'] = function (prompt_bufnr)
-									local current_picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
-									local cwd = current_picker.cwd and tostring(current_picker.cwd) or vim.loop.cwd()
-									local parent_dir = vim.fs.dirname(cwd)
-
-									actions.close(prompt_bufnr)
-									builtin.find_files{
-										results_title = vim.fs.basename(parent_dir),
-										cwd = parent_dir,
-									}
-								end,
 						['<c-h>']   = actions.preview_scrolling_left,
 						['<C-j>']   = actions.preview_scrolling_up,
 						['<C-k>']   = actions.preview_scrolling_down,
