@@ -35,7 +35,7 @@ local ft = '*.lua'
 
 -- [function] 1) empty
 local function_empty = s({
-	trig = 'fun@e',
+	trig = 'fun#e',
 	name = 'funciton ()',
 	desc = 'make empty argument function',
 	-- condition = CheckComment
@@ -49,7 +49,7 @@ table.insert(autosnippets, function_empty)
 
 -- [function] 2) empty inline
 local function_empty_inline = s({
-	trig = 'fun@i',
+	trig = 'fun#i',
 	name = 'funciton() end',
 	desc = 'make empty argument inline function',
 	-- condition = CheckComment
@@ -71,7 +71,7 @@ end
 ]]
 
 local function_comment = s({
-	trig = 'fun@c',
+	trig = 'fun#c',
 	name = 'full funciton()',
 	desc = 'make full argument function and comment',
 	},
