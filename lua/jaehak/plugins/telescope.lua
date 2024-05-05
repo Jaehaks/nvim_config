@@ -224,7 +224,7 @@ return {
 		vim.keymap.set('n', '<leader>fG', [[<Cmd>lua TelescopePicker('live_grep_cur_dir')<CR>]],	 		{desc = 'live_grep'})
 		vim.keymap.set('n', '<leader>fw', [[<Cmd>lua TelescopePicker('grep_string_cur_buf')<CR>]],	 		{desc = 'grep_string cur_buf'})
 		vim.keymap.set('n', '<leader>fo', builtin.oldfiles, 		{desc = 'recent files'})                    -- recent files
-		vim.keymap.set('n', '<leader>fb', builtin.buffers, 			{desc = 'buffer list'})                     -- buffer manager
+		-- vim.keymap.set('n', '<leader>fb', builtin.buffers, 			{desc = 'buffer list'})                     -- buffer manager
 		vim.keymap.set('n', '<leader>fc', builtin.command_history, 	{desc = 'command history'})                 -- command history
 		vim.keymap.set('n', '<leader>fh', builtin.help_tags, 		{desc = 'help tags list'})                  -- search tag for help
 		vim.keymap.set('n', '<leader>fm', builtin.marks, 			{desc = 'mark list'})                       -- marks list
