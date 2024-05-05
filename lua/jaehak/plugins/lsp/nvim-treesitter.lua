@@ -13,7 +13,7 @@ return {
 		local installs = require('nvim-treesitter.install')
 		-- local TShighlight = require('nvim-treesitter.highlight')
 
-		installs.prefer_git = false
+		installs.prefer_git = false -- sometimes curl has an error (60), it is solved after I execute nvim-qt in terminal
 		installs.compilers = {'gcc'}
 
 		configs.setup({
