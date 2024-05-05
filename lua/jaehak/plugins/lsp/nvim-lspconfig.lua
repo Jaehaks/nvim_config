@@ -61,7 +61,10 @@ return {
 		lspconfig.matlab_ls.setup({
 			cmd = {'matlab-language-server', '--stdio'},
 			filetypes = {'matlab'},
-			root_dir = lsp_util.root_pattern('*.m'),
+			-- root_dir = lsp_util.root_pattern('*.m'),
+			root_dir = function (fname)
+				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+			end,
 			settings = {
 				matlab = {
 					indexWorkspace = true,
@@ -181,7 +184,7 @@ return {
 				end
 
 				local bufnr = vim.api.nvim_get_current_buf() -- get current buf id
-				local clients = vim.lsp.buf_get_clients(bufnr) -- get lsp table which is attached on current buffer
+				local clients = vim.lsp.get_active_clients({bufnr = bufnr}) -- get lsp table which is attached on current buffer
 				for _, client in pairs(clients) do --  ipairs is effective when table has key from 1
 					if client.name == 'texlab' then
 						vim.b[0].texlab_attach = true
