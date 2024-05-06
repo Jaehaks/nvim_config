@@ -59,14 +59,19 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 	callback = function(event)
 		local diable_ft = {'help', 'terminal', 'FTerm', 'floaterm', 'qf'}	-- disable filetype list
 		local filetype = vim.bo[event.buf].filetype
-		local ok = nil
 		for _, val in ipairs(diable_ft) do
-			if filetype == val then ok = true end
+			if filetype == val then
+				break
+			else
+				return
+			end
 		end
 
-		if ok then
-			-- apply to the specific buffer only
-			vim.keymap.set('n', 'q', ':q!<CR>', {silent = true, buffer = 0, noremap = true})
+		if filetype == 'help' then
+			-- it prevents that whole neovim termination when I quit a help file which is in full screen
+			vim.keymap.set('n', 'q', ':bd<CR>', {silent = true, buffer = 0, noremap = true})
+		else
+			vim.keymap.set('n', 'q', ':q!<CR>', {silent = true, buffer = 0, noremap = true}) -- apply to the specific buffer only
 		end
 	end
 })
