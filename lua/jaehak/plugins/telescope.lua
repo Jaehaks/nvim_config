@@ -79,8 +79,6 @@ return {
 						['o']       = actions.select_default,
 						['<C-f>']   = actions.select_horizontal,
 						['<C-v>']   = actions.select_vertical,
-
-
 					},
 				},
 			},
@@ -174,6 +172,8 @@ return {
 				end
 				opts.cwd = vim.fn.getcwd() -- if lsp doesn't exist, use cwd()
 			end
+			opts.cwd = opts.cwd:gsub('/','\\') -- the delimiter '/' makes displaying absolute path in oldfiles 
+											   -- solution of duplicated problem as I think
 			opts.title = vim.fs.basename(opts.cwd)
 			picker({
 				results_title = opts.title,
