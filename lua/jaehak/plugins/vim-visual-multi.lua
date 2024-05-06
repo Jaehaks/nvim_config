@@ -41,7 +41,7 @@ return {
 		end
 
 		vim.keymap.set('n', '<leader>m', '<Plug>(VM-Toggle-Mappings)'                        , {silent = true})
-		vim.keymap.set('n', '<C-m>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-At-Pos)')<CR>]] , {silent = true})
+		vim.keymap.set('n', '<C-b>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-At-Pos)')<CR>]] , {silent = true})
 		vim.keymap.set('n', '<C-k>'    , [[:lua VMFunc("<Plug>(VM-Add-Cursor-Down)")<CR>]]   , {silent = true})
 		vim.keymap.set('n', '<C-j>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-Up)')<CR>]]     , {silent = true})
 		vim.keymap.set('n', '<C-n>'    , [[:lua VMFunc('<Plug>(VM-Find-Under)')<CR>]]        , {silent = true})
