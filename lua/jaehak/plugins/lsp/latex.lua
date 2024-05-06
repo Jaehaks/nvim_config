@@ -2,16 +2,16 @@ vim.g.maplocalleader = ' ' -- for vimtex
 
 return {
 {
-
-	-- 1) scoop install tectonic ⇒ compiler
+	-- 1) scoop install MikTex ⇒ compiler (for latexmk)
 	-- 2) scoop install biber ⇒ syntax check / linting 
 	-- 3) scoop install mupdf ⇒ PDF viewer
 	-- 4) treesitter-latex must be uninstalled
 	'lervag/vimtex', -- it use lazy load default, do not set lazy 
-	enabled = false,
+	enabled = true,
 	ft = {'tex'},
 	init = function()
 
+		-- /////// compiler setting
 		vim.g.vimtex_view_method = 'general' -- to use sumatraPDF as general viewer
 		vim.g.vimtex_view_general_viewer = 'SumatraPDF'
 		vim.g.vimtex_view_general_options = "-reuse-instance -forward-search @tex @line @pdf "
@@ -20,50 +20,45 @@ return {
 			-- -reverse-search cannot work in nvim-qt I thought. I have no idea
 		vim.g.vimtex_compiler_method = 'latexmk' -- it supports continuous compile (compile when *.tex is saved)
 
+		-- ////// configuration
+		vim.g.vimtex_matchparen_enabled = 0 -- \begin <-> \end highlight 
+
+		-- //////// conceal setting
 		local User_VimTex = vim.api.nvim_create_augroup('User_VimTex', {clear = true})
 		vim.api.nvim_create_autocmd('FileType', {
 			group = User_VimTex,
 			pattern = {'tex', 'plaintex'},
 			callback = function ()
 				vim.opt_local.conceallevel = 2		-- raw char hide and latex symbols are shown in concealcursor mode
-				vim.opt_local.concealcursor = 'nv'  -- which mode the latex symbols are shown
+				-- vim.opt_local.concealcursor = 'nv'  -- which mode the latex symbols are shown
 			end
 		})
 	end,
 },
-{
-	'micangl/cmp-vimtex',
-	lazy = false, -- Since nvim-cmp calls cmp-vimtex as a dependency, if lazy=true, it is called twice as a cmp source.
-				  -- although it is called from nvim-cmp as dependency, the source is duplicated if it is configured in dependencies of nvim-cmp
-				  -- it must be called ahead of nvim-cmp's cmp-vimtex
-				  -- It may seem to be silly, always call cmp-vimtex at start if I want to change configuration
-	enabled = false,
-	config = function ()
-		require('cmp_vimtex').setup({
-			additional_information = {
-				info_in_menu = false,       -- about citation
-				info_in_window = false,     -- about citation
-				info_max_length = 60,       -- about citation
-				match_against_info = false, -- about citation
-				symbols_in_menu = true,     -- show symbol in completion window
-			},
-			bibtex_parser = {
-				enabled = false,            -- it is used when i search for citation
-			},
-		})
-	end
-},
-{
-	'KeitaNakamura/tex-conceal.vim', -- it must be used with vimtex, not works standalone
-	enabled = false,
-	ft = {'tex', 'plaintex'},
-	init = function ()
-		vim.g.tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
-		vim.g.tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
-		vim.g.tex_conceal_frac = 1
-		vim.g.tex_conceal = 'abdgm'
-	end,
-},
+-- {
+-- 	'micangl/cmp-vimtex',
+-- 	lazy = false, -- Since nvim-cmp calls cmp-vimtex as a dependency, if lazy=true, it is called twice as a cmp source.
+-- 				  -- although it is called from nvim-cmp as dependency, the source is duplicated if it is configured in dependencies of nvim-cmp
+-- 				  -- it must be called ahead of nvim-cmp's cmp-vimtex
+-- 				  -- It may seem to be silly, always call cmp-vimtex at start if I want to change configuration
+-- 	enabled = true,
+-- 	config = function ()
+-- 		require('cmp_vimtex').setup({
+-- 			additional_information = {
+-- 				info_in_menu = false,       -- about citation
+-- 				info_in_window = false,     -- about citation
+-- 				info_max_length = 60,       -- about citation
+-- 				match_against_info = false, -- about citation
+-- 				symbols_in_menu = true,     -- show symbol in completion window
+-- 			},
+-- 			bibtex_parser = {
+-- 				enabled = false,            -- it is used when i search for citation
+-- 			},
+-- 		})
+-- 	end
+-- },
+-- 	'KeitaNakamura/tex-conceal.vim' : it aids to represent conceal of tex,
+-- 									  After vimtex tag v2.0, it use own conceal which replaces tex-conceal.vim
 -- 	'bamonroe/rnoweb-nvim' : it can be used without vimtex, but it show conceal of superscript / subsciprt not properly
 {
 	'luochen1990/rainbow', -- for vimtex

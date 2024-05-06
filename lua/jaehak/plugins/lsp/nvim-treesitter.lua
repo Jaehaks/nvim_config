@@ -25,7 +25,7 @@ return {
 								 'markdown', 'markdown_inline',
 								 'html', 'json',
 								 'diff', 'regex', 'ssh_config',
-							   	 'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
+							   	 -- 'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
 			},
 			highlight = {
 				enable = true,  -- if highlight, cannot use rainbow bracket. 
@@ -47,7 +47,7 @@ return {
 		})
 
 		-- custom_captures for latex not work
-		vim.api.nvim_set_hl(0, "@markup.math.latex" , { link = 'NightflyYello'}) -- it has bug. but is the best...
+		-- vim.api.nvim_set_hl(0, "@markup.math.latex" , { link = 'NightflyYello'}) -- it has bug. but is the best...
 	end,
 },
 }
