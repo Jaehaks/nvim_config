@@ -104,6 +104,9 @@ return {
 				},
 				marks = {
 					mark_type = 'local'  	-- don't need numbered marks
+				},
+				oldfiles = {
+					file_ignore_patterns = {'doc\\'}
 				}
 			},
 			extensions = {
