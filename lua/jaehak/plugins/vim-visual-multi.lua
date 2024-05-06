@@ -2,7 +2,6 @@ return {
 {
 	-- multiple cursor : change string
 	'mg979/vim-visual-multi',
-	enabled = true,
 	branch = 'master',
 	event = 'VeryLazy',
 	init = function ()
