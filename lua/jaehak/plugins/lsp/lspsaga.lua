@@ -70,9 +70,10 @@ return {
 
 		vim.keymap.set({ 'n' }, '<C-s>', lsp_sig.toggle_float_win , {silent = true, noremap = true, desc = 'toggle signature help'})
 	end
-}
+},
 }
 -- toggle term : must close using :q! not :q
 -- lspsaga toggle term can use after lsp attatch only. and i will change to floatterm
 
 -- ray-x/navigator.lua : change lsp action more comfortable. too complicate to I use...
+-- stevearc/aerial.nvim : it shows only function
