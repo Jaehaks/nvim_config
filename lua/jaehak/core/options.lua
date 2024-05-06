@@ -106,11 +106,7 @@ vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nv
 })
 opt.path:append(vim.fn.stdpath("config") .. "/**10")
 opt.path:append(vim.fn.stdpath("data") .. "/**10")
---vim.api.nvim_create_autocmd('BufEnter', {
---	pattern = '*',
---	desc = 'Change pwd of current buffer',
---	command = 'silent! lcd %:p:h',
---})
+
 
 ------------- editing -----------------------
 opt.number = true         -- set line number
