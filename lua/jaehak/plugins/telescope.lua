@@ -30,12 +30,17 @@ return {
 			defaults = {
 				initial_mode = 'normal',
 				path_display = function (opts, path) -- display path only basename
-				   local tail = utils.path_tail(path)
-				   local basename = vim.fs.basename(vim.fs.dirname(path)) .. '/'
-				   if basename == vim.fs.basename(vim.fn.expand('%:p:h')) .. '/' then
-					   basename = ''
-				   end
-				   return string.format('%s%s', basename, tail)
+					-- sometimes neovim saved old file path in shada file using '/' delimiter. is it bug?
+					-- this makes duplicated lists and doesn't be affected by path argument
+					-- it means that if path_display function returns single string 'test', 
+					-- the paths with '/' are shown literally. These are not listed in 'path' argument
+					-- The solution does not exist in currently. I should modify the string '/' in shada file to '\\'
+					local tail = utils.path_tail(path)
+					local basename = vim.fs.basename(vim.fs.dirname(path)) .. '\\'
+					if basename == vim.fs.basename(vim.fn.expand('%:p:h')) .. '\\' then
+						basename = ''
+					end
+					return string.format('%s%s', basename, tail)
 				end,
 				layout_strategy = 'horizontal',
 				layout_config = {
