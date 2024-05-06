@@ -57,14 +57,18 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 	group = aug_User_defined,
 	pattern = '*',
 	callback = function(event)
+		local ok = false
 		local diable_ft = {'help', 'terminal', 'FTerm', 'floaterm', 'qf'}	-- disable filetype list
 		local filetype = vim.bo[event.buf].filetype
 		for _, val in ipairs(diable_ft) do
 			if filetype == val then
+				ok = true
 				break
-			else
-				return
 			end
+		end
+
+		if not ok then
+			return
 		end
 
 		if filetype == 'help' then
