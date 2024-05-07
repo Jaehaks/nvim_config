@@ -38,3 +38,4 @@ return {
 -- 										   it make me very confused
 -- ThePrimeagen/harpoon : harpoon list scope is only cwd not global.}
 -- gnikdroy/projections.nvim : I cannot see any project in telescope extension... I don't know how to use this..
+-- coffebar/neovim-project : it needs to write project path in configuration file, not in nvim-data
