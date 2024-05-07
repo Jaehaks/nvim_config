@@ -40,7 +40,7 @@ return {
 				enable = false,		-- lightbulb makes screen shake, I don't know why
 			},
 		})
-		vim.keymap.set('n', 'go'     , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
+		-- vim.keymap.set('n', 'go'     , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
 		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'hover_doc', silent = true, noremap = true})
 		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'hover_doc ++keep', silent = true, noremap = true})
 		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'peek_definition', silent = true, noremap = true})
@@ -71,6 +71,53 @@ return {
 		vim.keymap.set({ 'n' }, '<C-s>', lsp_sig.toggle_float_win , {silent = true, noremap = true, desc = 'toggle signature help'})
 	end
 },
+{
+	-- show code outline
+	'hedyhli/outline.nvim',
+	lazy = true,
+	keys = {
+		{'go', '<Cmd>Outline<CR>', desc = 'Toggle outline'}
+	},
+	opts = {
+		outline_window = {
+			show_numbers = true,
+			show_relative_numbers = true,
+		},
+		outline_items = {
+			show_symbol_details = true,
+			show_symbol_lineno = false,
+		},
+		symbol_folding = {
+			autofold_depth = 1,
+		},
+		keymaps = {
+			show_help = '?',
+			close = {'<Esc>', 'q'},
+			goto_location = '<S-CR>',
+			goto_and_close = '<CR>',
+			peek_location = 'o', -- highlight current node without goto
+			restore_location = '<C-g>',
+			hover_symbol = 'K',
+			toggle_preview = '<C-Space>',
+			rename_symbol = 'r',
+			code_actions = 'a',
+			fold = 'h',
+			unfold = 'l',
+			fold_all = 'W',
+			unfold_all = 'E',
+			fold_toggle = '<Tab>',
+			fold_toggle_all = '<S-Tab>',
+			fold_reset = 'R', -- restore folding state to the first opening time
+			down_and_jump = '<C-k>', -- peek_location for lower item
+			up_and_jump = '<C-j>', -- peek_location for upper item
+		},
+		providers = {
+			lsp = {
+				blacklist_clients = {'ltex'}
+			}
+		},
+	}
+}
 }
 -- toggle term : must close using :q! not :q
 -- lspsaga toggle term can use after lsp attatch only. and i will change to floatterm
