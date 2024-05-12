@@ -117,10 +117,37 @@ return {
 			}
 		},
 	}
+},
+{
+	'aznhe21/actions-preview.nvim',
+	lazy = true,
+	event = 'LspAttach',
+	config = function ()
+		local ap = require('actions-preview')
+		ap.setup({
+			telescope = {
+				sorting_strategy = "ascending",
+				layout_strategy = "vertical",
+				layout_config = {
+					width = 0.8,
+					height = 0.5,
+					prompt_position = "top",
+					preview_cutoff = 20,
+					preview_height = function(_, _, max_lines)
+						return max_lines - 15
+					end,
+					},
+				},
+		})
+		vim.keymap.set({'n', 'v'}, 'ga', function ()
+			vim.diagnostics.goto_next() -- move cursor to diagnostics location
+			ap.code_actions()           -- code_actions() execute only current cursor location
+		end , {noremap = true, desc = 'LSP - action-preview'})
+	end
+
 }
 }
 -- toggle term : must close using :q! not :q
 -- lspsaga toggle term can use after lsp attatch only. and i will change to floatterm
-
 -- ray-x/navigator.lua : change lsp action more comfortable. too complicate to I use...
 -- stevearc/aerial.nvim : it shows only function
