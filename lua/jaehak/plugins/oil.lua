@@ -61,7 +61,7 @@ return {
 				["<C-v>"] = "actions.select_vsplit",
 				["<C-x>"] = "actions.select_split",
 				["<C-t>"] = "actions.select_tab",
-				["<Tab>"] = "actions.preview",
+				["<Tab>"] = "actions.preview", -- it does not support with floating window
 				["q"]     = "actions.close",
 				["<F5>"]  = "actions.refresh",
 				["<C-h>"] = "actions.parent",
