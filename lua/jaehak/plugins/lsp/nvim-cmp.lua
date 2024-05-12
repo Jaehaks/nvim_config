@@ -22,24 +22,7 @@ return {
 			-- BUG: if cmp-vimtex was configured, the source attached repeatedly
 			-- if I don't use lazy-loading, the duplicate is removed. but I have to load this plugin every opening (200ms load time)
 			'micangl/cmp-vimtex', 		-- source of vimtex for latex
-			-- config = function ()
-				-- require('cmp_vimtex').setup({
-					-- additional_information = {
-					-- 	info_in_menu = false,       -- about citation
-					-- 	info_in_window = false,     -- about citation
-					-- 	info_max_length = 60,       -- about citation
-					-- 	match_against_info = false, -- about citation
-					-- 	symbols_in_menu = true,     -- show symbol in completion window
-					-- },
-					-- bibtex_parser = {
-					-- 	enabled = false,            -- it is used when i search for citation
-					-- },
-				-- })
-			-- end
 		},
-		-- 'kdheepak/cmp-latex-symbols' -- source of latex symbol for texlab
-		-- 'uga-rosa/cmp-latex-symbol', -- source of latex symbol for texlab (it insert only symbol, not code)
-		-- 'amarakon/nvim-cmp-lua-latex-symbols', -- source of latex symbol for texlab (it isn't works)
 	},
 	config = function()
 		local cmp = require('cmp')
