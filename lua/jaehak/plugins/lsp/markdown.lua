@@ -11,38 +11,14 @@ return {
 	end
 },
 {
-	-- cursorline of headline highlight
-	-- BUG: I found that this headlines.nvim makes navigation slow in large markdown files (Changing setting depending on lien number does not support yet?)
-	-- it isn't bug. I think it's a simple problem caused by too many highlights.
-	-- it will be disabled temporarily
-	'lukas-reineke/headlines.nvim',
-	enabled = false,
-	ft = {'markdown'},
-	dependencies = 'nvim-treesitter/nvim-treesitter',
-	config = function ()
-
-		vim.api.nvim_set_hl(0, "Headline1", { bg = "#195E52", bold = true, fg = '#FFFFFF'})                  -- for normal cursor
-		vim.api.nvim_set_hl(0, "Headline2", { bg = "#3F107B", bold = true, fg = '#FFFFFF'})                  -- for normal cursor
-		vim.api.nvim_set_hl(0, "Headline3", { bg = "#6F0957", bold = true, fg = '#FFFFFF'})                  -- for normal cursor
-		vim.api.nvim_set_hl(0, "Headline4", { bg = "#4D3505", bold = true, fg = '#FFFFFF'})                  -- for normal cursor
-		vim.api.nvim_set_hl(0, "CodeBlock", { bg = "#202020"})                  -- for normal cursor
-		vim.api.nvim_set_hl(0, "Dash", { fg = "#D19A66"})                  -- for normal cursor
-
-		require('headlines').setup({
-			markdown = {
-				headline_highlights = {
-					'Headline1',
-					'Headline2',
-					'Headline3',
-					'Headline4',
-				},
-				bullets = false,		-- don't use marker
-				dash_string = false,
-				quote_string = false,
-				fat_headlines = false,	-- only highlight the line of headline
-			}
+	-- highlight of markdown file. but there are no delay to navigate
+	'MeanderingProgrammer/markdown.nvim',
+	name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+	dependencies = { 'nvim-treesitter/nvim-treesitter' },
+	config = function()
+		require('render-markdown').setup({
 		})
-	end
+	end,
 },
 {
 	-- surround emphasis / make links / TOC
@@ -136,3 +112,4 @@ return {
 },
 -- bullets-vim/bullets.nvim : it does not work in neovim
 }
+-- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
