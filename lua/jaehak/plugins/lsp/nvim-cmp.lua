@@ -170,7 +170,6 @@ return {
 				},
 				{
 					name = 'path',
-					max_item_count = 5,
 					priority = 100,
 				},
 			},{
@@ -215,7 +214,6 @@ return {
 				},
 				{
 					name = 'path',
-					max_item_count = 5,
 					priority = 100,
 				},
 			},{
@@ -241,7 +239,6 @@ return {
 				},
 				{
 					name = 'path',
-					max_item_count = 5,
 					priority = 250,
 				},
 			},{
