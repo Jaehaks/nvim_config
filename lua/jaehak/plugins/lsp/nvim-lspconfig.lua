@@ -78,6 +78,7 @@ return {
 
 		-- ####### 3) markdown language server configuration #########
 		-- marksman offers very few features. It does not useful as I think. I don't use link works heavily
+		-- it doesn't support link completion...
 		-- lspconfig.marksman.setup({
 		-- 	cmd = {'marksman', 'server'},
 		-- 	filetypes = {'markdown', 'markdown.mdx'},
