@@ -23,5 +23,6 @@ return {
 
 		-- only current file and word under cursor
 		vim.keymap.set('n', '<leader>sf', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', { desc = "Search on current file" })
+		vim.keymap.set('v', '<leader>sw', '<cmd>lua require("spectre").open_visual()<CR>', { desc = "Search visual word" })
 	end
 }
