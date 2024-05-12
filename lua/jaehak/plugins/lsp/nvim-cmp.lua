@@ -319,8 +319,8 @@ return {
 		cmp.setup.cmdline(':', {
 			mapping = cmp.mapping.preset.cmdline(),
 			sources ={
-				-- {name = 'path', group_index = 1},
-				{name = 'cmdline', group_index = 2}
+				-- {name = 'path', group_index = 1}, -- it supports path starting with slash (./, ../), but don't support windows drive
+				{name = 'cmdline', group_index = 2} -- it supports path also starting with backslash and windows drive (ex. c:\Users)
 			}
 		})
 
