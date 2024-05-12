@@ -189,7 +189,8 @@ return {
 						keep_all_entries = true, -- it can show more possible list
 						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
 							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
-						end
+						end,
+						preselect_correct_word = false, -- if false, order is the same with spellsuggest()
 					},
 				},
 				{
@@ -231,6 +232,7 @@ return {
 					option = {
 						keep_all_entries = true, -- it can show more possible list
 					},
+					preselect_correct_word = false, -- if false, order is the same with spellsuggest()
 				},
 				{
 					name = 'buffer',
@@ -266,6 +268,7 @@ return {
 					option = {
 						keep_all_entries = true, -- it can show more possible list
 					},
+					preselect_correct_word = false, -- if false, order is the same with spellsuggest()
 				},
 				{
 					name = 'buffer',
