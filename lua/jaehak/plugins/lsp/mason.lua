@@ -8,7 +8,7 @@ return {
 	'williamboman/mason.nvim',
 	lazy = false,  	-- lazy-loading is not recommended
 	dependencies = {
-		'williamboman/mason-lspconfig.nvim',
+		'williamboman/mason-lspconfig.nvim', -- for connection with nvim-lspconfig
 		'WhoIsSethDaniel/mason-tool-installer.nvim',
 	},
 	config = function()
@@ -27,18 +27,19 @@ return {
 				'marksman',
 				'jsonls',
 				'ltex', -- grammar check with LanguageTool
-				'texlab',
 			}
 		})
 
 		mason_tool.setup({
 			ensure_installed = {
-				'lua_ls',
-				'matlab_ls',
-				'marksman',
-				'jsonls',
-				'ltex',
-				'texlab',
+				"lua_ls",
+				"matlab_ls",
+				"marksman",
+				"jsonls",
+				"ltex",
+
+				"stylua", -- formatter for lua
+				"latexindent", -- formatter for tex
 			},
 			auto_update = false,
 		})
