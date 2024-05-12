@@ -41,12 +41,12 @@ return {
 			},
 		})
 		-- vim.keymap.set('n', 'go'     , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
-		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'hover_doc', silent = true, noremap = true})
-		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'hover_doc ++keep', silent = true, noremap = true})
-		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'peek_definition', silent = true, noremap = true})
-		vim.keymap.set('n', 'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , {desc = 'peek_type_definition', silent = true, noremap = true})
-		vim.keymap.set('n', 'gk'     , '<Cmd>Lspsaga diagnostic_jump_next<CR>'      , {desc = 'diagnostics_jump_next', silent = true, noremap = true})
-		vim.keymap.set('n', 'gK'     , '<Cmd>Lspsaga show_workspace_diagnostics<CR>', {desc = 'show_workspace_diagnostics', silent = true, noremap = true})
+		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'LSP - hover_doc', silent = true, noremap = true})
+		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'LSP - hover_doc ++keep', silent = true, noremap = true})
+		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'LSP - peek_definition', silent = true, noremap = true})
+		vim.keymap.set('n', 'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , {desc = 'LSP - peek_type_definition', silent = true, noremap = true})
+		vim.keymap.set('n', 'gk'     , '<Cmd>Lspsaga diagnostic_jump_next<CR>'      , {desc = 'LSP - diagnostics_jump_next', silent = true, noremap = true})
+		vim.keymap.set('n', 'gK'     , '<Cmd>Lspsaga show_workspace_diagnostics<CR>', {desc = 'LSP - show_workspace_diagnostics', silent = true, noremap = true})
 		-- Lspsaga rename() include all project files, not current buffer
 	end
 	-- caution!!) lspsga has error for some lsp diagnostic
@@ -68,7 +68,7 @@ return {
 		lsp_sig.setup(cfg)
 		lsp_sig.on_attach(cfg) -- it is deprecated, but it need to lsp_signature automatically, i don't know why
 
-		vim.keymap.set({ 'n' }, '<C-s>', lsp_sig.toggle_float_win , {silent = true, noremap = true, desc = 'toggle signature help'})
+		vim.keymap.set({ 'n' }, '<C-s>', lsp_sig.toggle_float_win , {silent = true, noremap = true, desc = 'LSP - toggle signature help'})
 	end
 },
 {
@@ -76,7 +76,7 @@ return {
 	'hedyhli/outline.nvim',
 	lazy = true,
 	keys = {
-		{'go', '<Cmd>Outline<CR>', desc = 'Toggle outline'}
+		{'go', '<Cmd>Outline<CR>', desc = 'LSP - Toggle outline'}
 	},
 	opts = {
 		outline_window = {
