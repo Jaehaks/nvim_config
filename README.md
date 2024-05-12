@@ -39,10 +39,10 @@ and it can be used in [HiPhish/rainbow-delimiters.nvim](https://github.com/HiPhi
 
 
 1. test
-2. tset
+2. [tset](./)
 
 
-
+[test](.\README.md)
 
 ## queries
 
