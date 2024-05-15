@@ -140,7 +140,7 @@ return {
 				},
 		})
 		vim.keymap.set({'n', 'v'}, 'ga', function ()
-			vim.diagnostics.goto_next() -- move cursor to diagnostics location
+			vim.diagnostic.goto_next() -- move cursor to diagnostics location
 			ap.code_actions()           -- code_actions() execute only current cursor location
 		end , {noremap = true, desc = 'LSP - action-preview'})
 	end
