@@ -78,6 +78,8 @@ opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
 opt.cursorline = true		-- show underline where current cursor is located
 opt.termguicolors = true 	-- change cursor line from line to block 
 opt.signcolumn = 'yes' 	-- show additional gray column on the leftside of line number 
+opt.shellslash = false -- if true, '/' is used for expanding directory
+
 
 -- cursor line in only active window
 -- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window

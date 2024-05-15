@@ -35,8 +35,10 @@ return {
 					-- it means that if path_display function returns single string 'test', 
 					-- the paths with '/' are shown literally. These are not listed in 'path' argument
 					-- The solution does not exist in currently. I should modify the string '/' in shada file to '\\'
-					local tail = utils.path_tail(path)
-					local basename = vim.fs.basename(vim.fs.dirname(path)) .. '\\'
+					-- if PR(#3103) accepted, this problem will be removed.
+					local PATH = path:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
+					local tail = utils.path_tail(PATH)
+					local basename = vim.fs.basename(vim.fs.dirname(PATH)) .. '\\'
 					if basename == vim.fs.basename(vim.fn.expand('%:p:h')) .. '\\' then
 						basename = ''
 					end
@@ -63,8 +65,8 @@ return {
 						['<C-l>'] = function() vim.api.nvim_input('<Right>') end,
 					},
 					n = {	-- chnage normal mode keymaps
-						['j'] = actions.move_selection_previous,
-						['k'] = actions.move_selection_next,
+						['j']       = actions.move_selection_previous,
+						['k']       = actions.move_selection_next,
 						['<c-h>']   = actions.preview_scrolling_left,
 						['<C-j>']   = actions.preview_scrolling_up,
 						['<C-k>']   = actions.preview_scrolling_down,
@@ -104,7 +106,7 @@ return {
 					mark_type = 'local'  	-- don't need numbered marks
 				},
 				oldfiles = {
-					file_ignore_patterns = {'doc\\'}
+					file_ignore_patterns = {'doc\\', 'COMMIT_EDITMSG'}
 				}
 			},
 			extensions = {
