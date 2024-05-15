@@ -15,16 +15,9 @@ return {
 					command = 'edit'
 				},
 				-- BUG: mapping key doesn't work properly
-				-- vsplit = {
-				-- 	key = '<M-v>',
-				-- 	command = 'vsplit'
-				-- },
-				-- hsplit = {
-				-- 	key = '<M-h>',
-				-- 	command = 'split'
-				-- },
 			},
 			-- BUG: short_file_names doesn't work properly
+			-- I think it is caused by windows path delimiter '\\', it will be solved if PR(#35) is applied
 			short_file_names = true, -- show shorten filename
 			short_term_names = true,
 			loop_nav = true,
