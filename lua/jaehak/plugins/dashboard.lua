@@ -1,27 +1,5 @@
 return {
 {
-	'goolord/alpha-nvim',
-	enabled = false,
-	event = 'VimEnter',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function ()
-		local alpha = require('alpha')
-		local dashboard = require('alpha.themes.dashboard')
-
-		dashboard.section.buttons.val = {
-			dashboard.button('e', '1 - New file'                   , ':ene<CR>'),
-			dashboard.button('r', '2 - Recent Files'               , '<Cmd>Telescope oldfiles<CR><Esc>'),
-			dashboard.button('c', '3 - Folder : Config'            , [[<Cmd>lua require("oil").open_float(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>]]), -- open config folder
-			dashboard.button('d', '4 - Folder : D:\\MATLAB_Project', [[<Cmd>lua require("oil").open_float("D:\\MATLAB_Project")<CR>]]),                              -- open MATLAB Project
-			dashboard.button('p', '5 - Bookmarks'                  , [[<Cmd>lua require("grapple").toggle_tags()<CR>]]),                             -- open project list
-		}
-        alpha.setup(dashboard.config)	-- setting applied 
-
-		-- key mapping 
-		vim.keymap.set('n', '<leader>a', '<Cmd>Alpha<CR>', {noremap = true})
-    end
-},
-{
 	-- dashboard is faster a little?
 	'nvimdev/dashboard-nvim',
 	-- enabled = false,
@@ -67,9 +45,15 @@ return {
 					},
 					{
 						icon = '',
-						desc = 'Bookmarks', desc_hl = 'String',
+						desc = 'Bookmark Files', desc_hl = 'String',
 						key = 'p', key_hl = 'DashboardShortCut',
 						action = [[lua require("grapple").toggle_tags()]],
+					},
+					{
+						icon = '',
+						desc = 'Last Sessions', desc_hl = 'String',
+						key = 's', key_hl = 'DashboardShortCut',
+						action = [[lua require("sessions").load(vim.fn.stdpath('data') .. '\\sessions\\session_saved.txt', {autosave = false})]],
 					},
 				},
 				footer = function()
@@ -106,3 +90,5 @@ return {
 }
 }
 
+-- alpha-nvim : It is very good plugin. I think dashboard's footer is more convenient and faster
+-- 				dashboard has more example to implement, but 
