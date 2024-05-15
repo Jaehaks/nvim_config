@@ -13,6 +13,7 @@ return {
 {
 	-- highlight of markdown file. but there are no delay to navigate
 	'MeanderingProgrammer/markdown.nvim',
+	ft = {'markdown'},
 	name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
 	dependencies = { 'nvim-treesitter/nvim-treesitter' },
 	config = function()
