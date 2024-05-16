@@ -76,16 +76,6 @@ return {
 			single_file_support = true,
 		})
 
-		-- ####### 3) markdown language server configuration #########
-		-- marksman offers very few features. It does not useful as I think. I don't use link works heavily
-		-- it doesn't support link completion...
-		-- lspconfig.marksman.setup({
-		-- 	cmd = {'marksman', 'server'},
-		-- 	filetypes = {'markdown', 'markdown.mdx'},
-		-- 	root_dir = lsp_util.root_pattern('*.md'),
-		-- 	single_file_support = true,
-		-- })
-
 
 		-- ####### 5) ltex language server configuration #########
 		-- it need java11(upper class file 55). => scoop install openjdk11
@@ -117,68 +107,93 @@ return {
 		-- prosesitter : deprecated
 
 
-		-- ####### 6) texlab language server configuration - for latex #########
-		-- install : miktex for latexmk
-		-- install : sumatraPDF for viewer, and add to user path 
-		-- texlab does not support code action. and it is not compatible with lspsaga. 
-		-- lspsaga's function makes error. use default vim.lsp function
-		
-		-- lspconfig.texlab.setup({
-		-- 	cmd = {'texlab'},
-		-- 	filetypes = {'tex', 'plaintex'},
-		-- 	settings = {
-		-- 		texlab = {
-		-- 			build = {
-		-- 				executable = 'latexmk',
-		-- 				args = {'-pdflatex', '-interaction=nonstopmode', '-synctex=1', '%f'},
-		-- 				forwardSearchAfter = false, -- show pdfviewer after build
-		-- 				onSave = true, -- rebuild automatically after .tex saved
-		-- 				-- I want to not focus the viewer whenever rebuild. so forwardSearchAfter is false.
-		-- 				-- '-pv' option open default pdf viewer like acrobat
-		-- 			},
-		-- 			forwardSearch = {
-		-- 				executable = 'SumatraPDF',
-		-- 				args = {
-		-- 					'-reuse-instance',
-		-- 					'%p',
-		-- 					'-forward-search',
-		-- 					'%f',
-		-- 					'%l',
-		-- 				}
-		-- 			},
-		-- 			completion = {
-		-- 				matcher = 'prefix-ignore-case',
-		-- 			}
-		-- 			-- chktex performance is not exact
-		-- 		}
-		-- 	},
-		-- 	single_file_support = true,
-		-- })
+		-- ###### 6) python language server configuration ###########
+		-- I think ruff's linting seems a bit lacking 
+		lspconfig.ruff_lsp.setup({ -- use ruff as python linter
+			on_attach = function (client, bufnr)
+				-- lsp use ruff to formatter
+				client.server_capabilities.documentFormattingProvider = true -- enable vim.lsp.buf.format(), actually true is default
+				client.server_capabilities.documentRangeFormattingProvider = true
+			end,
+			-- cmp_nvim_lsp default_configuration add completionProvider. ruff_lsp don't use completion
+			filetype = {'python'},
+			root_dir = function (fname)
+				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+			end,
+			single_file_support = true,
+			init_options = {
+				settings = {
+					lint = { -- it links with ruff, but lint.args are different with ruff configuration 
+						enable = true,
+						run = 'onType',
+					},
+				}
+			}
+		})
+
+		-- pyright supports some lsp functions, but not enough
+		lspconfig.pyright.setup({
+			-- pyright doesn't have FormattingProvider
+			capabilities = capabilities,
+			filetype = {'python'},
+			settings = {
+				pyright = {
+					disableLanguageServices = false, -- use basic function (type completion, signature, reference , symbols)
+					disableOrganizeImports = false,
+					disableTaggedHints = false, -- use hint diagnostic with tag
+				},
+				python = {
+					analysis = {
+						autoImportCompletions = true, -- use auto import
+						diagnosticMode = 'openFilesOnly', -- analyze only open files
+						ignore = {'*'}, -- paths or files whose diagnostic output should be suppressed
+						typeCheckingMode = 'off', -- all type checking rules are disabled (use ruff)
+						useLibraryCodeForTypes = true, -- analyze library code to extract type information
+					}
+				}
+			}
+		})
+
+		-- pylsp is slow? 
+		lspconfig.pylsp.setup({ -- pure pylsp has no ruff configuration, for completion / lsp_signature
+			-- pylsp has FormattingProvider, but I don't set the formatter
+			on_attach = function (client, bufnr)
+				client.server_capabilities.documentFormattingProvider = false
+				client.server_capabilities.documentRangeFormattingProvider = false
+			end,
+			capabilities = capabilities, -- required 
+			filetyps = {'python'},
+			settings = {
+				pylsp = {
+					plugins = {
+						autopep8            = { enabled = false },
+						flake8              = { enabled = false },
+						jedi_completion     = { -- support completion
+							enabled = false,
+							include_params = true, -- required : not default, add () besides of function (little snippet for builtin)
+							include_class_objects = false,
+							include_function_objects = false, -- add function object to completion separately. make duplicated item
+							fuzzy = false,
+							eager = false,
+						},
+						jedi_definition     = { enabled = false },
+						jedi_hover          = { enabled = false },
+						jedi_references     = { enabled = false },
+						jedi_signature_help = { enabled = false }, -- support lsp_signature help
+						jedi_symbols        = { enabled = false },
+						mccabe              = { enabled = false },
+						preload             = { enabled = false },
+						pycodestyle         = { enabled = false },
+						pyflakes            = { enabled = false },
+						pylint              = { enabled = false },
+						rope_autoimport     = { enabled = false },
+						yapf                = { enabled = false },
+					}
+				}
+			}
+		})
 
 
-		-- set keymaps locally for texlab
-		-- local LaTeXKey = vim.api.nvim_create_augroup('LaTeXKey', {clear = true})
-		-- vim.api.nvim_create_autocmd('LspAttach', {
-		-- 	group = LaTeXKey,
-		-- 	callback = function ()
-		-- 		if vim.b[0].texlab_attach then
-		-- 			return
-		-- 		end
-		--
-		-- 		local bufnr = vim.api.nvim_get_current_buf() -- get current buf id
-		-- 		local clients = vim.lsp.get_active_clients({bufnr = bufnr}) -- get lsp table which is attached on current buffer
-		-- 		for _, client in pairs(clients) do --  ipairs is effective when table has key from 1
-		-- 			if client.name == 'texlab' then
-		-- 				vim.b[0].texlab_attach = true
-		-- 			end
-		-- 		end
-		--
-		-- 		if vim.b[0].texlab_attach then
-		-- 			vim.keymap.set('n', '<leader>lv', '<Cmd>TexlabForward<CR>', {noremap = true, buffer = 0, desc = 'latex - forward search'})
-		-- 			vim.keymap.set('n', '<leader>ll', '<Cmd>TexlabBuild<CR>', {noremap = true, buffer = 0, desc = 'latex - Build'})
-		-- 		end
-		-- 	end
-		-- })
 
 		-- ####### autocmd key mapping when LspAttach ######
 		-- vim.api.nvim_create_autocmd('LspAttach', {

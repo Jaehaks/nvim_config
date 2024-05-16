@@ -7,9 +7,17 @@ return {
 			-- configuration
 			local conform = require("conform")
 			conform.setup({
+				-- set formatter configuration
+				formatters = {
+					stylua = {
+
+					}
+				},
+				-- set formatter to filetype
 				formatters_by_ft = {
 					lua = { "stylua"},
 					tex = { "latexindent" },
+					python = { "ruff" },
 					-- ["*"] = { "codespell" },       -- on all filetypes
 					["_"] = { "trim_whitespace" }, -- on filetypes that  don't have other formatter, it needs awk.
 				},

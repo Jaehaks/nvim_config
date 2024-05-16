@@ -21,12 +21,14 @@ return {
 		})
 
 		mason_lspconfig.setup({
-			ensure_installed = {		-- server automatically install if it is not installed
+			ensure_installed = { -- server automatically install if it is not installed
 				'lua_ls',
-				'matlab_ls', 			-- after matlab_ls install, copy matlab-language-server.cmd to nvim-data/mason/bin manually
-				'marksman',
+				'matlab_ls',     -- after matlab_ls install, copy matlab-language-server.cmd to nvim-data/mason/bin manually
 				'jsonls',
-				'ltex', -- grammar check with LanguageTool
+				'ltex',          -- grammar check with LanguageTool
+				'ruff_lsp',
+				'pyright',
+				'pylsp',
 			}
 		})
 
@@ -34,12 +36,14 @@ return {
 			ensure_installed = {
 				"lua_ls",
 				"matlab_ls",
-				"marksman",
 				"jsonls",
 				"ltex",
+				"ruff_lsp",    -- use ruff as linter without nvim-lint for python
+				"pyright", 	   -- python lsp from Microsoft, completion variables
 
-				"stylua", -- formatter for lua
+				"stylua",      -- formatter for lua
 				"latexindent", -- formatter for tex
+				"ruff",        -- linter / formatter for python
 			},
 			auto_update = false,
 		})
