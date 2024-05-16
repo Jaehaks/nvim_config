@@ -277,38 +277,6 @@ return {
 				},
 			}),
 		})
-	
-		
-		-- /////// source of latex using texlab
-		-- cmp.setup.filetype({'tex', 'plaintex'}, {
-		-- 	sources = cmp.config.sources( {
-		-- 		{
-		-- 			name = 'latex_symbols',
-		-- 			priority = 1000,
-		-- 			max_item_count = 5,
-		-- 			option = { strategy = 2, } -- mixed
-		-- 		}
-		-- 	}, {
-		-- 		{
-		-- 			name = 'nvim_lsp',
-		-- 			priority = 1000,
-		-- 		},
-		-- 	},{
-		-- 		{
-		-- 			name = 'spell',
-		-- 			max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
-		-- 			priority = 500,
-		-- 			option = {
-		-- 				keep_all_entries = true, -- it can show more possible list
-		-- 			},
-		-- 		},
-		-- 		{
-		-- 			name = 'buffer',
-		-- 			max_item_count = 5,
-		-- 			priority = 500,
-		-- 		},
-		-- 	}),
-		-- })
 
 		-- /////////`/` cmdline setup. (search)
 		cmp.setup.cmdline('/', {
