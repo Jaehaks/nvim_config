@@ -11,13 +11,25 @@ return {
 				formatters = {
 					stylua = {
 
+					},
+					ruff_format = {
+						command = 'ruff',
+						args = {
+							'format',
+							'--config=' .. vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml',
+							'--force-exclude',
+							'--stdin-filename',
+							'$FILENAME',
+							'-'
+						},
+						stdin = true,
 					}
 				},
 				-- set formatter to filetype
 				formatters_by_ft = {
 					lua = { "stylua"},
 					tex = { "latexindent" },
-					python = { "ruff" },
+					python = { "ruff_format" },
 					-- ["*"] = { "codespell" },       -- on all filetypes
 					["_"] = { "trim_whitespace" }, -- on filetypes that  don't have other formatter, it needs awk.
 				},
