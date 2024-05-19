@@ -70,6 +70,18 @@ return {
 				'RainbowDelimiterCyan',
 			},
 		})
+
+		-- if there is not matlab query directory, make it
+		local source_dir = vim.fn.stdpath('config') .. '\\queries\\rainbow-delimiters.nvim\\matlab\\'
+		local dest_dir = vim.fn.stdpath('data') .. '\\lazy\\rainbow-delimiters.nvim\\queries\\matlab\\'
+		vim.uv.fs_scandir(dest_dir , function (err, userdata)
+				if err then
+					vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'
+					vim.uv.fs_copyfile(source_dir .. 'rainbow-delimiters.scm', dest_dir .. 'rainbow-delimiters.scm')
+				end
+		end)
+
+
 	end
 },
 {
