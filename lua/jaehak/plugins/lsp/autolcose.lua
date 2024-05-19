@@ -92,5 +92,22 @@ return {
 	end
 },
 -- tpope/vim-endwise : it doesn't work
+{
+	-- show matchparen of current region
+	"utilyre/sentiment.nvim",
+	version = "*",
+	event = "VeryLazy", -- keep for lazy loading
+	opts = {
+		pairs = {
+			{ '(', ')' },
+			{ '{', '}' },
+			{ '[', ']' },
+			{ '<', '>' },
+		}
+	},
+	init = function()
+		vim.g.loaded_matchparen = 1
+	end,
+}
 }
 
