@@ -40,12 +40,16 @@ return {
 				enable = false,		-- lightbulb makes screen shake, I don't know why
 			},
 		})
+		-- gk : 1) lspsaga has strong advantage about peek_definition because it shows code_action together
+		-- 		   but sometimes, lspsaga's peek_definition invokes error. I have to restart neovim after error 
+		-- 		2) lspsaga shows always one diagnostic even though there are multiple diagnostic in the line
 		-- vim.keymap.set('n', 'go'     , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
-		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'LSP - hover_doc', silent = true, noremap = true})
-		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'LSP - hover_doc ++keep', silent = true, noremap = true})
-		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'LSP - peek_definition', silent = true, noremap = true})
-		vim.keymap.set('n', 'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , {desc = 'LSP - peek_type_definition', silent = true, noremap = true})
-		vim.keymap.set('n', 'gk'     , '<Cmd>Lspsaga diagnostic_jump_next<CR>'      , {desc = 'LSP - diagnostics_jump_next', silent = true, noremap = true})
+		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'LSP - hover_doc'                 , silent = true, noremap = true})
+		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'LSP - hover_doc ++keep'          , silent = true, noremap = true})
+		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'LSP - peek_definition'           , silent = true, noremap = true})
+		vim.keymap.set('n', 'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , {desc = 'LSP - peek_type_definition'      , silent = true, noremap = true})
+		-- vim.keymap.set('n', 'gk'     , '<Cmd>Lspsaga diagnostic_jump_next<CR>'      , {desc = 'LSP - diagnostics_jump_next', silent = true, noremap = true})
+		vim.keymap.set('n', 'gk'     , vim.diagnostic.goto_next                     , {desc = 'LSP - diagnostics_jump_next'     , silent = true, noremap = true})
 		vim.keymap.set('n', 'gK'     , '<Cmd>Lspsaga show_workspace_diagnostics<CR>', {desc = 'LSP - show_workspace_diagnostics', silent = true, noremap = true})
 		-- Lspsaga rename() include all project files, not current buffer
 	end
@@ -142,7 +146,11 @@ return {
 		vim.keymap.set({'n', 'v'}, 'ga', function ()
 			vim.diagnostic.goto_next() -- move cursor to diagnostics location
 			ap.code_actions()           -- code_actions() execute only current cursor location
-		end , {noremap = true, desc = 'LSP - action-preview'})
+		end , {noremap = true, desc = 'LSP - goto next action-preview'})
+		vim.keymap.set({'n', 'v'}, 'gs', function ()
+			vim.diagnostic.goto_prev() -- move cursor to diagnostics location
+			ap.code_actions()           -- code_actions() execute only current cursor location
+		end , {noremap = true, desc = 'LSP - goto prev action-preview'})
 	end
 
 }
