@@ -30,8 +30,8 @@ return {
 },
 {
 	-- auto highlight to brackets
-	-- if you use treesitter highlight, must use the rainbow plugins that uses treesitter grammer, not regex
-	-- I'll make matlab query somedays
+	-- if you use treesitter highlight, must use the rainbow plugins that use treesitter grammar, not regex
+	-- I'll make matlab query some days
 	'HiPhish/rainbow-delimiters.nvim',
 	enabled = true,
 	lazy = true, -- from nvim-treesitter
@@ -57,7 +57,7 @@ return {
 			},
 			query = {
 				[''] = 'rainbow-delimiters',
-				-- matlab query for delimiters is added. confirmed it works
+				-- matlab query for delimiters is added. Confirmed it works
 				-- copy directory "nvim/queries/rainbow-delimiters.nvim/matlab"  to "nvim-data/lazy/rainbow-delimiters.nvim/queries"
 			},
 			highlight = {
