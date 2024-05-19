@@ -9,6 +9,9 @@ return {
 		'hrsh7th/cmp-nvim-lsp',
 		'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
 	},
+	init = function ()
+		vim.env.RUFF_CACHE_DIR = vim.fn.stdpath('cache') .. '\\.ruff_cache' --  set ruff cache directory
+	end,
 	config = function()
 		-- ######## setup neodev configuration, must be start #######
 		-- feature : vim object completion / require completion
@@ -108,12 +111,24 @@ return {
 
 
 		-- ###### 6) python language server configuration ###########
-		-- I think ruff's linting seems a bit lacking 
+		-- a) ruff_lsp : use code_action(but cannot all fix) / use Formatting / fast type check inherited
+		-- b) pyright : no code_action / no Formatting / fast type check inherited
+		-- c) pylsp : no code action / use Formatting / slow type check disinherited
+		-- flake8 is also fast, but I found that pyright / ruff are faster a more little bit
+		-- 		but not big differences, I understand that type checking of pyright is more accurate than ruff/flake8
+		-- 		pyright has more accuracy about unused variable, linter's error is shadowed by other error when it detects multiple error
+		-- 		organizeImports is applied to both pyright and ruff / buf ruff has code action to this
+		-- 		linter is not type checker... it helps code convention as formatting rule, and better style of code 
+		--      it detects some trivial error like undefined , but it cannot detect type checking error
+		--      On the other hand, pyright does not support linting(better style checker)
+		--      but for trivial error, ruff / flake8 / pyright detect in the same time
+
 		lspconfig.ruff_lsp.setup({ -- use ruff as python linter
 			on_attach = function (client, bufnr)
 				-- lsp use ruff to formatter
-				client.server_capabilities.documentFormattingProvider = true -- enable vim.lsp.buf.format(), actually true is default
-				client.server_capabilities.documentRangeFormattingProvider = true
+				client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
+				client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
+				client.server_capabilities.hoverProvider = false                   -- use pylsp
 			end,
 			-- cmp_nvim_lsp default_configuration add completionProvider. ruff_lsp don't use completion
 			filetype = {'python'},
@@ -123,43 +138,57 @@ return {
 			single_file_support = true,
 			init_options = {
 				settings = {
-					lint = { -- it links with ruff, but lint.args are different with ruff configuration 
+					logLevel = 'error',
+					organizeImports = true, -- use code action for organizeImports
+					codeAction = {
+						disableRuleComment = { enable = false }, -- show options about rule disabling
+					},
+					format = false,     -- use conform.nvim
+					lint = {            -- it links with ruff, but lint.args are different with ruff configuration
 						enable = true,
-						run = 'onType',
+						run = 'onType', -- ruff every keystroke
+						args = {        -- pass to ruff check (--config = *.toml)
+							'--config=' .. vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml',
+						},
 					},
 				}
 			}
 		})
 
 		-- pyright supports some lsp functions, but not enough
-		lspconfig.pyright.setup({
-			-- pyright doesn't have FormattingProvider
+		lspconfig.pyright.setup({ -- use pyright as type checker , for definition/hover
+			on_attach = function (client, bufnr)
+				-- pyright doesn't have FormattingProvider
+				client.server_capabilities.hoverProvider = true          -- pylsp gives more params explanation. pyright gives more type explanation
+				client.server_capabilities.completionProvider = false    -- use pylsp instead
+				client.server_capabilities.signatureHelpProvider = false -- use pylsp instead
+			end,
 			capabilities = capabilities,
 			filetype = {'python'},
 			settings = {
 				pyright = {
-					disableLanguageServices = false, -- use basic function (type completion, signature, reference , symbols)
-					disableOrganizeImports = false,
-					disableTaggedHints = false, -- use hint diagnostic with tag
+					disableLanguageServices = false, -- disable all lsp feature except of hover
+					disableOrganizeImports  = true,  -- use ruff instead of it
+					disableTaggedHints      = false, -- hint for unused variable, not supports from other lsp
 				},
 				python = {
 					analysis = {
-						autoImportCompletions = true, -- use auto import
-						diagnosticMode = 'openFilesOnly', -- analyze only open files
-						ignore = {'*'}, -- paths or files whose diagnostic output should be suppressed
-						typeCheckingMode = 'off', -- all type checking rules are disabled (use ruff)
-						useLibraryCodeForTypes = true, -- analyze library code to extract type information
+						autoImportCompletions  = false,           -- use auto import
+						diagnosticMode         = 'openFilesOnly', -- analyze only open files
+						typeCheckingMode       = 'standard',      -- all type checking rules are disabled (use ruff)
+						useLibraryCodeForTypes = true,            -- analyze library code to extract type information
 					}
 				}
 			}
 		})
 
 		-- pylsp is slow? 
-		lspconfig.pylsp.setup({ -- pure pylsp has no ruff configuration, for completion / lsp_signature
+		lspconfig.pylsp.setup({ -- for completion / hover / lsp_signature, pure pylsp has no ruff configuration, 
 			-- pylsp has FormattingProvider, but I don't set the formatter
 			on_attach = function (client, bufnr)
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
+				client.server_capabilities.documentHighlightProvider = false
 			end,
 			capabilities = capabilities, -- required 
 			filetyps = {'python'},
@@ -167,25 +196,25 @@ return {
 				pylsp = {
 					plugins = {
 						autopep8            = { enabled = false },
-						flake8              = { enabled = false },
+						flake8              = { enabled = false }, -- fast, diagnostics for linting and formatting
 						jedi_completion     = { -- support completion
-							enabled = false,
+							enabled = true,
 							include_params = true, -- required : not default, add () besides of function (little snippet for builtin)
 							include_class_objects = false,
 							include_function_objects = false, -- add function object to completion separately. make duplicated item
 							fuzzy = false,
 							eager = false,
 						},
-						jedi_definition     = { enabled = false },
-						jedi_hover          = { enabled = false },
+						jedi_definition     = { enabled = false }, -- same with pyright
+						jedi_hover          = { enabled = true }, -- better than pyright. it supports explanation
 						jedi_references     = { enabled = false },
-						jedi_signature_help = { enabled = false }, -- support lsp_signature help
+						jedi_signature_help = { enabled = true }, -- support lsp_signature help, more detail than pyright
 						jedi_symbols        = { enabled = false },
 						mccabe              = { enabled = false },
 						preload             = { enabled = false },
 						pycodestyle         = { enabled = false },
 						pyflakes            = { enabled = false },
-						pylint              = { enabled = false },
+						pylint              = { enabled = false }, -- very slow loading to lint
 						rope_autoimport     = { enabled = false },
 						yapf                = { enabled = false },
 					}

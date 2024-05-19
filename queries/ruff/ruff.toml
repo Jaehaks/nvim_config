@@ -1,0 +1,16 @@
+line-length = 120
+indent-width = 4
+
+[lint]
+# select : include diagnostic feature  -- bug? : pycodestyle(E,W) does not work, but formatter corrects them
+# I001 : to code action for organizeImport 
+select = ['E', 'W', 'F', 'I001']
+# select = ['ALL'] 
+
+# ignore : feature overlapped with pyright
+# F821 : undefined function 
+ignore = ['F821']
+
+[format]
+quote-style = "single"
+indent-style = "space"
