@@ -1,6 +1,7 @@
-return {
+return {{
 	-- support current indentation only(good), but if there are code in indentline, the line will be  cut
 	'echasnovski/mini.indentscope',
+	enabled = true,
 	version = '*',
 	config = function()
 		local indents = require('mini.indentscope')
@@ -22,5 +23,7 @@ return {
 			end,
 		})
 	end
+},
 }
 --	'lukas-reineke/indent-blankline.nvim' 		  -->>>> works well, not support current indentation level, it depends on treesitter 
+--	'nvimdev/indentmini.nvim' : loading time is fast, but not work
