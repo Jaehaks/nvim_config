@@ -97,7 +97,7 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 })
 
 ------------- file detect -----------------------
-vim.g.python3_host_prog = os.getenv("USERPROFILE") .. '\\Python\\.Nvim_venv\\Scripts\\python'		-- use python support
+vim.g.python3_host_prog = os.getenv("USERPROFILE") .. '\\.config\\.Nvim_venv\\Scripts\\python'		-- use python support
 opt.autochdir = true	-- change pwd where current buffer is located
 --opt.autoread = true		-- auto reload when file has been changed outside of vim
 local aug_NvimFocus = vim.api.nvim_create_augroup('aug_NvimFocus', {clear = true})
