@@ -8,7 +8,7 @@ vim.keymap.set({'n','v'}, 'j', 'k', opts)
 vim.keymap.set({'n','v'}, 'k', 'j', opts)
 vim.keymap.set({'n'}, '<C-w>k', '<C-w>j', opts)
 vim.keymap.set({'n'}, '<C-w>j', '<C-w>k', opts)
-vim.keymap.set({'i'}, 'jk', '<Esc>', opts)   -- must be lowercase to esc
+vim.keymap.set({'i'}, 'jk', '<Esc>', opts)      -- must be lowercase to esc
 vim.keymap.set({'n'}, '<C-o>', '<C-o>zz', opts) -- move center of screen after restore cursor location
 
 
@@ -24,14 +24,15 @@ vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) 	-- out from terminal mode
 
 
 -- set edit keys in normal mode
-vim.keymap.set('n', 'ww', 'i<space><esc>', opts)		-- space
-vim.keymap.set('n', 'tt', 'i<Tab><esc>', opts)			-- tab
-vim.keymap.set('n', '<S-CR>', 'o<esc>', opts)			-- new line (i heard it works only gui)
-vim.keymap.set('n', 'U', ':redo<CR>', opts)				-- redo
+vim.keymap.set('n', 'ww', 'i<space><esc>', opts)  -- space
+vim.keymap.set('n', 'tt', 'i<Tab><esc>', opts)    -- tab
+vim.keymap.set('n', '<CR>', 'o<esc>', opts)       -- new line without split(i heard it works only gui)
+vim.keymap.set('n', '<S-CR>', 'i<CR><esc>', opts) -- new line with split(i heard it works only gui)
+vim.keymap.set('n', 'U', ':redo<CR>', opts)       -- redo
 vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
 vim.keymap.set('n', ':', ';',opts)
-vim.keymap.set({'n', 'v'}, ';', ':',opts) -- replace ;q instead of :q
-vim.keymap.set('n', 'zf', '[s1z=', opts) -- replace current/previous word on cursor to 1st suggested spell
+vim.keymap.set({'n', 'v'}, ';', ':',opts)         -- replace ;q instead of :q
+vim.keymap.set('n', 'zf', '[s1z=', opts)          -- replace current/previous word on cursor to 1st suggested spell
 
 
 -- set find/replace behavior
@@ -44,6 +45,7 @@ vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 
 -- clear keymap
 vim.keymap.set({'n'}, '<C-l>', '<Nop>', opts) -- default is redraw (highlight all blank region)
+vim.keymap.set({'i'}, '<C-Space>', '<Nop>', opts) -- default is paste
 -- vim.keymap.set('n', [[q:]], '<Nop>', opts) -- q: shortcut cannot change
 
 -- only show cursorline in current buffer
