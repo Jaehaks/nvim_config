@@ -2,6 +2,8 @@ return {
 	-- buffer manager to edit/move buffer quickly
 	-- cons : bmui.save_menu_to_file() make a file in current directory. not nvim-data
 	'j-morano/buffer_manager.nvim',
+	commit = 'fd36131',
+	branch = 'main',
 	dependencies = {
 		'nvim-lua/plenary.nvim'
 	},
