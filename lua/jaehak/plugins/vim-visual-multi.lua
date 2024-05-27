@@ -5,7 +5,7 @@ return {
 	branch = 'master',
 	event = 'VeryLazy',
 	init = function ()
-		vim.g.VM_default_mappings = 0 -- disable all keymaps except <C-n>
+		vim.g.VM_default_mappings = 0 -- disable all keymaps except <C-n>  | it must be in init  field
 		vim.g.VM_mouse_mappings = 0
 		vim.g.VM_maps = {}
 		vim.g.VM_maps = {
@@ -20,7 +20,6 @@ return {
 		vim.g.VM_quit_after_leaving_insert_mode = 1 -- quit VM mode after leaving insert mode
 	end,
 	config = function ()
-		-- BUG: all settings don't work including VM_default_mappings..... just use default setting,
 
 		-- TODO: toggle mapping / show inforline at once when visual-multi-cursor starts automatically
 		-- @param Funkey <String> : String which is mapped to other function 
@@ -34,14 +33,17 @@ return {
 				vim.api.nvim_feedkeys(key, 'n', false) -- execute plugin
 				key = vim.api.nvim_replace_termcodes('<Plug>(VM-Show-Infoline)', true, true, true)
 				vim.api.nvim_feedkeys(key, 'n', false) -- show infoline at start
-				key = vim.api.nvim_replace_termcodes('<Plug>(VM-Toggle-Mappings)', true, true, true)
-				vim.api.nvim_feedkeys(key, 'n', false) -- escape visual-mutli mode at start 
+
+				if FunKey == '<Plug>(VM-Add-Cursor-At-Pos)' then
+					key = vim.api.nvim_replace_termcodes('<Plug>(VM-Toggle-Mappings)', true, true, true)
+					vim.api.nvim_feedkeys(key, 'n', false) -- escape visual-mutli mode at start 
+				end
 			end
 		end
 
 		vim.keymap.set('n', '<leader>m', '<Plug>(VM-Toggle-Mappings)'                        , {silent = true})
 		vim.keymap.set('n', '<C-b>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-At-Pos)')<CR>]] , {silent = true})
-		vim.keymap.set('n', '<C-k>'    , [[:lua VMFunc("<Plug>(VM-Add-Cursor-Down)")<CR>]]   , {silent = true})
+		vim.keymap.set('n', '<C-k>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-Down)')<CR>]]   , {silent = true})
 		vim.keymap.set('n', '<C-j>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-Up)')<CR>]]     , {silent = true})
 		vim.keymap.set('n', '<C-n>'    , [[:lua VMFunc('<Plug>(VM-Find-Under)')<CR>]]        , {silent = true})
 		-- vim.keymap.set('x', '<C-n>'    , [[:lua VMFunc('<Plug>(VM-Find-Subword-Under)')<CR>]], {silent = true})
