@@ -28,7 +28,10 @@ return {
 	lazy = false, -- for startup window
 	config = function ()
 		local sessions = require('sessions')
-		local saved_path = vim.fn.stdpath('data') .. '\\sessions\\session_saved.txt'
+		local saved_path = vim.fn.stdpath('data') .. '/sessions/session_saved.txt'
+		if vim.g.has_win32 == 1 then
+			saved_path = saved_path:gsub('/','\\')
+		end
 		sessions.setup({
 			events = {'VimLeavePre'},
 			session_filepath = saved_path,

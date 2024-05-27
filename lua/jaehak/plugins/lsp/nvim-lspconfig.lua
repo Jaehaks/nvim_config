@@ -10,7 +10,10 @@ return {
 		'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
 	},
 	init = function ()
-		vim.env.RUFF_CACHE_DIR = vim.fn.stdpath('cache') .. '\\.ruff_cache' --  set ruff cache directory
+		vim.env.RUFF_CACHE_DIR = vim.fn.stdpath('cache') .. '/.ruff_cache' --  set ruff cache directory
+		if vim.g.has_win32 == 1 then
+			vim.env.RUFF_CACHE_DIR = vim.env.RUFF_CACHE_DIR:gsub('/','\\')
+		end
 	end,
 	config = function()
 		-- ######## setup neodev configuration, must be start #######
@@ -61,6 +64,13 @@ return {
 		})
 
 		-- ####### 2) matlab language server configuration #########
+		local matlab_path = nil
+		if vim.g.has_win32 then
+			matlab_path = vim.fs.dirname(vim.fn.systemlist('where matlab')[1]):match('(.*[/\\])')
+			matlab_path:gsub('/','\\')
+		else
+			matlab_path = vim.fs.dirname(vim.fn.systemlist('which matlab')[1]):match('(.*[/\\])')
+		end
 		lspconfig.matlab_ls.setup({
 			cmd = {'matlab-language-server', '--stdio'},
 			filetypes = {'matlab'},
@@ -71,7 +81,7 @@ return {
 			settings = {
 				matlab = {
 					indexWorkspace = true,
-					installPath = 'C:\\Program Files\\MATALB\\R2023b',
+					installPath = matlab_path,
 					matlabConnectionTiming = 'onStart',
 					telemetry = true,
 				},
@@ -123,6 +133,11 @@ return {
 		--      On the other hand, pyright does not support linting(better style checker)
 		--      but for trivial error, ruff / flake8 / pyright detect in the same time
 
+		local ruff_config_path = vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml'
+		if vim.g.has_win32 == 1 then
+			ruff_config_path = ruff_config_path:gsub('/','\\')
+		end
+
 		lspconfig.ruff_lsp.setup({ -- use ruff as python linter
 			on_attach = function (client, bufnr)
 				-- lsp use ruff to formatter
@@ -148,7 +163,7 @@ return {
 						enable = true,
 						run = 'onType', -- ruff every keystroke
 						args = {        -- pass to ruff check (--config = *.toml)
-							'--config=' .. vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml',
+							'--config=' .. ruff_config_path,
 						},
 					},
 				}

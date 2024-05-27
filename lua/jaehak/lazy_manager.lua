@@ -1,4 +1,8 @@
-local lazypath = vim.fn.stdpath("data") .. "\\lazy\\lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if vim.g.has_win32 == 1 then
+	lazypath = lazypath:gsub('/', '\\')
+end
+
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",

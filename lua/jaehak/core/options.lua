@@ -97,17 +97,24 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 })
 
 ------------- file detect -----------------------
-vim.g.python3_host_prog = os.getenv("USERPROFILE") .. '\\.config\\.Nvim_venv\\Scripts\\python'		-- use python support
+vim.g.has_win32 = vim.fn.has('win32')
+if vim.g.has_win32 then
+	vim.g.python3_host_prog = vim.fn.stdpath('config') .. '\\.Nvim_venv\\Scripts\\python'		-- use python support
+	opt.path:append(vim.fn.stdpath("config") .. "\\**10")
+	opt.path:append(vim.fn.stdpath("data") .. "\\**10")
+else
+	vim.g.python3_host_prog = '~/.config/.Nvim_venv/Scripts/python'		-- use python support
+	opt.path:append(vim.fn.stdpath("config") .. "/**10")
+	opt.path:append(vim.fn.stdpath("data") .. "/**10")
+end
 opt.autochdir = true	-- change pwd where current buffer is located
 --opt.autoread = true		-- auto reload when file has been changed outside of vim
 local aug_NvimFocus = vim.api.nvim_create_augroup('aug_NvimFocus', {clear = true})
 vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nvim focused
 	group = aug_NvimFocus,
 	pattern = '*',
-	command = 'silent! checktime'
+	command = 'silent! checktime'	-- check the buffer is changed out of neovim
 })
-opt.path:append(vim.fn.stdpath("config") .. "/**10")
-opt.path:append(vim.fn.stdpath("data") .. "/**10")
 
 
 ------------- editing -----------------------

@@ -6,6 +6,10 @@ return {
 		config = function()
 			-- configuration
 			local conform = require("conform")
+			local ruff_config_path = vim.fn.stdpath('config') .. '/queries/ruff/ruff.toml'
+			if vim.g.has_win32 == 1 then
+				ruff_config_path = ruff_config_path:gsub('/', '\\')
+			end
 			conform.setup({
 				-- set formatter configuration
 				formatters = {
@@ -16,7 +20,7 @@ return {
 						command = 'ruff',
 						args = {
 							'format',
-							'--config=' .. vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml',
+							'--config=' .. ruff_config_path,
 							'--force-exclude',
 							'--stdin-filename',
 							'$FILENAME',

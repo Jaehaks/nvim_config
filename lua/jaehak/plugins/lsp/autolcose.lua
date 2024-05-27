@@ -72,8 +72,12 @@ return {
 		})
 
 		-- if there is not matlab query directory, make it
-		local source_dir = vim.fn.stdpath('config') .. '\\queries\\rainbow-delimiters.nvim\\matlab\\'
-		local dest_dir = vim.fn.stdpath('data') .. '\\lazy\\rainbow-delimiters.nvim\\queries\\matlab\\'
+		local source_dir = vim.fn.stdpath('config') .. '/queries/rainbow-delimiters.nvim/matlab/'
+		local dest_dir = vim.fn.stdpath('data') .. '/lazy/rainbow-delimiters.nvim/queries/matlab/'
+		if vim.g.has_win32 == 1 then
+			source_dir = source_dir:gsub('/', '\\')
+			dest_dir = dest_dir:gsub('/', '\\')
+		end
 		vim.uv.fs_scandir(dest_dir , function (err, userdata)
 				if err then
 					vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'

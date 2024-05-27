@@ -53,7 +53,7 @@ return {
 						icon = '',
 						desc = 'Last Sessions', desc_hl = 'String',
 						key = 's', key_hl = 'DashboardShortCut',
-						action = [[lua require("sessions").load(vim.fn.stdpath('data') .. '\\sessions\\session_saved.txt', {autosave = false})]],
+						action = [[lua require("sessions").load(vim.fn.stdpath('data') .. '/sessions/session_saved.txt', {autosave = false})]],
 					},
 				},
 				footer = function()

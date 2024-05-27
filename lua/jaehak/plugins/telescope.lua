@@ -36,11 +36,17 @@ return {
 					-- the paths with '/' are shown literally. These are not listed in 'path' argument
 					-- The solution does not exist in currently. I should modify the string '/' in shada file to '\\'
 					-- if PR(#3103) accepted, this problem will be removed.
-					local PATH = path:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
+					local PATH = path
+					if vim.g.has_win32 == 1 then
+						PATH = PATH:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
+					end
 					local tail = utils.path_tail(PATH)
-					local basename = vim.fs.basename(vim.fs.dirname(PATH)) .. '\\'
-					if basename == vim.fs.basename(vim.fn.expand('%:p:h')) .. '\\' then
+					local basename = vim.fs.basename(vim.fs.dirname(PATH)) .. '/'
+					if basename == vim.fs.basename(vim.fn.expand('%:p:h')) .. '/' then
 						basename = ''
+					end
+					if vim.g.has_win32 == 1 then
+						basename = basename:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
 					end
 					return string.format('%s%s', basename, tail)
 				end,
@@ -106,7 +112,7 @@ return {
 					mark_type = 'local'  	-- don't need numbered marks
 				},
 				oldfiles = {
-					file_ignore_patterns = {'doc\\', 'COMMIT_EDITMSG'}
+					file_ignore_patterns = {'doc\\', 'doc/', 'COMMIT_EDITMSG'}
 				}
 			},
 			extensions = {
@@ -174,8 +180,11 @@ return {
 				end
 				opts.cwd = vim.fn.getcwd() -- if lsp doesn't exist, use cwd()
 			end
-			opts.cwd = opts.cwd:gsub('/','\\') -- the delimiter '/' makes displaying absolute path in oldfiles 
-											   -- solution of duplicated problem as I think
+			if vim.g.has_win32 == 1 then
+				opts.cwd = opts.cwd:gsub('/','\\') -- the delimiter '/' makes displaying absolute path in oldfiles 
+													-- solution of duplicated problem as I think
+				ignore_patterns = ignore_patterns:gsub('/', '\\')
+			end
 			opts.title = vim.fs.basename(opts.cwd)
 			picker({
 				results_title = opts.title,
