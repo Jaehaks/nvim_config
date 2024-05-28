@@ -167,7 +167,7 @@ return {
 		local CheckGitDir = function (picker)
 			-- builtin.git_files() invokes error when it is not git directory
 			-- but find_files ignore also .gitignore file
-			local ignore_patterns = {'slprj\\', '.git\\'}
+			local ignore_patterns = {'slprj/', '.git/'}
 			local opts = {}
 
 			opts.cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
@@ -183,7 +183,9 @@ return {
 			if vim.g.has_win32 == 1 then
 				opts.cwd = opts.cwd:gsub('/','\\') -- the delimiter '/' makes displaying absolute path in oldfiles 
 													-- solution of duplicated problem as I think
-				ignore_patterns = ignore_patterns:gsub('/', '\\')
+				for i, pattern in ipairs(ignore_patterns) do
+					ignore_patterns[i] = pattern:gsub('/', '\\')
+				end
 			end
 			opts.title = vim.fs.basename(opts.cwd)
 			picker({
