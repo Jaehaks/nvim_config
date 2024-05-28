@@ -64,14 +64,14 @@ return {
 		})
 
 		-- ####### 2) matlab language server configuration #########
-		local matlab_path = nil
+		local matlab_path = vim.fs.dirname(vim.fn.systemlist('where matlab')[1]):match('(.*[/\\])')
 		if vim.g.has_win32 then
-			matlab_path = vim.fs.dirname(vim.fn.systemlist('where matlab')[1]):match('(.*[/\\])')
 			matlab_path:gsub('/','\\')
-		else
-			matlab_path = vim.fs.dirname(vim.fn.systemlist('which matlab')[1]):match('(.*[/\\])')
 		end
 		lspconfig.matlab_ls.setup({
+			on_attach = function (client, bufnr)
+				client.server_capabilities.signatureHelpProvider = false -- signature help by matlab lsp is poor
+			end,
 			cmd = {'matlab-language-server', '--stdio'},
 			filetypes = {'matlab'},
 			-- root_dir = lsp_util.root_pattern('*.m'),
