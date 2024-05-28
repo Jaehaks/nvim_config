@@ -27,6 +27,7 @@ return {
 {
 	-- make text object
 	'chrisgrieser/nvim-various-textobjs',
+	commit = '674b7c9', -- use multiCommentedLines until update nvim v.10
 	config = function ()
 		local textobjs = require('various-textobjs')
 		textobjs.setup({
