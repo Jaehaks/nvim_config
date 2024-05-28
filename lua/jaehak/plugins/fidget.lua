@@ -5,9 +5,14 @@ return {
 	config = function()
 		require('fidget').setup({
 			progress = {
+				ignore_done_already = true,
+				ignore_empty_message = true,
 				ignore = {'ltex'},		-- because ltex progress always operate when write character
-			}
+			},
+			logger = {
+				level = vim.log.levels.OFF, -- disable logging
 
+			}
 		})
 	end
 }
