@@ -62,7 +62,6 @@ return {
 				end,
 			},
 			mapping = cmp.mapping.preset.insert({
-				['<C-n>'] = cmp.mapping.complete(),
 			    ['<TAB>'] = cmp.mapping(function(fallback)
 					if cmp.visible() then -- select next cmp item when visible
 						cmp.select_next_item()
@@ -95,7 +94,16 @@ return {
 						fallback()
 					end
 				end, {'i', 's'}),
-				['<C-e>'] 	= cmp.mapping.close(),
+				['<c-n>'] = cmp.mapping(function (fallback) -- remain showing previous deleting keymap
+					if cmp.visible() then
+						cmp.mapping.close()
+					else
+						fallback()
+					end
+				end),
+				['<C-e>'] 	= cmp.mapping(function (fallback) -- disable default <C-e> mapping to separate with deleting keymap
+					fallback()
+				end),
 				['<CR>']	= cmp.mapping(function (fallback) -- In cmp.mapping, function have to be called without <mapping> field
 					if cmp.visible() then                     -- without this condition, cmp.abort() will be execute multiple times
 						if cmp.get_active_entry() == nil then -- if you don't select, <cr> operate as original function
