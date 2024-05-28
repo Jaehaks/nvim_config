@@ -20,8 +20,9 @@ vim.keymap.set({'i','c','t'}, '<C-l>', '<Right>', opts)
 vim.keymap.set({'i','c'}, '<C-e>', '<Del>', opts)
 
 -- set action in terminal mode 
-vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) 	-- out from terminal mode
-
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) -- out from terminal mode
+vim.keymap.set({'i'},'<C-p>','<Nop>')              -- disable default completion next
+vim.keymap.set({'i'},'<C-n>','<Nop>')              -- disable default completion previous
 
 -- set edit keys in normal mode
 vim.keymap.set('n', 'ww', 'i<space><esc>', opts)  -- space
