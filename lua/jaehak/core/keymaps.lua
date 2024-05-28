@@ -33,6 +33,8 @@ vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
 vim.keymap.set('n', ':', ';',opts)
 vim.keymap.set({'n', 'v'}, ';', ':',opts)         -- replace ;q instead of :q
 vim.keymap.set('n', 'zf', '[s1z=', opts)          -- replace current/previous word on cursor to 1st suggested spell
+vim.keymap.set('n', 'Y', '"*yy', opts)            -- copy a line using system clipboard
+vim.keymap.set('v', 'Y', '"*y', opts)             -- copy a visual block using system clipboard
 
 
 -- set find/replace behavior

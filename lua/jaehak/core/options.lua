@@ -145,8 +145,9 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 --vim.cmd[[set mouse=ni]]		-- disable mouse operation
 								-- In neovim, mouse is disabled after entered visual mode, it is weird
 
-opt.clipboard:append('unnamedplus')		-- share clipboard between vim and system
-										-- "*p doest not need to paste from system clipboard
-opt.iskeyword:append('-')				-- i don't know 
+-- opt.clipboard:append('unnamedplus') -- share clipboard between vim and system
+                                    -- "*p doest not need to paste from system clipboard
+                                    -- it makes editing very slower, set keymap to use system clipboard instead of it
+opt.iskeyword:append('-')           -- i don't know
 
 
