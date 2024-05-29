@@ -127,6 +127,8 @@ opt.autoindent = true     -- when enter next line, automatically indent from sta
 opt.inccommand = ''       -- disable show effect of substitute
 
 opt.wrap = false          -- disable line wrapping
+opt.splitright = true	  -- focus to new window when vsplit
+opt.splitbelow = true	  -- focus to new window when split
 
 ------------- output file -------------------
 opt.swapfile = false		-- no swap file when file is created 
