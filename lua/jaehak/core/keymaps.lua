@@ -27,8 +27,6 @@ vim.keymap.set({'i'},'<C-n>','<Nop>')              -- disable default completion
 -- set edit keys in normal mode
 vim.keymap.set('n', 'ww', 'i<space><esc>', opts)  -- space
 vim.keymap.set('n', 'tt', 'i<Tab><esc>', opts)    -- tab
-vim.keymap.set('n', '<CR>', 'o<esc>', opts)       -- new line without split(i heard it works only gui)
-vim.keymap.set('n', '<S-CR>', 'i<CR><esc>', opts) -- new line with split(i heard it works only gui)
 vim.keymap.set('n', 'U', ':redo<CR>', opts)       -- redo
 vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
 vim.keymap.set('n', ':', ';',opts)
@@ -73,7 +71,9 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 			end
 		end
 
-		if not ok then
+		if not ok then -- if normal filetype buffer (writable)
+			vim.keymap.set('n', '<CR>', 'o<esc>', opts)       -- new line without split(i heard it works only gui)
+			vim.keymap.set('n', '<S-CR>', 'i<CR><esc>', opts) -- new line with split(i heard it works only gui)
 			return
 		end
 
