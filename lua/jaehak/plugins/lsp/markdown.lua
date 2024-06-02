@@ -17,7 +17,21 @@ return {
 	name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
 	dependencies = { 'nvim-treesitter/nvim-treesitter' },
 	config = function()
+		vim.api.nvim_set_hl(0, 'markdownB1', {bg = '#216042'})
+		vim.api.nvim_set_hl(0, 'markdownB2', {bg = '#215860'})
+		vim.api.nvim_set_hl(0, 'markdownB3', {bg = '#2E2D5C'})
+		vim.api.nvim_set_hl(0, 'markdownB4', {bg = '#504032'})
 		require('render-markdown').setup({
+			highlights = {
+				heading = {
+					backgrounds = { 
+						'markdownB1',
+						'markdownB2',
+						'markdownB3',
+						'markdownB4',
+					},
+				}
+			}
 		})
 	end,
 },
