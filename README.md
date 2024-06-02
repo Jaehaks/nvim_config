@@ -1,51 +1,13 @@
 # nvim_config
 
+- Default setup :
+    - Windows 10
+    -
+
 ## Installation
 
-1) it is test  
-test test hih hello  
-hih hello 
-3) test
-    1) test  
-    2) it is test
-4) it is test
-4) itist
-    4) 
-    5) it must
+1) **alacritty - terminal emulator**  
 
-
-1) test
-2)  [testes](2024-04-22_testes.md)
-3) 
-
-*test is it jsijsei* 
-
-
-[[#queries]]
-
-
-1. test
-2. test
-3. tset
-4. estse
-5.
-    - test
-    - seifjes
-    - jseifjsek
-6. tes   t
-7. setset
-8. test
-     - test
-     - test
-9. [ ]     -
-and it can be used in [HiPhish/rainbow-delimiters.nvim](https://github.com/HiPhish/rainbow-delimiters.nvim)    
-
-
-1. test
-2. [tset](./)
-
-
-[test](.\README.md)
 
 ## queries
 
