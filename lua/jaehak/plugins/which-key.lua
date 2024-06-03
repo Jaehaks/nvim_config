@@ -23,7 +23,7 @@ return {
 		})
 
 		-- manually register's opts
-		local opts = {
+		local nopts = {
 		  mode = "n", -- NORMAL mode
 		  prefix = "<leader>",
 		  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -34,20 +34,40 @@ return {
 
 
 		-- mapping 
-		local mappings = {
-			c = { name = 'color' },
-			e = { name = 'oil explorer' },
-			f = { name = 'telescope' },
-			x = { name = 'trouble' },
-			l = { name = 'lspsaga' },
-			m = { name = 'markdown' },
-			h = { name = 'gitsign' },
+		local nmappings = {
+			c = { name = 'Color' },
+			e = { name = 'Oil explorer' },
+			f = { name = 'Telescope' },
+			x = { name = 'Trouble' },
+			l = { name = 'Lspsaga' },
+			m = { name = 'Markdown' },
+			h = { name = 'Gitsign' },
 			g = { name = 'Neogit' },
-			p = { name = 'project'},
-			s = { name = 'nvim-spectre'},
-			t = { name = 'terminal / translate'},
+			p = { name = 'Project'},
+			s = { name = 'Nvim-spectre'},
+			t = { name = 'Terminal / Translate'},
+			w = { name = 'Formatter'},
 		}
 
-		wk.register(mappings, opts)	-- register mappings
+		-- manually register's opts
+		local vopts = {
+		  mode = "v", -- VISUAL mode
+		  prefix = "<leader>",
+		  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+		  silent = true, -- use `silent` when creating keymaps
+		  noremap = true, -- use `noremap` when creating keymaps
+		  nowait = true, -- use `nowait` when creating keymaps
+		}
+
+
+		-- mapping 
+		local vmappings = {
+			w = { name = 'Formatter' },
+			t = { name = 'Translate' },
+			s = { name = 'Nvim-spectre' },
+		}
+
+		wk.register(nmappings, nopts)	-- register mappings
+		wk.register(vmappings, vopts)	-- register mappings
 	end
 }
