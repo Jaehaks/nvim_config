@@ -61,7 +61,7 @@ return {
 			fg = '#000000',
 			bg = '#986fec',
 			inactive_fg = '#AAAAAA',
-			exclude_fts = {'dashboard'},
+			exclude_fts = {'dashboard', 'Outline'},
 			numbers = function (bufn,n)
 				return bufn .. ' ' -- show buffer number
 			end
