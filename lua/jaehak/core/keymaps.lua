@@ -62,7 +62,17 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 	pattern = '*',
 	callback = function(event)
 		local ok = false
-		local diable_ft = {'help', 'terminal', 'FTerm', 'floaterm', 'qf', 'spectre_panel'}	-- disable filetype list
+		local diable_ft = {	-- disable filetype list
+			'help',
+			'terminal',
+			'FTerm',
+			'floaterm',
+			'qf',
+			'spectre_panel',
+			'Outline',
+			'TelescopePrompt',
+			'oil'
+		}
 		local filetype = vim.bo[event.buf].filetype
 		for _, val in ipairs(diable_ft) do
 			if filetype == val then
@@ -72,8 +82,8 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 		end
 
 		if not ok then -- if normal filetype buffer (writable)
-			vim.keymap.set('n', '<CR>', 'o<esc>', opts)       -- new line without split(i heard it works only gui)
-			vim.keymap.set('n', '<S-CR>', 'i<CR><esc>', opts) -- new line with split(i heard it works only gui)
+			vim.keymap.set('n', '<CR>', 'o<esc>', {silent = true, buffer = 0, noremap = true})       -- new line without split(i heard it works only gui)
+			vim.keymap.set('n', '<S-CR>', 'i<CR><esc>', {silent = true, buffer = 0, noremap = true}) -- new line with split(i heard it works only gui)
 			return
 		end
 
