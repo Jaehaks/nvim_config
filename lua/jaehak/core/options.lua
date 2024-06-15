@@ -103,7 +103,7 @@ if vim.g.has_win32 == 1 then
 	opt.path:append(vim.fn.stdpath("config") .. "\\**10")
 	opt.path:append(vim.fn.stdpath("data") .. "\\**10")
 else
-	vim.g.python3_host_prog = '~/.config/.Nvim_venv/Scripts/python'		-- use python support
+	vim.g.python3_host_prog = '~/.config/.Nvim_venv/bin/python'		-- use python support
 	opt.path:append(vim.fn.stdpath("config") .. "/**10")
 	opt.path:append(vim.fn.stdpath("data") .. "/**10")
 end
