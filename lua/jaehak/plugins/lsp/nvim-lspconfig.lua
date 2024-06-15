@@ -65,7 +65,7 @@ return {
 
 		-- ####### 2) matlab language server configuration #########
 		local matlab_path = vim.fs.dirname(vim.fn.systemlist('where matlab')[1]):match('(.*[/\\])')
-		if vim.g.has_win32 then
+		if vim.g.has_win32 == 1 then
 			matlab_path:gsub('/','\\')
 		end
 		lspconfig.matlab_ls.setup({
