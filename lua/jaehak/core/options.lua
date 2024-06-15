@@ -98,7 +98,7 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 
 ------------- file detect -----------------------
 vim.g.has_win32 = vim.fn.has('win32')
-if vim.g.has_win32 then
+if vim.g.has_win32 == 1 then
 	vim.g.python3_host_prog = vim.fn.stdpath('config') .. '\\.Nvim_venv\\Scripts\\python'		-- use python support
 	opt.path:append(vim.fn.stdpath("config") .. "\\**10")
 	opt.path:append(vim.fn.stdpath("data") .. "\\**10")
