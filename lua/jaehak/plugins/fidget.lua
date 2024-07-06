@@ -5,13 +5,13 @@ return {
 	config = function()
 		require('fidget').setup({
 			progress = {
+				suppress_on_insert = true, -- suppress new messages while insert
 				ignore_done_already = true,
 				ignore_empty_message = true,
 				ignore = {'ltex'},		-- because ltex progress always operate when write character
 			},
 			logger = {
 				level = vim.log.levels.OFF, -- disable logging
-
 			}
 		})
 	end
