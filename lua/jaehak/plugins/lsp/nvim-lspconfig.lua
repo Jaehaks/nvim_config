@@ -6,6 +6,14 @@ return {
 			'folke/neodev.nvim',
 			ft = {'lua'}
 		},
+		-- {
+		-- 	'folke/lazydev.nvim', -- instead of neodev
+		-- 	ft = 'lua',
+		-- },
+		-- {
+		-- 	'Bilal2453/luvit-meta', -- for lazydev, vim.uv library
+		-- 	lazy = true,
+		-- },
 		'hrsh7th/cmp-nvim-lsp',
 		'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
 	},
@@ -27,6 +35,14 @@ return {
 				plugins = false,		-- installed plugins completion (too long loading time)
 			}
 		})
+		-- require('lazydev').setup({
+		-- 	library = {
+		-- 		-- { path = 'luvit-meta/library', words = {'vim%.uv'}}
+		-- 	},
+		-- 	enabled = function(root_dir)
+		-- 		return vim.g.lazydev_enabled == nil and true or vim.g.lazydev
+		-- 	end
+		-- })
 
 		local lspconfig = require('lspconfig')
 		local lsp_util = require('lspconfig.util')
@@ -107,6 +123,7 @@ return {
 						['en-US'] = {
 							'MORFOLOGIK_RULE_EN_US',	-- misspell check
 							'WHITESPACE_RULE',			-- check white space in front of line
+							'COMMA_PARENTHESIS_WHITESPACE',	-- space after parenthesis
 						}
 					}
 				}
