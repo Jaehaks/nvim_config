@@ -43,6 +43,7 @@ return {
 					diagnostics = {
 						disable = {
 							'missing-parameter',	-- disable diagnostics about whether all fields are filled
+							'missing-fields',
 						},
 						globals = {'vim'},	-- recognize 'vim' global to language server
 						undefined_global = false,
