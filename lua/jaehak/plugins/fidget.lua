@@ -8,7 +8,12 @@ return {
 				suppress_on_insert = true, -- suppress new messages while insert
 				ignore_done_already = true,
 				ignore_empty_message = true,
-				ignore = {'ltex'},		-- because ltex progress always operate when write character
+				ignore = { -- After #a01443a, add function
+					'ltex',	-- because ltex progress always operate when write character
+					function (msg)
+						return msg.lsp_client.name == 'lua_ls' and string.find(msg.title, 'Diagnosing')
+					end,
+				},
 			},
 			logger = {
 				level = vim.log.levels.OFF, -- disable logging
