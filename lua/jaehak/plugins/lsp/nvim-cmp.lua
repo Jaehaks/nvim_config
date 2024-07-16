@@ -6,7 +6,7 @@ return {
 		-- changing these option must be out of config function of nvim-cmp
 		-- I have no idea what is the reason, but something turns off this option after setting option
 		vim.opt.spell = true
-		vim.opt.spelllang = {'en_us'}
+		vim.opt.spelllang = {'en_us', 'cjk'} -- disable spell check for asian char
 		vim.opt.pumheight = 10			-- maximum item number when show completion
 	end,
 	dependencies = {
