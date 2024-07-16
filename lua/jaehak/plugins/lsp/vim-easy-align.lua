@@ -31,8 +31,8 @@ return {
 				stick_to_left = 0,
 			}
 		}
-		vim.keymap.set({'n', 'x'}, '<C-=>',   ':EasyAlign ')
-		vim.keymap.set({'n', 'x'}, '<C-S-=>', ':EasyAlign *')
+		vim.keymap.set({'n', 'x'}, '<C-\\>',   ':EasyAlign ')
+		vim.keymap.set({'n', 'x'}, '<C-S-\\>', ':EasyAlign *')
 	end
 },
 }
