@@ -167,7 +167,7 @@ return {
 		local CheckGitDir = function (picker)
 			-- builtin.git_files() invokes error when it is not git directory
 			-- but find_files ignore also .gitignore file
-			local ignore_patterns = {'slprj/', '.git/'}
+			local ignore_patterns = {'slprj/', '.git/', '%.asv'}
 			local opts = {}
 
 			opts.cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
