@@ -126,5 +126,40 @@ return {
 	end
 },
 -- bullets-vim/bullets.nvim : it does not work in neovim
+{
+	'HakonHarnes/img-clip.nvim', -- paste image link and download file from clipboard
+	ft = {'markdown'},
+	config = function ()
+		local img = require('img-clip')
+		img.setup({
+			default = {
+				dir_path = function ()
+					return 'img_' .. vim.fn.expand('%:t:r')
+				end,
+				extension = 'png',
+				file_name = '%Y-%m-%d',
+				relative_to_current_file = true,
+
+				insert_mode_after_paste = true,
+				show_dir_path_in_prompt = false;
+
+				copy_images = true,
+				download_images = true,
+
+				drag_and_drop = {
+					enabled = false,
+				},
+				filetypes = {
+					markdown = {
+						url_encode_path = true,
+						template = "![$CURSOR]($FILE_PATH)",
+						download_images = true,
+					}
+				}
+			}
+		})
+		vim.keymap.set('n', '<leader>mv', img.paste_image, {noremap = true, desc = 'Paste Image From Clipboard'})
+	end
+}
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
