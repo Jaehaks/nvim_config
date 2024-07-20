@@ -28,7 +28,7 @@ vim.keymap.set({'i'},'<C-n>','<Nop>')              -- disable default completion
 vim.keymap.set('n', 'ww', 'i<space><esc>', opts)  -- space
 vim.keymap.set('n', 'tt', 'i<Tab><esc>', opts)    -- tab
 vim.keymap.set('n', 'U', ':redo<CR>', opts)       -- redo
-vim.keymap.set('n', '<C-/>', '/\\<\\><Left><Left>',opts)
+vim.keymap.set('n', '?', '/\\<\\><Left><Left>',opts) -- find exact word, <C-/> doesn't work in terminal 
 vim.keymap.set('n', ':', ';',opts)
 vim.keymap.set({'n', 'v'}, ';', ':',opts)         -- replace ;q instead of :q
 vim.keymap.set('n', 'zf', '[s1z=', opts)          -- replace current/previous word on cursor to 1st suggested spell
