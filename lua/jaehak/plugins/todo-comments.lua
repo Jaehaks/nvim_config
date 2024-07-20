@@ -17,8 +17,8 @@ return {
 			},
 			keywords = {	-- keywords recognized as todo comments
 			FIX  = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" , "FAILED" }}, -- test failed, to be continue
-			TODO = { icon = " ", color = "hint" , alt = { "WHATFOR", "FOR", "WHAT" }}, -- hint
-			CONF = { icon = " ", color = "info",  alt = { "PASSED", "Confirmed" }},  -- code confirm completed
+			TODO = { icon = " ", color = "info" , alt = { "WHATFOR", "FOR", "WHAT" }}, -- hint
+			CONF = { icon = " ", color = "hint",  alt = { "PASSED", "Confirmed" }},  -- code confirm completed
 			TEST = { icon = "⏲ ", color = "test",  alt = { "TESTING" }},               -- for testing code
 			TBD  = { icon = " ", color = "tbd",   alt = { "LATER" }}, -- to be continue
 			-- WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
