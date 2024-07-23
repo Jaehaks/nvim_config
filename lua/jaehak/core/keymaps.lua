@@ -84,7 +84,7 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 
 		if not ok then -- if normal filetype buffer (writable)
 			vim.keymap.set('n', '<CR>', 'o<esc>', {silent = true, buffer = 0, noremap = true})       -- new line without split(i heard it works only gui)
-			vim.keymap.set('n', '<S-CR>', 'i<CR><esc>', {silent = true, buffer = 0, noremap = true}) -- new line with split(i heard it works only gui)
+			vim.keymap.set('n', '<C-i>', 'a<CR><esc><Up>$', {silent = true, buffer = 0, noremap = true}) -- new line with split(i heard it works only gui)
 			return
 		end
 
