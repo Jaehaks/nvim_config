@@ -72,6 +72,7 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 			'spectre_panel',
 			'Outline',
 			'TelescopePrompt',
+			'toggleterm',
 			-- 'oil'
 		}
 		local filetype = vim.bo[event.buf].filetype
