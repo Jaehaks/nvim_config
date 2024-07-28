@@ -17,7 +17,9 @@ vim.keymap.set({'i','c','t'}, '<C-h>', '<Left>', opts)
 vim.keymap.set({'i','c','t'}, '<C-j>', '<Up>', opts)
 vim.keymap.set({'i','c','t'}, '<C-k>', '<Down>', opts)
 vim.keymap.set({'i','c','t'}, '<C-l>', '<Right>', opts)
-vim.keymap.set({'i','c'}, '<C-e>', '<Del>', opts)
+vim.keymap.set({'i','c'}, '<C-d>', '<Del>', opts)
+vim.keymap.set({'i','c'}, '<C-a>', '<Home>', opts)
+vim.keymap.set({'i','c'}, '<C-e>', '<End>', opts)
 
 -- set action in terminal mode 
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) -- out from terminal mode
