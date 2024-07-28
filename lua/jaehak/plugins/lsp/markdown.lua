@@ -17,21 +17,79 @@ return {
 	name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
 	dependencies = { 'nvim-treesitter/nvim-treesitter' },
 	config = function()
+		-- for heading
 		vim.api.nvim_set_hl(0, 'markdownB1', {bg = '#216042'})
 		vim.api.nvim_set_hl(0, 'markdownB2', {bg = '#215860'})
 		vim.api.nvim_set_hl(0, 'markdownB3', {bg = '#2E2D5C'})
 		vim.api.nvim_set_hl(0, 'markdownB4', {bg = '#504032'})
-		require('render-markdown').setup({
-			highlights = {
-				heading = {
-					backgrounds = { 
-						'markdownB1',
-						'markdownB2',
-						'markdownB3',
-						'markdownB4',
-					},
-				}
-			}
+
+		-- for code / bullet
+		vim.api.nvim_set_hl(0, 'RenderMarkdownCode', {bg = '#333333'})
+		vim.api.nvim_set_hl(0, 'RenderMarkdownBullet', {fg = '#F78C6C'})
+
+		-- for callout
+		vim.api.nvim_set_hl(0, "RenderMarkdownInfo"   , {fg = '#0DB9D7' })
+		vim.api.nvim_set_hl(0, "RenderMarkdownSuccess", {fg = '#b3f6c0' })
+		vim.api.nvim_set_hl(0, "RenderMarkdownHint"   , {fg = '#1abc9c' })
+		vim.api.nvim_set_hl(0, "RenderMarkdownWarn"   , {fg = '#e0af68' })
+		vim.api.nvim_set_hl(0, "RenderMarkdownError"  , {fg = '#db4b4b' })
+		vim.api.nvim_set_hl(0, "@markup.quote"        , {fg = '#E6E6E6' })
+
+		-- setting
+		require('render-markdown').setup({ -- after @56d92af
+			anti_conceal = { -- it set autocmd for cursormoved, but I don't know what it does
+				enabled = false,
+			},
+			heading = {
+				enabled = true,
+				sign = false, -- don't show icon of heading in sign column
+				icons = { '󰉫 ', '󰉬 ', '󰉭 ', '󰉮 ', '󰉯 ', '󰉰 ' }, -- rendering icon of header
+				backgrounds = {
+					'markdownB1',
+					'markdownB2',
+					'markdownB3',
+					'markdownB4',
+				},
+			},
+			code = {
+				enabled = true,
+				sign = false, -- don't show icon of code block in sign column
+				style = 'full', -- symbol + Lang
+				left_pad = 2, -- padding to left of code block
+				right_pad = 2, -- for 'block' width
+				width = 'block',
+				border = 'thick', -- render full background region of code
+				highlight = 'RenderMarkdowncode', -- highlight of code block
+				highlight_inline = '', -- disable highlight of inline code
+			},
+			bullet = {
+				enabled = true,
+				icons = {'■', '▲', '●', '★', '▶'},
+				highlight = 'RenderMarkdownBullet',
+			},
+			checkbox = {
+				enabled = false,
+			},
+			quote = {
+				enabled = true
+			},
+			callout = {
+				-- Obsidian: https://help.a.md/Editing+and+formatting/Callouts
+				note      = { raw = '[!NOTE]'     , rendered = '󰋽 Note'     , highlight = 'RenderMarkdownInfo' }   ,
+				abstract  = { raw = '[!ABSTRACT]' , rendered = '󰨸 Abstract' , highlight = 'RenderMarkdownInfo' }   ,
+				todo      = { raw = '[!TODO]'     , rendered = '󰗡 Todo'     , highlight = 'RenderMarkdownInfo' }   ,
+				tip       = { raw = '[!TIP]'      , rendered = '󰌶 Tip'      , highlight = 'RenderMarkdownSuccess' },
+				success   = { raw = '[!SUCCESS]'  , rendered = '󰄬 Success'  , highlight = 'RenderMarkdownSuccess' },
+				example   = { raw = '[!EXAMPLE]'  , rendered = '󰉹 Example'  , highlight = 'RenderMarkdownHint' }   ,
+				important = { raw = '[!IMPORTANT]', rendered = '󰅾 Important', highlight = 'RenderMarkdownHint' }   ,
+				warning   = { raw = '[!WARNING]'  , rendered = '󰀪 Warning'  , highlight = 'RenderMarkdownWarn' }   ,
+				question  = { raw = '[!QUESTION]' , rendered = '󰘥 Question' , highlight = 'RenderMarkdownWarn' }   ,
+				caution   = { raw = '[!CAUTION]'  , rendered = '󰳦 Caution'  , highlight = 'RenderMarkdownError' }  ,
+				failure   = { raw = '[!FAILURE]'  , rendered = '󰅖 Failure'  , highlight = 'RenderMarkdownError' }  ,
+				danger    = { raw = '[!DANGER]'   , rendered = '󱐌 Danger'   , highlight = 'RenderMarkdownError' }  ,
+				bug       = { raw = '[!BUG]'      , rendered = '󰨰 Bug'      , highlight = 'RenderMarkdownError' }  ,
+				quote     = { raw = '[!QUOTE]'    , rendered = '󱆨 Quote'    , highlight = 'RenderMarkdownQuote' }  ,
+			},
 		})
 	end,
 },
@@ -93,6 +151,7 @@ return {
 --'AntonVanAssche/md-headers.nvim' : make toc list to navigate. it is replaced by markdown.nvim
 		-- it needs long load time
 --'ixru/nvim-markdown' : It dose not have recalculating number list
+--'OXY2DEV/markview.nvim' : default highlight is poor, if I set any configuration, it doesn't work
 {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
