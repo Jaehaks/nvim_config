@@ -157,6 +157,7 @@ return {
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
 	-- it doesn't work in filetype 'NeogitCommitMessage' 
 	'gaoDean/autolist.nvim',
+	enabled = false,
 	ft = {'markdown', 'text'},
 	config = function ()
 		local autolist = require('autolist')
@@ -184,7 +185,63 @@ return {
 
 	end
 },
+{
+	'roodolv/markdown-toggle.nvim',
+	config = function()
+		-- settings
+		local enabled_filetype = { 'markdown', 'text' }
+		require('markdown-toggle').setup({
+			use_default_keymaps = false,
+			filetypes = enabled_filetype,
+
+			enable_list_cycle = true,
+			list_table = { '-', '+', '*', '=' },
+
+			enable_box_cycle = true,
+			box_table = { 'x', '~', '!', '>' },
+
+			mimic_obsidian_list = true,
+			mimic_obsidian_cycle = true,
+
+			heading_table = { '#', '##', '###', '####', '#####' },
+
+			enable_blankhead_skip = true,
+			enable_inner_indent = false,
+			enable_unmarked_only = true, -- toggle unmarked lines first
+			enable_autolist = true,
+			enable_auto_samestate = false, -- maintain checkbox state when continusing list
+			enable_dot_repeat = false, -- dot repeat for toggle function
+		})
+
+		vim.api.nvim_create_autocmd('Filetype', {
+			desc = 'keymap for markdown-toggle.nvim',
+			pattern = enabled_filetype,
+			callback = function (args)
+				local opts  = {silent = true, noremap = true, buffer = args.buf}
+				local toggle = require('markdown-toggle')
+
+				-- for toggle list
+				vim.keymap.set({ "n", "x" }, "<leader>mq", toggle.quote, opts)
+				vim.keymap.set({ "n", "x" }, "<leader>mw", toggle.list, opts)
+				vim.keymap.set({ "n", "x" }, "<leader>me", toggle.olist, opts)
+				vim.keymap.set({ "n", "x" }, "<leader>mc", toggle.checkbox, opts)
+				vim.keymap.set({ "n", "x" }, "<leader>mt", toggle.heading, opts)
+
+				-- for autolist
+				vim.keymap.set("n", "O", toggle.autolist_up, opts)
+				vim.keymap.set("n", "o", toggle.autolist_down, opts)
+				vim.keymap.set("i", "<CR>", toggle.autolist_cr, opts)
+			end
+
+		})
+
+	end,
+
+},
 -- bullets-vim/bullets.nvim : it does not work in neovim
+-- gaoDean/autolist.nvim : sometimes, it makes indent problem when I put indent in front of word at the beginning line
+-- 						   when I enter TAB, indent is inserted after first character of the word. 
+-- 						   It is a big reason of why I migrate to other plugin
 {
 	'HakonHarnes/img-clip.nvim', -- paste image link and download file from clipboard
 	ft = {'markdown'},
