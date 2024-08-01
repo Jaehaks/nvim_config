@@ -156,8 +156,9 @@ return {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
 	-- it doesn't work in filetype 'NeogitCommitMessage' 
-	'gaoDean/autolist.nvim',
-	enabled = false,
+	-- 'gaoDean/autolist.nvim',
+	'mcauley-penney/autolist.nvim',
+	enabled = true,
 	ft = {'markdown', 'text'},
 	config = function ()
 		local autolist = require('autolist')
@@ -187,6 +188,7 @@ return {
 },
 {
 	'roodolv/markdown-toggle.nvim',
+	enabled = false,
 	config = function()
 		-- settings
 		local enabled_filetype = { 'markdown', 'text' }
