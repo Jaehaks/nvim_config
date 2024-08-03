@@ -19,9 +19,10 @@ return {
 		configs.setup({
 			-- :TSInstall does not work, but :TSInstallSync works
 			ensure_installed = { 'lua', 'luadoc', 'luap', 'luau',
+								 'c',
 								 'matlab',
 								 'python',
-							 	 'vim', 'vimdoc',
+								 'vim', 'vimdoc',
 								 'markdown', 'markdown_inline',
 								 'html', 'json',
 								 'diff', 'regex', 'ssh_config',
