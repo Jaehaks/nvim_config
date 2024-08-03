@@ -116,15 +116,24 @@ vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nv
 	command = 'silent! checktime'	-- check the buffer is changed out of neovim
 })
 
-
 ------------- editing -----------------------
+opt.inccommand = ''       -- disable show effect of substitute
 opt.number = true         -- set line number
 opt.relativenumber = true -- set relative line number
 opt.tabstop = 4           -- set inserted space in TAB
 opt.shiftwidth = 4        -- set indent space
 opt.autoindent = true     -- when enter next line, automatically indent from start line
 -- opt.smarttab = true
-opt.inccommand = ''       -- disable show effect of substitute
+-- opt.smartindent = true    -- smart autoindent when starting new line
+                          -- when 'cindent' is on  (or) 'indentexpr' is set => smartindent is no effect
+                          -- it add indent after { or 'if, else ... '
+                          -- so in markdown, 'indentexpr' is nil as default. so it requires smartindent
+                          -- but smartindent makes new line and indent after {.
+                          -- and then, if I enter } at the next line, outdent occurs.
+                          -- so <autoclose> plugins are not works directly
+                          -- plus, '#' removes all indent at the line, but not works?
+                          -- if '#' is located at first column, '>>' doesn't work
+						  -- I'll use nvim-FeMaco.lua in markdown instead of it 
 
 opt.wrap = false          -- disable line wrapping
 opt.splitright = true	  -- focus to new window when vsplit
