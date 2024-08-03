@@ -9,7 +9,7 @@ local snippets, autosnippets = {}, {}
 
 -- 1) make code block
 local code_block = s({
-	trig = '``\\',
+	trig = '```',
 	name = 'code block',
 	desc = 'make code block',
 	}, {
