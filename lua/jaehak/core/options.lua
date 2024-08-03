@@ -122,8 +122,8 @@ opt.number = true         -- set line number
 opt.relativenumber = true -- set relative line number
 opt.tabstop = 4           -- set inserted space in TAB
 opt.shiftwidth = 4        -- set indent space
-opt.autoindent = true     -- when enter next line, automatically indent from start line
 -- opt.smarttab = true
+opt.autoindent = true     -- when enter next line, automatically indent from start line
 -- opt.smartindent = true    -- smart autoindent when starting new line
                           -- when 'cindent' is on  (or) 'indentexpr' is set => smartindent is no effect
                           -- it add indent after { or 'if, else ... '
