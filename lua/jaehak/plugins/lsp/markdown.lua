@@ -278,6 +278,16 @@ return {
 		})
 		vim.keymap.set('n', '<leader>mv', img.paste_image, {noremap = true, desc = 'Paste Image From Clipboard'})
 	end
+},
+{
+	-- editing fenced code block using treesitter
+	'AckslD/nvim-FeMaco.lua',
+	config = function ()
+		local femaco = require('femaco')
+		femaco.setup({ })
+		vim.keymap.set('n', '<leader>mc', require('femaco.edit').edit_code_block, {noremap = true, desc = 'Edit code block'})
+	end
+
 }
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
