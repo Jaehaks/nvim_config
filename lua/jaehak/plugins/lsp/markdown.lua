@@ -282,6 +282,7 @@ return {
 {
 	-- editing fenced code block using treesitter
 	'AckslD/nvim-FeMaco.lua',
+	ft = {'markdown'},
 	config = function ()
 		local femaco = require('femaco')
 		femaco.setup({ })
