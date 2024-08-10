@@ -12,7 +12,6 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make'
 		},
-		'nvim-telescope/telescope-file-browser.nvim',
 		-- cder.nvim : (extension) change pwd using telescope, not useful to me, and 'ls' has invalid argument error
 		-- 			   it is useful when I want to subdirectories list and files quick
 	},
@@ -21,7 +20,6 @@ return {
 		local telescope  = require('telescope')
 		local actions    = require('telescope.actions')
 		local builtin    = require('telescope.builtin')
-		local actions_fb = require('telescope._extensions.file_browser.actions')
 		local utils      = require('telescope.utils')
 
 		-- telescope settings 	
@@ -116,17 +114,6 @@ return {
 				}
 			},
 			extensions = {
-				-- //////// extensions : file_browser ////////////
-				file_browser = {
-					path = '%:p:h', 		-- start dir,  expanded auto
-					select_buffer = true,	-- select current buffer
-					mappings = {
-						['n'] = {
-							['-'] = actions_fb.goto_parent_dir,
-							['o'] = actions_fb.open,
-						}
-					}
-				},
 				-- //////// extensions : fzf sorter (for find_files) ////////////
 				fzf = {
 					--fuzzy = true,			-- only use exact word 
@@ -150,7 +137,6 @@ return {
 		-- 1) need cmake for windows (cmake windows x64 installer)
 		-- 2) add system path with cmake
 		telescope.load_extension('fzf')
-		telescope.load_extension('file_browser')
 		telescope.load_extension('helpgrep')
 
 
@@ -226,7 +212,6 @@ return {
 		vim.keymap.set('n', '<leader>fk', builtin.keymaps, 			{desc = 'keymaps list'})                    -- keymaps list
 		vim.keymap.set('n', '<leader>fv', builtin.vim_options, 		{desc = 'vim options list'})                -- vim options list
 
-		vim.keymap.set('n', '<leader>fe', telescope.extensions.file_browser.file_browser, {desc = 'file_browser'})
 		vim.keymap.set('n', '<leader>fH', telescope.extensions.helpgrep.helpgrep, {desc = 'help grep'})
 	end
 }
