@@ -43,6 +43,9 @@ return {
 		vim.keymap.set({'o', 'x'}, 'ic', function() textobjs.multiCommentedLines() end)
 	end
 
-}
+},
 }
 -- 'nvim-treesitter/nvim-treesitter-textobjects' : it makes textobject with comment line only, not block
+-- 'danymat/neogen' : it is useful when I put description for functions even if cursor is in the function. 
+-- 					  it takes the cursor to top of the funciton rapidly. but the template is can be maed by luasnip
+-- 					  I think it can be replaced by luasnip
