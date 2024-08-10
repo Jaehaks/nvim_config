@@ -135,7 +135,7 @@ return {
 
 			end
 			
-			vim.keymap.set('n', '<leader>mf', FollowImage, {noremap = true})
+			vim.keymap.set('n', '<leader>mf', FollowImage, {noremap = true, desc = 'follow image link'})
 			
 		end
 		-- BUG: img_name_func doesn't work
