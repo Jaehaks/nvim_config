@@ -51,4 +51,12 @@ return {
 		-- vim.api.nvim_set_hl(0, "@markup.math.latex" , { link = 'NightflyYello'}) -- it has bug. but is the best...
 	end,
 },
+{
+	-- rendering help using vimdoc treesitter
+	"OXY2DEV/helpview.nvim",
+	lazy = false, -- Recommended
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter"
+	}
+}
 }
