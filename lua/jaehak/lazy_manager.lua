@@ -27,6 +27,9 @@ if vim.g.vscode == nil then
 				--		enabled = false,
 				notify = false,
 			},
+			rocks = { -- disable lazy.nvim's luarocks supports for fugit2
+				enabled = false,
+			}
 		})
 else		-- for vscode
 	require('lazy').setup({
