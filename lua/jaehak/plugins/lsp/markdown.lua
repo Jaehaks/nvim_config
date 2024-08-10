@@ -10,6 +10,7 @@ return {
 		vim.keymap.set('n', '<leader>mp', '<Cmd>:MarkdownPreviewToggle<CR>', {desc = 'toggle markdown preview'})
 	end
 },
+-- 'datsfilipe/md-previewer' : how to use this? 
 {
 	-- highlight of markdown file. but there are no delay to navigate
 	'MeanderingProgrammer/markdown.nvim',
@@ -115,10 +116,11 @@ return {
 		-- 4) cons : conceal is not perfect. but treesitter cannot conceal without link 
 		-- mkdnflow is very functional, it seems to be well-used for creating tables and links.
 		-- but for me, these are too much, so I disable lots of functions
+-- tadmccorkle/markdown.nvim : I didn't use toc and shortcut usually. toc is feature of note taking plugins too
 --'AntonVanAssche/md-headers.nvim' : make toc list to navigate. it is replaced by markdown.nvim
 		-- it needs long load time
 --'ixru/nvim-markdown' : It dose not have recalculating number list
---'OXY2DEV/markview.nvim' : default highlight is poor, if I set any configuration, it doesn't work
+--'OXY2DEV/markview.nvim' : default highlight is poor, if I set any configuration, it doesn't work all
 {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
