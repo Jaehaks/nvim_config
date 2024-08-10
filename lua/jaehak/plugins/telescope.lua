@@ -130,7 +130,19 @@ return {
 						n = { ['<CR>'] = actions.select_default, },
 						i = { ['<CR>'] = actions.select_default, }
 					}
-				}
+				},
+				-- //////// extensions : heading (show headers of markdown) ////////////
+				heading = { -- cannot support detour floating window
+					treesitter = true,
+					picker_opts = {
+						layout_config = {
+							width = 0.8,
+							preview_width = 0.5
+						},
+						layout_strategy = 'horizontal',
+						sorting_strategy = 'ascending',
+					},
+				},
 			},
 		})
 		-- ////// telescope-fzf-navie.nvim //////

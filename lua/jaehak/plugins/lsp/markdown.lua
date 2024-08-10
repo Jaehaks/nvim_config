@@ -94,47 +94,14 @@ return {
 	end,
 },
 {
-	-- surround emphasis / make links / TOC
-	'tadmccorkle/markdown.nvim',
+	'crispgm/telescope-heading.nvim',
+	dependencies = {
+		'nvim-telescope/telescope.nvim',
+	},
 	ft = {'markdown'},
 	config = function ()
-		require('markdown').setup({
-			mappings = { -- applied to markdown file only
-				inline_surround_toggle      = "gs",
-				inline_surround_toggle_line = "gS",
-				inline_surround_delete      = "ds",
-				inline_surround_change      = "cs", -- `aaa` -> csci -> *aaa* 
-				link_add                    = "gm",
-				link_follow                 = "gM",
-				go_curr_heading             = "]c",
-				go_parent_heading           = "]p",
-				go_next_heading             = "]]",
-				go_prev_heading             = "[[",
-			},
-			inline_surround = {
-				emphasis      = { key = "i", txt = "*", },-- italic
-				strong        = { key = "b", txt = "**", },-- bold
-				strikethrough = { key = "s", txt = "~~", },-- cancel line
-				code          = { key = "c", txt = "`", },-- code line
-			},
-			link = {
-				paste = {
-					enable = true, -- make link when URLs are pasted
-				},
-			},
-			toc = {
-				omit_heading = "toc omit heading",
-				omit_section = "toc omit section",
-				markers = { "-" },
-			},
-			hooks = {
-				follow_link = nil,
-			},
-			on_attach = function (bufnr)
-				vim.keymap.set('n', '<leader>mh', '<Cmd>MDTocAll<CR>', {noremap = true, buffer = bufnr, desc = 'show TOC list'})
-				vim.keymap.set('n', '<leader>mH', '<Cmd>MDInsertToc<CR>', {noremap = true, buffer = bufnr, desc = 'Insert TOC list'})
-			end,
-		})
+		require('telescope').load_extension('heading')
+		vim.keymap.set('n', '<leader>mh', '<Cmd>Telescope heading<CR>' , {desc = 'show header of markdown'})
 	end
 },
 -- without any lsp, default filetype detector support syntax highlighting
