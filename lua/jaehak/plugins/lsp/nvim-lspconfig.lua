@@ -112,30 +112,59 @@ return {
 		-- it works, but the grammar check level is poor I thought and cannot apply by context
 		-- ltex server does offline operation
 		-- ltex only comment check in program language 
-		lspconfig.ltex.setup({
-			cmd = {'ltex-ls'},
-			settings = {
-				ltex = {
-					-- both 'enabled' and 'filetypes' are listed to check
-					enabled = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
-					language = 'en-US',
-					disabledRules = {
-						['en-US'] = {
-							'MORFOLOGIK_RULE_EN_US',	-- misspell check
-							'WHITESPACE_RULE',			-- check white space in front of line
-							'COMMA_PARENTHESIS_WHITESPACE',	-- space after parenthesis
-						}
-					}
-				}
-			},
-			root_dir = function (fname)
-				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
-			end,
-			filetypes = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
-			single_file_support = true,
-		})
+		-- lspconfig.ltex.setup({
+		-- 	cmd = {'ltex-ls'},
+		-- 	settings = {
+		-- 		ltex = {
+		-- 			-- both 'enabled' and 'filetypes' are listed to check
+		-- 			enabled = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
+		-- 			language = 'en-US',
+		-- 			disabledRules = {
+		-- 				['en-US'] = {
+		-- 					'MORFOLOGIK_RULE_EN_US',	-- misspell check
+		-- 					'WHITESPACE_RULE',			-- check white space in front of line
+		-- 					'COMMA_PARENTHESIS_WHITESPACE',	-- space after parenthesis
+		-- 				}
+		-- 			}
+		-- 		}
+		-- 	},
+		-- 	root_dir = function (fname)
+		-- 		return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+		-- 	end,
+		-- 	filetypes = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
+		-- 	single_file_support = true,
+		-- })
 		-- grammar-guard.nvim : deprecated
 		-- prosesitter : deprecated
+
+		-- ####### 6) harper_ls language server configuration #########
+		-- more faster than ltex
+		lspconfig.harper_ls.setup({
+			filetypes = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
+			settings = {
+				['harper-ls'] = {
+					linters = {
+						spell_check                  = true,
+						spelled_numbers              = false,
+						an_a                         = true,
+						sentence_capitalization      = false,
+						unclosed_quotes              = true,
+						wrong_quotes                 = true,
+						long_sentences               = false,
+						repeated_words               = false,
+						spaces                       = true,
+						matcher                      = true,
+						correct_number_suffix        = false,
+						number_suffix_capitalization = false,
+						multiple_sequential_pronouns = true,
+					},
+					diagnosticSeverity = 'hint', -- show the spell check as hint
+					codeActions = {
+						forceStable = true
+					}
+				}
+			}
+		})
 
 
 		-- ###### 6) python language server configuration ###########

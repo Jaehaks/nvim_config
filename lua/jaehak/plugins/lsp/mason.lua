@@ -25,7 +25,8 @@ return {
 				'lua_ls',
 				'matlab_ls',     -- after matlab_ls install, copy matlab-language-server.cmd to nvim-data/mason/bin manually
 				'jsonls',
-				'ltex',          -- grammar check with LanguageTool
+				-- 'ltex',          -- grammar check with LanguageTool
+				'harper_ls',
 				'ruff_lsp',
 				'pyright',
 				'pylsp',
@@ -37,7 +38,8 @@ return {
 				"lua_ls",
 				"matlab_ls",
 				"jsonls",
-				"ltex",
+				-- "ltex",
+				'harper_ls',
 				"ruff_lsp",    -- use ruff as linter without nvim-lint for python
 				"pyright", 	   -- python lsp from Microsoft, completion variables
 
