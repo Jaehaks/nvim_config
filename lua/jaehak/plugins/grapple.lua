@@ -77,6 +77,8 @@ return {
 -- 'natecraddock/workspaces.nvim' : it save cwd as workspace. Opening workspace means that change cd. 
 -- 								    it will be useful with hooks after load workspace like telescope find_files, 
 -- 								    now From combination of grapple, telescope and oil, it can be replaced to workspace's behavior 
+-- 'Rics-Dev/project-explorer.nvim' : how to use? and no docs. default keymapping doesn't work
+--
 
 
 -- ///////// sessions plugins
