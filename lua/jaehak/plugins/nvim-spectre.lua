@@ -26,3 +26,4 @@ return {
 		vim.keymap.set('v', '<leader>sw', '<cmd>lua require("spectre").open_visual()<CR>', { desc = "Search visual word" })
 	end
 }
+-- 'chrisgrieser/nvim-rip-substitute' : it's ui is nice, I want to see line list to replace , but it only highlight in current view 
