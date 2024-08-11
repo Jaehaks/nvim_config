@@ -146,7 +146,7 @@ return {
 				vim.keymap.set('i', '<CR>'      , '<CR><Cmd>AutolistNewBullet<CR>'   , opts)
 				vim.keymap.set('n', 'o'         , 'o<Cmd>AutolistNewBullet<CR>'      , opts)
 				vim.keymap.set('n', 'O'         , 'O<Cmd>AutolistNewBulletBefore<CR>', opts)
-				vim.keymap.set('n', '<leader>mn', '<Cmd>AutolistCycleNext<CR>'       , opts)
+				vim.keymap.set('n', '<C-m>'		, '<Cmd>AutolistCycleNext<CR>'       , opts)
 				vim.keymap.set('n', '<leader>mr', '<Cmd>AutolistRecalculate<CR>'     , opts)
 				vim.keymap.set('n', 'dd'        , 'dd<Cmd>AutolistRecalculate<CR>'   , opts)
 				vim.keymap.set('v', 'd'         , 'd<Cmd>AutolistRecalculate<CR>'    , opts)
@@ -215,6 +215,7 @@ return {
 -- 						   It is a big reason of why I migrate to other plugin
 {
 	'HakonHarnes/img-clip.nvim', -- paste image link and download file from clipboard
+	enabled = false,
 	ft = {'markdown'},
 	config = function ()
 		local img = require('img-clip')

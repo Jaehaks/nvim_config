@@ -23,7 +23,6 @@ return {
 	{
 		'epwalsh/obsidian.nvim',
 		enabled = true,
-		version = '*',
 		lazy = true,
 		ft = 'markdown',
 		dependencies = {
@@ -31,12 +30,15 @@ return {
 			'nvim-telescope/telescope.nvim',
 		},
 		init = function ()
-			vim.opt.conceallevel = 2 -- set conceallevel
+			vim.opt.conceallevel = 2 -- set conceallevel (but markdown.nvim will changes)
 		end,
 		config = function ()
+			-- ####################################################
+			-- * obsidian's setting
+			-- ####################################################
 			local obsidian = require('obsidian')
 			obsidian.setup({
-				workspaces = {
+				workspaces = { -- this directory must exist
 					{
 						name = 'personal',
 						path = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\personal'
@@ -49,21 +51,24 @@ return {
 				mappings = {}, -- disable default keymapping
 				preferred_link_style = 'markdown',
 				attachments = {
-					img_name_func = function () -- it doesn't work
-						local client = obsidian.get_client()
-
-						local note = client:current_note() 
-						return 'c:\\Users\\USER\\img'
-						-- if note then
-						-- 	-- return string.format("%s/imgs/", note.path)
-						-- 	return string.format("%s/imgs/", note.path.filename)
-						-- else
-						-- 	return string.format("%s-", os.time())
-						-- end
+					img_name_func = function () -- download clipboard image to filename folder
+						return string.format("%s\\%s-", vim.fn.expand('%:p:r'), os.date('%y%m%d'))
 					end
-				}
+				},
+				ui = {
+					enable = false, -- use markdown.nvim as renderer
+				},
+				note_id_func = function (title) -- set note id automatically when :ObsidianNew
+					if title ~= nil then
+						title = title:gsub(' ','-')
+					end
+					return tostring(os.date('%y%m%d')) .. '-' .. title
+				end,
 			})
 
+			-- ####################################################
+			-- * Follow image link with wezterm
+			-- ####################################################
 			-- check extension of link is image
 			local GetFileExtension = function (url)
 				local image_ext_list = {'.bmp', '.jpg', '.jpeg', '.png', '.gif'}
@@ -113,7 +118,8 @@ return {
 				start_idx, end_idx = string.find(url, '%b()')
 				url = url:sub(start_idx+1, end_idx-1)
 				if not GetFileExtension(url) then
-					vim.api.nvim_err_writeln('Link is not image!')
+					vim.api.nvim_command(':ObsidianFollowLink') -- if the link is not image, use obsidian's api
+					-- vim.api.nvim_err_writeln('Link is not image!')
 					return nil
 				end
 
@@ -135,7 +141,14 @@ return {
 
 			end
 			
-			vim.keymap.set('n', '<leader>mf', FollowImage, {noremap = true, desc = 'follow image link'})
+			vim.keymap.set('n', '<leader>mf', FollowImage                 , {noremap = true, desc = 'follow image link'})
+			vim.keymap.set('n', '<leader>mv', '<Cmd>ObsidianPasteImg<CR>' , {noremap = true, desc = '(Obsidian)Paste Image From Clipboard'})
+			vim.keymap.set('n', '<leader>mw', '<Cmd>ObsidianWorkspace<CR>', {noremap = true, desc = '(Obsidian)switch another workspace'})
+			vim.keymap.set('n', '<leader>mn', '<Cmd>ObsidianNew<CR>'	  , {noremap = true, desc = '(Obsidian)Make new obsidian note'})
+			vim.keymap.set('n', '<leader>mo', '<Cmd>ObsidianOpen<CR>'	  , {noremap = true, desc = '(Obsidian)Open a note in obsidian app'})
+			-- ObsidianTOC() : use telescope-heading instead of it
+			-- ObsidianQuickSwitch() : use oil or telescope instead of it
+			--
 			
 		end
 		-- BUG: img_name_func doesn't work
