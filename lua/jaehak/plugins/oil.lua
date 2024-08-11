@@ -79,9 +79,24 @@ return {
 			}
 		})
 
+
+		-- open current buffer directory
 		vim.keymap.set('n', '<leader>ee', oil.open_float, {desc = 'open current buffer dir'}) -- default current buffer cwd
-		vim.keymap.set('n', '<leader>ec', [[<Cmd>lua require('oil').open_float(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")<CR>]], {desc = 'open config dir'}) -- default current buffer cwd
-		vim.keymap.set('n', '<leader>ed', [[<Cmd>lua require('oil').open_float(vim.fn.stdpath("data") .. "/lazy")<CR>]], {desc = 'open data dir'}) -- default current buffer cwd
+
+		-- open config directory
+		vim.keymap.set('n', '<leader>ec', function () -- default current buffer cwd
+			require('oil').open_float(vim.fn.stdpath("config") .. "\\lua\\jaehak\\plugins")
+		end, {desc = 'open nivm-config dir'}) 
+
+		-- open data directory
+		vim.keymap.set('n', '<leader>ed', function () 
+			require('oil').open_float(vim.fn.stdpath("data") .. "\\lazy")
+		end, {desc = 'open nvim-data dir'}) 
+
+		-- open note directory
+		vim.keymap.set('n', '<leader>en', function () 
+			require('oil').open_float(vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\personal')
+		end, {desc = 'open note dir'}) 
 
 		-- local keymap for oil
 		local User_Oil = vim.api.nvim_create_augroup('User_Oil', {clear = true})

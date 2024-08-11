@@ -35,13 +35,19 @@ return {
 						icon = '',
 						desc = 'Folder : Config', desc_hl = 'String',
 						key = 'c', key_hl = 'DashboardShortCut',
-						action = [[lua require("oil").open_float(vim.fn.stdpath("config") .. "/lua/jaehak/plugins")]],
+						action = [[lua require("oil").open_float(vim.fn.stdpath("config") .. "\\lua\\jaehak\\plugins")]],
 					},
 					{
 						icon = '',
 						desc = 'Folder : D:\\MATLAB_Project', desc_hl = 'String',
 						key = 'd', key_hl = 'DashboardShortCut',
 						action = [[lua require("oil").open_float("D:\\MATLAB_Project")]],
+					},
+					{
+						icon = '',
+						desc = 'Folder : Note', desc_hl = 'String',
+						key = 'n', key_hl = 'DashboardShortCut',
+						action = [[lua require("oil").open_float(vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\personal')]],
 					},
 					{
 						icon = '',
@@ -53,7 +59,7 @@ return {
 						icon = '',
 						desc = 'Last Sessions', desc_hl = 'String',
 						key = 's', key_hl = 'DashboardShortCut',
-						action = [[lua require("sessions").load(vim.fn.stdpath('data') .. '/sessions/session_saved.txt', {autosave = false})]],
+						action = [[lua require("sessions").load(vim.fn.stdpath('data') .. '\\sessions\\session_saved.txt', {autosave = false})]],
 					},
 				},
 				footer = function()
