@@ -1,26 +1,5 @@
 return {
 	{
-		'renerocksai/telekasten.nvim',
-		enabled = false,
-		dependencies = {'nvim-telescope/telescope.nvim'},
-		config = function ()
-			local telekasten = require('telekasten')
-			local home_dir = vim.fn.expand('$HOME');
-			home_dir = home_dir:gsub('\\','/');
-			telekasten.setup({
-				home = home_dir .. '/Telekasten_Notes',
-				take_over_my_home = false,
-				image_subdir = 'img',
-				extension = '.md',
-				image_link_style = 'markdown',
-				tage_notation = '#tag',
-				auto_set_filetype = false,
-				auto_set_syntax = true,
-
-			})
-		end
-	},
-	{
 		'epwalsh/obsidian.nvim',
 		enabled = true,
 		lazy = true,
@@ -49,6 +28,7 @@ return {
 					}
 				},
 				mappings = {}, -- disable default keymapping
+				new_notes_location = 'current_dir',
 				preferred_link_style = 'markdown',
 				attachments = {
 					img_name_func = function () -- download clipboard image to filename folder
@@ -141,14 +121,15 @@ return {
 
 			end
 			
-			vim.keymap.set('n', '<leader>mf', FollowImage                 , {noremap = true, desc = 'follow image link'})
-			vim.keymap.set('n', '<leader>mv', '<Cmd>ObsidianPasteImg<CR>' , {noremap = true, desc = '(Obsidian)Paste Image From Clipboard'})
-			vim.keymap.set('n', '<leader>mw', '<Cmd>ObsidianWorkspace<CR>', {noremap = true, desc = '(Obsidian)switch another workspace'})
-			vim.keymap.set('n', '<leader>mn', '<Cmd>ObsidianNew<CR>'	  , {noremap = true, desc = '(Obsidian)Make new obsidian note'})
-			vim.keymap.set('n', '<leader>mo', '<Cmd>ObsidianOpen<CR>'	  , {noremap = true, desc = '(Obsidian)Open a note in obsidian app'})
+			vim.keymap.set('n', '<leader>mf', FollowImage                   , {noremap = true, desc = 'follow image link'})
+			vim.keymap.set('n', '<leader>mv', '<Cmd>ObsidianPasteImg<CR>'   , {noremap = true, desc = '(Obsidian)Paste Image From Clipboard'})
+			vim.keymap.set('n', '<leader>mw', '<Cmd>ObsidianWorkspace<CR>'  , {noremap = true, desc = '(Obsidian)switch another workspace'})
+			vim.keymap.set('n', '<leader>ms', '<Cmd>ObsidianQuickSwitch<CR>', {noremap = true, desc = '(Obsidian)Switch another file'})
+			vim.keymap.set('n', '<leader>mn', '<Cmd>ObsidianNew<CR>'        , {noremap = true, desc = '(Obsidian)Make new obsidian note'})
+			vim.keymap.set('n', '<leader>mo', '<Cmd>ObsidianOpen<CR>'       , {noremap = true, desc = '(Obsidian)Open a note in obsidian app'})
 			-- ObsidianTOC() : use telescope-heading instead of it
-			-- ObsidianQuickSwitch() : use oil or telescope instead of it
-			--
+			-- ObsidianQuickSwitch() : it can be replaced with oil or telescope,
+			-- 						   but, this func can add file link directly
 			
 		end
 		-- BUG: img_name_func doesn't work
