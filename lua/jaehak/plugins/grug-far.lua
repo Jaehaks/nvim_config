@@ -24,21 +24,11 @@ return {
 			},
 		})
 
-		-- open grug-far about current file, current word
-		vim.keymap.set('n', '<leader>sf', function ()
+		-- open grug-far about current file, current word, it supports visual block
+		vim.keymap.set({'n','x'}, '<leader>sf', function ()
 			grugfar.grug_far({
 				prefills = {
 					search = vim.fn.expand('<cword>'),
-					paths = vim.fn.expand('%')
-				}
-			})
-		end, { desc = "Find and replace on current file" })
-
-		-- BUG: it takes the word when I call this function twice
-		-- open grug-far about curretn file, visual range
-		vim.keymap.set('x', '<leader>sf', function ()
-			grugfar.with_visual_selection({
-				prefills = {
 					paths = vim.fn.expand('%')
 				}
 			})
