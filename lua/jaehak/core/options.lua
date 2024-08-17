@@ -141,6 +141,19 @@ opt.splitright = true	  -- focus to new window when vsplit
 -- opt.splitbelow = true	  -- focus to new window when split
 opt.scrolloff = 5		  -- scroll start offset line
 
+
+-- set local options for markdown because markdown's ftplugin must set expandtab
+local aug_Markdown = vim.api.nvim_create_augroup('aug_Markdown', {clear = true})
+vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim focused
+	group = aug_Markdown,
+	pattern = 'markdown',
+	callback = function ()
+		vim.opt_local.expandtab = false
+		vim.opt_local.tabstop = 4           -- set inserted space in TAB
+		vim.opt_local.shiftwidth = 4        -- set indent space
+	end
+})
+
 ------------- output file -------------------
 opt.swapfile = false		-- no swap file when file is created 
 opt.backup = false 			-- no backup file when file is created
