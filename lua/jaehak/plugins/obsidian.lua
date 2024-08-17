@@ -19,13 +19,9 @@ return {
 			obsidian.setup({
 				workspaces = { -- this directory must exist
 					{
-						name = 'personal',
-						path = paths.obsidian.vault
+						name = 'Personal',
+						path = paths.obsidian.personal
 					},
-					{
-						name = 'works',
-						path = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\works'
-					}
 				},
 				mappings = {}, -- disable default keymapping
 				new_notes_location = 'current_dir',

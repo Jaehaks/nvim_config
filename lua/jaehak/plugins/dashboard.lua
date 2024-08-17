@@ -48,7 +48,7 @@ return {
 						icon = '',
 						desc = 'Folder : Note', desc_hl = 'String',
 						key = 'n', key_hl = 'DashboardShortCut',
-						action = function () require('oil').open_float(paths.obsidian.vault) end,
+						action = function () require('oil').open_float(paths.obsidian.personal) end,
 					},
 					{
 						icon = '',

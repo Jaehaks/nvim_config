@@ -97,8 +97,8 @@ return {
 
 		-- open note directory
 		vim.keymap.set('n', '<leader>en', function () 
-			require('oil').open_float(paths.obsidian.vault)
-		end, {desc = 'open note dir'}) 
+			require('oil').open_float(paths.obsidian.personal)
+		end, {desc = 'open note dir(personal)'}) 
 
 		-- local keymap for oil
 		local User_Oil = vim.api.nvim_create_augroup('User_Oil', {clear = true})

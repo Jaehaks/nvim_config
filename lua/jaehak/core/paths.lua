@@ -14,7 +14,7 @@ M.session = {
 }
 
 M.obsidian = {
-	vault = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\Personal',
+	personal = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\Personal',
 }
 
 return M
