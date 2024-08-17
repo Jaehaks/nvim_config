@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 	-- lir.nvim : very simple and good to operate, but i think oil.nvim is more expandable
 	-- 			  if current file name change, the change not apply to buffer name immediately
@@ -85,17 +86,18 @@ return {
 
 		-- open config directory
 		vim.keymap.set('n', '<leader>ec', function () -- default current buffer cwd
-			require('oil').open_float(vim.fn.stdpath("config") .. "\\lua\\jaehak\\plugins")
+			-- require('oil').open_float(vim.fn.stdpath("config") .. "\\lua\\jaehak\\plugins")
+			require('oil').open_float(paths.nvim.config)
 		end, {desc = 'open nivm-config dir'}) 
 
 		-- open data directory
 		vim.keymap.set('n', '<leader>ed', function () 
-			require('oil').open_float(vim.fn.stdpath("data") .. "\\lazy")
+			require('oil').open_float(paths.nvim.data)
 		end, {desc = 'open nvim-data dir'}) 
 
 		-- open note directory
 		vim.keymap.set('n', '<leader>en', function () 
-			require('oil').open_float(vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\personal')
+			require('oil').open_float(paths.obsidian.vault)
 		end, {desc = 'open note dir'}) 
 
 		-- local keymap for oil

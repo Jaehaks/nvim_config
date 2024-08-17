@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 {
 	-- dashboard is faster a little?
@@ -35,31 +36,31 @@ return {
 						icon = '',
 						desc = 'Folder : Config', desc_hl = 'String',
 						key = 'c', key_hl = 'DashboardShortCut',
-						action = [[lua require("oil").open_float(vim.fn.stdpath("config") .. "\\lua\\jaehak\\plugins")]],
+						action = function () require('oil').open_float(paths.nvim.config) end,
 					},
 					{
 						icon = '',
 						desc = 'Folder : D:\\MATLAB_Project', desc_hl = 'String',
 						key = 'd', key_hl = 'DashboardShortCut',
-						action = [[lua require("oil").open_float("D:\\MATLAB_Project")]],
+						action = function () require('oil').open_float(paths.project.matlab) end,
 					},
 					{
 						icon = '',
 						desc = 'Folder : Note', desc_hl = 'String',
 						key = 'n', key_hl = 'DashboardShortCut',
-						action = [[lua require("oil").open_float(vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\personal')]],
+						action = function () require('oil').open_float(paths.obsidian.vault) end,
 					},
 					{
 						icon = '',
 						desc = 'Bookmark Files', desc_hl = 'String',
 						key = 'p', key_hl = 'DashboardShortCut',
-						action = [[lua require("grapple").toggle_tags()]],
+						action = function () require('grapple').toggle_tags() end,
 					},
 					{
 						icon = '',
 						desc = 'Last Sessions', desc_hl = 'String',
 						key = 's', key_hl = 'DashboardShortCut',
-						action = [[lua require("sessions").load(vim.fn.stdpath('data') .. '\\sessions\\session_saved.txt', {autosave = false})]],
+						action = function () require('sessions').load(paths.session.saved, {autosave = false}) end,
 					},
 				},
 				footer = function()

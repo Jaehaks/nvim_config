@@ -20,7 +20,7 @@ return {
 				workspaces = { -- this directory must exist
 					{
 						name = 'personal',
-						path = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\personal'
+						path = paths.obsidian.vault
 					},
 					{
 						name = 'works',
