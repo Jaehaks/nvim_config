@@ -139,6 +139,7 @@ opt.autoindent = true     -- when enter next line, automatically indent from sta
 opt.wrap = false          -- disable line wrapping
 opt.splitright = true	  -- focus to new window when vsplit
 -- opt.splitbelow = true	  -- focus to new window when split
+opt.scrolloff = 5		  -- scroll start offset line
 
 ------------- output file -------------------
 opt.swapfile = false		-- no swap file when file is created 
