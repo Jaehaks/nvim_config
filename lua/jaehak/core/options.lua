@@ -68,18 +68,18 @@ end
 
 
 ------------- font setting -----------------------
-opt.guifont = 'FiraCode Nerd Font Mono:h11'
-opt.guifontwide = '나눔고딕:h11'
+opt.guifont       = 'FiraCode Nerd Font Mono:h11'
+opt.guifontwide   = '나눔고딕:h11'
 opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
 
 
 ------------ gui windows ------------------------
 -- show cursorline only current buffer 
-opt.cursorline = true		-- show underline where current cursor is located
-opt.termguicolors = true 	-- change cursor line from line to block 
-opt.signcolumn = 'yes' 	-- show additional gray column on the leftside of line number 
-opt.shellslash = false -- if true, '/' is used for expanding directory
-
+opt.cursorline    = true    -- show underline where current cursor is located
+opt.termguicolors = true    -- change cursor line from line to block
+opt.signcolumn    = 'yes'   -- show additional gray column on the leftside of line number
+opt.shellslash    = true    -- if true, '/' is used for expanding directory
+opt.completeslash = 'slash' -- slash is used for path completion
 
 -- cursor line in only active window
 -- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window
