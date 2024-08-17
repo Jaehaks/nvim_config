@@ -153,9 +153,11 @@ return {
 		end , {noremap = true, desc = 'LSP - goto prev action-preview'})
 	end
 
-}
+},
 }
 -- toggle term : must close using :q! not :q
 -- lspsaga toggle term can use after lsp attatch only. and i will change to floatterm
 -- ray-x/navigator.lua : change lsp action more comfortable. too complicate to I use...
 -- stevearc/aerial.nvim : it shows only function
+-- rachartier/tiny-code-action.nvim : it is exactly same with 'actions-preview.nvim'
+-- 									  But the loading time is longer
