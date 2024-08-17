@@ -1,4 +1,5 @@
 local opt = vim.opt 		-- for conciseness 
+local paths = require('jaehak.core.paths')
 
 
 -- 1) neovide supports customize cursor highlight 
@@ -99,7 +100,7 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 ------------- file detect -----------------------
 vim.g.has_win32 = vim.fn.has('win32')
 if vim.g.has_win32 == 1 then
-	vim.g.python3_host_prog = vim.fn.stdpath('config') .. '\\.Nvim_venv\\Scripts\\python'		-- use python support
+	vim.g.python3_host_prog = paths.nvim.python
 	opt.path:append(vim.fn.stdpath("config") .. "\\**10")
 	opt.path:append(vim.fn.stdpath("data") .. "\\**10")
 else

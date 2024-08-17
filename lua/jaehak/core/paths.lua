@@ -3,6 +3,7 @@ local M = {}
 M.nvim = {
 	config = vim.fn.stdpath("config") .. "\\lua\\jaehak\\plugins",
 	data   = vim.fn.stdpath("data") .. "\\lazy",
+	python = vim.fn.stdpath('config') .. '\\.Nvim_venv\\Scripts\\python'		-- use python support
 }
 
 M.project = {
