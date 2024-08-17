@@ -2,7 +2,6 @@ local paths = require('jaehak.core.paths')
 return {
 	{
 		'epwalsh/obsidian.nvim',
-		enabled = true,
 		lazy = true,
 		ft = 'markdown',
 		dependencies = {
