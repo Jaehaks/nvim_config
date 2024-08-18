@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 {
 	-- list up important files (add list to nvim-data/grapple)
@@ -28,7 +29,7 @@ return {
 	lazy = false, -- for startup window
 	config = function ()
 		local sessions = require('sessions')
-		local saved_path = vim.fn.stdpath('data') .. '/sessions/session_saved.txt'
+		local saved_path = paths.session.saved
 		if vim.g.has_win32 == 1 then
 			saved_path = saved_path:gsub('/','\\')
 		end
