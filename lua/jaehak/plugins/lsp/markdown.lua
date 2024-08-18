@@ -63,15 +63,18 @@ return {
 				},
 			},
 			code = {
-				enabled = true,
-				sign = false, -- don't show icon of code block in sign column
-				style = 'full', -- symbol + Lang
-				left_pad = 2, -- padding to left of code block
-				right_pad = 2, -- for 'block' width
-				width = 'block',
-				border = 'thick', -- render full background region of code
-				highlight = 'RenderMarkdowncode', -- highlight of code block
-				highlight_inline = '', -- disable highlight of inline code
+				enabled          = true,
+				sign             = false,                -- don't show icon of code block in sign column
+				style            = 'full',               -- symbol + Lang
+ 														 -- padding to left of code block
+														 -- if it is different with tabstop, 
+														 -- the first indentation of codeblcok is different with second indentation
+				left_pad         = vim.api.nvim_get_option_value('tabstop', {}),
+				right_pad        = 2,                    -- for 'block' width
+				width            = 'block',
+				border           = 'thick',              -- render full background region of code
+				highlight        = 'RenderMarkdowncode', -- highlight of code block
+				highlight_inline = '',                   -- disable highlight of inline code
 			},
 			bullet = {
 				enabled = true,
