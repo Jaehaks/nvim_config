@@ -41,6 +41,16 @@ return {
 			anti_conceal = { -- it set autocmd for cursormoved, but I don't know what it does
 				enabled = false,
 			},
+			win_options = {
+				conceallevel = { 
+					default  = 0,  -- for other mode rendering, if conceallevel >= 1, (```) doesn't show event insert mode
+					rendered = 3,  -- for normal mode rendering
+				},
+				concealcursor = {  -- which mode to conceal cursorline
+					default  = '',
+					rendered = '', -- disable conceal at cursorline
+				},
+			},
 			heading = {
 				enabled = true,
 				sign = false, -- don't show icon of heading in sign column
