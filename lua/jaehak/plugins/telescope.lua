@@ -1,5 +1,6 @@
 return {
-	'nvim-telescope/telescope.nvim',
+	-- 'nvim-telescope/telescope.nvim',
+	'Jaehaks/telescope.nvim',
 	event = 'VeryLazy',
 	dependencies = {
 		'nvim-lua/plenary.nvim',
@@ -171,7 +172,7 @@ return {
 			opts.cwd = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
 			if vim.v.shell_error ~= 0 then -- if it it not git repository, 1) find lsp root_dir 2) find cwd
 				local bufnr = vim.api.nvim_get_current_buf()
-				local clients = vim.lsp.get_active_clients({bufnr = bufnr})
+				local clients = vim.lsp.get_clients({bufnr = bufnr})
 				for _, client in pairs(clients) do --  assume that filetype lsp will be first
 					opts.cwd = client.config.root_dir
 					break

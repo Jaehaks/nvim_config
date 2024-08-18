@@ -8,7 +8,8 @@ return {
 		{
 			'benfowler/telescope-luasnip.nvim',
 			dependencies = {
-				'nvim-telescope/telescope.nvim',
+				-- 'nvim-telescope/telescope.nvim',
+				'Jaehaks/telescope.nvim',
 			},
 			module = 'telescope._extensions.luasnip'
 		}
