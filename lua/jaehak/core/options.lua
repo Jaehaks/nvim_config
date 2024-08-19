@@ -103,9 +103,10 @@ if vim.g.has_win32 == 1 then
 	vim.g.python3_host_prog = paths.nvim.python
 	opt.path:append(vim.fn.stdpath("config") .. "\\**10")
 	opt.path:append(vim.fn.stdpath("data") .. "\\**10")
+	vim.opt.rtp:prepend(paths.nvim.luarocks)
 else
 	vim.g.python3_host_prog = '~/.config/.Nvim_venv/bin/python'		-- use python support
-	opt.path:append(vim.fn.stdpath("config") .. "/**10")
+	opt.path:append(vim.fn.stdpath() .. "/**10")
 	opt.path:append(vim.fn.stdpath("data") .. "/**10")
 end
 opt.autochdir = true	-- change pwd where current buffer is located
