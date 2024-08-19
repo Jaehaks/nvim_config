@@ -43,7 +43,7 @@ return {
 		-- gk : 1) lspsaga has strong advantage about peek_definition because it shows code_action together
 		-- 		   but sometimes, lspsaga's peek_definition invokes error. I have to restart neovim after error 
 		-- 		2) lspsaga shows always one diagnostic even though there are multiple diagnostic in the line
-		-- vim.keymap.set('n', 'go'     , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
+		-- vim.keymap.set('n', 'go' , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
 		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'LSP - hover_doc'                 , silent = true, noremap = true})
 		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'LSP - hover_doc ++keep'          , silent = true, noremap = true})
 		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'LSP - peek_definition'           , silent = true, noremap = true})
@@ -124,6 +124,7 @@ return {
 },
 {
 	'aznhe21/actions-preview.nvim',
+	enabled = false,
 	lazy = true,
 	event = 'LspAttach',
 	config = function ()
@@ -152,8 +153,41 @@ return {
 			ap.code_actions()           -- code_actions() execute only current cursor location
 		end , {noremap = true, desc = 'LSP - goto prev action-preview'})
 	end
+	-- sometime native code_actions() is ignored
 
 },
+{
+	'luckasRanarison/clear-action.nvim',
+	config = function ()
+		local clearaction = require('clear-action')
+		clearaction.setup({
+			signs = {
+				enable = false,
+			},
+			popup = {
+				enable = true,
+				hide_cursor = true,
+			},
+		})
+
+		local code_action_next = function ()
+			-- local inspect = require('inspect')
+			local params = vim.lsp.util.make_range_params()
+			params.context = {}
+			params.context.diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
+			local line = params.range.start.line
+			vim.lsp.buf_request_all(0, "textDocument/codeAction", params, function(results)
+				local result = results[2].result
+				if not result or type(result) ~= "table" or vim.tbl_isempty(result) then
+					vim.diagnostic.goto_next() -- if diagnostics not exist, goto next diagnostics
+				end
+				require('clear-action.actions').code_action()
+			end)
+		end
+
+		vim.keymap.set('n', 'ga', code_action_next)
+	end
+}
 }
 -- toggle term : must close using :q! not :q
 -- lspsaga toggle term can use after lsp attatch only. and i will change to floatterm
@@ -161,3 +195,5 @@ return {
 -- stevearc/aerial.nvim : it shows only function
 -- rachartier/tiny-code-action.nvim : it is exactly same with 'actions-preview.nvim'
 -- 									  But the loading time is longer
+-- 'RishabhRD/lspactions' : I don't know what is difference with native lsp handler
+-- 							code_action has error
