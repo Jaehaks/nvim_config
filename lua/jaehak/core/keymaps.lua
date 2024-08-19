@@ -75,6 +75,7 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 			'Outline',
 			'TelescopePrompt',
 			'toggleterm',
+			'CodeAction',
 			-- 'oil'
 		}
 		local filetype = vim.bo[event.buf].filetype
