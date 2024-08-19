@@ -8,11 +8,14 @@ return {
 		vim.g.VM_default_mappings = 0 -- disable all keymaps except <C-n>  | it must be in init  field
 		vim.g.VM_mouse_mappings = 0
 		vim.g.VM_maps = {}
-		vim.g.VM_maps = {
+		vim.g.VM_maps = { -- these mappings are global. So keymaps acts anywhere
 			['Find Under'] = '', -- disable <C-n>
 								 -- user defined VM-Find-Under key is replaced by permanent command if it is in config field
 								 -- it must be in init field to replace by user defined key
 			-- ['Find Subword Under'] = '', -- it cannot be disabled (it is replaced by permanent key)
+			['Select h'] = '<S-h>', -- visual select left
+			['Select l'] = '<S-l>', -- visual select right
+			['Toggle Mappings'] = '\\', -- toggle VM mode
 		}
 		vim.g.VM_add_cursor_at_post_no_mappings = 1
 		vim.g.VM_verbose_commands = 1 --  not working
@@ -41,7 +44,6 @@ return {
 			end
 		end
 
-		vim.keymap.set('n', '<leader>m', '<Plug>(VM-Toggle-Mappings)'                        , {silent = true})
 		vim.keymap.set('n', '<C-b>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-At-Pos)')<CR>]] , {silent = true})
 		vim.keymap.set('n', '<C-k>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-Down)')<CR>]]   , {silent = true})
 		vim.keymap.set('n', '<C-j>'    , [[:lua VMFunc('<Plug>(VM-Add-Cursor-Up)')<CR>]]     , {silent = true})
@@ -70,3 +72,4 @@ return {
 },
 }
 -- 'smoka7/multicursors.nvim' : it doesn't support 'Add-Cursor-At-Post', sometimes it invokes autocmd error
+-- 								it has little buggy and lag
