@@ -166,26 +166,39 @@ return {
 			},
 			popup = {
 				enable = true,
-				hide_cursor = true,
+				hide_cursor = false,
 			},
 		})
 
+		-- keymap : first detect code action under cursor and go to next code action if it doesn't exist
 		local code_action_next = function ()
-			-- local inspect = require('inspect')
 			local params = vim.lsp.util.make_range_params()
 			params.context = {}
 			params.context.diagnostics = vim.lsp.diagnostic.get_line_diagnostics()
-			local line = params.range.start.line
 			vim.lsp.buf_request_all(0, "textDocument/codeAction", params, function(results)
 				local result = results[2].result
+				-- if diagnostics not exist, goto next diagnostics
 				if not result or type(result) ~= "table" or vim.tbl_isempty(result) then
-					vim.diagnostic.goto_next() -- if diagnostics not exist, goto next diagnostics
+					vim.diagnostic.goto_next()
 				end
 				require('clear-action.actions').code_action()
 			end)
 		end
+		vim.keymap.set('n', 'ga', code_action_next, {desc = 'code action'})
 
-		vim.keymap.set('n', 'ga', code_action_next)
+		-- keymap : go to next code action if window of code action is opened
+		local User_codeAction = vim.api.nvim_create_augroup('User_codeAction', {clear = true})
+		vim.api.nvim_create_autocmd('FileType', {
+			group = User_codeAction,
+			pattern = 'CodeAction',
+			callback = function ()
+				vim.keymap.set('n', 'ga', function ()
+					vim.api.nvim_command(':q') -- quit window
+					vim.diagnostic.goto_next()
+					require('clear-action.actions').code_action()
+				end, {buffer = 0, noremap = true, desc = 'quit and code action next'})
+			end
+		})
 	end
 }
 }
