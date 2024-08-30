@@ -141,6 +141,7 @@ opt.wrap = false          -- disable line wrapping
 opt.splitright = true	  -- focus to new window when vsplit
 -- opt.splitbelow = true	  -- focus to new window when split
 opt.scrolloff = 5		  -- scroll start offset line
+opt.foldenable = false    -- disable folding automatically with marker (ex, toml )
 
 
 -- set local options for markdown because markdown's ftplugin must set expandtab
