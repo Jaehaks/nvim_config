@@ -79,8 +79,7 @@ return {
 				-- get link under current cursor
 				local line = vim.api.nvim_get_current_line() -- get current line string
 				local col = vim.fn.col('.')
-				local start_idx = 0
-				local end_idx = 0
+				local start_idx, end_idx
 				while true do
 					start_idx, end_idx = string.find(line, '%b[]%b()', start_idx+1) -- get link format string
 					-- if link doesn't exist
@@ -113,14 +112,61 @@ return {
 
 				-- vim.api.nvim_command('silent !wezterm cli split-pane --horizontal -- cmd /k wezterm imgcat ' .. path .. ' ^& pause')
 				vim.api.nvim_command('silent !wezterm cli split-pane --horizontal -- powershell wezterm imgcat ' .. '\'' ..  path .. '\'' .. ' ; pause')
-				
-				-- print(path)
 
 				-- string.find(s, "%b[]") find start and end index with matching [ and ]
 				-- string.find(s, "%b[]%b()") find pattern within [] followed by ()
 
 			end
-			
+
+
+
+			-- ####################################################
+			-- * ClipboardPaste
+			-- ####################################################
+
+			-- check content is URL form
+			local is_url = function(content)
+				return (string.match(content, '^(https?://)')
+					 or string.match(content,'^(www%.)'))
+			end
+
+			-- paste with different form from system clipboard
+			local ClipboardPaste = function ()
+
+				-- check clipboard content
+				local clipboard_content = vim.fn.getreg('+')
+
+				-- Paste depends on format
+				local markdown_link
+
+				if is_url(clipboard_content) then -- paste with link form
+					markdown_link = string.format('[](%s)',  clipboard_content)
+					vim.api.nvim_put({markdown_link}, 'c', true, true)
+
+				elseif clipboard_content ~= '' then -- paste '+' register 
+					local termcodes = vim.api.nvim_replace_termcodes('"+p', true, false, true)
+					vim.api.nvim_feedkeys(termcodes,'n', true)
+
+				else -- paste with obsidian function
+					vim.api.nvim_command('ObsidianPasteImg')
+
+				end
+
+			end
+
+			local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
+			vim.api.nvim_create_autocmd('FileType',{
+				group = User_markdown,
+				pattern = {'markdown'},
+				callback = function ()
+					vim.keymap.set('n', 'P', ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
+				end
+			})
+
+
+			-- ####################################################
+			-- * Keymaps
+			-- ####################################################
 			vim.keymap.set('n', '<leader>mf', FollowImage                   , {noremap = true, desc = 'follow image link'})
 			vim.keymap.set('n', '<leader>mv', '<Cmd>ObsidianPasteImg<CR>'   , {noremap = true, desc = '(Obsidian)Paste Image From Clipboard'})
 			vim.keymap.set('n', '<leader>mw', '<Cmd>ObsidianWorkspace<CR>'  , {noremap = true, desc = '(Obsidian)switch another workspace'})
@@ -130,7 +176,7 @@ return {
 			-- ObsidianTOC() : use telescope-heading instead of it
 			-- ObsidianQuickSwitch() : it can be replaced with oil or telescope,
 			-- 						   but, this func can add file link directly
-			
+
 		end
 		-- BUG: img_name_func doesn't work
 		-- obsidian's unique highlight works like ==word== in `workspace` only
