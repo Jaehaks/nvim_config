@@ -55,8 +55,8 @@ return {
 
 				map('n', '<leader>hs', gs.stage_buffer, {desc = 'stage all hunks in current buffer'}) --  git add this buffer
 				map('n', '<leader>hS', gs.reset_buffer_index, {desc = 'reset staged all hunks in current buffer'}) --  git add this buffer
-				map('n', '<leader>ha', gs.stage_hunk, {desc = 'stage current contiguous hunks'}) --  git add this hunk
-				map('n', '<leader>hA', gs.undo_stage_hunk, {desc = 'undo staged current contiguous hunks'}) --  git add this hunk
+				map({'n', 'v'}, '<leader>ha', ':Gitsigns stage_hunk<CR>', {desc = 'stage current contiguous hunks'}) --  git add this hunk
+				map({'n', 'v'}, '<leader>hA', ':Gitsigns undo_stage_hunk<CR>', {desc = 'undo staged current contiguous hunks'}) --  git add this hunk
 
 				-- reset_hunk() : reset unstaged hunk, it deletes the modified hunk
 
