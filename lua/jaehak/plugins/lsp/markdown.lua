@@ -282,7 +282,6 @@ return {
 			enabled_cmp_integration = false,
 		})
 
-
 		local ts = require('telescope').load_extension('emoji')
 		vim.keymap.set('n', '<leader>fe', ts.emoji, { desc = 'Search Emoji' })
 	end
