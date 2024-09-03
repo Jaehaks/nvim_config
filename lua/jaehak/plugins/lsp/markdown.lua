@@ -25,8 +25,9 @@ return {
 		vim.api.nvim_set_hl(0, 'markdownB4', {bg = '#504032'})
 
 		-- for code / bullet
-		vim.api.nvim_set_hl(0, 'RenderMarkdownCode', {bg = '#333333'})
+		vim.api.nvim_set_hl(0, 'RenderMarkdownCode'  , {bg = '#333333'})
 		vim.api.nvim_set_hl(0, 'RenderMarkdownBullet', {fg = '#F78C6C'})
+		vim.api.nvim_set_hl(0, 'RenderMarkdownTodo'  , {fg = '#E6E6E6'})
 
 		-- for callout
 		vim.api.nvim_set_hl(0, "RenderMarkdownInfo"   , {fg = '#0DB9D7' })
@@ -79,7 +80,16 @@ return {
 				highlight = 'RenderMarkdownBullet',
 			},
 			checkbox = {
-				enabled = false,
+				enabled = true,
+				unchecked = {
+					icon = ' '
+				},
+				checked = {
+					icon = '󰄲 ',
+				},
+				custom = {
+					todo = {raw = '[-]', rendered = '󱋭 ', highlight = 'RenderMarkdownTodo'} -- for cancel mark
+				}
 			},
 			quote = {
 				enabled = true
