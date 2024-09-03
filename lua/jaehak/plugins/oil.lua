@@ -113,6 +113,29 @@ return {
 	end
 
 },
+{
+	"mikavilpas/yazi.nvim",
+	enabled = false,
+	event = "VeryLazy",
+	config = function ()
+		require('yazi').setup({
+			open_for_directories = false, -- open yazi instead of netrw (call yazi.setup())
+			keymaps = {
+				show_help                            = '<f1>',
+				open_file_in_vertical_split          = '<c-v>',
+				open_file_in_horizontal_split        = '<c-x>',
+				open_file_in_tab                     = '<c-t>',
+				grep_in_directory                    = '<c-f>', -- using telescope's live_grep
+				replace_in_directory                 = '<c-h>', -- using grug-far
+				cycle_open_buffers                   = '<tab>',
+				copy_relative_path_to_selected_files = '<c-y>',-- require GNU realpath andgrealpath
+				send_to_quickfix_list                = '<c-q>',
+			},
+			clipboard_register = '+',
+		})
+		vim.keymap.set('n', '<leader>ee', '<Cmd>Yazi<CR>', {desc = 'Open yazi at current file'})
+	end
+}
 }
 -- 'refractalize/oil-git-status.nvim' : autocmd error is invoked whenever i write some file in oil.
 -- 									    it dosn't show git sign. I think it has some bug in windows
