@@ -154,8 +154,9 @@ return {
 
 			end
 
+			local User_markdown2 = vim.api.nvim_create_augroup('User_markdown2', {clear = true})
 			vim.api.nvim_create_autocmd('FileType',{
-				group = 'User_markdown',
+				group = User_markdown2,
 				pattern = {'markdown'},
 				callback = function ()
 					vim.keymap.set('n', 'P', ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
