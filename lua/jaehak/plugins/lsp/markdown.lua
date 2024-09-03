@@ -270,6 +270,22 @@ return {
 		vim.keymap.set('n', '<leader>mc', require('femaco.edit').edit_code_block, {noremap = true, desc = 'Edit code block'})
 	end
 
+},
+{
+	'allaman/emoji.nvim',
+	ft = 'markdown',
+	dependencies = {
+		'nvim-telescope/telescope.nvim'
+	},
+	config = function ()
+		require('emoji').setup({
+			enabled_cmp_integration = false,
+		})
+
+
+		local ts = require('telescope').load_extension('emoji')
+		vim.keymap.set('n', '<leader>fe', ts.emoji, { desc = 'Search Emoji' })
+	end
 }
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
