@@ -36,9 +36,12 @@ return {
 		vim.api.nvim_set_hl(0, "RenderMarkdownWarn"   , {fg = '#e0af68' })
 		vim.api.nvim_set_hl(0, "RenderMarkdownError"  , {fg = '#db4b4b' })
 		vim.api.nvim_set_hl(0, "@markup.quote"        , {fg = '#E6E6E6' })
+
+		-- for emphasis, some features like bold / strikethrough are cannot render in terminal, but it is ok in nvim-qt
 		vim.api.nvim_set_hl(0, "@markup.italic"        , {fg = '#EDFF93' , italic = true})
 		vim.api.nvim_set_hl(0, "@markup.strong"        , {fg = '#E39AA6' , bold = true})
 		vim.api.nvim_set_hl(0, "@markup.strikethrough" , {fg = '#999999' , strikethrough = true})
+
 
 		-- setting
 		require('render-markdown').setup({ -- after @56d92af
