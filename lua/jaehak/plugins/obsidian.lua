@@ -26,6 +26,9 @@ return {
 				mappings = {}, -- disable default keymapping
 				new_notes_location = 'current_dir',
 				preferred_link_style = 'markdown',
+				follow_url_func = function (url) -- command for follow url
+					vim.fn.system('start ' .. url)
+				end,
 				attachments = {
 					img_name_func = function () -- download clipboard image to filename folder
 						return string.format("%s\\%s-", vim.fn.expand('%:p:r'), os.date('%y%m%d'))
