@@ -33,6 +33,14 @@ return {
 					confirm_img_paste = true, -- show confirm message when paste
 					img_name_func = function () -- download clipboard image to filename folder
 						return string.format("%s\\%s-", vim.fn.expand('%:p:r'), os.date('%y%m%d'))
+					end,
+					img_text_func = function (client, path)
+						-- path : absolute path of image file
+						-- client:vault_relative_path(path) : relative to vault
+
+						-- set link name with relative to current file path not vault
+						path = path:relative_to(vim.fn.expand('%:p:h'))
+						return string.format("![%s](%s)", path.name, path)
 					end
 				},
 				ui = {
