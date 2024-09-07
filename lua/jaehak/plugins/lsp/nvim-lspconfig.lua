@@ -60,6 +60,7 @@ return {
 						disable = {
 							'missing-parameter',	-- disable diagnostics about whether all fields are filled
 							'missing-fields',
+							'unused-function',
 						},
 						globals = {'vim'},	-- recognize 'vim' global to language server
 						undefined_global = false,
