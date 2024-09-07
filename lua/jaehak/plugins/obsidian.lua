@@ -52,14 +52,15 @@ return {
 					}
 				},
 				note_id_func = function (title) -- set note id automatically when :ObsidianNew
-					if title == nil then 
+					if title == nil then
 						title = 'NewFile'
 					else
 						title = title:gsub(' ','_')
 						-- Having whitespace in title and id works well when I search string or open file.
 						-- But if title has whitespace, ' ' must be changed with %20 to insert link.
 					end
-					return tostring(os.date('%y%m%d')) .. '_' .. title
+					-- return tostring(os.date('%y%m%d')) .. '_' .. title
+					return title
 				end,
 			})
 
