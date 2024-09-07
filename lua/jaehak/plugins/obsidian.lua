@@ -52,7 +52,7 @@ return {
 					}
 				},
 				note_id_func = function (title) -- set note id automatically when :ObsidianNew
-					if title == nil then
+					if title == nil then 
 						title = 'NewFile'
 					else
 						title = title:gsub(' ','_')
@@ -89,15 +89,11 @@ return {
 
 			-- follow image link
 			local FollowImage = function ()
-				-- check the terminal is wezterm
-				if os.getenv('WEZTERM_PANE') == nil then
-					vim.api.nvim_err_writeln('This terminal is not wezterm! Change Terminal')
-				end
 
 				-- get link under current cursor
 				local line = vim.api.nvim_get_current_line() -- get current line string
 				local col = vim.fn.col('.')
-				local start_idx, end_idx
+				local start_idx, end_idx = 0, 0
 				while true do
 					start_idx, end_idx = string.find(line, '%b[]%b()', start_idx+1) -- get link format string
 					-- if link doesn't exist
@@ -118,6 +114,11 @@ return {
 					vim.api.nvim_command(':ObsidianFollowLink') -- if the link is not image, use obsidian's api
 					-- vim.api.nvim_err_writeln('Link is not image!')
 					return nil
+				end
+
+				-- check the terminal is wezterm (use wezterm for following image)
+				if os.getenv('WEZTERM_PANE') == nil then
+					vim.api.nvim_err_writeln('This terminal is not wezterm! Change Terminal')
 				end
 
 				-- check path is absolute
