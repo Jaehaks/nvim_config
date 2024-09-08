@@ -179,3 +179,26 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 opt.iskeyword:append('-')           -- i don't know
 
 
+
+------------ autocommand --------------
+
+local SystemCall = vim.api.nvim_create_augroup("SystemCall", { clear = true })
+
+-- delete program which isn't terminated  
+-- it needs to check where is harper-ls used
+-- vim.api.nvim_create_autocmd({"VimLeave"}, {
+-- 	group = SystemCall,
+-- 	pattern = "*",
+-- 	callback = function ()
+-- 		vim.fn.system('taskkill /F /IM harper-ls.exe > nul 2>&1')
+-- 	end
+-- })
+
+-- delete shada.tmp files which are not deleted after shada is saved
+vim.api.nvim_create_autocmd({"VimLeave"}, {
+	group = SystemCall,
+	pattern = "*",
+	callback = function ()
+		vim.fn.system('del /Q /F /S "' .. vim.fn.stdpath('data') .. '\\shada\\*tmp*"')
+	end
+})
