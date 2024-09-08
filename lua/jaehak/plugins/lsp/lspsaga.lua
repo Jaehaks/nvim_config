@@ -68,6 +68,11 @@ return {
 			hint_enable     = false,   -- hint_inline option does not work
 			toggle_key      = '<C-s>', -- turn off signature help temporary in insert mode
 			move_cursor_key = '<C-w>', -- go to signature help window in insert mode (in normal mode, use <C-w>w)
+
+			bind = true,
+			floating_window_off_x = -100,
+			floating_window_off_y = 100,
+
 		}
 		lsp_sig.setup(cfg)
 		lsp_sig.on_attach(cfg) -- it is deprecated, but it need to lsp_signature automatically, i don't know why
