@@ -180,6 +180,8 @@ opt.iskeyword:append('-')           -- i don't know
 
 
 
+
+
 ------------ autocommand --------------
 
 local SystemCall = vim.api.nvim_create_augroup("SystemCall", { clear = true })
@@ -202,3 +204,18 @@ vim.api.nvim_create_autocmd({"VimLeave"}, {
 		vim.fn.system('del /Q /F /S "' .. vim.fn.stdpath('data') .. '\\shada\\*tmp*"')
 	end
 })
+
+
+-- for web search
+vim.api.nvim_create_user_command("Google", function (opts)
+	local query = opts.args:gsub(' ', '+')
+	local url = 'https://www.google.com/search?q='
+	os.execute('start brave ' .. url .. query)
+end, {nargs = 1})
+
+vim.api.nvim_create_user_command("Perplexity", function (opts)
+	local query = opts.args:gsub(' ', '+')
+	local url = 'https://www.perplexity.ai/search?q='
+	os.execute('start brave ' .. url .. query)
+end, {nargs = 1})
+
