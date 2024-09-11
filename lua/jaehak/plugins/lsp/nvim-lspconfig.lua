@@ -55,6 +55,7 @@ return {
 				Lua = {
 					completion = {
 						callSnippet = 'Replace',	-- neodev.nvim completion
+						showWord = 'Disable' -- disable word suggestion of lsp
 					},
 					diagnostics = {
 						disable = {
