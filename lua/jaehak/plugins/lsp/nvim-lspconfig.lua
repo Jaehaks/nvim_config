@@ -229,6 +229,9 @@ return {
 			end,
 			capabilities = capabilities,
 			filetype = {'python'},
+			root_dir = function (fname)
+				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+			end,
 			settings = {
 				pyright = {
 					disableLanguageServices = false, -- disable all lsp feature except of hover
@@ -256,6 +259,9 @@ return {
 			end,
 			capabilities = capabilities, -- required 
 			filetyps = {'python'},
+			root_dir = function (fname)
+				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+			end,
 			settings = {
 				pylsp = {
 					plugins = {
