@@ -103,9 +103,9 @@ return {
 						fallback()
 					end
 				end, {'i', 's'}),
-				['<c-n>'] = cmp.mapping(function (fallback) -- remain showing previous deleting keymap
-					if cmp.visible() then
-						cmp.mapping.close()
+				['<C-n>'] = cmp.mapping(function (fallback) -- remain showing previous deleting keymap
+					if ls.expand_or_locally_jumpable() then
+						require('luasnip.extras.select_choice')()
 					else
 						fallback()
 					end
