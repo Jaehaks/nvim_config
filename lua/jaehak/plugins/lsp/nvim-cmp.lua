@@ -176,24 +176,24 @@ return {
 				-- 	},
 				-- },
 				{
-					name = 'dictionary',
-					max_item_count = 3,
-					priority = 1000,
-				},
-				{
-					name = 'buffer',
-					max_item_count = 5,
-					priority = 500,
-				},
-				{
 					name = 'luasnip',
 					max_item_count = 5,
-					priority = 250,
+					priority = 1000,
 					-- show_autosnippets : it true, show autosnip, but it is expanded automatically when word selected in cmp window
 				},
 				{
 					name = 'nvim_lsp',
 					max_item_count = 5,
+					priority = 500,
+				},
+				{
+					name = 'buffer',
+					max_item_count = 5,
+					priority = 350,
+				},
+				{
+					name = 'dictionary',
+					max_item_count = 3,
 					priority = 250,
 				},
 				{
