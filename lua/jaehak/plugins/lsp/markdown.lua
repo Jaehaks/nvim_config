@@ -182,100 +182,13 @@ return {
 
 	end
 },
-{
-	'roodolv/markdown-toggle.nvim',
-	enabled = false,
-	config = function()
-		-- settings
-		local enabled_filetype = { 'markdown', 'text' }
-		require('markdown-toggle').setup({
-			use_default_keymaps = false,
-			filetypes = enabled_filetype,
 
-			enable_list_cycle = true,
-			list_table = { '-', '+', '*', '=' },
-
-			enable_box_cycle = true,
-			box_table = { 'x', '~', '!', '>' },
-
-			mimic_obsidian_list = true,
-			mimic_obsidian_cycle = true,
-
-			heading_table = { '#', '##', '###', '####', '#####' },
-
-			enable_blankhead_skip = true,
-			enable_inner_indent = false,
-			enable_unmarked_only = true, -- toggle unmarked lines first
-			enable_autolist = true,
-			enable_auto_samestate = false, -- maintain checkbox state when continusing list
-			enable_dot_repeat = false, -- dot repeat for toggle function
-		})
-
-		vim.api.nvim_create_autocmd('Filetype', {
-			desc = 'keymap for markdown-toggle.nvim',
-			pattern = enabled_filetype,
-			callback = function (args)
-				local opts  = {silent = true, noremap = true, buffer = args.buf}
-				local toggle = require('markdown-toggle')
-
-				-- for toggle list
-				vim.keymap.set({ "n", "x" }, "<leader>mq", toggle.quote, opts)
-				vim.keymap.set({ "n", "x" }, "<leader>mw", toggle.list, opts)
-				vim.keymap.set({ "n", "x" }, "<leader>me", toggle.olist, opts)
-				vim.keymap.set({ "n", "x" }, "<leader>mc", toggle.checkbox, opts)
-				vim.keymap.set({ "n", "x" }, "<leader>mt", toggle.heading, opts)
-
-				-- for autolist
-				vim.keymap.set("n", "O", toggle.autolist_up, opts)
-				vim.keymap.set("n", "o", toggle.autolist_down, opts)
-				vim.keymap.set("i", "<CR>", toggle.autolist_cr, opts)
-			end
-
-		})
-
-	end,
-
-},
+-- roodolv/markdown-toggle : autolist.nvim has more feature, but it has some bug about indent
+-- 							I think after using mcauley-penny/autolist.nvim, this problem is gone
 -- bullets-vim/bullets.nvim : it does not work in neovim
 -- gaoDean/autolist.nvim : sometimes, it makes indent problem when I put indent in front of word at the beginning line
 -- 						   when I enter TAB, indent is inserted after first character of the word. 
 -- 						   It is a big reason of why I migrate to other plugin
-{
-	'HakonHarnes/img-clip.nvim', -- paste image link and download file from clipboard
-	enabled = false,
-	ft = {'markdown'},
-	config = function ()
-		local img = require('img-clip')
-		img.setup({
-			default = {
-				dir_path = function ()
-					return 'img_' .. vim.fn.expand('%:t:r')
-				end,
-				extension = 'png',
-				file_name = '%Y-%m-%d',
-				relative_to_current_file = true,
-
-				insert_mode_after_paste = true,
-				show_dir_path_in_prompt = false;
-
-				copy_images = true,
-				download_images = true,
-
-				drag_and_drop = {
-					enabled = false,
-				},
-				filetypes = {
-					markdown = {
-						url_encode_path = true,
-						template = "![$CURSOR]($FILE_PATH)",
-						download_images = true,
-					}
-				}
-			}
-		})
-		vim.keymap.set('n', '<leader>mv', img.paste_image, {noremap = true, desc = 'Paste Image From Clipboard'})
-	end
-},
 {
 	-- editing fenced code block using treesitter
 	'AckslD/nvim-FeMaco.lua',
@@ -304,3 +217,4 @@ return {
 }
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
+-- HakonHarnes/img-clip.nvim : it replaced with obisidian.nvim's paste function.
