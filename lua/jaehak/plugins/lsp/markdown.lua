@@ -162,6 +162,46 @@ return {
 
 		})
 
+		-- Add strong mark (**) both side of visualized region
+		local AddStrong = function (args)
+			local start_pos = vim.fn.getpos("v")
+			local end_pos   = vim.fn.getpos(".")
+			local start_line, start_col = start_pos[2], start_pos[3]
+			local end_line, end_col     = end_pos[2], end_pos[3]
+
+			-- local marks = '**' -- set marks to add
+			if type(args) ~= 'string' then
+				vim.api.nvim_err_writeln('Error(AddStrong) : use string for args')
+				return
+			end
+			local marks = args or '**' -- set marks to add
+
+			-- Add asterisks at the start of the selection
+			vim.api.nvim_buf_set_text(0, start_line - 1, start_col - 1, start_line - 1, start_col - 1, {marks})
+
+			-- check end col regardless of non-ASCII char
+			local lines = vim.api.nvim_buf_get_lines(0, end_line - 1, end_line, false)
+			if start_line == end_line then -- if 'marks' is added in same line, it is included in end_col calculation
+				end_col = end_col + #marks
+			end
+			local end_bytecol = vim.str_utfindex(lines[1], end_col)
+			if end_bytecol then
+				end_col = vim.str_byteindex(lines[1], end_bytecol) + 1
+			else
+				vim.api.nvim_err_writeln('Error(AddStrong) : end_bytecol is nil')
+				return
+			end
+
+			-- Add asterisks at the end of the selection
+			vim.api.nvim_buf_set_text(0, end_line - 1, end_col - 1 , end_line - 1, end_col - 1, {marks})
+
+			-- go to normal mode
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
+		end
+
+
+
+		-- keymap set for markdown
 		local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
 		vim.api.nvim_create_autocmd('FileType',{
 			group = User_markdown,
@@ -177,6 +217,9 @@ return {
 				vim.keymap.set('n', '<leader>mr', '<Cmd>AutolistRecalculate<CR>'     , opts)
 				vim.keymap.set('n', 'dd'        , 'dd<Cmd>AutolistRecalculate<CR>'   , opts)
 				vim.keymap.set('v', 'd'         , 'd<Cmd>AutolistRecalculate<CR>'    , opts)
+				vim.keymap.set('v', '<leader>mb', function () AddStrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
+				vim.keymap.set('v', '<leader>mh', function () AddStrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
+				vim.keymap.set('v', '<leader>ms', function () AddStrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
 			end
 		})
 
