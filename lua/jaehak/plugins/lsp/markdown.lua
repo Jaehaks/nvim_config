@@ -23,6 +23,8 @@ return {
 		vim.api.nvim_set_hl(0, 'markdownB2', {bg = '#215860'})
 		vim.api.nvim_set_hl(0, 'markdownB3', {bg = '#2E2D5C'})
 		vim.api.nvim_set_hl(0, 'markdownB4', {bg = '#504032'})
+		vim.api.nvim_set_hl(0, 'markdownB5', {bg = '#363F4B'})
+		vim.api.nvim_set_hl(0, 'markdownB6', {bg = '#473B4F'})
 
 		-- for code / bullet
 		vim.api.nvim_set_hl(0, 'RenderMarkdownCode'  , {bg = '#333333'})
@@ -67,6 +69,8 @@ return {
 					'markdownB2',
 					'markdownB3',
 					'markdownB4',
+					'markdownB5',
+					'markdownB6',
 				},
 			},
 			code = {
