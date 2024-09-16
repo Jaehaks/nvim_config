@@ -1,3 +1,5 @@
+local paths = require('jaehak.core.paths')
+
 return {
 {
 	'nvim-treesitter/nvim-treesitter',
@@ -8,6 +10,10 @@ return {
 		'RRethy/nvim-treesitter-endwise',
 	},
 	build = ':TSUpdate',
+	init= function ()
+		vim.opt.rtp:prepend(paths.nvim.treesitter_queries)
+		vim.opt.rtp:prepend(paths.nvim.luarocks)
+	end,
 	config = function()
 		local configs = require('nvim-treesitter.configs')
 		local installs = require('nvim-treesitter.install')
