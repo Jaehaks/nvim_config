@@ -111,14 +111,27 @@ else
 	opt.path:append(vim.fn.stdpath() .. "/**10")
 	opt.path:append(vim.fn.stdpath("data") .. "/**10")
 end
-opt.autochdir = true	-- change pwd where current buffer is located
---opt.autoread = true		-- auto reload when file has been changed outside of vim
+
+-- reload when neovim is focused
 local aug_NvimFocus = vim.api.nvim_create_augroup('aug_NvimFocus', {clear = true})
 vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nvim focused
 	group = aug_NvimFocus,
 	pattern = '*',
 	command = 'silent! checktime'	-- check the buffer is changed out of neovim
 })
+
+-- change 
+opt.autochdir = true	-- change pwd where current buffer is located
+--opt.autoread = true		-- auto reload when file has been changed outside of vim
+
+-- force modify filetype
+vim.filetype.add({
+	extension = {
+		scm = 'query', -- .scm is 'scheme' as default, 'query' is more colorful
+	}
+})
+
+
 
 ------------- editing -----------------------
 opt.inccommand = ''       -- disable show effect of substitute
