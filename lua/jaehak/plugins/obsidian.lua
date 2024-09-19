@@ -1,7 +1,9 @@
 local paths = require('jaehak.core.paths')
 return {
 	{
-		'epwalsh/obsidian.nvim',
+		-- 'epwalsh/obsidian.nvim',
+		'Jaehaks/obsidian.nvim',
+		branch = 'fix/link_completion_nonascii',
 		lazy = true,
 		ft = 'markdown',
 		dependencies = {
