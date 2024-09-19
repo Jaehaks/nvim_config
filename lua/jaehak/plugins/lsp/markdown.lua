@@ -161,9 +161,30 @@ return {
 	enabled = true,
 	ft = {'markdown', 'text'},
 	config = function ()
+
+		local list_patterns = { -- patterns which is used for autolist
+			unordered = "[-+*>]", -- use -,+,*,> for unordered list
+			digit = "%d+[.)]", -- 1. or 1)
+			ascii = "%a[.)]", -- a. or a)
+			roman = "%u*[.)]", -- I. or I)
+		}
+
 		local autolist = require('autolist')
 		autolist.setup({
-
+			lists = {
+				markdown = {
+					list_patterns.unordered,
+					list_patterns.digit,
+					list_patterns.ascii,
+					list_patterns.roman,
+				},
+				text = {
+					list_patterns.unordered,
+					list_patterns.digit,
+					list_patterns.ascii,
+					list_patterns.roman,
+				}
+			}
 		})
 
 		-- Add strong mark (**) both side of visualized region
