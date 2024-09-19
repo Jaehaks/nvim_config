@@ -5,7 +5,8 @@ M.nvim = {
 	data   = vim.fn.stdpath("data") .. "\\lazy",
 	python = vim.fn.stdpath('config') .. '\\.Nvim_venv\\Scripts\\python',		-- use python support
 	luarocks = vim.fn.expand('$HOME\\scoop\\apps\\luarocks\\current\\rocks\\share\\lua\\5.4'),
-	treesitter_queries = vim.fn.stdpath("config") .. "\\queries\\nvim-treesitter"
+	treesitter_queries = vim.fn.stdpath("config") .. "\\queries\\nvim-treesitter",
+	wordlist_korean = vim.fn.stdpath('config') .. '\\queries\\dictionary\\wordslist_korean.txt',
 }
 
 M.project = {

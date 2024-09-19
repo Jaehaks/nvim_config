@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 	'hrsh7th/nvim-cmp',
 	event = 'InsertEnter',		-- load before starting insert mode / replace mode
@@ -21,7 +22,10 @@ return {
 				'dwyl/english-words',
 			},
 			opts ={
-				paths = {vim.fn.stdpath('data') .. '\\lazy\\english-words\\words_alpha.txt'}
+				paths = {
+					vim.fn.stdpath('data') .. '\\lazy\\english-words\\words_alpha.txt',
+					-- paths.nvim.wordlist_korean,
+				}
 			}
 		},
 		'L3MON4D3/LuaSnip',         -- snippet engine
