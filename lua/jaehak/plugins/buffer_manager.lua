@@ -1,9 +1,10 @@
 return {
 	-- buffer manager to edit/move buffer quickly
 	-- cons : bmui.save_menu_to_file() make a file in current directory. not nvim-data
-	'j-morano/buffer_manager.nvim',
-	-- commit = 'fd36131',
-	branch = 'main',
+	-- 'j-morano/buffer_manager.nvim',
+	-- branch = 'main',
+	'Jaehaks/buffer_manager.nvim',
+	branch = 'fix/short_file_name_properly',
 	dependencies = {
 		'nvim-lua/plenary.nvim'
 	},
@@ -12,6 +13,14 @@ return {
 		local bmui = require('buffer_manager.ui')
 		bm.setup({
 			select_menu_item_commands = {
+				vsplit = {
+					key = '<C-v>',
+					command = 'vsplit'
+				},
+				hsplit = {
+					key = '<C-x>',
+					command = 'split'
+				},
 				edit = {
 					key = '<CR>',
 					command = 'edit'
