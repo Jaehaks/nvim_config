@@ -272,7 +272,7 @@ return {
 	'allaman/emoji.nvim',
 	ft = 'markdown',
 	dependencies = {
-		'nvim-telescope/telescope.nvim'
+		'Jaehaks/telescope.nvim'
 	},
 	config = function ()
 		require('emoji').setup({
