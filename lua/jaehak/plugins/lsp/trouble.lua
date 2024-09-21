@@ -12,6 +12,6 @@ return {
 			},
 --			auto_open = true,
 		})
-		vim.keymap.set({'n'}, '<leader>xd', function() trouble.toggle('document_diagnostics') end)
+		vim.keymap.set({'n'}, '<leader>xt', function() trouble.toggle('document_diagnostics') end)
 	end
 }

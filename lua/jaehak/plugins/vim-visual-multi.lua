@@ -1,6 +1,74 @@
 return {
 {
+	"jake-stewart/multicursor.nvim",
+    branch = "1.0",
+	config = function()
+		local mc = require("multicursor-nvim")
+
+		mc.setup()
+
+		-- Add cursors above/below the main cursor.
+		vim.keymap.set({"n", "v"}, "<C-k>", function() mc.addCursor("k") end, {desc = '[Multicursor] Add below char'})
+		vim.keymap.set({"n", "v"}, "<C-j>", function() mc.addCursor("j") end, {desc = '[Multicursor] Add above char'})
+
+		-- Rotate the main cursor within multi-cursors
+		vim.keymap.set({"n", "v"}, "<C-l>", function ()
+			if mc.cursorsEnabled() then
+				mc.nextCursor()
+			end
+		end, {desc = '[Multicursor] move main cursor within multi-cursors'})
+
+		-- Delete the current main cursor.
+		vim.keymap.set({"n", "v"}, "<C-q>", function ()
+			if mc.cursorsEnabled() then
+				mc.deleteCursor()
+			end
+		end, {desc = '[Multicursor] Delete Current Pos'})
+
+		-- Add Current Cursor position | Deactivate multi-cursor mode
+		vim.keymap.set({"n", "v"}, "<c-b>", function()
+			if mc.cursorsEnabled() then
+				mc.disableCursors()
+			else
+				mc.addCursor()
+			end
+		end, {desc = '[Multicursor] Add Current Pos | Deactivate'})
+
+		-- Quit multicursor mode
+		vim.keymap.set("n", "<esc>", function()
+			if not mc.cursorsEnabled() then
+				mc.enableCursors()
+			elseif mc.hasCursors() then
+				mc.clearCursors()
+			else
+				-- Default <esc> handler.
+			end
+		end, {desc = '[Multicursor] quit multicursor mode'})
+
+		-- Align cursor columns.
+		vim.keymap.set("n", "<leader>a", function ()
+			if mc.cursorsEnabled() then
+				mc.alignCursors()
+			end
+		end, {desc = '[Multicursor] align columns of cursor'})
+
+		-- Append/insert for each line of visual selections.
+		vim.keymap.set("v", "I", mc.insertVisual, {desc = '[Multicursor] Add multicursor at Start in visual block'})
+		vim.keymap.set("v", "A", mc.appendVisual, {desc = '[Multicursor] Add multicursor at End in visual block'})
+
+		-- match new cursors within visual selections by regex.
+		vim.keymap.set("v", "M", mc.matchCursors, {desc = '[Multicursor] Add multicursor to start of matching pattern'})
+
+		-- Customize how cursors look.
+		vim.api.nvim_set_hl(0, "MultiCursorCursor"          , { fg = 'black', bg = "#F78C6C" }) -- cursor color when multicursor enabled
+		vim.api.nvim_set_hl(0, "MultiCursorVisual"          , { bg = "#647B13" }) -- cursor color when multicursor enabled
+		vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor"  , { fg = 'black', bg = "#955441" }) -- cursor color when multicursor paused
+		vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual"  , { bg = "#5C533B" }) -- cursor color when multicursor enabled
+	end,
+},
+{
 	-- multiple cursor : change string
+	enabled = false,
 	'mg979/vim-visual-multi',
 	branch = 'master',
 	event = 'VeryLazy',
@@ -73,3 +141,5 @@ return {
 }
 -- 'smoka7/multicursors.nvim' : it doesn't support 'Add-Cursor-At-Post', sometimes it invokes autocmd error
 -- 								it has little buggy and lag
+-- 'mg979/vim-visual-multi' : After entering visual-multi mode, keymap related with <CR> is cleared
+-- 							  It seems to bug. It is the reason Why I change to 'jake-stewart/multicursor.nvim'
