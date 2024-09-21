@@ -3,7 +3,6 @@ return {
 	{
 		-- 'epwalsh/obsidian.nvim',
 		'Jaehaks/obsidian.nvim',
-		branch = 'fix/link_completion_nonascii',
 		lazy = true,
 		ft = 'markdown',
 		dependencies = {
@@ -32,7 +31,8 @@ return {
 					vim.fn.system('start ' .. url)
 				end,
 				attachments = {
-					confirm_img_paste = true, -- show confirm message when paste
+					confirm_img_paste = false,  -- show confirm message when paste
+					img_folder = '', 			-- use path with img_name_func only
 					img_name_func = function () -- download clipboard image to filename folder
 						return string.format("%s\\%s-", vim.fn.expand('%:p:r'), os.date('%y%m%d'))
 					end,
