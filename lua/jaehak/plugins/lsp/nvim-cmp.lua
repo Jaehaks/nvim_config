@@ -15,19 +15,19 @@ return {
 		'hrsh7th/cmp-path',         -- source for file system path
 		'hrsh7th/cmp-cmdline',		-- source for commandline, [command], [path]
 		'hrsh7th/cmp-nvim-lsp',     -- using LSP for source
-		-- 'f3fora/cmp-spell',			-- source for vim's spellsuggest
-		{
-			'uga-rosa/cmp-dictionary',
-			dependencies = {
-				'dwyl/english-words',
-			},
-			opts ={
-				paths = {
-					vim.fn.stdpath('data') .. '\\lazy\\english-words\\words_alpha.txt',
-					-- paths.nvim.wordlist_korean,
-				}
-			}
-		},
+		'f3fora/cmp-spell',			-- source for vim's spellsuggest
+		-- {
+		-- 	'uga-rosa/cmp-dictionary',
+		-- 	dependencies = {
+		-- 		-- 'dwyl/english-words',
+		-- 	},
+		-- 	opts ={
+		-- 		paths = { -- this word file is too much to load for RAM
+		-- 			-- vim.fn.stdpath('data') .. '\\lazy\\english-words\\words_alpha.txt',
+		-- 			-- paths.nvim.wordlist_korean,
+		-- 		}
+		-- 	}
+		-- },
 		'L3MON4D3/LuaSnip',         -- snippet engine
 		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
 		'mstanciu552/cmp-matlab',   -- source of matlab
@@ -140,8 +140,8 @@ return {
 						buffer     = '[BUF]',
 						path       = '[PATH]',
 						cmp_matlab = '[MATLAB]',
-						-- spell      = '[SPELL]',
-						dictionary = '[Dict]',
+						spell      = '[SPELL]',
+						-- dictionary = '[Dict]',
 						cmdline    = '[CMD]',
 						vimtex     = item.menu, -- show packages as menu
 					}
@@ -167,18 +167,18 @@ return {
 				}
 			},
 			sources = cmp.config.sources({
-				-- {
-				-- 	name = 'spell',
-				-- 	max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
-				-- 	priority = 1000,
-				-- 	option = {
-				-- 		keep_all_entries = true, -- it can show more possible list
-				-- 		enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
-				-- 			return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
-				-- 		end,
-				-- 		preselect_correct_word = false, -- if false, order is the same with spellsuggest()
-				-- 	},
-				-- },
+				{
+					name = 'spell',
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
+					priority = 250,
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
+							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
+						end,
+						preselect_correct_word = false, -- if false, order is the same with spellsuggest()
+					},
+				},
 				{
 					name = 'luasnip',
 					max_item_count = 5,
@@ -195,11 +195,11 @@ return {
 					max_item_count = 5,
 					priority = 350,
 				},
-				{
-					name = 'dictionary',
-					max_item_count = 3,
-					priority = 250,
-				},
+				-- {
+				-- 	name = 'dictionary',
+				-- 	max_item_count = 3,
+				-- 	priority = 250,
+				-- },
 				{
 					name = 'path',
 					priority = 100,
@@ -213,23 +213,23 @@ return {
 		-- /////// source of matlab
 		cmp.setup.filetype({'matlab'}, {
 			sources = cmp.config.sources({
-				-- {
-				-- 	name = 'spell',
-				-- 	max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
-				-- 	priority = 1000,
-				-- 	option = {
-				-- 		keep_all_entries = true, -- it can show more possible list
-				-- 		enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
-				-- 			return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
-				-- 		end,
-				-- 		preselect_correct_word = false, -- if false, order is the same with spellsuggest()
-				-- 	},
-				-- },
 				{
-					name = 'dictionary',
-					max_item_count = 3,
+					name = 'spell',
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
 					priority = 1000,
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
+							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
+						end,
+						preselect_correct_word = false, -- if false, order is the same with spellsuggest()
+					},
 				},
+				-- {
+				-- 	name = 'dictionary',
+				-- 	max_item_count = 3,
+				-- 	priority = 1000,
+				-- },
 				{
 					name = 'buffer',
 					max_item_count = 5,
@@ -262,20 +262,20 @@ return {
 		-- /////// source of plain text
 		cmp.setup.filetype({'markdown', 'text', 'oil', 'NeogitCommitMessage'}, {
 			sources = cmp.config.sources({
-				-- {
-				-- 	name = 'spell',
-				-- 	max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
-				-- 	priority = 1000,
-				-- 	option = {
-				-- 		keep_all_entries = true, -- it can show more possible list
-				-- 	},
-				-- 	preselect_correct_word = false, -- if false, order is the same with spellsuggest()
-				-- },
 				{
-					name = 'dictionary',
-					max_item_count = 3,
+					name = 'spell',
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
 					priority = 1000,
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+					},
+					preselect_correct_word = false, -- if false, order is the same with spellsuggest()
 				},
+				-- {
+				-- 	name = 'dictionary',
+				-- 	max_item_count = 3,
+				-- 	priority = 1000,
+				-- },
 				{
 					name = 'buffer',
 					max_item_count = 5,
@@ -303,20 +303,20 @@ return {
 					priority = 500,
 				},
 			},{
-				-- {
-				-- 	name = 'spell',
-				-- 	max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
-				-- 	priority = 500,
-				-- 	option = {
-				-- 		keep_all_entries = true, -- it can show more possible list
-				-- 	},
-				-- 	preselect_correct_word = false, -- if false, order is the same with spellsuggest()
-				-- },
 				{
-					name = 'dictionary',
-					max_item_count = 3,
-					priority = 1000,
+					name = 'spell',
+					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
+					priority = 500,
+					option = {
+						keep_all_entries = true, -- it can show more possible list
+					},
+					preselect_correct_word = false, -- if false, order is the same with spellsuggest()
 				},
+				-- {
+				-- 	name = 'dictionary',
+				-- 	max_item_count = 3,
+				-- 	priority = 1000,
+				-- },
 				{
 					name = 'buffer',
 					max_item_count = 5,
