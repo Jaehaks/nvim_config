@@ -285,6 +285,10 @@ return {
 					name = 'path',
 					priority = 250,
 				},
+				{
+					name = 'emoji',
+					priority = 250,
+				},
 			},{
 				-- TBD:
 			}),

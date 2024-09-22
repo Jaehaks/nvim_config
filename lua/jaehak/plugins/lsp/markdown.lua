@@ -277,11 +277,11 @@ return {
 	},
 	config = function ()
 		require('emoji').setup({
-			enabled_cmp_integration = false,
+			enable_cmp_integration = true, -- cmp integration requires 14MB RAM
 		})
 
 		local ts = require('telescope').load_extension('emoji')
-		vim.keymap.set('n', '<leader>fe', ts.emoji, { desc = 'Search Emoji' })
+		vim.keymap.set({'n', 'i'}, '<M-e>', ts.emoji, { desc = 'Search Emoji' })
 	end
 }
 }
