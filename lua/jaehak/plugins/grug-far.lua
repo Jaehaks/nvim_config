@@ -9,7 +9,7 @@ return {
 				replace           = { n = '<localleader>r' }, -- replace all
 				qflist            = { n = '<localleader>q' }, -- (not useful) 
 				syncLocations     = { n = '<localleader>s' }, -- replace all
-				syncLine          = { n = 'o' },              -- replace one line
+				syncLine          = { n = '<localleader>l' }, -- replace one line
 				close             = { n = 'q' },
 				historyOpen       = { n = '<localleader>h' }, -- show replace history, it can be applied
 				historyAdd        = { n = '<localleader>a' },
