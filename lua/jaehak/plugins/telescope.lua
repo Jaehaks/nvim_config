@@ -1,6 +1,5 @@
 return {
-	-- 'nvim-telescope/telescope.nvim',
-	'Jaehaks/telescope.nvim',
+	'nvim-telescope/telescope.nvim',
 	event = 'VeryLazy',
 	dependencies = {
 		'nvim-lua/plenary.nvim',
@@ -34,19 +33,19 @@ return {
 					-- it means that if path_display function returns single string 'test', 
 					-- the paths with '/' are shown literally. These are not listed in 'path' argument
 					-- The solution does not exist in currently. I should modify the string '/' in shada file to '\\'
-					-- if PR(#3103) accepted, this problem will be removed.
+					-- if PR(#3103) accepted, this problem will be removed.					-- 
 					local PATH = path
-					if vim.g.has_win32 == 1 then
-						PATH = PATH:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
-					end
+					-- if vim.g.has_win32 == 1 then
+					-- 	PATH = PATH:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
+					-- end
 					local tail = utils.path_tail(PATH)
 					local basename = vim.fs.basename(vim.fs.dirname(PATH)) .. '/'
 					if basename == vim.fs.basename(vim.fn.expand('%:p:h')) .. '/' then
 						basename = ''
 					end
-					if vim.g.has_win32 == 1 then
-						basename = basename:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
-					end
+					-- if vim.g.has_win32 == 1 then
+					-- 	basename = basename:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
+					-- end
 					return string.format('%s%s', basename, tail)
 				end,
 				layout_strategy = 'horizontal',

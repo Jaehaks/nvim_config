@@ -128,8 +128,7 @@ return {
 {
 	'crispgm/telescope-heading.nvim',
 	dependencies = {
-		-- 'nvim-telescope/telescope.nvim',
-		'Jaehaks/telescope.nvim',
+		'nvim-telescope/telescope.nvim',
 	},
 	ft = {'markdown'},
 	config = function ()
@@ -273,7 +272,7 @@ return {
 	'allaman/emoji.nvim',
 	ft = 'markdown',
 	dependencies = {
-		'Jaehaks/telescope.nvim'
+		'nvim-telescope/telescope.nvim'
 	},
 	config = function ()
 		require('emoji').setup({

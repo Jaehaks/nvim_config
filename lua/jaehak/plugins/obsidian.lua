@@ -7,7 +7,7 @@ return {
 		ft = 'markdown',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
-			'Jaehaks/telescope.nvim',
+			'nvim-telescope/telescope.nvim',
 		},
 		init = function ()
 			-- vim.opt.conceallevel = 2 -- set conceallevel (but markdown.nvim will changes)
