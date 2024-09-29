@@ -201,26 +201,71 @@ opt.iskeyword:append('-')           -- i don't know
 
 local SystemCall = vim.api.nvim_create_augroup("SystemCall", { clear = true })
 
--- delete program which isn't terminated  
--- it needs to check where is harper-ls used
--- vim.api.nvim_create_autocmd({"VimLeave"}, {
--- 	group = SystemCall,
--- 	pattern = "*",
--- 	callback = function ()
--- 		vim.fn.system('taskkill /F /IM harper-ls.exe > nul 2>&1')
--- 	end
--- })
+-- TODO: sometimes harper-ls.exe doesn't terminate properly. so force to exit this
+-- get recent process id
+local function GetProcessId(name)
+	-- skip=1 : erase first line of output
+	-- tokens=3 : catch 3rd item which is sliced with delimiter ',' from output
+	-- processid,creationdate : show creationdate and sort by recently
+	local cmd = [[for /f "usebackq skip=1 tokens=3 delims=," %a in (`wmic process where name^="]]
+				.. name
+				.. [[" get processid^,creationdate /format:csv ^| sort -r`) do @echo %a]]
+	local outputs = vim.fn.system(cmd)
+	local ids = {}
+	for id in outputs:gmatch('(%d+)') do
+		table.insert(ids, id)
+	end
+	return ids
+end
 
--- delete shada.tmp files which are not deleted after shada is saved
+local delete_process_list = {}
+-- get process id of specific lsp to add delete list when VimLeave
+vim.api.nvim_create_autocmd({"LspAttach"}, {
+	group = SystemCall,
+	callback = function (args)
+		local client_id = args.data.client_id
+		local client = vim.lsp.get_client_by_id(client_id)
+
+		if client then
+			if client.name == 'harper_ls' then
+				table.insert(delete_process_list, GetProcessId('harper-ls.exe')[1])
+			end
+		end
+	end
+})
+
+-- clear some procedure after VimLeave
 vim.api.nvim_create_autocmd({"VimLeave"}, {
 	group = SystemCall,
-	pattern = "*",
 	callback = function ()
+		-- delete shada.tmp files which are not deleted after shada is saved
 		vim.fn.system('del /Q /F /S "' .. vim.fn.stdpath('data') .. '\\shada\\*tmp*"')
+
+		-- terminate process in delete process
+		local i = #delete_process_list
+		while i > 0 do
+			vim.fn.system('taskkill /F /PID ' .. delete_process_list[i])
+			i = i - 1
+		end
+	end
+})
+
+-- Check redundant process and terminate at startup
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+	group = SystemCall,
+	callback = function ()
+		local nvim_process = GetProcessId('nvim.exe')
+		if #nvim_process <= 3 then
+			vim.fn.system('taskkill /F /IM ' .. 'harper-ls.exe')
+		end
 	end
 })
 
 
+
+
+
+------------ UserCommand --------------
 -- for web search
 vim.api.nvim_create_user_command("Google", function (opts)
 	local query = opts.args:gsub(' ', '+')
