@@ -16,6 +16,7 @@ return {
 			custom_key_maps = {
 				{{'n', 'x'}, {'j', '<Up>'}, mc_motion.k},
 				{{'n', 'x'}, {'k', '<Down>'}, mc_motion.j},
+				{{'n', 'x'}, {'<leader>a'}, mc.align},
 			},
 			pre_hook = function ()
 				vim.opt.cursorline = false
@@ -30,7 +31,6 @@ return {
 		vim.keymap.set({'n', 'x'}, '<C-k>',  "<Cmd>MultipleCursorsAddDown<CR>", {desc = 'Add cursor and move down'} )
 		vim.keymap.set({'n', 'x'}, '<C-j>',  "<Cmd>MultipleCursorsAddUp<CR>", {desc = 'Add cursor and move Up'} )
 		vim.keymap.set({'n', 'x'}, '<C-S-n>',  "<Cmd>MultipleCursorsAddMatches<CR>", {desc = 'Add cursor to cword'} )
-		vim.keymap.set({'n', 'x'}, '<leader>A',  "<Cmd>MultipleCursorsAddMatchesV<CR>", {desc = 'Add cursor to cword in previous area'} )
 		vim.keymap.set({'n', 'x'}, '<C-n>',  "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", {desc = 'Add cursor and jump to next cword'} )
 		vim.keymap.set({'n', 'x'}, '<C-q>',  "<Cmd>MultipleCursorsJumpNextMatch<CR>", {desc = 'Jump to next cword'} )
 		vim.keymap.set({'n', 'x'}, '<leader>l',  "<Cmd>MultipleCursorsLock<CR>", {desc = 'Toggle lock virtual cursors'} )
