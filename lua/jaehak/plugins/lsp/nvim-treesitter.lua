@@ -7,7 +7,7 @@ return {
 	lazy = true, -- by telescope
 	dependencies = {
 		'HiPhish/rainbow-delimiters.nvim',
-		'RRethy/nvim-treesitter-endwise',
+		'RRethy/nvim-treesitter-endwise', -- it requires neovim under v0.11
 	},
 	build = ':TSUpdate',
 	init= function ()
