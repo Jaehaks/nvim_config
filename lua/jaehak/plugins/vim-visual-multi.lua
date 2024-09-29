@@ -1,6 +1,44 @@
 return {
 {
+	-- "brenton-leighton/multiple-cursors.nvim",
+	"Jaehaks/multiple-cursors.nvim",
+	version = "*",  -- Use the latest tagged version
+	config = function ()
+
+		vim.api.nvim_set_hl(0, 'MultipleCursorsCursor'    , { fg = 'black', bg = "#F78C6C" })
+		vim.api.nvim_set_hl(0, 'MultipleCursorsVisual'    , { bg = "#647B13" })
+		vim.api.nvim_set_hl(0, "MultipleCursorsLockCursor", { fg = 'black', bg = "#955441" })
+
+
+		local mc = require('multiple-cursors')
+		local mc_motion = require('multiple-cursors.normal_mode.motion')
+		mc.setup({
+			custom_key_maps = {
+				{{'n', 'x'}, {'j', '<Up>'}, mc_motion.k},
+				{{'n', 'x'}, {'k', '<Down>'}, mc_motion.j},
+			},
+			pre_hook = function ()
+				vim.opt.cursorline = false
+				vim.print('Multiple Cursor Mode!!')
+			end,
+			post_hook = function ()
+				vim.opt.cursorline = true
+				vim.print('')
+			end
+		})
+
+		vim.keymap.set({'n', 'x'}, '<C-k>',  "<Cmd>MultipleCursorsAddDown<CR>", {desc = 'Add cursor and move down'} )
+		vim.keymap.set({'n', 'x'}, '<C-j>',  "<Cmd>MultipleCursorsAddUp<CR>", {desc = 'Add cursor and move Up'} )
+		vim.keymap.set({'n', 'x'}, '<C-S-n>',  "<Cmd>MultipleCursorsAddMatches<CR>", {desc = 'Add cursor to cword'} )
+		vim.keymap.set({'n', 'x'}, '<leader>A',  "<Cmd>MultipleCursorsAddMatchesV<CR>", {desc = 'Add cursor to cword in previous area'} )
+		vim.keymap.set({'n', 'x'}, '<C-n>',  "<Cmd>MultipleCursorsAddJumpNextMatch<CR>", {desc = 'Add cursor and jump to next cword'} )
+		vim.keymap.set({'n', 'x'}, '<C-q>',  "<Cmd>MultipleCursorsJumpNextMatch<CR>", {desc = 'Jump to next cword'} )
+		vim.keymap.set({'n', 'x'}, '<leader>l',  "<Cmd>MultipleCursorsLock<CR>", {desc = 'Toggle lock virtual cursors'} )
+	end,
+},
+{
 	"jake-stewart/multicursor.nvim",
+	enabled = false,
     branch = "1.0",
 	config = function()
 		local mc = require("multicursor-nvim")
