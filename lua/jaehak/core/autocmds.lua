@@ -89,6 +89,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end
 })
 
+------------ highlight when yank --------------
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function ()
+		vim.highlight.on_yank()
+	end
+})
 
 ------------ Web Search --------------
 -- for web search
