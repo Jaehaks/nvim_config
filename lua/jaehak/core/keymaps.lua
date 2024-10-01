@@ -50,15 +50,7 @@ vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 -- clear keymap
 vim.keymap.set({'n'}, '<C-l>', '<Nop>', opts) -- default is redraw (highlight all blank region)
 vim.keymap.set({'i'}, '<C-Space>', '<Nop>', opts) -- default is paste
--- vim.keymap.set('n', [[q:]], '<Nop>', opts) -- q: shortcut cannot change
 
--- only show cursorline in current buffer
-local aug_User_defined = vim.api.nvim_create_augroup('User_defined', {clear = true})
-vim.api.nvim_create_autocmd({'WinEnter', 'BufRead'}, {
-	group = aug_User_defined,
-	pattern = '*',
-	callback = function() vim.opt_local.cursorline = false end
-})
 -- use q instead of :q when close some filetype
 vim.api.nvim_create_autocmd({'Filetype'}, {
 	group = aug_User_defined,
