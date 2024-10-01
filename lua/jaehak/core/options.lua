@@ -1,4 +1,4 @@
-local opt = vim.opt 		-- for conciseness 
+local opt = vim.opt 		-- for conciseness
 local paths = require('jaehak.core.paths')
 
 
@@ -9,7 +9,7 @@ opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
 
 
 ------------ gui windows ------------------------
--- show cursorline only current buffer 
+-- show cursorline only current buffer
 opt.cursorline    = true    -- show underline where current cursor is located
 opt.termguicolors = true    -- change cursor line from line to block
 opt.signcolumn    = 'yes'   -- show additional gray column on the leftside of line number
@@ -33,7 +33,7 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 
 ------------- file detect -----------------------
 
--- register config / data directory to runtimepath 
+-- register config / data directory to runtimepath
 -- register python program
 vim.g.has_win32 = vim.fn.has('win32')
 if vim.g.has_win32 == 1 then
@@ -47,7 +47,7 @@ else
 end
 
 
--- change 
+-- change
 opt.autochdir = true	-- change pwd where current buffer is located
 --opt.autoread = true		-- auto reload when file has been changed outside of vim
 
@@ -77,7 +77,7 @@ opt.autoindent = true     -- when enter next line, automatically indent from sta
                           -- so <autoclose> plugins are not works directly
                           -- plus, '#' removes all indent at the line, but not works?
                           -- if '#' is located at first column, '>>' doesn't work
-						  -- I'll use nvim-FeMaco.lua in markdown instead of it 
+						  -- I'll use nvim-FeMaco.lua in markdown instead of it
 
 opt.wrap = false          -- disable line wrapping
 opt.splitright = true	  -- focus to new window when vsplit
@@ -99,14 +99,16 @@ vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim 
 })
 
 ------------- output file -------------------
-opt.swapfile = false		-- no swap file when file is created 
+opt.swapfile = false		-- no swap file when file is created
 opt.backup = false 			-- no backup file when file is created
 --opt.shell = 'cmd "C:\\Users\\USER\\user_installed\\cmder_mini\\vendor\\init.bat"'
 
+opt.sessionoptions = "curdir,folds,tabpages,winsize" -- get rid of 'blank,buffers' to remove unlisted buffer
+													 -- get rid of 'help, terminal'
 
 ------------- case sensitive ----------------
-opt.ignorecase = true		-- ignore case when searching 
-opt.smartcase = true		-- when pattern has upper case, disable ignorecase 
+opt.ignorecase = true		-- ignore case when searching
+opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 --vim.cmd[[set mouse=ni]]		-- disable mouse operation
 								-- In neovim, mouse is disabled after entered visual mode, it is weird
 -- opt.clipboard:append('unnamedplus') -- share clipboard between vim and system
