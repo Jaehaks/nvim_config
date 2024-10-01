@@ -95,7 +95,7 @@ local NotHasFileName = function ()
 	return filename == '' or filename == '[No Name]'
 end
 
-vim.api.nvim_create_autocmd("InsertLeave", {
+vim.api.nvim_create_autocmd({"InsertLeave", "TextChanged"}, {
 	pattern = '*',
 	group = aug_TrimWhiteSpace,
 	callback = function (event)
