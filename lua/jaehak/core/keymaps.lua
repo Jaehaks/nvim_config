@@ -59,16 +59,11 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 		local ok = false
 		local diable_ft = {	-- disable filetype list
 			'help',
-			'terminal',
-			'FTerm',
-			'floaterm',
 			'qf',
-			'spectre_panel',
 			'Outline',
 			'TelescopePrompt',
 			'toggleterm',
 			'CodeAction',
-			-- 'oil'
 		}
 		local filetype = vim.bo[event.buf].filetype
 		for _, val in ipairs(diable_ft) do
