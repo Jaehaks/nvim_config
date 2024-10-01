@@ -75,6 +75,19 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 
 
 
+------------ Auto Trim white space at the end of line --------------
+local aug_TrimWhiteSpace = vim.api.nvim_create_augroup("aug_TrimWhiteSpace", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = '*',
+	group = aug_TrimWhiteSpace,
+	callback = function ()
+		require('conform').format({
+			lsp_fallback = false,
+			async = true,
+			formatters = {'trim_whitespace'}
+		})
+	end
+})
 
 
 ------------ Web Search --------------
