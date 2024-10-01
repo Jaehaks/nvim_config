@@ -21,7 +21,7 @@ vim.keymap.set({'i','c'}, '<C-d>', '<Del>', opts)
 vim.keymap.set({'i','c'}, '<C-a>', '<Home>', opts)
 vim.keymap.set({'i','c'}, '<C-e>', '<End>', opts)
 
--- set action in terminal mode 
+-- set action in terminal mode
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) -- out from terminal mode
 vim.keymap.set({'i'},'<C-p>','<Nop>')              -- disable default completion next
 vim.keymap.set({'i'},'<C-n>','<Nop>')              -- disable default completion previous
@@ -30,7 +30,7 @@ vim.keymap.set({'i'},'<C-n>','<Nop>')              -- disable default completion
 vim.keymap.set('n', 'ww', 'i<space><esc>', opts)  -- space
 vim.keymap.set('n', 'tt', 'i<Tab><esc>', opts)    -- tab
 vim.keymap.set('n', 'U', ':redo<CR>', opts)       -- redo
-vim.keymap.set('n', '?', '/\\<\\><Left><Left>',opts) -- find exact word, <C-/> doesn't work in terminal 
+vim.keymap.set('n', '?', '/\\<\\><Left><Left>',opts) -- find exact word, <C-/> doesn't work in terminal
 vim.keymap.set('n', ':', ';',opts)
 vim.keymap.set({'n', 'v'}, ';', ':',opts)         -- replace ;q instead of :q
 vim.keymap.set('n', 'zf', '[s1z=', opts)          -- replace current/previous word on cursor to 1st suggested spell
@@ -51,39 +51,35 @@ vim.keymap.set('n', '<F2>', ':let @/=""<CR>', opts)
 vim.keymap.set({'n'}, '<C-l>', '<Nop>', opts) -- default is redraw (highlight all blank region)
 vim.keymap.set({'i'}, '<C-Space>', '<Nop>', opts) -- default is paste
 
--- use q instead of :q when close some filetype
-vim.api.nvim_create_autocmd({'Filetype'}, {
-	group = aug_User_defined,
-	pattern = '*',
-	callback = function(event)
-		local ok = false
-		local diable_ft = {	-- disable filetype list
-			'help',
-			'qf',
-			'Outline',
-			'TelescopePrompt',
-			'toggleterm',
-			'CodeAction',
-		}
-		local filetype = vim.bo[event.buf].filetype
-		for _, val in ipairs(diable_ft) do
-			if filetype == val then
-				ok = true
-				break
-			end
-		end
+-- Insert New line
+vim.keymap.set('n', '<CR>', 'o<esc>', {silent = true, noremap = true})       -- new line without split(i heard it works only gui)
+vim.keymap.set('n', '<C-i>', 'a<CR><esc><Up>$', {silent = true, noremap = true}) -- new line with split(i heard it works only gui)
 
-		if not ok then -- if normal filetype buffer (writable)
-			vim.keymap.set('n', '<CR>', 'o<esc>', {silent = true, buffer = 0, noremap = true})       -- new line without split(i heard it works only gui)
-			vim.keymap.set('n', '<C-i>', 'a<CR><esc><Up>$', {silent = true, buffer = 0, noremap = true}) -- new line with split(i heard it works only gui)
-			return
-		end
+-- use q instead of :q when close some filetype
+local aug_QuickQuit = vim.api.nvim_create_augroup("aug_QuickQuit", { clear = true })
+vim.api.nvim_create_autocmd({'Filetype'}, {
+	group = aug_QuickQuit,
+	pattern = {
+		'help',
+		'qf',
+		'Outline',
+		'TelescopePrompt',
+		'toggleterm',
+		'CodeAction',
+	},
+	callback = function(event)
+		local filetype = vim.bo[event.buf].filetype -- get current filetype
+		vim.bo[event.buf].buflisted = false  -- ensure the buffer don't listed in 'ls'
 
 		if filetype == 'help' then
 			-- it prevents that whole neovim termination when I quit a help file which is in full screen
-			vim.keymap.set('n', 'q', ':bd<CR>', {silent = true, buffer = 0, noremap = true})
+			vim.keymap.set('n', 'q', ':bd<CR>', {silent = true, buffer = event.buf, noremap = true})
+
+			-- disable keymaps to not modifiable file
+			vim.keymap.set('n', '<CR>', '<CR>', {silent = true, buffer = event.buf, noremap = true})
+			vim.keymap.set('n', '<C-i>', '<Nop>', {silent = true, buffer = event.buf, noremap = true})
 		else
-			vim.keymap.set('n', 'q', ':q!<CR>', {silent = true, buffer = 0, noremap = true}) -- apply to the specific buffer only
+			vim.keymap.set('n', 'q', ':q!<CR>', {silent = true, buffer = event.buf, noremap = true}) -- apply to the specific buffer only
 		end
 	end
 })
