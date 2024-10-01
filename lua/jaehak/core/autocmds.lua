@@ -74,7 +74,6 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 })
 
 
-
 ------------ Auto Trim white space at the end of line --------------
 local aug_TrimWhiteSpace = vim.api.nvim_create_augroup("aug_TrimWhiteSpace", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -86,6 +85,32 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 			async = true,
 			formatters = {'trim_whitespace'}
 		})
+	end
+})
+
+
+------------ Auto save when InsertLeave --------------
+local NotHasFileName = function ()
+	local filename = vim.fn.expand('%:t')
+	return filename == '' or filename == '[No Name]'
+end
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+	pattern = '*',
+	group = aug_TrimWhiteSpace,
+	callback = function (event)
+
+		if vim.bo.buftype ~= '' or NotHasFileName() or not vim.bo.modified then
+			return
+		end
+
+		if vim.bo[event.buf].filetype == 'NeogitCommitMessage' then
+			return
+		end
+
+		vim.api.nvim_exec_autocmds('BufWritePre', {buffer = 0}) -- force execute BufWritePre event
+		vim.cmd('write') -- because cmd('write') doesn't invokes BufWritePre
+		print('write automatically')
 	end
 })
 
