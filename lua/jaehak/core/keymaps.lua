@@ -38,6 +38,9 @@ vim.keymap.set('n', 'Y', '"*yy', opts)            -- copy a line using system cl
 vim.keymap.set('v', 'Y', '"*y', opts)             -- copy a visual block using system clipboard
 vim.keymap.set('n', 'P', '"*p', opts)             -- paste from system clipboard
 
+-- set diff keymaps
+vim.keymap.set({'n', 'v'}, 'do', ':diffg<CR>', {silent = true, noremap = true}) -- copy continuous region of change from other to cursor
+vim.keymap.set({'n', 'v'}, 'dp', ':diffpu<CR>', {silent = true, noremap = true}) -- copy continuous region of change from cursor to other
 
 -- set find/replace behavior
 vim.keymap.set('v', '<C-h>', '"hy:.,$s/<C-r>h//gc<Left><Left><Left>', opts)

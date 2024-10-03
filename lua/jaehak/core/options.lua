@@ -98,6 +98,11 @@ vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim 
 	end
 })
 
+------------- diff -----------------------
+opt.diffopt = {'internal', 'filler', 'closeoff', 'linematch:60'}
+
+
+
 ------------- output file -------------------
 opt.swapfile = false		-- no swap file when file is created
 opt.backup = false 			-- no backup file when file is created
