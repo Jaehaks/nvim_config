@@ -9,6 +9,16 @@ return {
 		-- {
 		-- 	'folke/lazydev.nvim', -- instead of neodev
 		-- 	ft = 'lua',
+		-- 	config = function ()
+		-- 		require('lazydev').setup({
+		-- 			library = {
+		-- 				-- { path = 'luvit-meta/library', words = {'vim%.uv'}}
+		-- 			},
+		-- 			enabled = function(root_dir)
+		-- 				return vim.g.lazydev_enabled == nil and true or vim.g.lazydev_enabled
+		-- 			end
+		-- 		})
+		-- 	end
 		-- },
 		-- {
 		-- 	'Bilal2453/luvit-meta', -- for lazydev, vim.uv library
@@ -35,14 +45,6 @@ return {
 				plugins = false,		-- installed plugins completion (too long loading time)
 			}
 		})
-		-- require('lazydev').setup({
-		-- 	library = {
-		-- 		-- { path = 'luvit-meta/library', words = {'vim%.uv'}}
-		-- 	},
-		-- 	enabled = function(root_dir)
-		-- 		return vim.g.lazydev_enabled == nil and true or vim.g.lazydev
-		-- 	end
-		-- })
 
 		local lspconfig = require('lspconfig')
 		local lsp_util = require('lspconfig.util')
@@ -71,7 +73,7 @@ return {
 							vim.env.VIMRUMTIME,
 							--vim.api.nvim_get_runtime_file('',true),
 
-							-- ## below two directories make lsp loading too slow 
+							-- ## below two directories make lsp loading too slow
 							-- I think stdpath('data') load all plugins even though it has "enabled = false"
 --							vim.fn.stdpath('config'),
 --							vim.fn.stdpath('data'),
@@ -113,7 +115,7 @@ return {
 		-- it need java11(upper class file 55). => scoop install openjdk11
 		-- it works, but the grammar check level is poor I thought and cannot apply by context
 		-- ltex server does offline operation
-		-- ltex only comment check in program language 
+		-- ltex only comment check in program language
 		-- lspconfig.ltex.setup({
 		-- 	cmd = {'ltex-ls'},
 		-- 	settings = {
@@ -177,7 +179,7 @@ return {
 		-- 		but not big differences, I understand that type checking of pyright is more accurate than ruff/flake8
 		-- 		pyright has more accuracy about unused variable, linter's error is shadowed by other error when it detects multiple error
 		-- 		organizeImports is applied to both pyright and ruff / buf ruff has code action to this
-		-- 		linter is not type checker... it helps code convention as formatting rule, and better style of code 
+		-- 		linter is not type checker... it helps code convention as formatting rule, and better style of code
 		--      it detects some trivial error like undefined , but it cannot detect type checking error
 		--      On the other hand, pyright does not support linting(better style checker)
 		--      but for trivial error, ruff / flake8 / pyright detect in the same time
@@ -249,15 +251,15 @@ return {
 			}
 		})
 
-		-- pylsp is slow? 
-		lspconfig.pylsp.setup({ -- for completion / hover / lsp_signature, pure pylsp has no ruff configuration, 
+		-- pylsp is slow?
+		lspconfig.pylsp.setup({ -- for completion / hover / lsp_signature, pure pylsp has no ruff configuration,
 			-- pylsp has FormattingProvider, but I don't set the formatter
 			on_attach = function (client, bufnr)
 				client.server_capabilities.documentFormattingProvider = false
 				client.server_capabilities.documentRangeFormattingProvider = false
 				client.server_capabilities.documentHighlightProvider = false
 			end,
-			capabilities = capabilities, -- required 
+			capabilities = capabilities, -- required
 			filetyps = {'python'},
 			root_dir = function (fname)
 				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
