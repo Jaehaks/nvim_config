@@ -1,6 +1,6 @@
 return {
 	-- ultimate-autopair.nvim  : it is too bulky and slow
-	-- m4xshen/autoclose.nvim : more simple, but it cannot ignore like the "'" in "'don't" 
+	-- m4xshen/autoclose.nvim : more simple, but it cannot ignore like the "'" in "'don't"
 	-- 							and it change some keymaps in settings automatically
 {
 	-- more simple and smart / but it cannot support filetype
@@ -46,7 +46,7 @@ return {
 				[''] = function(bufnr)
 					local lc = vim.api.nvim_buf_line_count(bufnr)
 					if lc > 5000 then
-						return nil -- although it return nil, delimiters make slow read performance 
+						return nil -- although it return nil, delimiters make slow read performance
 					end
 					return rainbow_delimiters.strategy['global']
 				end,
@@ -91,7 +91,7 @@ return {
 {
 	-- add endwise, i think it would be useful when use language which does not support snippet
 	'RRethy/nvim-treesitter-endwise',
-	lazy = true, -- from nvim-treesitter 
+	lazy = true, -- from nvim-treesitter
 	config = function ()
 	end
 },
