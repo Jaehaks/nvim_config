@@ -99,7 +99,8 @@ local NotHasFileName = function ()
 	return filename == '' or filename == '[No Name]'
 end
 
-vim.api.nvim_create_autocmd({"InsertLeave", "TextChanged"}, {
+vim.opt.updatetime = 500
+vim.api.nvim_create_autocmd('CursorHold', {
 	pattern = '*',
 	group = aug_TrimWhiteSpace,
 	callback = function (event)
@@ -114,7 +115,6 @@ vim.api.nvim_create_autocmd({"InsertLeave", "TextChanged"}, {
 
 		vim.api.nvim_exec_autocmds('BufWritePre', {buffer = 0}) -- force execute BufWritePre event
 		vim.cmd('write') -- because cmd('write') doesn't invokes BufWritePre
-		print('write automatically')
 	end
 })
 
