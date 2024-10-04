@@ -2,6 +2,7 @@ return {
 {
 	-- "brenton-leighton/multiple-cursors.nvim",
 	"Jaehaks/multiple-cursors.nvim",
+	enabled = false,
 	version = "*",  -- Use the latest tagged version
 	config = function ()
 
@@ -38,7 +39,7 @@ return {
 },
 {
 	"jake-stewart/multicursor.nvim",
-	enabled = false,
+	enabled = true,
     branch = "1.0",
 	config = function()
 		local mc = require("multicursor-nvim")
@@ -71,6 +72,15 @@ return {
 				mc.addCursor()
 			end
 		end, {desc = '[Multicursor] Add Current Pos | Deactivate'})
+
+		-- Lock Cursor
+		vim.keymap.set({"n"}, "<leader>l", function()
+			if mc.cursorsEnabled() then
+				mc.disableCursors()
+			else
+				mc.enableCursors()
+			end
+		end, {desc = '[Multicursor] Toggle lock of the cursor'})
 
 		-- Quit multicursor mode
 		vim.keymap.set("n", "<esc>", function()
@@ -131,7 +141,7 @@ return {
 	config = function ()
 
 		-- TODO: toggle mapping / show inforline at once when visual-multi-cursor starts automatically
-		-- @param Funkey <String> : String which is mapped to other function 
+		-- @param Funkey <String> : String which is mapped to other function
 		VMFunc = function (FunKey)
 			local key = nil
 			if vim.b[0].visual_multi then
@@ -145,7 +155,7 @@ return {
 
 				if FunKey == '<Plug>(VM-Add-Cursor-At-Pos)' then
 					key = vim.api.nvim_replace_termcodes('<Plug>(VM-Toggle-Mappings)', true, true, true)
-					vim.api.nvim_feedkeys(key, 'n', false) -- escape visual-mutli mode at start 
+					vim.api.nvim_feedkeys(key, 'n', false) -- escape visual-mutli mode at start
 				end
 			end
 		end
@@ -165,10 +175,10 @@ return {
 		-- o : switch direction of extending region
 		-- 		selecting visual word is the same with extending after Find-Under
 
-		-- how to use? 
-		-- 1) enter VM mode using <C-m> etc.. 
-		-- 2) to move cursor freely, press  <leader>m 
-		-- 	  in this mode, you can add multicursor with key of VM mode like <C-m> etc.. 
+		-- how to use?
+		-- 1) enter VM mode using <C-m> etc..
+		-- 2) to move cursor freely, press  <leader>m
+		-- 	  in this mode, you can add multicursor with key of VM mode like <C-m> etc..
 		-- 	  but editing in VM mode cannot works
 		-- 3) restore to VM mode, press <leader>m again.
 		-- 4) edit the multi cursor region and exit with Esc
@@ -181,3 +191,7 @@ return {
 -- 								it has little buggy and lag
 -- 'mg979/vim-visual-multi' : After entering visual-multi mode, keymap related with <CR> is cleared
 -- 							  It seems to bug. It is the reason Why I change to 'jake-stewart/multicursor.nvim'
+-- "brenton-leighton/multiple-cursors.nvim", : very precise, but it is too buggy and cannot enter autoclose ()
+-- "jake-stewart/multicursor.nvim", : it is nice to use. it doesn't support synchronizing when entering characters
+-- 									  but I know why this is hard to implement.
+-- 									  it is also has a bug that the cursor is gone to the top when undo after align
