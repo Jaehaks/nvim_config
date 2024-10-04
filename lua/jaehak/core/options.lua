@@ -108,7 +108,7 @@ opt.swapfile = false		-- no swap file when file is created
 opt.backup = false 			-- no backup file when file is created
 --opt.shell = 'cmd "C:\\Users\\USER\\user_installed\\cmder_mini\\vendor\\init.bat"'
 
-opt.sessionoptions = "curdir,folds,tabpages,winsize" -- get rid of 'blank,buffers' to remove unlisted buffer
+opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize" -- get rid of 'blank,buffers' to remove unlisted buffer
 													 -- get rid of 'help, terminal'
 
 ------------- case sensitive ----------------
