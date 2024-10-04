@@ -37,21 +37,18 @@ return {
 						icon = '',
 						desc = 'Folder : Config', desc_hl = 'String',
 						key = 'c', key_hl = 'DashboardShortCut',
-						-- action = function () require('oil').open_float(paths.nvim.config) end,
 						action = function () yazi_conf.yazi(yazi_conf.config, paths.nvim.config) end,
 					},
 					{
 						icon = '',
 						desc = 'Folder : D:\\MATLAB_Project', desc_hl = 'String',
 						key = 'd', key_hl = 'DashboardShortCut',
-						-- action = function () require('oil').open_float(paths.project.matlab) end,
 						action = function () yazi_conf.yazi(yazi_conf.config, paths.project.matlab) end,
 					},
 					{
 						icon = '',
 						desc = 'Folder : Note', desc_hl = 'String',
 						key = 'n', key_hl = 'DashboardShortCut',
-						-- action = function () require('oil').open_float(paths.obsidian.personal) end,
 						action = function () yazi_conf.yazi(yazi_conf.config, paths.obsidian.personal) end,
 					},
 					{
@@ -102,4 +99,4 @@ return {
 }
 
 -- alpha-nvim : It is very good plugin. I think dashboard's footer is more convenient and faster
--- 				dashboard has more example to implement, but 
+-- 				dashboard has more example to implement, but
