@@ -107,7 +107,7 @@ return {
 					telemetry = true,
 				},
 			},
-			single_file_support = true,
+			single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
 		})
 
 
@@ -201,7 +201,7 @@ return {
 			root_dir = function (fname)
 				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
 			end,
-			single_file_support = true,
+			single_file_support = false,
 			init_options = {
 				settings = {
 					logLevel = 'error',
