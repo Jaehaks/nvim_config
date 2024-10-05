@@ -238,13 +238,15 @@ return {
 				vim.keymap.set('i', '<CR>'      , '<CR><Cmd>AutolistNewBullet<CR>'   , opts)
 				vim.keymap.set('n', 'o'         , 'o<Cmd>AutolistNewBullet<CR>'      , opts)
 				vim.keymap.set('n', 'O'         , 'O<Cmd>AutolistNewBulletBefore<CR>', opts)
-				vim.keymap.set('n', '<C-m>'		, '<Cmd>AutolistCycleNext<CR>'       , opts)
+				-- vim.keymap.set('n', '<C-m>'		, '<Cmd>AutolistCycleNext<CR>'       , opts)
 				vim.keymap.set('n', '<leader>mr', '<Cmd>AutolistRecalculate<CR>'     , opts)
 				vim.keymap.set('n', 'dd'        , 'dd<Cmd>AutolistRecalculate<CR>'   , opts)
 				vim.keymap.set('v', 'd'         , 'd<Cmd>AutolistRecalculate<CR>'    , opts)
 				vim.keymap.set('v', '<leader>mb', function () AddStrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
 				vim.keymap.set('v', '<leader>mh', function () AddStrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
 				vim.keymap.set('v', '<leader>ms', function () AddStrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
+
+				-- Don't remap to <C-m>, it synchronize with <CR>
 			end
 		})
 
