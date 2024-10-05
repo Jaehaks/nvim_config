@@ -35,6 +35,8 @@ return {{
 			qf                  = true,
 			NeogitCommitMessage = true,
 			yazi                = true,
+			markdown            = true,
+			text                = true,
 		}
 		require("hlchunk").setup({
 			chunk = {
