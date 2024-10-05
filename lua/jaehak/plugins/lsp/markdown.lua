@@ -10,7 +10,7 @@ return {
 		vim.keymap.set('n', '<leader>mp', '<Cmd>:MarkdownPreviewToggle<CR>', {desc = 'toggle markdown preview'})
 	end
 },
--- 'datsfilipe/md-previewer' : how to use this? 
+-- 'datsfilipe/md-previewer' : how to use this?
 {
 	-- highlight of markdown file. but there are no delay to navigate
 	'MeanderingProgrammer/markdown.nvim',
@@ -52,7 +52,7 @@ return {
 				enabled = false,
 			},
 			win_options = {
-				conceallevel = { 
+				conceallevel = {
 					default  = 0,  -- for other mode rendering, if conceallevel >= 1, (```) doesn't show event insert mode
 					rendered = 3,  -- for normal mode rendering
 				},
@@ -141,10 +141,10 @@ return {
 	-- without headlines.nvim, It confused to discern code block and link => I turned of conceal of markdown
 -- mkdnflow.nvim : main function is link and table editing
 		-- 1) pros: it can access and make link with <CR>, it will be convenient reading README.md
-		-- 2) pros : increase / decrease heading 
-		-- 3) cons: it support auto indent numbering / but :MkdnUpdateNumbering cannot update like autolist.nvim 
-		--			=> use autolist.nvim and disable function about list item of mkdnflow 
-		-- 4) cons : conceal is not perfect. but treesitter cannot conceal without link 
+		-- 2) pros : increase / decrease heading
+		-- 3) cons: it support auto indent numbering / but :MkdnUpdateNumbering cannot update like autolist.nvim
+		--			=> use autolist.nvim and disable function about list item of mkdnflow
+		-- 4) cons : conceal is not perfect. but treesitter cannot conceal without link
 		-- mkdnflow is very functional, it seems to be well-used for creating tables and links.
 		-- but for me, these are too much, so I disable lots of functions
 -- tadmccorkle/markdown.nvim : I didn't use toc and shortcut usually. toc is feature of note taking plugins too
@@ -155,7 +155,7 @@ return {
 {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
-	-- it doesn't work in filetype 'NeogitCommitMessage' 
+	-- it doesn't work in filetype 'NeogitCommitMessage'
 	-- 'gaoDean/autolist.nvim',
 	'mcauley-penney/autolist.nvim',
 	enabled = true,
@@ -255,7 +255,7 @@ return {
 -- 							I think after using mcauley-penny/autolist.nvim, this problem is gone
 -- bullets-vim/bullets.nvim : it does not work in neovim
 -- gaoDean/autolist.nvim : sometimes, it makes indent problem when I put indent in front of word at the beginning line
--- 						   when I enter TAB, indent is inserted after first character of the word. 
+-- 						   when I enter TAB, indent is inserted after first character of the word.
 -- 						   It is a big reason of why I migrate to other plugin
 {
 	-- editing fenced code block using treesitter
