@@ -1,7 +1,7 @@
 return {{
 	-- support current indentation only(good), but if there are code in indentline, the line will be  cut
 	'echasnovski/mini.indentscope',
-	enabled = true,
+	enabled = false,
 	version = '*',
 	config = function()
 		local indents = require('mini.indentscope')
@@ -24,6 +24,38 @@ return {{
 		})
 	end
 },
+{
+	"shellRaining/hlchunk.nvim",
+	enabled = true,
+	config = function()
+		local default_exclude_filetype = {
+			dashboard           = true,
+			TelescopePrompt     = true,
+			help                = true,
+			qf                  = true,
+			NeogitCommitMessage = true,
+			yazi                = true,
+		}
+		require("hlchunk").setup({
+			chunk = {
+				enable = true,
+				exclude_filetypes = default_exclude_filetype,
+			},
+			indent = {
+				enable = false,
+				exclude_filetypes = default_exclude_filetype,
+			},
+			line_num = {
+				enable = false,
+				exclude_filetypes = default_exclude_filetype,
+			},
+			blank = {
+				enable = false,
+				exclude_filetypes = default_exclude_filetype,
+			}
+		})
+	end
 }
---	'lukas-reineke/indent-blankline.nvim' 		  -->>>> works well, not support current indentation level, it depends on treesitter 
+}
+--	'lukas-reineke/indent-blankline.nvim' 		  -->>>> works well, not support current indentation level, it depends on treesitter
 --	'nvimdev/indentmini.nvim' : loading time is fast, but not work
