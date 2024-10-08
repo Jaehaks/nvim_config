@@ -292,21 +292,21 @@ return {
 	'SCJangra/table-nvim',
 	ft = 'markdown',
 	opts = {
-		padd_column_separators = true,       -- Insert a space around column separators.
-		mappings = {                         -- next and prev work in Normal and Insert mode. All other mappings work in Normal mode.
-			next                = '<TAB>',   -- Go to next cell.
-			prev                = '<S-TAB>', -- Go to previous cell.
-			insert_row_up       = '<A-j>',   -- Insert a row above the current row.
-			insert_row_down     = '<A-k>',   -- Insert a row below the current row.
-			move_row_up         = '<A-C-j>', -- Move the current row up.
-			move_row_down       = '<A-C-k>', -- Move the current row down.
-			insert_column_left  = '<A-h>',   -- Insert a column to the left of current column.
-			insert_column_right = '<A-l>',   -- Insert a column to the right of current column.
-			move_column_left    = '<A-C-h>', -- Move the current column to the left.
-			move_column_right   = '<A-C-l>', -- Move the current column to the right.
-			insert_table        = '<leader>mt',   -- Insert a new table.
+		padd_column_separators = true,          -- Insert a space around column separators.
+		mappings = {                            -- next and prev work in Normal and Insert mode. All other mappings work in Normal mode.
+			next                = '<A-S-l>',    -- Go to next cell.
+			prev                = '<A-S-h>',    -- Go to previous cell.
+			insert_row_up       = '<A-j>',      -- Insert a row above the current row.
+			insert_row_down     = '<A-k>',      -- Insert a row below the current row.
+			move_row_up         = '<A-C-j>',    -- Move the current row up.
+			move_row_down       = '<A-C-k>',    -- Move the current row down.
+			insert_column_left  = '<A-h>',      -- Insert a column to the left of current column.
+			insert_column_right = '<A-l>',      -- Insert a column to the right of current column.
+			move_column_left    = '<A-C-h>',    -- Move the current column to the left.
+			move_column_right   = '<A-C-l>',    -- Move the current column to the right.
+			insert_table        = '<leader>mt', -- Insert a new table.
 			insert_table_alt    = '<leader>mT', -- Insert a new table that is not surrounded by pipes.
-			delete_column       = '<A-C-d>',   -- Delete the column under cursor.
+			delete_column       = '<A-C-d>',    -- Delete the column under cursor.
 		}
 	},
 }
