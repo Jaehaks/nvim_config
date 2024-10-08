@@ -49,6 +49,9 @@ return {
 		-- Add cursors above/below the main cursor.
 		vim.keymap.set({"n", "v"}, "<C-k>", function() mc.addCursor("k") end, {desc = '[Multicursor] Add below char'})
 		vim.keymap.set({"n", "v"}, "<C-j>", function() mc.addCursor("j") end, {desc = '[Multicursor] Add above char'})
+		vim.keymap.set({"n", "v"}, "<C-n>", function() mc.matchAddCursor(1) end, {desc = '[Multicursor] Add next cword'})
+		vim.keymap.set({"n", "v"}, "<leader>q", function() mc.matchSkipCursor(1) end, {desc = '[Multicursor] Add next cword'})
+		vim.keymap.set({"n", "v"}, "<C-S-n>", function() mc.matchAllAddCursors() end, {desc = '[Multicursor] Add all cword'})
 
 		-- Rotate the main cursor within multi-cursors
 		vim.keymap.set({"n", "v"}, "<C-l>", function ()
