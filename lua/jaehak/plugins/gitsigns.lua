@@ -1,5 +1,5 @@
 return {
-	-- it is useful to show git diff sign / but staging and commit is not 
+	-- it is useful to show git diff sign / but staging and commit is not
 	'lewis6991/gitsigns.nvim',
 	enabled = true,
 	config = function ()
