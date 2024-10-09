@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 	'neovim/nvim-lspconfig',
 	-- lazy = true,		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
@@ -28,10 +29,7 @@ return {
 		'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
 	},
 	init = function ()
-		vim.env.RUFF_CACHE_DIR = vim.fn.stdpath('cache') .. '/.ruff_cache' --  set ruff cache directory
-		if vim.g.has_win32 == 1 then
-			vim.env.RUFF_CACHE_DIR = vim.env.RUFF_CACHE_DIR:gsub('/','\\')
-		end
+		vim.env.RUFF_CACHE_DIR = paths.nvim.ruff_cache_path --  set ruff cache directory
 	end,
 	config = function()
 		-- ######## setup neodev configuration, must be start #######
@@ -184,11 +182,6 @@ return {
 		--      On the other hand, pyright does not support linting(better style checker)
 		--      but for trivial error, ruff / flake8 / pyright detect in the same time
 
-		local ruff_config_path = vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml'
-		if vim.g.has_win32 == 1 then
-			ruff_config_path = ruff_config_path:gsub('/','\\')
-		end
-
 		lspconfig.ruff_lsp.setup({ -- use ruff as python linter
 			on_attach = function (client, bufnr)
 				-- lsp use ruff to formatter
@@ -214,7 +207,7 @@ return {
 						enable = true,
 						run = 'onType', -- ruff every keystroke
 						args = {        -- pass to ruff check (--config = *.toml)
-							'--config=' .. ruff_config_path,
+							'--config=' .. paths.nvim.ruff_config_path,
 						},
 					},
 				}
