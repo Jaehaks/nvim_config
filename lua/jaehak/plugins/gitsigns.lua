@@ -14,15 +14,9 @@ return {
 				changedelete = { text = '~' },
 				untracked    = { text = '┆' },
 			},
-			signs_staged = {
-				add          = { text = '' },
-				change       = { text = '' },
-				delete       = { text = '' },
-				topdelete    = { text = '' },
-				changedelete = { text = '' },
-				untracked    = { text = '' },
-			},
+			signs_staged_enable = false,
 			signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+			sign_priority = 10,
 			on_attach = function(bufnr)
 				local gs = package.loaded.gitsigns
 

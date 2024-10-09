@@ -1,4 +1,22 @@
 local paths = require('jaehak.core.paths')
+local sign_priority = {
+	rank1 = 20,
+	rank2 = 10, -- default of lsp
+	rank3 = 3,
+	-- sign of gitsign.nvim is 10
+}
+
+local create_custom_handler = function (priority)
+	return function (err, result, ctx, config)
+		config = config or {}
+		config.signs = config.signs or {}
+		config.signs.priority= priority
+		config.severity_sort = true -- if true, priority is set automatically
+		config.virtual_text = false
+		vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+	end
+end
+
 return {
 	'neovim/nvim-lspconfig',
 	-- lazy = true,		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
@@ -79,7 +97,10 @@ return {
 					}
 				}
 			},
-			capabilities = capabilities
+			capabilities = capabilities,
+			handlers = {
+				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+			}
 		})
 
 		-- ####### 2) matlab language server configuration #########
@@ -106,10 +127,14 @@ return {
 				},
 			},
 			single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
+			handlers = {
+				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+			}
 		})
 
 		-- grammar-guard.nvim : deprecated
 		-- prosesitter : deprecated
+		-- ltex : too heavy to load. its speed is too slow
 
 		-- ####### 6) harper_ls language server configuration #########
 		-- more faster than ltex
@@ -137,7 +162,11 @@ return {
 						forceStable = true
 					}
 				}
+			},
+			handlers = {
+				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank3)
 			}
+
 		})
 
 
@@ -183,6 +212,9 @@ return {
 						},
 					},
 				}
+			},
+			handlers = {
+				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 			}
 		})
 
@@ -213,6 +245,9 @@ return {
 						useLibraryCodeForTypes = true,            -- analyze library code to extract type information
 					}
 				}
+			},
+			handlers = {
+				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 			}
 		})
 
@@ -256,6 +291,9 @@ return {
 						yapf                = { enabled = false },
 					}
 				}
+			},
+			handlers = {
+				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 			}
 		})
 
@@ -278,13 +316,5 @@ return {
 		-- global mapping for diagnostic
 		-- vim.keymap.set('n', 'gk', vim.diagnostic.goto_next) -- show next diagnostic result
 
-
-
-
-		vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-			vim.lsp.diagnostic.on_publish_diagnostics, {
-				virtual_text = false
-			}
-		)
 	end
 }
