@@ -108,34 +108,6 @@ return {
 			single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
 		})
 
-
-		-- ####### 5) ltex language server configuration #########
-		-- it need java11(upper class file 55). => scoop install openjdk11
-		-- it works, but the grammar check level is poor I thought and cannot apply by context
-		-- ltex server does offline operation
-		-- ltex only comment check in program language
-		-- lspconfig.ltex.setup({
-		-- 	cmd = {'ltex-ls'},
-		-- 	settings = {
-		-- 		ltex = {
-		-- 			-- both 'enabled' and 'filetypes' are listed to check
-		-- 			enabled = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
-		-- 			language = 'en-US',
-		-- 			disabledRules = {
-		-- 				['en-US'] = {
-		-- 					'MORFOLOGIK_RULE_EN_US',	-- misspell check
-		-- 					'WHITESPACE_RULE',			-- check white space in front of line
-		-- 					'COMMA_PARENTHESIS_WHITESPACE',	-- space after parenthesis
-		-- 				}
-		-- 			}
-		-- 		}
-		-- 	},
-		-- 	root_dir = function (fname)
-		-- 		return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
-		-- 	end,
-		-- 	filetypes = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
-		-- 	single_file_support = true,
-		-- })
 		-- grammar-guard.nvim : deprecated
 		-- prosesitter : deprecated
 
