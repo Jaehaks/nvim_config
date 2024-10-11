@@ -69,12 +69,13 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 		'TelescopePrompt',
 		'toggleterm',
 		'CodeAction',
+		'checkhealth',
 	},
 	callback = function(event)
 		local filetype = vim.bo[event.buf].filetype -- get current filetype
 		vim.bo[event.buf].buflisted = false  -- ensure the buffer don't listed in 'ls'
 
-		if filetype == 'help' then
+		if filetype == 'help' or filetype == 'checkhealth' then
 			-- it prevents that whole neovim termination when I quit a help file which is in full screen
 			vim.keymap.set('n', 'q', ':bd<CR>', {silent = true, buffer = event.buf, noremap = true})
 
