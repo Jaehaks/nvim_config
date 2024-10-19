@@ -5,7 +5,7 @@ local paths = require('jaehak.core.paths')
 ------------- font setting -----------------------
 opt.guifont       = 'FiraCode Nerd Font Mono:h11'
 opt.guifontwide   = '나눔고딕:h11'
-opt.fileencodings = {'utf-8', 'cp949'}	 -- find encodings in this table
+opt.fileencodings = {'utf-8', 'cp949', 'utf-16le'}	 -- find encodings in this table
 
 
 ------------ gui windows ------------------------
