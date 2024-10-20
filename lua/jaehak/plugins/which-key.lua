@@ -21,11 +21,12 @@ return {
 
 		wk.add({
 			{'<leader>c', group = 'Color', mode = 'n'},
-			{'<leader>e', group = 'Oil explorer', mode = 'n'},
+			{'<leader>e', group = 'File explorer', mode = 'n'},
 			{'<leader>f', group = 'Telescope', mode = 'n'},
 			{'<leader>x', group = 'Trouble', mode = 'n'},
-			{'<leader>l', group = 'Lspsaga', mode = 'n'},
+			-- {'<leader>l', group = 'Lspsaga', mode = 'n'},
 			{'<leader>m', group = 'Markdown', mode = 'n'},
+			{'<leader>n', group = 'Minimap', mode = 'n'},
 			{'<leader>h', group = 'Gitsign', mode = 'n'},
 			{'<leader>g', group = 'Neogit', mode = 'n'},
 			{'<leader>p', group = 'Project', mode = 'n'},
