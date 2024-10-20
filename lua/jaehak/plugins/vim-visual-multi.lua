@@ -87,12 +87,9 @@ return {
 
 		-- Quit multicursor mode
 		vim.keymap.set("n", "<esc>", function()
-			if not mc.cursorsEnabled() then
-				mc.enableCursors()
-			elseif mc.hasCursors() then
+			if mc.hasCursors() then
 				mc.clearCursors()
 			else
-				-- Default <esc> handler.
 			end
 		end, {desc = '[Multicursor] quit multicursor mode'})
 
