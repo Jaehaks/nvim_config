@@ -60,6 +60,6 @@ return {
 			}
 		}
 
-		vim.keymap.set('n', '<leader>mi', '<Cmd>Neominimap toggle<CR>', {noremap = true, desc = 'Toggle minimap for current window'})
+		vim.keymap.set('n', '<leader>n', '<Cmd>Neominimap toggle<CR>', {noremap = true, desc = 'Toggle minimap'})
 	end,
 }
