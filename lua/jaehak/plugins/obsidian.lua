@@ -54,7 +54,7 @@ return {
 					}
 				},
 				note_id_func = function (title) -- set note id automatically when :ObsidianNew
-					if title == nil then 
+					if title == nil then
 						title = 'NewFile'
 					else
 						title = title:gsub(' ','_')
@@ -164,7 +164,7 @@ return {
 					markdown_link = string.format('[](%s)',  clipboard_content)
 					vim.api.nvim_put({markdown_link}, 'c', true, true)
 
-				elseif clipboard_content ~= '' then -- paste '+' register 
+				elseif clipboard_content ~= '' then -- paste '+' register
 					local termcodes = vim.api.nvim_replace_termcodes('"+p', true, false, true)
 					vim.api.nvim_feedkeys(termcodes,'n', true)
 

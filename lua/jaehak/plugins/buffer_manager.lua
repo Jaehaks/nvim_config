@@ -34,7 +34,7 @@ return {
 			loop_nav = true,
 		})
 
-		vim.api.nvim_set_hl(0, 'BufferManagerModified', {fg = '#FF00FF'}) -- set highlight modified and not saved buffers in manager 
+		vim.api.nvim_set_hl(0, 'BufferManagerModified', {fg = '#FF00FF'}) -- set highlight modified and not saved buffers in manager
 		vim.keymap.set('n', '<M-m>', bmui.nav_next, {noremap = true, desc = 'go to next buffer'})
 		vim.keymap.set('n', '<M-n>', bmui.nav_prev, {noremap = true, desc = 'go to prev buffer'})
 		vim.keymap.set('n', '<leader>fb', bmui.toggle_quick_menu, {noremap = true, desc = 'open buffer window'})
