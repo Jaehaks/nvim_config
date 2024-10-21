@@ -5,7 +5,6 @@ return {
 	lazy = false,
 	init = function ()
 		vim.opt.wrap = false       -- default false,
-		vim.opt.sidescrolloff = 36 -- default 0
 
 		vim.g.neominimap = {
 			auto_enable = false,
