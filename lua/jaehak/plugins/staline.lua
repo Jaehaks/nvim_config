@@ -55,24 +55,126 @@ return {
 		})
 
 		-- ///////// buffer line configuration /////////////
-		require('stabline').setup({
-			style = 'slant', -- it set stab_left / stab_right using preset
-			stab_right = "",
-			fg = '#000000',
-			bg = '#986fec',
-			inactive_fg = '#AAAAAA',
-			exclude_fts = {'dashboard', 'Outline'},
-			numbers = function (bufn,n)
-				return bufn .. ' ' -- show buffer number
-			end
-		})
+		-- require('stabline').setup({
+		-- 	style = 'slant', -- it set stab_left / stab_right using preset
+		-- 	stab_right = "",
+		-- 	fg = '#000000',
+		-- 	bg = '#986fec',
+		-- 	inactive_fg = '#AAAAAA',
+		-- 	exclude_fts = {'dashboard', 'Outline'},
+		-- 	numbers = function (bufn,n)
+		-- 		return bufn .. ' ' -- show buffer number
+		-- 	end
+		-- })
 
 		vim.api.nvim_set_hl(0, "StalineBranch"  	 , { fg = '#FF00FF'})
 		vim.api.nvim_set_hl(0, "StalineFileSize"  	 , { fg = '#FFD800'})
 
 	end
+},
+{
+	'willothy/nvim-cokeline',
+	enabled = true,
+	dependencies = {
+		"nvim-lua/plenary.nvim",        -- Required for v0.4.0+
+		"nvim-tree/nvim-web-devicons", -- If you want devicons
+	},
+	config = function ()
+		vim.api.nvim_set_hl(0, "BufferActive", { bg = "#986FEC", fg = "#000000" })
+		vim.api.nvim_set_hl(0, "BufferInActive", { bg = "#131313", fg = "#AAAAAA" })
+		vim.api.nvim_set_hl(0, "TabLineFill", { bg = "#131313"}) -- fill color remained region of tabline
+
+		local is_picking_focus = require('cokeline.mappings').is_picking_focus
+		local is_picking_close = require('cokeline.mappings').is_picking_close
+		local get_hex = require('cokeline.hlgroups').get_hl_attr
+		local cokeline = require('cokeline')
+
+		local red = vim.g.terminal_color_1
+		-- local yellow = vim.g.terminal_color_3
+
+		cokeline.setup({
+			mappings = {
+				cycle_prev_next = false, -- don't cycle when focus/switch
+				disable_mouse = false,
+			},
+			history = {
+				enabled = false,
+			},
+			default_hl = {
+				fg = function (buffer)
+					return buffer.is_focused and get_hex('BufferActive', 'fg') or get_hex('BufferInActive', 'fg')
+				end,
+				bg = function (buffer)
+					return buffer.is_focused and get_hex('BufferActive', 'bg') or get_hex('BufferInActive', 'bg')
+				end
+			},
+			pick = {
+				use_filename = true, -- use first char of filename when pick
+			},
+			fill_hl = 'TabLineFill', -- remained region color
+			components = {
+				{ -- separator
+					text = " ",
+					fg = get_hex('BufferInActive', 'bg')
+				},
+				{
+					text = function (buffer)
+						return buffer.number .. ' '
+					end
+				},
+				{ -- icon or picking char
+					text = function(buffer)
+						return
+						(is_picking_focus() or is_picking_close())
+						and buffer.pick_letter .. ' '
+						or buffer.devicon.icon
+					end,
+					fg = function(buffer)
+						return
+						(is_picking_focus() and '#31EC36')
+						or (is_picking_close() and red)
+						or buffer.devicon.color
+					end,
+				},
+				{ -- filename with unique prefix
+					text = function(buffer)
+						return buffer.unique_prefix .. buffer.filename .. ' '
+					end,
+					bold = function(buffer) return buffer.is_focused end,
+				},
+				{
+					text = function (buffer)
+						return buffer.is_modified and '' or ' '
+					end,
+					fg = get_hex('BufferActive', 'fg')
+				},
+				{
+					text = "",
+					fg = function (buffer)
+						return buffer.is_focused and get_hex('BufferActive', 'bg') or get_hex('BufferInActive', 'bg')
+					end,
+					bg = get_hex('BufferInActive', 'bg'),
+				},
+			}
+		})
+
+		vim.keymap.set('n', '<leader>bp', function ()
+			require('cokeline.mappings').pick('focus')
+		end, {desc = '[Cokeline] pick a buffer'})
+
+		vim.keymap.set('n', '<M-m>', function ()
+			require('cokeline.mappings').by_step('focus', 1)
+		end, {desc = '[Cokeline] go to next buffer'})
+
+		vim.keymap.set('n', '<M-n>', function ()
+			require('cokeline.mappings').by_step('focus', -1)
+		end, {desc = '[Cokeline] go to previous buffer'})
+	end
 }
 }
 -- staline.nvim : blazed fast loading time, it covers both statusline and tabline and very flexible/configurable supports
+-- 				  it doesn't support dynamic rendering of bufferline when too many buffers are listed
 -- lualine/bufferline : bufferline has a bug to configure highlight, both have long load time
--- heirline.nvim : it can be more powerful, but lualine has more simple way to configure the same configuration.  
+-- heirline.nvim : it can be more powerful, but lualine has more simple way to configure the same configuration.
+-- romgrk/barbar.nvim : it has many feature what is want. but 'nvim_cokeline' is more configurable
+-- 						and has faster loading time a half of barbar.nvim
