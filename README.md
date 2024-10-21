@@ -40,7 +40,7 @@
     3) git
     4) gcc : `sudo apt-get install -y build-essential`
 3. provider
-    1) python3 provider : 
+    1) python3 provider :
         - install python-venv : `sudo apt-get install -y python3-venv`
         - activate venv : `source ~/.config/.Nvim_venv/bin/activate`
         - install neovim : `pip install neovim` in venv (`pynvim` is installed automatically)
@@ -60,21 +60,21 @@
 
 ### *1. Rainbow Delimiters for matlab*
 Delimiter file for matlab was written in `nvim_config/query/rainbow-delimiters.nvim/matlab/`
-and it can be used in [HiPhish/rainbow-delimiters.nvim](https://github.com/HiPhish/rainbow-delimiters.nvim)    
-To use, follow these step   
+and it can be used in [HiPhish/rainbow-delimiters.nvim](https://github.com/HiPhish/rainbow-delimiters.nvim)
+To use, follow these step
 
 1) Add matlab query directory to `nvim-data/lazy/rainbow-delimiters.nvim/queries`
 
 
 ### *2. nvim-treesitter-endwise for matlab*
-I'm making endwise file for matlab in `nvim_config/query/nvim-treesitter-endwise/matlab/`   
+I'm making endwise file for matlab in `nvim_config/query/nvim-treesitter-endwise/matlab/`
 (In Proceeding)
 
 
 ### *3. Luasnip for matlab*
 
-I'm making snippet file for matlab in `nvim_config/queries/friendly-snippets/matlab/` 
-using [friendly-snippets](https://github.com/rafamadriz/friendly-snippets),    
+I'm making snippet file for matlab in `nvim_config/queries/friendly-snippets/matlab/`
+using [friendly-snippets](https://github.com/rafamadriz/friendly-snippets),
 These steps will operate automatically later, every update of github repository or I'll find other ways
 
 1) Add matlab query directory to `nvim-data/lazy/friendly-snippets/snippets`
