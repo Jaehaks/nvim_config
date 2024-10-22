@@ -46,7 +46,9 @@ return {
 				}
 			},
 			search = {
-				enabled = false,
+				enabled = true,
+				mode = 'icon',
+				icon = '󰱽 ',
 			},
 			treesitter = {
 				enabled = true,
@@ -59,6 +61,8 @@ return {
 			}
 		}
 
+
+		-- neominimap toggle
 		vim.g.neominimap_manual = false
 		vim.keymap.set('n', '<leader>n', function ()
 			require('neominimap').toggle()
@@ -69,4 +73,8 @@ return {
 			end
 		end, {noremap = true, desc = 'Toggle minimap'})
 	end,
+	config = function ()
+		vim.api.nvim_set_hl(0, "NeominimapSearchIcon", {fg = "#FFFF00" }) -- searched sign color
+		vim.api.nvim_set_hl(0, "NeominimapSearchSign", {fg = "#FFFF00" }) -- searched icon color
+	end
 }
