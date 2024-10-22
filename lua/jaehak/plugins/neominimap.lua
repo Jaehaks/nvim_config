@@ -59,6 +59,14 @@ return {
 			}
 		}
 
-		vim.keymap.set('n', '<leader>n', '<Cmd>Neominimap toggle<CR>', {noremap = true, desc = 'Toggle minimap'})
+		vim.g.neominimap_manual = false
+		vim.keymap.set('n', '<leader>n', function ()
+			require('neominimap').toggle()
+			if require('neominimap.variables').g.enabled then
+				vim.g.neominimap_manual = true
+			else
+				vim.g.neominimap_manual = false
+			end
+		end, {noremap = true, desc = 'Toggle minimap'})
 	end,
 }

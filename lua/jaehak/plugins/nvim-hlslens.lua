@@ -44,8 +44,10 @@ return {
 		vim.api.nvim_create_autocmd('CursorMoved', {
 			group = aug_Neominimap,
 			callback = function ()
-				if vim.v.hlsearch == 0 and neovar.g.enabled then
-					neominimap.off()
+				if not vim.g.neominimap_manual then -- if not manual mode,
+					if vim.v.hlsearch == 0 and neovar.g.enabled then
+						neominimap.off()
+					end
 				end
 			end,
 		})
