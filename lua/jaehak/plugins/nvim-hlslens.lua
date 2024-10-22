@@ -13,14 +13,16 @@ return {
 		local kopts = {noremap = true, silent = true}
 		local neominimap = require('neominimap')
 		local neovar = require('neominimap.variables')
+		local min_line = 200 -- turn on minimap in file which has more lines than this value
 
 		-- function : turn on / off in search mode
 		local check_search_highlight = function ()
-			if vim.v.hlsearch == 1 and not neovar.g.enabled then
-				vim.opt.sidescroll = 36
+			local total_line = vim.api.nvim_buf_line_count(0)
+			if vim.v.hlsearch == 1 and not neovar.g.enabled and total_line > min_line then
+				vim.opt_local.sidescrolloff = 36
 				neominimap.on()
 			elseif vim.v.hlsearch == 0 and neovar.g.enabled then
-				vim.opt.sidescroll = 0
+				vim.opt_local.sidescrolloff = 0
 				neominimap.off()
 			end
 		end
@@ -31,7 +33,11 @@ return {
 			group = aug_Neominimap,
 			pattern = {'/', '?'},
 			callback = function ()
-				neominimap.on()
+				vim.schedule(function ()
+					if vim.fn.searchcount({recompute = 1}).total > 0 then -- check searched word is existed
+						check_search_highlight()
+					end
+				end)
 			end,
 		})
 
