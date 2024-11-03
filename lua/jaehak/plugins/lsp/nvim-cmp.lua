@@ -12,7 +12,7 @@ return {
 	end,
 	dependencies = {
 		'hrsh7th/cmp-buffer',       -- source for text in buffer
-		'hrsh7th/cmp-path',         -- source for file system path
+		-- 'hrsh7th/cmp-path',         -- source for file system path
 		'hrsh7th/cmp-cmdline',		-- source for commandline, [command], [path]
 		'hrsh7th/cmp-nvim-lsp',     -- using LSP for source
 		'f3fora/cmp-spell',			-- source for vim's spellsuggest
@@ -48,7 +48,7 @@ return {
 		require('luasnip.loaders.from_vscode').lazy_load()
 		cmp.setup({
 			completion = {
-				-- noselect : do not select a match in the menu 
+				-- noselect : do not select a match in the menu
 				completeopt = 'menu, menuone, preview, noselect',
 				keyword_length = 2,
 			},
@@ -138,7 +138,7 @@ return {
 						nvim_lsp   = '[LSP]',
 						luasnip    = '[LuaSnip]',
 						buffer     = '[BUF]',
-						path       = '[PATH]',
+						-- path       = '[PATH]',
 						cmp_matlab = '[MATLAB]',
 						spell      = '[SPELL]',
 						-- dictionary = '[Dict]',
@@ -147,7 +147,7 @@ return {
 					}
 					item.menu = menu_icon[entry.source.name] -- change kind field
 
-					-- item.dup make items unique if there are duplicated abbr. 
+					-- item.dup make items unique if there are duplicated abbr.
 					-- but it does not mean sources are not duplicated
 
 					return item
@@ -173,7 +173,7 @@ return {
 					priority = 250,
 					option = {
 						keep_all_entries = true, -- it can show more possible list
-						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
+						enable_in_context = function () -- is_available() does not work, this option make spell completion work only
 							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
 						end,
 						preselect_correct_word = false, -- if false, order is the same with spellsuggest()
@@ -200,10 +200,10 @@ return {
 				-- 	max_item_count = 3,
 				-- 	priority = 250,
 				-- },
-				{
-					name = 'path',
-					priority = 100,
-				},
+				-- {
+				-- 	name = 'path',
+				-- 	priority = 100,
+				-- },
 			},{
 				-- TBD:
 			}),
@@ -219,7 +219,7 @@ return {
 					priority = 1000,
 					option = {
 						keep_all_entries = true, -- it can show more possible list
-						enable_in_context = function () -- is_available() does not work, this option make spell completion work only 
+						enable_in_context = function () -- is_available() does not work, this option make spell completion work only
 							return context.in_treesitter_capture('comment') or context.in_syntax_group('Comment')
 						end,
 						preselect_correct_word = false, -- if false, order is the same with spellsuggest()
@@ -250,10 +250,10 @@ return {
 					max_item_count = 5,
 					priority = 250,
 				},
-				{
-					name = 'path',
-					priority = 100,
-				},
+				-- {
+				-- 	name = 'path',
+				-- 	priority = 100,
+				-- },
 			},{
 				-- TBD:
 			}),
@@ -281,10 +281,10 @@ return {
 					max_item_count = 5,
 					priority = 500,
 				},
-				{
-					name = 'path',
-					priority = 250,
-				},
+				-- {
+				-- 	name = 'path',
+				-- 	priority = 250,
+				-- },
 				{
 					name = 'emoji',
 					priority = 250,
