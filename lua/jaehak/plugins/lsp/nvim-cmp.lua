@@ -30,7 +30,7 @@ return {
 		-- },
 		'L3MON4D3/LuaSnip',         -- snippet engine
 		'saadparwaiz1/cmp_luasnip', -- using LuaSnip for source
-		'mstanciu552/cmp-matlab',   -- source of matlab
+		-- 'mstanciu552/cmp-matlab',   -- source of matlab
 		{
 			-- BUG: if cmp-vimtex was configured, the source attached repeatedly
 			-- if I don't use lazy-loading, the duplicate is removed. but I have to load this plugin every opening (200ms load time)
@@ -139,7 +139,7 @@ return {
 						luasnip    = '[LuaSnip]',
 						buffer     = '[BUF]',
 						-- path       = '[PATH]',
-						cmp_matlab = '[MATLAB]',
+						-- cmp_matlab = '[MATLAB]',
 						spell      = '[SPELL]',
 						-- dictionary = '[Dict]',
 						cmdline    = '[CMD]',
@@ -240,11 +240,11 @@ return {
 					max_item_count = 5,
 					priority = 250,
 				},
-				{
-					name = 'cmp_matlab',
-					max_item_count = 5,
-					priority = 250,
-				},
+				-- {
+				-- 	name = 'cmp_matlab',
+				-- 	max_item_count = 5,
+				-- 	priority = 250,
+				-- },
 				{
 					name = 'nvim_lsp',
 					max_item_count = 5,
