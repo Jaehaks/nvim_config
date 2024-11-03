@@ -5,7 +5,19 @@ local paths = require('jaehak.core.paths')
 ------------- font setting -----------------------
 opt.guifont       = 'FiraCode Nerd Font Mono:h11'
 opt.guifontwide   = '나눔고딕:h11'
-opt.fileencodings = {'utf-8', 'cp949', 'utf-16le'}	 -- find encodings in this table
+local aug_UserOptions = vim.api.nvim_create_augroup('aug_UserOptions', {clear = true})
+vim.api.nvim_create_autocmd({'BufReadPre', 'BufNewFile'}, {
+	group = aug_UserOptions,
+	pattern = '*',
+	callback = function(event)
+		local ext = string.match(event.file, '%.([^.]+)$') -- check extension from the file name
+		if ext == 'reg' then
+			opt.fileencodings = {'utf-8', 'utf-16le'}	 -- for windows registry
+		else
+			opt.fileencodings = {'utf-8', 'cp949'}	 -- for other document
+		end
+	end
+})
 
 
 ------------ gui windows ------------------------
@@ -19,14 +31,13 @@ opt.completeslash = 'slash' -- slash is used for path completion
 -- cursor line in only active window
 -- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window
 -- becase when :bn, BufRead invoked but WinEnter didn't not invoke
-local aug_WinLeave_Cursor = vim.api.nvim_create_augroup('WinLeave_Cursor', {clear = true})
 vim.api.nvim_create_autocmd({'WinLeave'}, {
-	group = aug_WinLeave_Cursor,
+	group = aug_UserOptions,
 	pattern = '*',
 	callback = function() vim.opt_local.cursorline = false end
 })
 vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
-	group = aug_WinLeave_Cursor,
+	group = aug_UserOptions,
 	pattern = '*',
 	callback = function() vim.opt_local.cursorline = true end
 })
@@ -87,9 +98,8 @@ opt.foldenable = false    -- disable folding automatically with marker (ex, toml
 
 
 -- set local options for markdown because markdown's ftplugin must set expandtab
-local aug_Markdown = vim.api.nvim_create_augroup('aug_Markdown', {clear = true})
 vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim focused
-	group = aug_Markdown,
+	group = aug_UserOptions,
 	pattern = 'markdown',
 	callback = function ()
 		vim.opt_local.expandtab = false
