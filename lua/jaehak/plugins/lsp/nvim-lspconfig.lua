@@ -110,11 +110,10 @@ return {
 		end
 		lspconfig.matlab_ls.setup({
 			on_attach = function (client, bufnr)
-				client.server_capabilities.signatureHelpProvider = false -- signature help by matlab lsp is poor
+				-- client.server_capabilities.signatureHelpProvider = false -- signature help by matlab lsp is poor
 			end,
 			cmd = {'matlab-language-server', '--stdio'},
 			filetypes = {'matlab'},
-			-- root_dir = lsp_util.root_pattern('*.m'),
 			root_dir = function (fname)
 				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
 			end,
@@ -123,7 +122,7 @@ return {
 					indexWorkspace = true,
 					installPath = matlab_path,
 					matlabConnectionTiming = 'onStart',
-					telemetry = true,
+					telemetry = false, -- don't report about any problem
 				},
 			},
 			single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
