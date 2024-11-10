@@ -30,14 +30,14 @@ return {
 								 'python',
 								 'vim', 'vimdoc',
 								 'markdown', 'markdown_inline',
-								 'html', 'json',
+								 'html', 'json', 'toml',
 								 'diff', 'regex', 'ssh_config',
 							   	 -- 'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
 			},
 			highlight = {
-				enable = true,  -- if highlight, cannot use rainbow bracket. 
-								-- because treesitter managed highlighting bracket also. 
-				-- treesitter highlight decrease overall performance. 
+				enable = true,  -- if highlight, cannot use rainbow bracket.
+								-- because treesitter managed highlighting bracket also.
+				-- treesitter highlight decrease overall performance.
 				-- highlight off if the file has too long lines, like help file lspconfig-server-configuration.md
 				-- it means that conceal of treesitter is disabled also.
 				disable = function (lang, bufnr)
