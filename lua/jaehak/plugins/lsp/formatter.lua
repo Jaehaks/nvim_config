@@ -68,7 +68,8 @@ return {
 			filetype_exclude = {  -- A list of filetypes for which the auto command gets disabled
 				"yazi",
 				'Outline',
-				"NeogitCommitMessage"
+				"NeogitCommitMessage",
+				"markdown"
 			},
 			buftype_exclude = {  -- A list of buffer types for which the auto command gets disabled
 				"help",
