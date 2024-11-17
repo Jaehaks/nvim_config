@@ -1,7 +1,7 @@
 return {
 {
 	"NeogitOrg/neogit",
-	-- version = 'v0.0.1', -- neovim 0.9.5 compatible
+	commit = '9fb8a93', -- after this commit, mapping doesn't work
 	keys = { -- negit loading time is too long
 		{'<leader>go', '<Cmd>Neogit<CR>', desc = 'open neogit default', 'n'}
 	},
@@ -20,7 +20,7 @@ return {
 			},
 			commit_editor = {
 				kind = 'split', -- horizontal split below
-				show_staged_diff = false,	-- disable diff in commit message 
+				show_staged_diff = false,	-- disable diff in commit message
 			},
 			console_timeout = 10000,	-- neogit loading slow.
 			integrations = {
@@ -41,8 +41,8 @@ return {
 },
 {
 	-- install libgit2 : choco install libgit2
-	-- required : add 'rocks = {enabled = false}' to disable lazy.nvim's luarocks support 
-	-- 			  to lazy.nvim's setting. because fugit2 can be builded by lua>5.1 
+	-- required : add 'rocks = {enabled = false}' to disable lazy.nvim's luarocks support
+	-- 			  to lazy.nvim's setting. because fugit2 can be builded by lua>5.1
 	'SuperBo/fugit2.nvim',
 	enabled = false,
 	opts = {
