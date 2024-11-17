@@ -181,41 +181,42 @@ return {
 		--      it detects some trivial error like undefined , but it cannot detect type checking error
 		--      On the other hand, pyright does not support linting(better style checker)
 		--      but for trivial error, ruff / flake8 / pyright detect in the same time
+		-- (241117) : ruff_lsp is deprecated
 
-		lspconfig.ruff_lsp.setup({ -- use ruff as python linter
-			on_attach = function (client, bufnr)
-				-- lsp use ruff to formatter
-				client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
-				client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
-				client.server_capabilities.hoverProvider = false                   -- use pylsp
-			end,
-			-- cmp_nvim_lsp default_configuration add completionProvider. ruff_lsp don't use completion
-			filetype = {'python'},
-			root_dir = function (fname)
-				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
-			end,
-			single_file_support = false,
-			init_options = {
-				settings = {
-					logLevel = 'error',
-					organizeImports = true, -- use code action for organizeImports
-					codeAction = {
-						disableRuleComment = { enable = false }, -- show options about rule disabling
-					},
-					format = false,     -- use conform.nvim
-					lint = {            -- it links with ruff, but lint.args are different with ruff configuration
-						enable = true,
-						run = 'onType', -- ruff every keystroke
-						args = {        -- pass to ruff check (--config = *.toml)
-							'--config=' .. paths.nvim.ruff_config_path,
-						},
-					},
-				}
-			},
-			handlers = {
-				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-			}
-		})
+		-- lspconfig.ruff_lsp.setup({ -- use ruff as python linter
+		-- 	on_attach = function (client, bufnr)
+		-- 		-- lsp use ruff to formatter
+		-- 		client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
+		-- 		client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
+		-- 		client.server_capabilities.hoverProvider = false                   -- use pylsp
+		-- 	end,
+		-- 	-- cmp_nvim_lsp default_configuration add completionProvider. ruff_lsp don't use completion
+		-- 	filetype = {'python'},
+		-- 	root_dir = function (fname)
+		-- 		return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+		-- 	end,
+		-- 	single_file_support = false,
+		-- 	init_options = {
+		-- 		settings = {
+		-- 			logLevel = 'error',
+		-- 			organizeImports = true, -- use code action for organizeImports
+		-- 			codeAction = {
+		-- 				disableRuleComment = { enable = false }, -- show options about rule disabling
+		-- 			},
+		-- 			format = false,     -- use conform.nvim
+		-- 			lint = {            -- it links with ruff, but lint.args are different with ruff configuration
+		-- 				enable = true,
+		-- 				run = 'onType', -- ruff every keystroke
+		-- 				args = {        -- pass to ruff check (--config = *.toml)
+		-- 					'--config=' .. paths.nvim.ruff_config_path,
+		-- 				},
+		-- 			},
+		-- 		}
+		-- 	},
+		-- 	handlers = {
+		-- 		['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+		-- 	}
+		-- })
 
 		-- pyright supports some lsp functions, but not enough
 		lspconfig.pyright.setup({ -- use pyright as type checker , for definition/hover
