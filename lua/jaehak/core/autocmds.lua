@@ -52,8 +52,8 @@ vim.api.nvim_create_autocmd({"LspAttach"}, {
 				local attempts = 0
 				local max_attempts = 5
 				local timer = vim.loop.new_timer()
-				local matlab_tbl = GetProcessId('matlab.exe')
-				timer:start(100, 1000, vim.schedule_wrap(function()
+				local matlab_tbl = {}
+				timer:start(3000, 1000, vim.schedule_wrap(function() -- start(start delay[ms], repeat[ms], callback )
 					attempts = attempts + 1
 					if next(matlab_tbl) or attempts >= max_attempts then
 						timer:stop()
