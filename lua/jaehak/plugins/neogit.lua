@@ -1,7 +1,6 @@
 return {
 {
 	"NeogitOrg/neogit",
-	commit = '9fb8a93', -- after this commit, mapping doesn't work
 	keys = { -- negit loading time is too long
 		{'<leader>go', '<Cmd>Neogit<CR>', desc = 'open neogit default', 'n'}
 	},
