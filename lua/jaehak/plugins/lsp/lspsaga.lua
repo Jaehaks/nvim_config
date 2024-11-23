@@ -10,10 +10,10 @@ return {
 	config = function ()
 		require('lspsaga').setup({
 			-- ////// code action : select behavior when diagnostics show //////////
-			-- lspsaga show code action with 
+			-- lspsaga show code action with
 			code_action = { -- builtin lsp use line diagnostics / lspsaga use cursor diagnostics
 				num_shortcut = true,
-				extend_gitsigns = false, -- extend gitsign plugin diff action 
+				extend_gitsigns = false, -- extend gitsign plugin diff action
 			},
 			-- ////// definition : peek_definition //////////
 			definition = {
@@ -30,18 +30,18 @@ return {
 				open_link = '<C-]>',   -- it can use website link also.
 				open_cmd = '!chrome'
 			},
-			-- ////// outline : code tree //////////	
+			-- ////// outline : code tree //////////
 			outline = {
 				layout = 'float',
 				detail = true,
 			},
-			-- ////// lightbulb : code action notify //////// 
+			-- ////// lightbulb : code action notify ////////
 			lightbulb = {
 				enable = false,		-- lightbulb makes screen shake, I don't know why
 			},
 		})
 		-- gk : 1) lspsaga has strong advantage about peek_definition because it shows code_action together
-		-- 		   but sometimes, lspsaga's peek_definition invokes error. I have to restart neovim after error 
+		-- 		   but sometimes, lspsaga's peek_definition invokes error. I have to restart neovim after error
 		-- 		2) lspsaga shows always one diagnostic even though there are multiple diagnostic in the line
 		-- vim.keymap.set('n', 'go' , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
 		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'LSP - hover_doc'                 , silent = true, noremap = true})
