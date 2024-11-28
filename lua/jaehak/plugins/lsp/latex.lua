@@ -3,10 +3,10 @@ vim.g.maplocalleader = ' ' -- for vimtex
 return {
 {
 	-- 1) scoop install MikTex ⇒ compiler (for latexmk)
-	-- 2) scoop install biber ⇒ syntax check / linting 
+	-- 2) scoop install biber ⇒ syntax check / linting
 	-- 3) scoop install mupdf ⇒ PDF viewer
 	-- 4) treesitter-latex must be uninstalled
-	'lervag/vimtex', -- it use lazy load default, do not set lazy 
+	'lervag/vimtex', -- it use lazy load default, do not set lazy
 	enabled = true,
 	ft = {'tex'},
 	init = function()
@@ -21,7 +21,7 @@ return {
 		vim.g.vimtex_compiler_method = 'latexmk' -- it supports continuous compile (compile when *.tex is saved)
 
 		-- ////// configuration
-		vim.g.vimtex_matchparen_enabled = 0 -- \begin <-> \end highlight 
+		vim.g.vimtex_matchparen_enabled = 0 -- \begin <-> \end highlight
 
 		-- //////// conceal setting
 		local User_VimTex = vim.api.nvim_create_augroup('User_VimTex', {clear = true})
@@ -33,6 +33,17 @@ return {
 				-- vim.opt_local.concealcursor = 'nv'  -- which mode the latex symbols are shown
 			end
 		})
+
+		-- /////// keymappings
+		-- see :h vimtex-default-mappings
+		-- <localleader>lt : toc open
+		-- <localleader>lT : toc toggle
+		-- <localleader>lv : vimtex view (forward search under cursor to pdf)
+		-- <localleader>ll : vimtex compile (compile and open pdf file) - if retry, it will stop auto compile
+		-- <localleader>lk : vimtex stop
+		-- <localleader>lg : vimtex status
+		-- <localleader>lq : vimtex log
+		--
 	end,
 },
 -- {
@@ -98,5 +109,5 @@ return {
 -- 		   	  there are some hooks / callback to do this. but I don't know how to activate nvim-qt instance
 -- 		   3) it cannot use treesitter , (rainbow bracket)
 -- 		   	  - junegunn/rainbow_parentheses.vim : it works in plaintext. but it doesn't in equation
--- 		   	  - luochen1990/rainbow : it doesn't works. 
+-- 		   	  - luochen1990/rainbow : it doesn't works.
 -- 		   	  - I think treesitter has more functionality

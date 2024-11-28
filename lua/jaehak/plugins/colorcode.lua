@@ -41,7 +41,7 @@ return {
 -- chrisbra/colorizer : it works very well. but I just want lua plugin
 -- uga-rosa/ccc.nvim : cannot show colors properly Since What I install other plugins. I think it is bug..
 -- 					   if modify some colorscheme, palette lose colors
--- 					   bug : if use custom_entries, other highlight are off. 
+-- 					   bug : if use custom_entries, other highlight are off.
 -- 					   I think use it for colorcode only
 -- 					   other colorpick plugins are not worked in windows
 

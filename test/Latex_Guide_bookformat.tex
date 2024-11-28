@@ -1,0 +1,87 @@
+% Latex Guide
+% 1) eqnarray 미사용
+%	- 등호 좌우간격이 너무 넓어서 보기 안좋음
+%	- 수식이 수식 번호까지 겹치게 되는 문제
+%	- 여러줄 수식을 조판하기 위한 환경인데, 이득이 없고 align을 대신 사용, align*는 수식 번호 없음
+%	- 여러줄 수식에 수식 번호 하나 붙이려면 aligned 이용
+
+
+% documentclass : article 대신 extarticle class 이용 시 13pt 이상 폰트 크기 사용 가능
+%				  단, chapter / section 등은 사용 불가 , 이를 이용하려면 book, report class 를 이용해야 한다
+% fleqn : 작성되는 수식들을 왼쪽으로 정렬
+% font : 일반적으로 12pt가 한계
+\documentclass[12pt, fleqn]{book}
+
+% packages :
+% - amsmath : matrix / align / dfrac block등을 사용 가능 , (이게 없으면 array block 으로만 만들어야 한다)
+% - amssymb : blackboard/ relational / logical 등 추가적인 수학기호 사용 가능
+% - amsfonts : fraktur/ calligraphic 등 여러 수학기호 폰트
+% - bm : bold math symbols
+% - cite : 인용 구 작성할 때 필요하다고 함
+% - inputenc : latex 문서 text encoding utf8로 설정
+% - fontenc : font encoding 을 Western European language 로 설정 (default OT1)
+% - geometry : 여백 조정 (기본 여백이 너무 많음)
+%			  top / bottom 은 chapter / section 등이 표시되기 위한 header / footer 공간은 남겨야한다
+%			  \chapter{} block 은 원래 위쪽에 마진이 많다. chapter 표시는 페이지 맨 위에 header 에 표시
+% - setspace : 줄간 간격 조정 (singlespacing 으로 라인간 한칸 유지) : 이게 없으면 내용에 따라 latex가 알아서 자동 줄간격 조정할 수 있다
+\usepackage{amsmath, amssymb, amsfonts, bm, cite}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=1cm, right=1cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{setspace}
+\singlespacing
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% document start
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\chapter{Chapter name }
+
+\section{Section name}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% subsections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Subsection name}
+
+\begin{align*}
+	\begin{bmatrix}
+		1 & 1 \\
+		0 & 0 \\
+	\end{bmatrix}
+\end{align*}
+
+
+
+
+
+
+\chapter{Chapter name }
+
+\section{Section name}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% subsections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Subsection name}
+
+\begin{align*}
+	\begin{bmatrix}
+		1 & 1 \\
+		0 & 0 \\
+	\end{bmatrix}
+\end{align*}
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
