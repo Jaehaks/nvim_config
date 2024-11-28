@@ -95,7 +95,7 @@ temp_fmt = [[
 ]]
 
 local frac = s({
-	trig = '\\fra',
+	trig = '\\frac',
 	name = 'frac{}{}',
 	desc = 'frac{}{}',
 	},
@@ -104,9 +104,23 @@ local frac = s({
 		i(2),
 	})
 )
-table.insert(autosnippets, frac)
+table.insert(snippets, frac)
 
+temp_fmt = [[
+\dfrac{{{}}}{{{}}}
+]]
 
+local dfrac = s({
+	trig = '\\dfrac',
+	name = 'dfrac{}{}',
+	desc = 'dfrac{}{}',
+	},
+	fmt(temp_fmt, {
+		i(1),
+		i(2),
+	})
+)
+table.insert(snippets, dfrac)
 
 
 -- [equation] 3) bmatrix 2x2
@@ -118,7 +132,7 @@ temp_fmt = [[
 ]]
 
 local mat = s({
-	trig = '\\mat',
+	trig = '\\matrix',
 	name = 'bmatrix 2x2',
 	desc = 'bmatrix 2x2',
 	},
@@ -129,7 +143,7 @@ local mat = s({
 		i(4),
 	})
 )
-table.insert(autosnippets, mat)
+table.insert(snippets, mat)
 
 
 
@@ -142,7 +156,7 @@ temp_fmt = [[
 ]]
 
 local vect = s({
-	trig = '\\vec',
+	trig = '\\vector',
 	name = 'vector 2x1',
 	desc = 'vector 2x1',
 	},
@@ -151,9 +165,28 @@ local vect = s({
 		i(2),
 	})
 )
-table.insert(autosnippets, vect)
+table.insert(snippets, vect)
 
 
+-- [doc] 1) title doc
+temp_fmt = [[
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% {}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{}
+]]
+
+local title = s({
+	trig = '\\doc',
+	name = 'doc title',
+	desc = 'doc title',
+	},
+	fmt(temp_fmt, {
+		i(1),
+		i(2),
+	})
+)
+table.insert(snippets, title)
 
 
 
