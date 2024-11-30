@@ -63,11 +63,24 @@ return {
 
 
 		-- neominimap toggle
+		local neominimap = require('neominimap')
+
 		vim.g.neominimap_manual = false
 		vim.keymap.set('n', '<leader>n', function ()
-			require('neominimap').toggle()
+			local winid_list = vim.api.nvim_list_wins()
+			local winid_cur = vim.api.nvim_get_current_win()
+			local winid_other = winid_list
+			for i, v in ipairs(winid_list) do -- get other win id
+				if v == winid_cur then
+					table.remove(winid_other, i)
+				end
+			end
+
+			neominimap.toggle()
 			if require('neominimap.variables').g.enabled then
 				vim.g.neominimap_manual = true
+				neominimap.winOff(winid_other) -- turn off neominimap except current window
+				neominimap.winOn({winid_cur}) -- turn on neominimap in current window
 			else
 				vim.g.neominimap_manual = false
 			end
