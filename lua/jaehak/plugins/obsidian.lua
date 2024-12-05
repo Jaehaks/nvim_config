@@ -161,8 +161,24 @@ return {
 				local markdown_link
 
 				if is_url(clipboard_content) then -- paste with link form
-					markdown_link = string.format('[](%s)',  clipboard_content)
-					vim.api.nvim_put({markdown_link}, 'c', true, true)
+
+					-- if visual mode, get the visualized word
+					local link_name = ''
+					local mode = vim.fn.mode()
+					if mode == 'v' or mode == 'V' then -- if current mode is visual mode ('v') or line mode ('V')
+						-- caution: getpos("'>") or getpos("'<") is updated after end of visual mode
+						-- so use getpos('v') or getpos('.')
+						local start_pos = vim.fn.getpos('v') -- get position of start of visual box
+						local end_pos   = vim.fn.getpos('.') -- get position of end of visual box
+						local txt       = vim.api.nvim_buf_get_text(0, start_pos[2]-1, start_pos[3]-1, end_pos[2]-1, end_pos[3], {})
+						link_name       = table.concat(txt, '\n')
+						markdown_link   = string.format('[%s](%s)',  link_name, clipboard_content)
+						vim.api.nvim_buf_set_text(0, start_pos[2]-1, start_pos[3]-1, end_pos[2]-1, end_pos[3], {markdown_link})
+						vim.api.nvim_input('<Esc>') -- go out to normal mode
+					else
+						markdown_link = string.format('[](%s)', clipboard_content)
+						vim.api.nvim_put({markdown_link}, 'c', true, true)
+					end
 
 				elseif clipboard_content ~= '' then -- paste '+' register
 					local termcodes = vim.api.nvim_replace_termcodes('"+p', true, false, true)
@@ -180,7 +196,7 @@ return {
 				group = User_markdown2,
 				pattern = {'markdown'},
 				callback = function ()
-					vim.keymap.set('n', 'P', ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
+					vim.keymap.set({'n', 'v'}, 'P', ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
 				end
 			})
 
