@@ -35,6 +35,22 @@ return {
 		nvim_highlight.turnOff() --  turn off initially
 	end
 },
+{
+	-- graphical color picker
+	'eero-lehtinen/oklch-color-picker.nvim',
+	config = function()
+		require('oklch-color-picker').setup ({
+			highlight = {
+				enabled = false, -- disable highlighting colorcode pattern
+			}
+		})
+
+		-- One handed keymaps recommended, you will be using the mouse
+		vim.keymap.set('n', '<leader>cp', function()
+			require('oklch-color-picker').pick_under_cursor()
+		end, { desc = 'Color pick under cursor' })
+	end,
+},
 }
 
 -- brenoprata10/nvim-highlight-colors : labels for custom_colors are just string, not regex
