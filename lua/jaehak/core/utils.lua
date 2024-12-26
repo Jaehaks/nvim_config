@@ -117,7 +117,10 @@ end
 local FollowLink = function ()
 
 	-- get only link pattern in full link
-	local url = GetLink() or ''
+	local url = GetLink()
+	if not url then
+		return
+	end
 	url = string.match(url, '%[.-%]%((.-)%)') -- get words in ()
 
 	-- if the url is not image, it is regarded as .md file or web link
@@ -256,11 +259,20 @@ end
 -- get the file contents under cursor
 local GotoCursor = function(bufnr, match_item)
 
-	local url = GetLink() or ''
+	local url = GetLink()
+	if not url then
+		return
+	end
+
 	local link_name = string.match(url, '%[.-%]%((.-)%)') 		-- capture file name in ()
+	if IsImage(link_name) or IsUrl(link_name) then
+		vim.api.nvim_err_writeln('Error(GotoCursor) : It is not file link')
+		return
+	end
+
 	local path, tag = string.match(link_name, '([^#]*)#?(.*)') 	-- separate path and tag with #
 	if not path then
-		vim.api.nvim_err_writeln('Error(goto_cursor) : use string for args')
+		vim.api.nvim_err_writeln('Error(GotoCursor) : It is not file path')
 		return
 	end
 
