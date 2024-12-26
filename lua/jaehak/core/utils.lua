@@ -249,9 +249,12 @@ local create_hover_window = function(filepath, filetype)
 
 	-- move focus to floating window
 	vim.api.nvim_set_current_win(current_hover_win)
-	vim.cmd('edit ' .. vim.fn.fnameescape(filepath) )
+	vim.cmd('edit ' .. vim.fn.fnameescape(filepath) ) -- open the buffer
 	vim.api.nvim_set_option_value('filetype', 'Floating', {buf = h_buf})
 	vim.api.nvim_set_option_value('modifiable', true, {buf = h_buf})
+
+	-- set default keymaps for floating buffer
+	vim.keymap.set('n', 'q', ':wq!<CR>', {buffer = true, silent = true, desc = 'quit buffer'})
 end
 
 -- get the file contents under cursor
