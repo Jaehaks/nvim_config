@@ -123,8 +123,13 @@ local FollowLink = function ()
 	-- if the url is not image, it is regarded as .md file or web link
 	if not IsImage(url) then
 
-		vim.api.nvim_command(':ObsidianFollowLink') -- if the link is not image, use obsidian's api
-		-- vim.api.nvim_err_writeln('Link is not image!')
+		if IsUrl(url) then
+			os.execute('start brave ' .. url)
+		else
+			vim.api.nvim_command(':ObsidianFollowLink') -- if the link is not image, use obsidian's api
+			-- vim.api.nvim_err_writeln('Link is not image!')
+		end
+
 		return
 	end
 
