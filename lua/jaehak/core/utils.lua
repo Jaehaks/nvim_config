@@ -122,20 +122,11 @@ local FollowLink = function ()
 
 	-- if the url is not image, it is regarded as .md file or web link
 	if not IsImage(url) then
-
 		if IsUrl(url) then
-			os.execute('start brave ' .. url)
+			os.execute('start brave ' .. url) -- if url is web link, use brave web browser
 		else
-			vim.api.nvim_command(':ObsidianFollowLink') -- if the link is not image, use obsidian's api
-			-- vim.api.nvim_err_writeln('Link is not image!')
+			vim.api.nvim_command(':ObsidianFollowLink hsplit') -- if the link is file, open the link file in horizontal split view
 		end
-
-		return
-	end
-
-	-- check the terminal is wezterm (use wezterm for following image)
-	if os.getenv('WEZTERM_PANE') == nil then
-		vim.api.nvim_err_writeln('This terminal is not wezterm! Change Terminal')
 		return
 	end
 
@@ -148,8 +139,13 @@ local FollowLink = function ()
 		path = curdir .. '\\' .. path
 	end
 
-	-- vim.api.nvim_command('silent !wezterm cli split-pane --horizontal -- cmd /k wezterm imgcat ' .. path .. ' ^& pause')
-	vim.api.nvim_command('silent !wezterm cli split-pane --horizontal -- powershell wezterm imgcat ' .. '\'' ..  path .. '\'' .. ' ; pause')
+	-- check the terminal is wezterm (use wezterm for following image)
+	if os.getenv('WEZTERM_PANE') ~= nil then
+		vim.api.nvim_command('silent !wezterm cli split-pane --horizontal -- powershell wezterm imgcat ' .. '\'' ..  path .. '\'' .. ' ; pause')
+	else
+		os.execute('start ' .. path) -- use default open tool for windows
+	end
+
 end
 
 M.FollowLink = FollowLink
