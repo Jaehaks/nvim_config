@@ -80,17 +80,18 @@ return {
 				pattern = {'markdown'},
 				callback = function ()
 					vim.keymap.set({'n', 'v'}, 'P', utils.ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
+					vim.keymap.set('n', 'gf', utils.FollowLink , {buffer = 0, noremap = true, desc = 'follow image link'})
+					vim.keymap.set('n', 'gd', utils.GotoCursor,  {buffer = 0, noremap = true, desc = '(Obsidian)open file in floating window'})
 				end
 			})
 
-			vim.keymap.set('n', '<leader>mf', utils.FollowLink                      , {noremap = true, desc = 'follow image link'})
+			-- vim.keymap.set('n', '<leader>mf', utils.FollowLink                      , {noremap = true, desc = 'follow image link'})
 			vim.keymap.set('n', '<leader>mv', '<Cmd>ObsidianPasteImg<CR>'      , {noremap = true, desc = '(Obsidian)Paste Image From Clipboard'})
 			vim.keymap.set('n', '<leader>mw', '<Cmd>ObsidianWorkspace<CR>'     , {noremap = true, desc = '(Obsidian)switch another workspace'})
 			vim.keymap.set('n', '<leader>ms', '<Cmd>ObsidianQuickSwitch<CR>'   , {noremap = true, desc = '(Obsidian)Switch another file'})
 			vim.keymap.set('n', '<leader>mn', '<Cmd>ObsidianNew<CR>'           , {noremap = true, desc = '(Obsidian)Make new obsidian note'})
 			vim.keymap.set('n', '<leader>mo', '<Cmd>ObsidianOpen<CR>'          , {noremap = true, desc = '(Obsidian)Open a note in obsidian app'})
 			vim.keymap.set('n', '<C-c>'		, '<Cmd>ObsidianToggleCheckbox<CR>', {noremap = true, desc = '(Obsidian)Toggle checkbox'})
-			vim.keymap.set('n', '<leader>md', utils.GotoCursor, 			   {noremap = true, desc = '(Obsidian)open line file'})
 			-- ObsidianTOC() : use telescope-heading instead of it
 			-- ObsidianQuickSwitch() : it can be replaced with oil or telescope,
 			-- 						   but, this func can add file link directly
