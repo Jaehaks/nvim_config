@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 {
 	"stevearc/conform.nvim",
@@ -6,10 +7,6 @@ return {
 	config = function()
 		-- configuration
 		local conform = require("conform")
-		local ruff_config_path = vim.fn.stdpath('config') .. '/queries/ruff/ruff.toml'
-		if vim.g.has_win32 == 1 then
-			ruff_config_path = ruff_config_path:gsub('/', '\\')
-		end
 		conform.setup({
 			-- set formatter configuration
 			formatters = {
@@ -20,7 +17,7 @@ return {
 					command = 'ruff',
 					args = {
 						'format',
-						'--config=' .. ruff_config_path,
+						'--config=' .. paths.lsp.ruff.config_path,
 						'--force-exclude',
 						'--stdin-filename',
 						'$FILENAME',

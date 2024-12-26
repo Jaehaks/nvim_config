@@ -7,8 +7,14 @@ M.nvim = {
 	luarocks           = vim.fn.expand('$HOME\\scoop\\apps\\luarocks\\current\\rocks\\share\\lua\\5.4'),
 	treesitter_queries = vim.fn.stdpath("config") .. "\\queries\\nvim-treesitter",
 	wordlist_korean    = vim.fn.stdpath('config') .. '\\queries\\dictionary\\wordslist_korean.txt',
-	ruff_config_path   = vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml',
-	ruff_cache_path    = vim.fn.stdpath('cache') .. '\\.ruff_cache',
+}
+
+M.lsp = {
+	ruff = {
+		config_path   = vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml',
+		cache_path    = vim.fn.stdpath('cache') .. '\\.ruff_cache',
+		log_path      = vim.fn.stdpath('data') .. '\\ruff.log',
+	}
 }
 
 M.project = {
