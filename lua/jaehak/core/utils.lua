@@ -93,7 +93,7 @@ end
 -- string.find(s, "%b[]%b()") find pattern within [] followed by ()
 --
 -- follow image link
-local FollowImage = function ()
+local FollowLink = function ()
 
 	-- get only link pattern in full link
 	local url = GetLink() or ''
@@ -125,7 +125,7 @@ local FollowImage = function ()
 	vim.api.nvim_command('silent !wezterm cli split-pane --horizontal -- powershell wezterm imgcat ' .. '\'' ..  path .. '\'' .. ' ; pause')
 end
 
-M.FollowImage = FollowImage
+M.FollowLink = FollowLink
 
 -- ####################################################
 -- * Markdown : ClipboardPaste

@@ -83,7 +83,7 @@ return {
 				end
 			})
 
-			vim.keymap.set('n', '<leader>mf', utils.FollowImage                      , {noremap = true, desc = 'follow image link'})
+			vim.keymap.set('n', '<leader>mf', utils.FollowLink                      , {noremap = true, desc = 'follow image link'})
 			vim.keymap.set('n', '<leader>mv', '<Cmd>ObsidianPasteImg<CR>'      , {noremap = true, desc = '(Obsidian)Paste Image From Clipboard'})
 			vim.keymap.set('n', '<leader>mw', '<Cmd>ObsidianWorkspace<CR>'     , {noremap = true, desc = '(Obsidian)switch another workspace'})
 			vim.keymap.set('n', '<leader>ms', '<Cmd>ObsidianQuickSwitch<CR>'   , {noremap = true, desc = '(Obsidian)Switch another file'})
