@@ -257,7 +257,7 @@ local create_hover_window = function(filepath, filetype)
 end
 
 -- get the file contents under cursor
-local GotoCursor = function(bufnr, match_item)
+local GotoCursor = function()
 
 	local url = GetLink()
 	if not url then
