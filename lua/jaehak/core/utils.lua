@@ -29,11 +29,13 @@ local GetIdxVisual = function ()
 end
 
 
+-- check content is URL form like "https://*" or "www.*"
+---@param content string web URL form
+local IsUrl = function(content)
+	return (string.match(content, '^(https?://)')
+			or string.match(content,'^(www%.)'))
+end
 
-
--- ####################################################
--- * Markdown : Follow image link with wezterm
--- ####################################################
 
 -- get link contents in []() format under cursor
 ---@return string|nil url it contains [..](..) form
@@ -63,6 +65,7 @@ local GetLink = function ()
 	return url
 end
 
+
 -- check extension of link is image file
 ---@param url string file name with extension
 ---@return boolean isValid true if the file is image
@@ -77,6 +80,7 @@ local IsImage = function (url)
 	return false
 end
 
+
 -- check the url is absolute path
 ---@param url string file path
 ---@return boolean isValid true if the path is absolute path with drive character (for windows)
@@ -89,9 +93,26 @@ local IsAbsolutePath = function (url)
 end
 
 
+--- Decode unicode from non-english word in url
+--- @param url string web URL form with encoding character from non-english word
+--- @return string decoded_url The decoded URL from UTF-8 to korean
+--- @return integer? hex The number of replacements made (optional).
+local url_decode = function(url)
+    return url:gsub("%%(%x%x)", function(hex)
+        return string.char(tonumber(hex, 16))
+    end)
+end
+
+
+
+-- ####################################################
+-- * Markdown : Follow image link with wezterm
+-- ####################################################
+
 -- string.find(s, "%b[]") find start and end index with matching [ and ]
 -- string.find(s, "%b[]%b()") find pattern within [] followed by ()
---
+
+
 -- follow image link
 local FollowLink = function ()
 
@@ -101,6 +122,7 @@ local FollowLink = function ()
 
 	-- if the url is not image, it is regarded as .md file or web link
 	if not IsImage(url) then
+
 		vim.api.nvim_command(':ObsidianFollowLink') -- if the link is not image, use obsidian's api
 		-- vim.api.nvim_err_writeln('Link is not image!')
 		return
@@ -127,27 +149,12 @@ end
 
 M.FollowLink = FollowLink
 
+
+
+
 -- ####################################################
 -- * Markdown : ClipboardPaste
 -- ####################################################
-
--- check content is URL form like "https://*" or "www.*"
----@param content string web URL form
-local IsUrl = function(content)
-	return (string.match(content, '^(https?://)')
-			or string.match(content,'^(www%.)'))
-end
-
-
---- Decode unicode from non-english word in url
---- @param url string web URL form with encoding character from non-english word
---- @return string decoded_url The decoded URL from UTF-8 to korean
---- @return integer? hex The number of replacements made (optional).
-local url_decode = function(url)
-    return url:gsub("%%(%x%x)", function(hex)
-        return string.char(tonumber(hex, 16))
-    end)
-end
 
 -- paste with different form from system clipboard
 local ClipboardPaste = function ()
@@ -197,6 +204,7 @@ M.ClipboardPaste = ClipboardPaste
 -- ####################################################
 -- * Markdown : open linked file in the floating window
 -- ####################################################
+
 local opened_windows = {}
 local create_hover_window = function(filepath, filetype)
 
