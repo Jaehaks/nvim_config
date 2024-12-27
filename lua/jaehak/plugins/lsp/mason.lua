@@ -27,8 +27,8 @@ return {
 				'jsonls',
 				-- 'ltex',          -- grammar check with LanguageTool
 				'harper_ls',
-				'ruff_lsp',
-				'pyright',
+				-- 'ruff_lsp',
+				'basedpyright',
 				'pylsp',
 			}
 		})
@@ -40,8 +40,8 @@ return {
 				"jsonls",
 				-- "ltex",
 				'harper_ls',
-				"ruff_lsp",    -- use ruff as linter without nvim-lint for python
-				"pyright", 	   -- python lsp from Microsoft, completion variables
+				-- "ruff_lsp",    -- use ruff as linter without nvim-lint for python
+				"basedpyright", 	   -- python lsp from Microsoft, completion variables
 
 				"stylua",      -- formatter for lua
 				"latexindent", -- formatter for tex

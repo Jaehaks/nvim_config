@@ -223,51 +223,82 @@ return {
 			}
 		})
 
-		-- pylsp is slow?
-		lspconfig.pylsp.setup({ -- for completion / hover / lsp_signature, pure pylsp has no ruff configuration,
-			-- pylsp has FormattingProvider, but I don't set the formatter
+		-- It seems that basedpyright give more feature than pyright and pylsp (lsp signature, completion)
+		--
+		lspconfig.basedpyright.setup({ -- use pyright as type checker , for definition/hover
 			on_attach = function (client, bufnr)
-				client.server_capabilities.documentFormattingProvider = false
-				client.server_capabilities.documentRangeFormattingProvider = false
-				client.server_capabilities.documentHighlightProvider = false
+				-- pyright doesn't have FormattingProvider
+				-- client.server_capabilities.hoverProvider = true          -- pylsp gives more params explanation. pyright gives more type explanation
+				-- client.server_capabilities.completionProvider = false    -- use pylsp instead
+				-- client.server_capabilities.signatureHelpProvider = false -- use pylsp instead
 			end,
-			capabilities = capabilities, -- required
-			filetyps = {'python'},
+			capabilities = capabilities,
+			filetype = {'python'},
 			root_dir = function (fname)
 				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
 			end,
-			settings = {
-				pylsp = {
-					plugins = {
-						autopep8            = { enabled = false },
-						flake8              = { enabled = false }, -- fast, diagnostics for linting and formatting
-						jedi_completion     = { -- support completion
-							enabled = true,
-							include_params = true, -- required : not default, add () besides of function (little snippet for builtin)
-							include_class_objects = false,
-							include_function_objects = false, -- add function object to completion separately. make duplicated item
-							fuzzy = false,
-							eager = false,
-						},
-						jedi_definition     = { enabled = false }, -- same with pyright
-						jedi_hover          = { enabled = true }, -- better than pyright. it supports explanation
-						jedi_references     = { enabled = false },
-						jedi_signature_help = { enabled = true }, -- support lsp_signature help, more detail than pyright
-						jedi_symbols        = { enabled = false },
-						mccabe              = { enabled = false },
-						preload             = { enabled = false },
-						pycodestyle         = { enabled = false },
-						pyflakes            = { enabled = false },
-						pylint              = { enabled = false }, -- very slow loading to lint
-						rope_autoimport     = { enabled = false },
-						yapf                = { enabled = false },
+			settings = { -- see https://docs.basedpyright.com/latest/configuration/language-server-settings/
+				basedpyright = {
+					disableOrganizeImports = true, -- use ruff instead of it
+					analysis = {
+						autoImportCompletions = true,
+						autoSearchPaths = true, -- auto serach command paths like 'src'
+						diagnosticMode = 'openFilesOnly',
+						useLibraryCodeForTypes = true,
 					}
-				}
+				},
 			},
 			handlers = {
 				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 			}
 		})
+
+
+		-- -- pylsp is slow?
+		-- lspconfig.pylsp.setup({ -- for completion / hover / lsp_signature, pure pylsp has no ruff configuration,
+		-- 	-- pylsp has FormattingProvider, but I don't set the formatter
+		-- 	on_attach = function (client, bufnr)
+		-- 		client.server_capabilities.documentFormattingProvider = false
+		-- 		client.server_capabilities.documentRangeFormattingProvider = false
+		-- 		client.server_capabilities.documentHighlightProvider = false
+		-- 	end,
+		-- 	capabilities = capabilities, -- required
+		-- 	filetyps = {'python'},
+		-- 	root_dir = function (fname)
+		-- 		return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+		-- 	end,
+		-- 	settings = {
+		-- 		pylsp = {
+		-- 			plugins = {
+		-- 				autopep8            = { enabled = false },
+		-- 				flake8              = { enabled = false }, -- fast, diagnostics for linting and formatting
+		-- 				jedi_completion     = { -- support completion
+		-- 					enabled = true,
+		-- 					include_params = true, -- required : not default, add () besides of function (little snippet for builtin)
+		-- 					include_class_objects = false,
+		-- 					include_function_objects = false, -- add function object to completion separately. make duplicated item
+		-- 					fuzzy = false,
+		-- 					eager = false,
+		-- 				},
+		-- 				jedi_definition     = { enabled = false }, -- same with pyright
+		-- 				jedi_hover          = { enabled = true }, -- better than pyright. it supports explanation
+		-- 				jedi_references     = { enabled = false },
+		-- 				jedi_signature_help = { enabled = true }, -- support lsp_signature help, more detail than pyright
+		-- 				jedi_symbols        = { enabled = false },
+		-- 				mccabe              = { enabled = false },
+		-- 				preload             = { enabled = false },
+		-- 				pycodestyle         = { enabled = false },
+		-- 				pyflakes            = { enabled = false },
+		-- 				pylint              = { enabled = false }, -- very slow loading to lint
+		-- 				rope_autoimport     = { enabled = false },
+		-- 				yapf                = { enabled = false },
+		-- 			}
+		-- 		}
+		-- 	},
+		-- 	handlers = {
+		-- 		['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+		-- 	}
+		-- })
 
 
 
