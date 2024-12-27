@@ -155,6 +155,9 @@ return {
 						correct_number_suffix        = false,
 						number_suffix_capitalization = false,
 						multiple_sequential_pronouns = true,
+						linking_verbs                = true,
+						avoid_curses                 = false,
+						terminating_conjuctions      = true,
 					},
 					diagnosticSeverity = 'hint', -- show the spell check as hint
 					codeActions = {
