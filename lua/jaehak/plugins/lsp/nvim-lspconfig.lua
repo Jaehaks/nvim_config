@@ -218,7 +218,7 @@ return {
 					},
 				}
 			},
-			handlers = {
+			handlers = { -- it seems not work right now
 				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 			}
 		})
