@@ -264,17 +264,23 @@ local GotoCursor = function()
 		return
 	end
 
-	local link_name = string.match(url, '%[.-%]%((.-)%)') 		-- capture file name in ()
+	-- capture file name in ()
+	local link_name = string.match(url, '%[.-%]%((.-)%)')
 	if IsImage(link_name) or IsUrl(link_name) then
 		vim.api.nvim_err_writeln('Error(GotoCursor) : It is not file link')
 		return
 	end
 
-	local path, tag = string.match(link_name, '([^#]*)#?(.*)') 	-- separate path and tag with #
+	-- separate path and tag with #
+	local path, tag = string.match(link_name, '([^#]*)#?(.*)')
 	if not path then
 		vim.api.nvim_err_writeln('Error(GotoCursor) : It is not file path')
 		return
 	end
+
+	-- Get client of current note
+	local client = require('obsidian').get_client()
+
 
 	-- get top level workspace
 	local obs = require('obsidian')
