@@ -85,7 +85,7 @@ end
 ---@param url string file path
 ---@return boolean isValid true if the path is absolute path with drive character (for windows)
 local IsAbsolutePath = function (url)
-	local drive = string.find(url, '.:\\')
+	local drive = string.find(url, '.:[\\/]')
 	if not drive then
 		return false
 	end
