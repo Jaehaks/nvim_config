@@ -158,7 +158,8 @@ vim.api.nvim_create_autocmd('CursorHold', {
 			return
 		end
 
-		if vim.bo[event.buf].filetype == 'NeogitCommitMessage' then
+		if vim.bo[event.buf].filetype == 'gitcommit' or
+		   vim.bo[event.buf].filetype == 'NeogitStatus' then
 			return
 		end
 

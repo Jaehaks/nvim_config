@@ -138,7 +138,7 @@ return {
 		-- ####### 6) harper_ls language server configuration #########
 		-- more faster than ltex
 		lspconfig.harper_ls.setup({
-			filetypes = {'gitcommit', 'markdown', 'text', 'NeogitCommitMessage', 'lua'},
+			filetypes = {'gitcommit', 'markdown', 'text', 'NeogitStatus', 'lua'},
 			settings = {
 				['harper-ls'] = {
 					linters = {

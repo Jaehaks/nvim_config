@@ -260,7 +260,7 @@ return {
 		})
 
 		-- /////// source of plain text
-		cmp.setup.filetype({'markdown', 'text', 'oil', 'NeogitCommitMessage'}, {
+		cmp.setup.filetype({'markdown', 'text', 'oil', 'gitcommit'}, {
 			sources = cmp.config.sources({
 				{
 					name = 'spell',

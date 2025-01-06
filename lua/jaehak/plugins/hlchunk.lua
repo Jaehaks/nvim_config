@@ -8,7 +8,7 @@ return {{
 			TelescopePrompt     = true,
 			help                = true,
 			qf                  = true,
-			NeogitCommitMessage = true,
+			gitcommit 			= true,
 			yazi                = true,
 			markdown            = true,
 			text                = true,
