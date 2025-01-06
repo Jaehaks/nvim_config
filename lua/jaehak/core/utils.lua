@@ -210,23 +210,21 @@ M.ClipboardPaste = ClipboardPaste
 -- ####################################################
 
 local opened_windows = {}
-local create_hover_window = function(filepath, filetype)
-
+local create_hover_window = function(filepath, anchor_match)
+	filepath = filepath or vim.fn.expand('%:p')
 	local filename = vim.fn.fnamemodify(filepath, ':t')
+	local line = anchor_match and anchor_match.line or 1
 
 	-- close previously opened windows
 	for _, win in ipairs(opened_windows) do
 		if vim.api.nvim_win_is_valid(win) then -- check this window handle is valid
-			vim.api.nvim_win_close(win, true) -- close the window with {force = true}
+			vim.api.nvim_win_close(win, true)  -- close the window with {force = true}
 		end
 	end
 	opened_windows = {}
 
-	-- create new buffer contains link contents
-	local h_buf = vim.api.nvim_create_buf(false, true)
-
 	-- set options of floating windows style
-	local width = math.floor(vim.api.nvim_win_get_width(0) * 0.5)
+	local width = math.floor(vim.api.nvim_win_get_width(0) * 0.7)
 	local height = math.max(30,1)
 	local opts = {
 		relative  = 'cursor',
@@ -241,19 +239,46 @@ local create_hover_window = function(filepath, filetype)
 		title_pos = 'center',
 	}
 
-	-- open floating window with buffer
-	local current_hover_win = vim.api.nvim_open_win(h_buf, false, opts)
-	vim.api.nvim_set_option_value('wrap', false, {win = current_hover_win})
+	-- create new buffer contains link contents
+	local existing_buf = vim.fn.bufnr(filepath)
+	local h_buf = existing_buf ~= -1 and existing_buf or vim.api.nvim_create_buf(false, false)
+		-- nvim_create_buf()
+		-- if [listed] is false, buffer title isn't displayed in buffer line (but I think it doesn't work)
+		-- it means that the buffer isn't listed in buffer list
+		-- if [scratch] is true, buftype is set to nofile which protects to write.
+
+	vim.api.nvim_set_option_value('buflisted', false, {buf = h_buf})   -- don't display title
+	vim.api.nvim_set_option_value('bufhidden', 'hide', {buf = h_buf})  -- hide (not delete) buffer if it is not displayed
+                                                                       -- the buffer id is remained
+
+                                                                       -- open floating window with buffer
+	local current_hover_win = vim.api.nvim_open_win(h_buf, true, opts) -- open floating window and make it current window
+	if existing_buf == -1 then
+		vim.cmd('silent! edit ' .. vim.fn.fnameescape(filepath) )      -- open the buffer
+	end
+		-- If use vim.fn.readfile() and nvim_buf_set_lines() instead of 'edit', the loading time is fast.
+		-- But it means that texts of the file is written in created buffer. so it needs name to save
+		-- using nvim_buf_set_name. If the name is same with existing file, it invokes "already file exists" error.
+		-- so I must use 'edit' to open existing file and save it. Created buffer has name automatically
+		-- If I force to set name of the buffer in window, It invokes "already file exists" error also.
+		-- 'edit' is more convenient to use because it has some features which is same with conventional buffer,
+		-- such as detecting the filetype, modifiable, nowrap
+
+	vim.api.nvim_set_option_value('signcolumn'    , 'no', {win = current_hover_win})
+	vim.api.nvim_set_option_value('number'        , true, {win = current_hover_win})
+	vim.api.nvim_set_option_value('relativenumber', true, {win = current_hover_win})
+	vim.api.nvim_set_option_value('cursorline'    , true, {win = current_hover_win})
+	vim.api.nvim_win_set_cursor(current_hover_win, {line, 0}) -- move the cursor to the specific line
+	vim.cmd('normal! zt')                                     -- move screen to locate cursor to the top
 	table.insert(opened_windows, current_hover_win)
 
-	-- move focus to floating window
-	vim.api.nvim_set_current_win(current_hover_win)
-	vim.cmd('edit ' .. vim.fn.fnameescape(filepath) ) -- open the buffer
-	vim.api.nvim_set_option_value('filetype', 'Floating', {buf = h_buf})
-	vim.api.nvim_set_option_value('modifiable', true, {buf = h_buf})
-
 	-- set default keymaps for floating buffer
-	vim.keymap.set('n', 'q', ':wq!<CR>', {buffer = true, silent = true, desc = 'quit buffer'})
+	vim.keymap.set('n', 'q', function ()
+		vim.cmd('write')
+		vim.api.nvim_win_close(current_hover_win, true) -- close window forcely
+		-- close window instead of buffer to remain the buffer hide
+	end, {buffer = true, silent = true, desc = 'quit buffer'})
+
 end
 
 -- get the file contents under cursor
@@ -272,28 +297,48 @@ local GotoCursor = function()
 	end
 
 	-- separate path and tag with #
-	local path, tag = string.match(link_name, '([^#]*)#?(.*)')
+	local path, tag = require('obsidian.util').strip_anchor_links(link_name)
 	if not path then
 		vim.api.nvim_err_writeln('Error(GotoCursor) : It is not file path')
 		return
 	end
 
-	-- Get client of current note
-	local client = require('obsidian').get_client()
-
-
 	-- get top level workspace
 	local obs = require('obsidian')
-	local obs_workspace = require('obsidian.workspace')
+	local obs_note = require('obsidian.note')
 
-	local cur_dir = vim.fn.expand('%:p:h')
-	local workspaces = obs.get_client().opts.workspaces
-	local workspace = obs_workspace.get_workspace_for_dir(cur_dir, workspaces).path.filename
-	path = workspace .. '\\' .. path -- get absolute path of file
-	path = path:gsub('/','\\') -- change to windows path form
+	local client = obs.get_client() -- Get client of current note
+	local vault = client.dir.filename
 
-	-- vim.print(path)
-	create_hover_window(path)
+	-- find absolute path of the file
+	if path == "" then -- get location of current buffer
+		path = client.buf_dir.filename .. '/' .. vim.fn.expand('%')
+	else
+		if not IsAbsolutePath(path) then
+			path = vault .. '/' .. path
+		end
+	end
+
+	if vim.g.has_win32 == 1 then
+		path = path:gsub('/', '\\')
+	end
+
+	-- check the path is in workspaces
+	-- local ok = obs_workspace.get_workspace_for_dir(path, client.opts.workspaces)
+	local ok = vim.fn.filereadable(path) -- check the file is existed
+	if ok == 1 then
+		-- get tag's location
+		local note = obs_note.from_file(path)
+		local anchor_match
+		if tag ~= nil then
+			anchor_match = note:resolve_anchor_link(tag)
+		end
+
+		-- open the buffer in floating window
+		create_hover_window(path, anchor_match)
+	else
+		vim.api.nvim_err_writeln('Error(GotoCursor) : Cannot find this file link')
+	end
 
 end
 
