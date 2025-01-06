@@ -24,6 +24,10 @@ return {
 						name = 'Personal',
 						path = paths.obsidian.personal
 					},
+					{
+						name = 'Project',
+						path = paths.obsidian.project
+					},
 				},
 				mappings = {}, -- disable default keymapping
 				new_notes_location = 'current_dir',

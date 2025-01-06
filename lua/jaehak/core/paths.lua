@@ -27,6 +27,7 @@ M.session = {
 
 M.obsidian = {
 	personal = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\Personal',
+	project = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\Project',
 }
 
 return M
