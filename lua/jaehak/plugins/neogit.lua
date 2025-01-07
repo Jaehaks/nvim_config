@@ -12,7 +12,11 @@ return {
 		local neogit = require('neogit')
 		neogit.setup({
 			-- use_default_keymaps = true,
-			disable_line_numbers = false,
+			disable_insert_on_commit      = true,
+			commit_date_format            = "%Y-%m-%d %H:%M",
+			log_date_format               = "%Y-%m-%d %H:%M",
+			disable_line_numbers          = false,
+			disable_relative_line_numbers = false,
 			kind = 'tab', -- default window of opening neogit
 			status = {
 				recent_commit_count = 20,
@@ -22,6 +26,7 @@ return {
 				show_staged_diff = false,	-- disable diff in commit message
 			},
 			console_timeout = 10000,	-- neogit loading slow.
+			auto_show_console = false,
 			integrations = {
 				telescope = false,
 				diffview = true,
