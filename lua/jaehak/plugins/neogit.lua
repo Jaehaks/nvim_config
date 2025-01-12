@@ -12,9 +12,10 @@ return {
 		local neogit = require('neogit')
 		neogit.setup({
 			-- use_default_keymaps = true,
-			disable_insert_on_commit      = true,
+			disable_insert_on_commit      = false,
 			commit_date_format            = "%Y-%m-%d %H:%M",
 			log_date_format               = "%Y-%m-%d %H:%M",
+			process_spinner				  = false, -- show message when git command is running
 			disable_line_numbers          = false,
 			disable_relative_line_numbers = false,
 			kind = 'tab', -- default window of opening neogit
