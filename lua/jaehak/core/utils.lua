@@ -93,13 +93,13 @@ local IsAbsolutePath = function (url)
 end
 
 
---- Decode unicode from non-english word in url
+--- Decode unicode from non-english word in url except white space
 --- @param url string web URL form with encoding character from non-english word
 --- @return string decoded_url The decoded URL from UTF-8 to korean
 --- @return integer? hex The number of replacements made (optional).
 local url_decode = function(url)
     return url:gsub("%%(%x%x)", function(hex)
-        return string.char(tonumber(hex, 16))
+		return hex:upper() == '20' and '%20' or string.char(tonumber(hex, 16))
     end)
 end
 
