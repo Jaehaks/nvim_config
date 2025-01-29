@@ -43,8 +43,10 @@ return {
 	config = function ()
 		local colorizer = require('colorizer')
 		colorizer.setup({
-			-- lazy_load = true,
+			filetypes = {}, -- disable colorizing as default
+			user_commands = {'ColorizerToggle'}, -- only enable this command
 			user_default_options = {
+				names = false, -- disable colorizing for name
 				names_custom = {
 					["'r'"] = "#FF0000",
 					['"r"'] = "#FF0000",
