@@ -60,6 +60,7 @@ return {
 			callback = function ()
 				if not vim.g.neominimap_manual then -- if not manual mode,
 					if vim.v.hlsearch == 0 and neovar.g.enabled then
+						vim.opt_local.sidescrolloff = 0
 						neominimap.off()
 					end
 				end
