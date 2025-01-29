@@ -1,43 +1,7 @@
 return {
 {
-	'brenoprata10/nvim-highlight-colors',
-	enabled = false,
-	init = function ()
-		vim.opt.termguicolors = true
-	end,
-	config = function ()
-		local nvim_highlight = require('nvim-highlight-colors')
-		nvim_highlight.setup({
-			render = 'background',
-			enable_named_colors = false, -- colorize with color name, but it needs ':' ahead of the name
-			enable_tailwind = false,
-			custom_colors = { -- this pattern is used for gsub, so it does not same with lua regex pattern, whildcad, [set] doesn't work
-				{ label= [['r']], color = '#FF0000' },
-				{ label= [["r"]], color = '#FF0000' },
-				{ label= [['g']], color = '#00FF00' },
-				{ label= [["g"]], color = '#00FF00' },
-				{ label= [['b']], color = '#0000FF' },
-				{ label= [["b"]], color = '#0000FF' },
-				{ label= [['c']], color = '#00FFFF' },
-				{ label= [["c"]], color = '#00FFFF' },
-				{ label= [['m']], color = '#FF00FF' },
-				{ label= [["m"]], color = '#FF00FF' },
-				{ label= [['y']], color = '#FFFF00' },
-				{ label= [["y"]], color = '#FFFF00' },
-				{ label= [['k']], color = '#000000' },
-				{ label= [["k"]], color = '#000000' },
-				{ label= [['w']], color = '#FFFFFF' },
-				{ label= [["w"]], color = '#FFFFFF' },
-			}
-		})
-		vim.keymap.set('n','<leader>cc', nvim_highlight.toggle, {desc = 'Show color code toggle'})
-
-		nvim_highlight.turnOff() --  turn off initially
-	end
-},
-{
-	enabled = true,
     "catgoose/nvim-colorizer.lua",
+	enabled = true,
 	branch = 'fix/141-quotes_and_doublequotes',
     event = "BufReadPre",
 	config = function ()
