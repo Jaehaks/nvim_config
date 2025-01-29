@@ -37,7 +37,20 @@ return {
             [";"] = ";",
             [" "] = "%s+",            -- white space more than 1
 			["+"] = false,
-            ["-"] = "%.?[+-/%*%%\\]", -- arithmetic operators
+            ["-"] = {
+				pattern = "%.?[+-/%*%%\\]",
+				transform_segments = function(x, _, line)
+					if x:match(";$") then
+						return x
+					end
+
+					local extra = (line.filetype == "c" and " \\")
+								or (line.filetype == "matlab" and " ...")
+								or ""
+
+					return x .. extra
+				end
+			}, -- arithmetic operators
             ["|"] = "[&|][&|]?",      -- condition operators
             ["<"] = {                 -- all inequality like <, <=, >=
                 pattern = "[<>=]=?",
