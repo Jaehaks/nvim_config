@@ -35,13 +35,14 @@ return {
         interactive_options = {
             [","] = ",",
             [";"] = ";",
-            [" "] = "%s+",       -- white space more than 1
-            ["-"] = "[%+%-%*/]", -- arithmetic operators
-            ["<"] = {            -- all inequality like <, <=, >=
+            [" "] = "%s+",            -- white space more than 1
+			["+"] = false,
+            ["-"] = "%.?[+-/%*%%\\]", -- arithmetic operators
+            ["|"] = "[&|][&|]?",      -- condition operators
+            ["<"] = {                 -- all inequality like <, <=, >=
                 pattern = "[<>=]=?",
-                break_placement = "before_pattern"
             },
-            ["."] = {            -- all period of sentence (.?!)
+            ["."] = {                 -- all period of sentence (.?!)
                 pattern = "[%.?!]%s+",
                 unsplitter = " ",
                 smart_ignore = "code",
