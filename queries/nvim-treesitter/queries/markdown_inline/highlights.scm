@@ -1,5 +1,10 @@
 ;; extends
 
+; Matches |text| patterns for underlining
+; (inline) @markup.underline
+; 	(#match? @markup.underline "^\\|.+\\|$")
+; 	(#offset! @markup.underline 0 1 0 -1)
+
 ; (
 ; 	(inline) @markup.underline
 ; 	(#match? @markup.underline "\\+([^+]+)\\+")
