@@ -14,9 +14,8 @@ return {
 -- 'datsfilipe/md-previewer' : how to use this?
 {
 	-- highlight of markdown file. but there are no delay to navigate
-	'MeanderingProgrammer/markdown.nvim',
+	'MeanderingProgrammer/render-markdown.nvim',
 	ft = {'markdown'},
-	name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
 	dependencies = { 'nvim-treesitter/nvim-treesitter' },
 	config = function()
 		-- for heading
@@ -45,6 +44,7 @@ return {
 		vim.api.nvim_set_hl(0, "@markup.italic"        , {fg = '#3DC5DA' , italic = true})
 		vim.api.nvim_set_hl(0, "@markup.strong"        , {fg = '#E39AA6' , bold = true})
 		vim.api.nvim_set_hl(0, "@markup.strikethrough" , {fg = '#999999' , strikethrough = true})
+		vim.api.nvim_set_hl(0, "RenderMarkdownInlineHighlight" , {fg = '#efec83', bg = '#1a190c'} ) -- obsidian's inline highlight
 
 
 		-- setting
@@ -126,6 +126,18 @@ return {
 				bug       = { raw = '[!BUG]'      , rendered = '󰨰 Bug'      , highlight = 'RenderMarkdownError' }  ,
 				quote     = { raw = '[!QUOTE]'    , rendered = '󱆨 Quote'    , highlight = 'RenderMarkdownQuote' }  ,
 			},
+			inline_highlight = {
+				enabled = true,
+			},
+			indent = {
+				enabled = false,
+			},
+			html = {
+				enabled = true, -- now only html comment supports
+				comment = {
+					conceal = false, -- don't use html comment conceal
+				}
+			}
 		})
 	end,
 },
