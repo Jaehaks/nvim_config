@@ -88,6 +88,7 @@ return {
 			},
 			bullet = {
 				enabled = true,
+				render_modes = {'n', 'c', 't', 'i'},
 				icons = {'■', '▲', '●', '★', '▶'},
 				highlight = 'RenderMarkdownBullet',
 			},
@@ -128,6 +129,7 @@ return {
 			},
 			inline_highlight = {
 				enabled = true,
+				render_modes = {'n', 'c', 't', 'i'},
 			},
 			indent = {
 				enabled = false,
