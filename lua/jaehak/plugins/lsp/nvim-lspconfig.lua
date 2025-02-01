@@ -84,10 +84,14 @@ return {
 						globals = {'vim'},	-- recognize 'vim' global to language server
 						undefined_global = false,
 					},
+					runtime = {
+						version = 'LuaJIT',
+					},
 					workspace = {
+						checkThirdParty = false,
 						library = {
 							vim.env.VIMRUMTIME,
-							--vim.api.nvim_get_runtime_file('',true),
+							vim.api.nvim_get_runtime_file('lua',true),
 
 							-- ## below two directories make lsp loading too slow
 							-- I think stdpath('data') load all plugins even though it has "enabled = false"
