@@ -12,6 +12,9 @@ return {
 			select = {
 				enabled = true,
 				backend = {'telescope', 'builtin'}, 	-- use my telescope ui first
+				telescope = require('telescope.themes').get_dropdown({ -- initial mode is insert mode when using vim.ui.select
+					initial_mode = 'insert'
+				})
 			}
 		})
 	end

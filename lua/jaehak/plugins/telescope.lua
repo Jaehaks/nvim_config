@@ -12,17 +12,18 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make'
 		},
+		'nvim-telescope/telescope-ui-select.nvim',
 		-- cder.nvim : (extension) change pwd using telescope, not useful to me, and 'ls' has invalid argument error
 		-- 			   it is useful when I want to subdirectories list and files quick
 	},
 	config = function()
-		-- call modules 
+		-- call modules
 		local telescope  = require('telescope')
 		local actions    = require('telescope.actions')
 		local builtin    = require('telescope.builtin')
 		local utils      = require('telescope.utils')
 
-		-- telescope settings 	
+		-- telescope settings
 		telescope.setup({
 			-- ////// default settings //////////
 			defaults = {
@@ -30,10 +31,10 @@ return {
 				path_display = function (opts, path) -- display path only basename
 					-- sometimes neovim saved old file path in shada file using '/' delimiter. is it bug?
 					-- this makes duplicated lists and doesn't be affected by path argument
-					-- it means that if path_display function returns single string 'test', 
+					-- it means that if path_display function returns single string 'test',
 					-- the paths with '/' are shown literally. These are not listed in 'path' argument
 					-- The solution does not exist in currently. I should modify the string '/' in shada file to '\\'
-					-- if PR(#3103) accepted, this problem will be removed.					-- 
+					-- if PR(#3103) accepted, this problem will be removed.					--
 					local PATH = path
 					-- if vim.g.has_win32 == 1 then
 					-- 	PATH = PATH:gsub('/','\\') -- sometimes path has '/' as delimiter instead of '\\'
@@ -50,7 +51,7 @@ return {
 				end,
 				layout_strategy = 'horizontal',
 				layout_config = {
-					anchor = 'S',	-- show layout window pinned to south (bottom) 
+					anchor = 'S',	-- show layout window pinned to south (bottom)
 					height = 0.45,	-- make smaller height 0.9 -> 0.45
 				},
 				vimgrep_arguments = {	-- cmd for live_grep / grep_string
@@ -101,7 +102,7 @@ return {
 						width = 0.99,
 					},
 					sorting_strategy = 'ascending',
---					line_width = 'full',			-- if full, filename list will be not aligned 
+--					line_width = 'full',			-- if full, filename list will be not aligned
 				},
 				jumplist = {
 					trim_text = true		-- show only line information
@@ -116,7 +117,7 @@ return {
 			extensions = {
 				-- //////// extensions : fzf sorter (for find_files) ////////////
 				fzf = {
-					--fuzzy = true,			-- only use exact word 
+					--fuzzy = true,			-- only use exact word
 					override_generic_sorter = true,
 					override_file_sorter = true,
 					case_mode = 'smart_case'
@@ -150,6 +151,7 @@ return {
 		-- 2) add system path with cmake
 		telescope.load_extension('fzf')
 		telescope.load_extension('helpgrep')
+		telescope.load_extension('ui-select')
 
 
 		-- set line number in preview
@@ -179,7 +181,7 @@ return {
 				opts.cwd = vim.fn.getcwd() -- if lsp doesn't exist, use cwd()
 			end
 			if vim.g.has_win32 == 1 then
-				opts.cwd = opts.cwd:gsub('/','\\') -- the delimiter '/' makes displaying absolute path in oldfiles 
+				opts.cwd = opts.cwd:gsub('/','\\') -- the delimiter '/' makes displaying absolute path in oldfiles
 													-- solution of duplicated problem as I think
 				for i, pattern in ipairs(ignore_patterns) do
 					ignore_patterns[i] = pattern:gsub('/', '\\')
