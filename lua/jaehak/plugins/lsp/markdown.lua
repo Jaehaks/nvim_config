@@ -16,7 +16,10 @@ return {
 	-- highlight of markdown file. but there are no delay to navigate
 	'MeanderingProgrammer/render-markdown.nvim',
 	ft = {'markdown'},
-	dependencies = { 'nvim-treesitter/nvim-treesitter' },
+	dependencies = {
+		'nvim-treesitter/nvim-treesitter',
+		'nvim-tree/nvim-web-devicons',
+	},
 	config = function()
 		-- for heading
 		vim.api.nvim_set_hl(0, 'markdownB1', {bg = '#216042'})
