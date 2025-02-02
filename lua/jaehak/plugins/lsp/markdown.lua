@@ -91,7 +91,6 @@ return {
 			},
 			bullet = {
 				enabled = true,
-				render_modes = {'n', 'c', 't', 'i'},
 				icons = {'■', '▲', '●', '★', '▶'},
 				highlight = 'RenderMarkdownBullet',
 			},
