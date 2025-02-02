@@ -263,10 +263,6 @@ return {
 		cmp.setup.filetype({'markdown', 'text', 'oil', 'gitcommit'}, {
 			sources = cmp.config.sources({
 				{
-					name = 'render-markdown',
-					priority = 1000,
-				},
-				{
 					name = 'spell',
 					max_item_count = 3,	-- useless under 2nd suggestion + first one is the same with input
 					priority = 1000,
