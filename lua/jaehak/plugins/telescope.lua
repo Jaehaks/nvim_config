@@ -12,7 +12,6 @@ return {
 			'nvim-telescope/telescope-fzf-native.nvim',
 			build = 'make'
 		},
-		'nvim-telescope/telescope-ui-select.nvim',
 		-- cder.nvim : (extension) change pwd using telescope, not useful to me, and 'ls' has invalid argument error
 		-- 			   it is useful when I want to subdirectories list and files quick
 	},
@@ -151,7 +150,6 @@ return {
 		-- 2) add system path with cmake
 		telescope.load_extension('fzf')
 		telescope.load_extension('helpgrep')
-		telescope.load_extension('ui-select')
 
 
 		-- set line number in preview
