@@ -1,3 +1,7 @@
+;; extends
+; if ";; extends" doesn't exist, it override markdown treesitter
+; and it makes render-markdown malfunction
+
 ; Match pipe-delimited text using inline content
 ; (
 ;   (inline) @underline.pipe
