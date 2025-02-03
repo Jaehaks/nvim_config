@@ -24,7 +24,13 @@
 %			  top / bottom 은 chapter / section 등이 표시되기 위한 header / footer 공간은 남겨야한다
 %			  \chapter{} block 은 원래 위쪽에 마진이 많다. chapter 표시는 페이지 맨 위에 header 에 표시
 % - setspace : 줄간 간격 조정 (singlespacing 으로 라인간 한칸 유지) : 이게 없으면 내용에 따라 latex가 알아서 자동 줄간격 조정할 수 있다
+% - indentfirst : 자동 첫 줄 들여쓰기
+% 				\setlength{\parindent}{0.2in} : 들여쓰기 간격 설정
+%				\setlength{\parskip}{6pt} : 문단 간 간격 조정
+% - kotex : 한글 지원
 \usepackage{amsmath, amssymb, amsfonts, bm, cite}
+\usepackage{indentfirst}
+\usepackage{kotex}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[left=1cm, right=1cm, top=2cm, bottom=2cm]{geometry}
@@ -46,6 +52,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Subsection name}
 
+It is test line
 \begin{align*}
 	\begin{bmatrix}
 		1 & 1 \\
