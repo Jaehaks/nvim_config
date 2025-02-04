@@ -214,23 +214,23 @@ return {
 			end
 		end
 
-		vim.keymap.set('n', '<leader>ff', [[<Cmd>lua TelescopePicker('find_files')<CR>]],	 		{desc = 'find_files'})
-		vim.keymap.set('n', '<leader>fg', [[<Cmd>lua TelescopePicker('live_grep_cur_buf')<CR>]],	{desc = 'live_grep current dir'})
-		vim.keymap.set('n', '<leader>fG', [[<Cmd>lua TelescopePicker('live_grep_cur_dir')<CR>]],	 		{desc = 'live_grep'})
-		vim.keymap.set('n', '<leader>fw', [[<Cmd>lua TelescopePicker('grep_string_cur_buf')<CR>]],	 		{desc = 'grep_string cur_buf'})
-		vim.keymap.set('n', '<leader>fo', builtin.oldfiles, 		{desc = 'recent files'})                    -- recent files
-		-- vim.keymap.set('n', '<leader>fb', builtin.buffers, 			{desc = 'buffer list'})                     -- buffer manager
-		vim.keymap.set('n', '<leader>fc', builtin.command_history, 	{desc = 'command history'})                 -- command history
-		vim.keymap.set('n', '<leader>fh', builtin.help_tags, 		{desc = 'help tags list'})                  -- search tag for help
-		vim.keymap.set('n', '<leader>fm', builtin.marks, 			{desc = 'mark list'})                       -- marks list
-		vim.keymap.set('n', '<leader>fs', builtin.current_buffer_fuzzy_find, {desc = 'find in current buffer'}) -- search list in current buffer
-		vim.keymap.set('n', '<leader>fj', builtin.jumplist, 		{desc = 'old jumped cursor location list'}) -- cursor location history
-		vim.keymap.set('n', '<leader>fd', [[<Cmd>lua TelescopePicker('diagnostics_cur_buf')<CR>]],	{desc = 'diagnostics cur_buf'})
-		vim.keymap.set('n', '<leader>fD', [[<Cmd>lua TelescopePicker('diagnostics_all_buf')<CR>]],	{desc = 'diagnostics all_buf in cur_dir'})
-		vim.keymap.set('n', '<leader>fk', builtin.keymaps, 			{desc = 'keymaps list'})                    -- keymaps list
-		vim.keymap.set('n', '<leader>fv', builtin.vim_options, 		{desc = 'vim options list'})                -- vim options list
-
-		vim.keymap.set('n', '<leader>fH', telescope.extensions.helpgrep.helpgrep, {desc = 'help grep'})
+		-- vim.keymap.set('n', '<leader>ff', [[<Cmd>lua TelescopePicker('find_files')<CR>]],	 		{desc = 'find_files'})
+		-- vim.keymap.set('n', '<leader>fg', [[<Cmd>lua TelescopePicker('live_grep_cur_buf')<CR>]],	{desc = 'live_grep current dir'})
+		-- vim.keymap.set('n', '<leader>fG', [[<Cmd>lua TelescopePicker('live_grep_cur_dir')<CR>]],	 		{desc = 'live_grep'})
+		-- vim.keymap.set('n', '<leader>fw', [[<Cmd>lua TelescopePicker('grep_string_cur_buf')<CR>]],	 		{desc = 'grep_string cur_buf'})
+		-- vim.keymap.set('n', '<leader>fo', builtin.oldfiles, 		{desc = 'recent files'})                    -- recent files
+		-- -- vim.keymap.set('n', '<leader>fb', builtin.buffers, 			{desc = 'buffer list'})                     -- buffer manager
+		-- vim.keymap.set('n', '<leader>fc', builtin.command_history, 	{desc = 'command history'})                 -- command history
+		-- vim.keymap.set('n', '<leader>fh', builtin.help_tags, 		{desc = 'help tags list'})                  -- search tag for help
+		-- vim.keymap.set('n', '<leader>fm', builtin.marks, 			{desc = 'mark list'})                       -- marks list
+		-- vim.keymap.set('n', '<leader>fs', builtin.current_buffer_fuzzy_find, {desc = 'find in current buffer'}) -- search list in current buffer
+		-- vim.keymap.set('n', '<leader>fj', builtin.jumplist, 		{desc = 'old jumped cursor location list'}) -- cursor location history
+		-- vim.keymap.set('n', '<leader>fd', [[<Cmd>lua TelescopePicker('diagnostics_cur_buf')<CR>]],	{desc = 'diagnostics cur_buf'})
+		-- vim.keymap.set('n', '<leader>fD', [[<Cmd>lua TelescopePicker('diagnostics_all_buf')<CR>]],	{desc = 'diagnostics all_buf in cur_dir'})
+		-- vim.keymap.set('n', '<leader>fk', builtin.keymaps, 			{desc = 'keymaps list'})                    -- keymaps list
+		-- vim.keymap.set('n', '<leader>fv', builtin.vim_options, 		{desc = 'vim options list'})                -- vim options list
+		--
+		-- vim.keymap.set('n', '<leader>fH', telescope.extensions.helpgrep.helpgrep, {desc = 'help grep'})
 	end
 }
 -- linrongbin16/fzfx.nvim : too slow starup loading / preview loading than telescope, and many errors in windows

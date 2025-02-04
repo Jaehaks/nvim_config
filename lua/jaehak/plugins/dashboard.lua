@@ -31,7 +31,7 @@ return {
 						icon = '',
 						desc = 'Recent Files', desc_hl = 'String',
 						key = 'r', key_hl = 'DashboardShortCut',
-						action = 'Telescope oldfiles',
+						action = function () Snacks.picker.recent({ filter = { [vim.fn.stdpath('data')] = true, } }) end,
 					},
 					{
 						icon = '',

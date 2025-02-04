@@ -81,7 +81,7 @@ return {
 							'missing-fields',
 							'unused-function',
 						},
-						globals = {'vim'},	-- recognize 'vim' global to language server
+						globals = {'vim', 'Snacks'},	-- recognize 'vim' global to language server
 						undefined_global = false,
 					},
 					runtime = {

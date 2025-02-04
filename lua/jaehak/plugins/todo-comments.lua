@@ -57,6 +57,7 @@ return {
 
 		vim.keymap.set('n', ']t', todo.jump_next, {desc = 'Next todo comment'})
 		vim.keymap.set('n', '[t', todo.jump_prev, {desc = 'Prev todo comment'})
-		vim.keymap.set('n', '<leader>ft', '<Cmd>TodoTelescope<CR>', {desc = 'Todo Telescope'})
+		-- vim.keymap.set('n', '<leader>ft', '<Cmd>TodoTelescope<CR>', {desc = 'Todo Telescope'})
+		vim.keymap.set('n', '<leader>ft', function () Snacks.picker.todo_comments() end, {desc = 'Todo list in Snacks'})
 	end
 }
