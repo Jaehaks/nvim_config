@@ -15,6 +15,7 @@ return {
 {
 	-- highlight of markdown file. but there are no delay to navigate
 	'MeanderingProgrammer/render-markdown.nvim',
+	enabled = false,
 	ft = {'markdown'},
 	dependencies = {
 		'nvim-treesitter/nvim-treesitter',
@@ -146,6 +147,100 @@ return {
 	end,
 },
 {
+	"OXY2DEV/markview.nvim",
+	enabled = true,
+	ft = {'markdown'},
+	config = function ()
+
+		-- set highlights
+		vim.api.nvim_set_hl(0, "@markup.italic"       , {fg = '#3DC5DA' , italic = true})
+		vim.api.nvim_set_hl(0, "@markup.strong"       , {fg = '#E39AA6' , bold = true})
+		vim.api.nvim_set_hl(0, "@markup.strikethrough", {fg = '#999999' , strikethrough = true})
+		vim.api.nvim_set_hl(0, "@markup.underline"    , {underline = true})
+		vim.api.nvim_set_hl(0, "MarkviewHighlights"   , {fg = '#f2ed5e', bg = '#1a190c'} ) -- "== text =="
+		vim.api.nvim_set_hl(0, "MarkviewListItemMinus", {fg = '#F68C6B'} )
+		vim.api.nvim_set_hl(0, "MarkviewListItemPlus" , {fg = '#b1c61c'} )
+		vim.api.nvim_set_hl(0, "MarkviewListItemStar" , {fg = '#00d1dd'} )
+		vim.api.nvim_set_hl(0, 'MarkviewHeading5'     , {fg = '#F0FF7C',  bg = '#2D2F1D'})
+		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled', {fg = '#999999'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault', {link = 'Normal'}) -- default block quote color
+
+		require('markview').setup({
+			preview = {
+				hybrid_modes         = {'n'}, -- disable conceal specific region under cursor
+				linewise_hybrid_mode = true,  -- apply hybrid mode with line-wise not block-wise
+			},
+			html = {
+				container_elements = {
+					["^u$"] = { -- underline
+						on_node = { hl_group = "@markup.underline" },
+					},
+				}
+			},
+			markdown = {
+				headings = {
+					heading_1 ={
+						style = "label", sign = "", sign_hl = "", align = "center",
+						padding_left = "╾────────────────╴ ", padding_right = " ╶────────────────╼",
+						icon = "󰼏 ", hl = "MarkviewHeading1Sign",
+					},
+					heading_2 = { style = "icon", sign = "", sign_hl = "", icon = "󰎨 ", hl = "MarkviewHeading2",},
+					heading_3 = { style = "icon", sign = "", sign_hl = "", icon = "󰼑 ", hl = "MarkviewHeading3",},
+					heading_4 = { style = "icon", sign = "", sign_hl = "", icon = "󰎲 ", hl = "MarkviewHeading4",},
+					heading_5 = { style = "icon", sign = "", sign_hl = "", icon = "󰼓 ", hl = "MarkviewHeading5",},
+					heading_6 = { style = "icon", sign = "", sign_hl = "", icon = "󰎴 ", hl = "MarkviewHeading6",},
+				},
+				code_blocks = {
+					style = 'block', -- only highlight behind code region, not all
+					label_direction = 'left',
+					pad_amount = 0,  -- turn off left indentation
+					sign = false,    -- turn off icon in signcolumn
+				},
+				horizontal_rules = { -- horizontal line pattern '---'
+					parts = {
+						{
+							type = "repeating",
+							repeat_amount = function ()
+								return vim.o.columns; -- repeat to whole column
+							end,
+							text = "━",
+							hl = "MarkviewGradient9"
+						}
+					}
+				},
+				list_items = {
+					marker_minus       = { add_padding = false, text = '' }, -- When using '-'
+					marker_plus        = { add_padding = false, },            -- When using '+'
+					marker_star        = { add_padding = false, },            -- When using '*'
+					marker_dot         = { add_padding = false, },            -- When using '.'
+					marker_parenthesis = { add_padding = false, },            -- When using '1), 2)'
+				},
+			},
+			markdown_inline = {
+				highlights = { -- pattern "==word=="
+					default = { hl = "MarkviewHighlights" }
+				},
+				checkboxes = {
+					checked   = { text = "", hl = "MarkviewCheckboxChecked", scope_hl = "MarkviewCheckboxChecked" },
+					unchecked = { text = "", hl = "MarkviewCheckboxUnchecked", scope_hl = "MarkviewCheckboxUnchecked" },
+					["-"]     = { text = "󱋭", hl = "MarkviewCheckboxCancelled", scope_hl = "MarkviewCheckboxCancelled" },
+				},
+				emoji_shorthands = { enable = false, },
+				images = {
+					["%.png$"] = { icon = "󰥶 "},
+					["%.jpg$"] = { icon = "󰥶 "},
+					["%.gif$"] = { icon = " "},
+				},
+				internal_links = {}, -- pattern "[[#title]]", internal link in current file
+				uri_autolinks  = {}, -- pattern "<https://example.com>", direct link without link name
+			},
+			latex = { enable = true, }, -- $ $ for inline rendering / $$ $$ for block rendering
+			typst = { enable = false, },
+			yaml  = { enable = false, }
+		})
+	end
+},
+{
 	'crispgm/telescope-heading.nvim',
 	dependencies = {
 		'nvim-telescope/telescope.nvim',
@@ -172,6 +267,10 @@ return {
 		-- it needs long load time
 --'ixru/nvim-markdown' : It dose not have recalculating number list
 --'OXY2DEV/markview.nvim' : default highlight is poor, if I set any configuration, it doesn't work all
+--						  : it seems more faster than render-markdown.nvim. and it highlights correctly
+--						  although screen is moved and the first marks are not shown.
+--						  It supports html conceal also.
+--						  check the customization!!!!!!!!!!!!!
 {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate

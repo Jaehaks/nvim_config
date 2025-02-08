@@ -31,8 +31,8 @@ return {
 								 'vim', 'vimdoc',
 								 'markdown', 'markdown_inline',
 								 'html', 'json', 'toml',
-								 'diff', 'regex', 'ssh_config', 'powershell'
-							   	 -- 'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
+								 'diff', 'regex', 'ssh_config', 'powershell',
+							   	 'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
 			},
 			highlight = {
 				enable = true,  -- if highlight, cannot use rainbow bracket.
@@ -41,6 +41,9 @@ return {
 				-- highlight off if the file has too long lines, like help file lspconfig-server-configuration.md
 				-- it means that conceal of treesitter is disabled also.
 				disable = function (lang, bufnr)
+					if lang == "latex" then
+						return vim.bo.filetype ~= 'markdown'
+					end
 					return vim.api.nvim_buf_line_count(bufnr) > 5000
 				end,
 				additional_vim_regex_highlighting = false,
