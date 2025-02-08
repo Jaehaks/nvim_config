@@ -96,8 +96,11 @@ return {
 		{ '<leader>fh', function () Snacks.picker.help()
 		end, desc = 'Show help tags', mode = {'n'}},
 
-		{ '<leader>fi', function () Snacks.picker.highlights()
+		{ '<leader>fe', function () Snacks.picker.highlights()
 		end, desc = 'Show higlight', mode = {'n'}},
+
+		{ '<leader>fi', function () Snacks.picker.icons()
+		end, desc = 'Show nerd icons', mode = {'n'}},
 
 		{ '<leader>fj', function () Snacks.picker.jumps()
 		end, desc = 'Show jump list', mode = {'n'}},
