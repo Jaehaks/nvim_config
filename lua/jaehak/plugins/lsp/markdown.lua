@@ -269,8 +269,15 @@ return {
 --'OXY2DEV/markview.nvim' : default highlight is poor, if I set any configuration, it doesn't work all
 --						  : it seems more faster than render-markdown.nvim. and it highlights correctly
 --						  although screen is moved and the first marks are not shown.
---						  It supports html conceal also.
---						  check the customization!!!!!!!!!!!!!
+--					 pros: (over render-markdown)
+--					     1. supports latex / html marker
+--					     2. supports more customizable heading style
+--					     3. rendering speed is fast because it render only current view, not
+--					        file
+--					     4. it render correclty even though marker doesn't be shown in the
+--					        screen. it remains highlight when I move cursor to right
+--					 cons:
+--					     1. anti-conceal speed of linewise hybrid mode is slow
 {
 	-- add bullet automatically
 	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
