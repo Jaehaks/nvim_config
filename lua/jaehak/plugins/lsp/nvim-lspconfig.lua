@@ -18,310 +18,294 @@ local create_custom_handler = function (priority)
 end
 
 return {
-	'neovim/nvim-lspconfig',
-	-- lazy = true,		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
-	dependencies = {
-		{
-			'folke/neodev.nvim',
-			ft = {'lua'}
+	{
+		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
+		'neovim/nvim-lspconfig',
+		-- lazy = true,
+		dependencies = {
+			{
+				'folke/neodev.nvim',
+				ft = {'lua'}
+			},
+			'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
 		},
-		-- {
-		-- 	'folke/lazydev.nvim', -- instead of neodev
-		-- 	ft = 'lua',
-		-- 	config = function ()
-		-- 		require('lazydev').setup({
-		-- 			library = {
-		-- 				-- { path = 'luvit-meta/library', words = {'vim%.uv'}}
-		-- 			},
-		-- 			enabled = function(root_dir)
-		-- 				return vim.g.lazydev_enabled == nil and true or vim.g.lazydev_enabled
-		-- 			end
-		-- 		})
-		-- 	end
-		-- },
-		-- {
-		-- 	'Bilal2453/luvit-meta', -- for lazydev, vim.uv library
-		-- 	lazy = true,
-		-- },
-		'hrsh7th/cmp-nvim-lsp',
-		'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
-	},
-	init = function ()
-		vim.env.RUFF_CACHE_DIR = paths.lsp.ruff.cache_path --  set ruff cache directory
-	end,
-	config = function()
-		-- ######## setup neodev configuration, must be start #######
-		-- feature : vim object completion / require completion
-		require('neodev').setup({
-			setup_jsonls = false,
-			library = {
-				enabled = true,
-				runtime = true,			-- runtime path
-				types = true,			-- vim.api / vim.lsp completion
-				plugins = false,		-- installed plugins completion (too long loading time)
-			}
-		})
+		init = function ()
+			vim.env.RUFF_CACHE_DIR = paths.lsp.ruff.cache_path --  set ruff cache directory
+		end,
+		config = function()
+			-- ######## setup neodev configuration, must be start #######
+			-- feature : vim object completion / require completion
+			require('neodev').setup({
+				setup_jsonls = false,
+				library = {
+					enabled = true,
+					runtime = true,			-- runtime path
+					types = true,			-- vim.api / vim.lsp completion
+					plugins = false,		-- installed plugins completion (too long loading time)
+				}
+			})
 
-		local lspconfig = require('lspconfig')
-		local lsp_util = require('lspconfig.util')
-		local capabilities = require('cmp_nvim_lsp').default_capabilities()
+			local lspconfig = require('lspconfig')
+			local lsp_util = require('lspconfig.util')
+			local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 
-		-- ####### 1) lua language server configuration #########
-		lspconfig.lua_ls.setup({
-			settings = {	-- settings of lua_ls document
-				Lua = {
-					completion = {
-						callSnippet = 'Replace',	-- neodev.nvim completion
-						showWord = 'Disable' -- disable word suggestion of lsp
-					},
-					diagnostics = {
-						disable = {
-							'missing-parameter',	-- disable diagnostics about whether all fields are filled
-							'missing-fields',
-							'unused-function',
+			-- ####### 1) lua language server configuration #########
+			lspconfig.lua_ls.setup({
+				settings = {	-- settings of lua_ls document
+					Lua = {
+						completion = {
+							callSnippet = 'Replace',	-- neodev.nvim completion
+							showWord = 'Disable' -- disable word suggestion of lsp
 						},
-						globals = {'vim', 'Snacks'},	-- recognize 'vim' global to language server
-						undefined_global = false,
-					},
-					runtime = {
-						version = 'LuaJIT',
-					},
-					workspace = {
-						checkThirdParty = false,
-						library = {
-							vim.env.VIMRUMTIME,
-							vim.api.nvim_get_runtime_file('lua',true),
+						diagnostics = {
+							disable = {
+								'missing-parameter',	-- disable diagnostics about whether all fields are filled
+								'missing-fields',
+								'unused-function',
+							},
+							globals = {'vim', 'Snacks'},	-- recognize 'vim' global to language server
+							undefined_global = false,
+						},
+						runtime = {
+							version = 'LuaJIT',
+						},
+						workspace = {
+							checkThirdParty = false,
+							library = {
+								vim.env.VIMRUMTIME,
+								vim.api.nvim_get_runtime_file('lua',true),
 
-							-- ## below two directories make lsp loading too slow
-							-- I think stdpath('data') load all plugins even though it has "enabled = false"
---							vim.fn.stdpath('config'),
---							vim.fn.stdpath('data'),
+								-- ## below two directories make lsp loading too slow
+								-- I think stdpath('data') load all plugins even though it has "enabled = false"
+								--							vim.fn.stdpath('config'),
+								--							vim.fn.stdpath('data'),
+							}
 						}
 					}
-				}
-			},
-			capabilities = capabilities,
-			handlers = {
-				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-			}
-		})
-
-		-- ####### 2) matlab language server configuration #########
-		local matlab_path = vim.fs.dirname(vim.fn.systemlist('where matlab')[1]):match('(.*[/\\])')
-		if vim.g.has_win32 == 1 then
-			matlab_path:gsub('/','\\')
-		end
-		lspconfig.matlab_ls.setup({
-			on_attach = function (client, bufnr)
-				-- client.server_capabilities.signatureHelpProvider = false -- signature help by matlab lsp is poor
-			end,
-			cmd = {'matlab-language-server', '--stdio'},
-			filetypes = {'matlab'},
-			root_dir = function (fname)
-				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
-			end,
-			settings = {
-				matlab = {
-					indexWorkspace = true,
-					installPath = matlab_path,
-					matlabConnectionTiming = 'onStart',
-					telemetry = false, -- don't report about any problem
 				},
-			},
-			single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
-			handlers = {
-				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-			}
-		})
-
-		-- grammar-guard.nvim : deprecated
-		-- prosesitter : deprecated
-		-- ltex : too heavy to load. its speed is too slow
-
-		-- ####### 6) harper_ls language server configuration #########
-		-- more faster than ltex
-		lspconfig.harper_ls.setup({
-			filetypes = {'gitcommit', 'markdown', 'text', 'NeogitStatus', 'lua'},
-			settings = {
-				['harper-ls'] = {
-					linters = {
-						spell_check                  = true,
-						spelled_numbers              = false,
-						an_a                         = true,
-						sentence_capitalization      = false,
-						unclosed_quotes              = true,
-						wrong_quotes                 = true,
-						long_sentences               = false,
-						repeated_words               = false,
-						spaces                       = true,
-						matcher                      = true,
-						correct_number_suffix        = false,
-						number_suffix_capitalization = false,
-						multiple_sequential_pronouns = true,
-						linking_verbs                = true,
-						avoid_curses                 = false,
-						terminating_conjuctions      = true,
-					},
-					diagnosticSeverity = 'hint', -- show the spell check as hint
-					codeActions = {
-						forceStable = true
-					}
+				capabilities = capabilities,
+				handlers = {
+					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 				}
-			},
-			handlers = {
-				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank3)
-			}
+			})
 
-		})
-
-
-		-- ###### 6) python language server configuration ###########
-		-- a) ruff : use code_action(but cannot all fix) / use Formatting / fast type check inherited
-		-- b) pyright : no code_action / no Formatting / fast type check inherited
-		-- c) pylsp : no code action / use Formatting / slow type check disinherited
-		-- flake8 is also fast, but I found that pyright / ruff are faster a more little bit
-		-- 		but not big differences, I understand that type checking of pyright is more accurate than ruff/flake8
-		-- 		pyright has more accuracy about unused variable, linter's error is shadowed by other error when it detects multiple error
-		-- 		organizeImports is applied to both pyright and ruff / buf ruff has code action to this
-		-- 		linter is not type checker... it helps code convention as formatting rule, and better style of code
-		--      it detects some trivial error like undefined , but it cannot detect type checking error
-		--      On the other hand, pyright does not support linting(better style checker)
-		--      but for trivial error, ruff / flake8 / pyright detect in the same time
-		-- (241117) : ruff_lsp is deprecated
-
-		lspconfig.ruff.setup({ -- use ruff as python linter
-			on_attach = function (client, bufnr)
-				-- lsp use ruff to formatter
-				client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
-				client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
-				client.server_capabilities.hoverProvider = false                   -- use pylsp
-			end,
-			-- cmp_nvim_lsp default_configuration add completionProvider. ruff_lsp don't use completion
-			filetype = {'python'},
-			root_dir = function (fname)
-				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
-			end,
-			single_file_support = true,
-			init_options = {
+			-- ####### 2) matlab language server configuration #########
+			local matlab_path = vim.fs.dirname(vim.fn.systemlist('where matlab')[1]):match('(.*[/\\])')
+			if vim.g.has_win32 == 1 then
+				matlab_path:gsub('/','\\')
+			end
+			lspconfig.matlab_ls.setup({
+				on_attach = function (client, bufnr)
+					-- client.server_capabilities.signatureHelpProvider = false -- signature help by matlab lsp is poor
+				end,
+				cmd = {'matlab-language-server', '--stdio'},
+				filetypes = {'matlab'},
+				root_dir = function (fname)
+					return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+				end,
 				settings = {
-					configuration = paths.lsp.ruff.config_path,
-					logFile = paths.lsp.ruff.log_path,
-					logLevel = 'warn',
-					organizeImports = true, -- use code action for organizeImports
-					showSyntaxErrors = true, -- show syntax error diagnostics
-					codeAction = {
-						disableRuleComment = { enable = false }, -- show code action about rule disabling
-						fixViolation = { enable = false }, -- show code action for autofix violation
+					matlab = {
+						indexWorkspace = true,
+						installPath = matlab_path,
+						matlabConnectionTiming = 'onStart',
+						telemetry = false, -- don't report about any problem
 					},
-					format = {			-- use conform.nvim
-						preview = false,
-					},
-					lint = {            -- it links with ruff, but lint.args are different with ruff configuration
-						enable = true,
-					},
+				},
+				single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
+				handlers = {
+					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 				}
-			},
-			handlers = { -- it seems not work right now
-				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-			}
-		})
+			})
 
-		-- It seems that basedpyright give more feature than pyright and pylsp (lsp signature, completion)
-		--
-		lspconfig.basedpyright.setup({ -- use pyright as type checker , for definition/hover
-			on_attach = function (client, bufnr)
-				-- pyright doesn't have FormattingProvider
-				-- client.server_capabilities.hoverProvider = true          -- pylsp gives more params explanation. pyright gives more type explanation
-				-- client.server_capabilities.completionProvider = false    -- use pylsp instead
-				-- client.server_capabilities.signatureHelpProvider = false -- use pylsp instead
-			end,
-			capabilities = capabilities,
-			filetype = {'python'},
-			root_dir = function (fname)
-				return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
-			end,
-			settings = { -- see https://docs.basedpyright.com/latest/configuration/language-server-settings/
-				basedpyright = {
-					disableOrganizeImports = true, -- use ruff instead of it
-					analysis = {
-						autoImportCompletions = true,
-						autoSearchPaths = true, -- auto serach command paths like 'src'
-						diagnosticMode = 'openFilesOnly',
-						useLibraryCodeForTypes = true,
+			-- grammar-guard.nvim : deprecated
+			-- prosesitter : deprecated
+			-- ltex : too heavy to load. its speed is too slow
+
+			-- ####### 6) harper_ls language server configuration #########
+			-- more faster than ltex
+			lspconfig.harper_ls.setup({
+				filetypes = {'gitcommit', 'markdown', 'text', 'NeogitStatus', 'lua'},
+				settings = {
+					['harper-ls'] = {
+						linters = {
+							spell_check                  = true,
+							spelled_numbers              = false,
+							an_a                         = true,
+							sentence_capitalization      = false,
+							unclosed_quotes              = true,
+							wrong_quotes                 = true,
+							long_sentences               = false,
+							repeated_words               = false,
+							spaces                       = true,
+							matcher                      = true,
+							correct_number_suffix        = false,
+							number_suffix_capitalization = false,
+							multiple_sequential_pronouns = true,
+							linking_verbs                = true,
+							avoid_curses                 = false,
+							terminating_conjuctions      = true,
+						},
+						diagnosticSeverity = 'hint', -- show the spell check as hint
+						codeActions = {
+							forceStable = true
+						}
 					}
 				},
-			},
-			handlers = {
-				['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-			}
-		})
+				handlers = {
+					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank3)
+				}
+
+			})
 
 
-		-- -- pylsp is slow?
-		-- lspconfig.pylsp.setup({ -- for completion / hover / lsp_signature, pure pylsp has no ruff configuration,
-		-- 	-- pylsp has FormattingProvider, but I don't set the formatter
-		-- 	on_attach = function (client, bufnr)
-		-- 		client.server_capabilities.documentFormattingProvider = false
-		-- 		client.server_capabilities.documentRangeFormattingProvider = false
-		-- 		client.server_capabilities.documentHighlightProvider = false
-		-- 	end,
-		-- 	capabilities = capabilities, -- required
-		-- 	filetyps = {'python'},
-		-- 	root_dir = function (fname)
-		-- 		return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
-		-- 	end,
-		-- 	settings = {
-		-- 		pylsp = {
-		-- 			plugins = {
-		-- 				autopep8            = { enabled = false },
-		-- 				flake8              = { enabled = false }, -- fast, diagnostics for linting and formatting
-		-- 				jedi_completion     = { -- support completion
-		-- 					enabled = true,
-		-- 					include_params = true, -- required : not default, add () besides of function (little snippet for builtin)
-		-- 					include_class_objects = false,
-		-- 					include_function_objects = false, -- add function object to completion separately. make duplicated item
-		-- 					fuzzy = false,
-		-- 					eager = false,
-		-- 				},
-		-- 				jedi_definition     = { enabled = false }, -- same with pyright
-		-- 				jedi_hover          = { enabled = true }, -- better than pyright. it supports explanation
-		-- 				jedi_references     = { enabled = false },
-		-- 				jedi_signature_help = { enabled = true }, -- support lsp_signature help, more detail than pyright
-		-- 				jedi_symbols        = { enabled = false },
-		-- 				mccabe              = { enabled = false },
-		-- 				preload             = { enabled = false },
-		-- 				pycodestyle         = { enabled = false },
-		-- 				pyflakes            = { enabled = false },
-		-- 				pylint              = { enabled = false }, -- very slow loading to lint
-		-- 				rope_autoimport     = { enabled = false },
-		-- 				yapf                = { enabled = false },
-		-- 			}
-		-- 		}
-		-- 	},
-		-- 	handlers = {
-		-- 		['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-		-- 	}
-		-- })
+			-- ###### 6) python language server configuration ###########
+			-- a) ruff : use code_action(but cannot all fix) / use Formatting / fast type check inherited
+			-- b) pyright : no code_action / no Formatting / fast type check inherited
+			-- c) pylsp : no code action / use Formatting / slow type check disinherited
+			-- flake8 is also fast, but I found that pyright / ruff are faster a more little bit
+			-- 		but not big differences, I understand that type checking of pyright is more accurate than ruff/flake8
+			-- 		pyright has more accuracy about unused variable, linter's error is shadowed by other error when it detects multiple error
+			-- 		organizeImports is applied to both pyright and ruff / buf ruff has code action to this
+			-- 		linter is not type checker... it helps code convention as formatting rule, and better style of code
+			--      it detects some trivial error like undefined , but it cannot detect type checking error
+			--      On the other hand, pyright does not support linting(better style checker)
+			--      but for trivial error, ruff / flake8 / pyright detect in the same time
+			-- (241117) : ruff_lsp is deprecated
+
+			lspconfig.ruff.setup({ -- use ruff as python linter
+				on_attach = function (client, bufnr)
+					-- lsp use ruff to formatter
+					client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
+					client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
+					client.server_capabilities.hoverProvider = false                   -- use pylsp
+				end,
+				-- cmp_nvim_lsp default_configuration add completionProvider. ruff_lsp don't use completion
+				filetype = {'python'},
+				root_dir = function (fname)
+					return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+				end,
+				single_file_support = true,
+				init_options = {
+					settings = {
+						configuration = paths.lsp.ruff.config_path,
+						logFile = paths.lsp.ruff.log_path,
+						logLevel = 'warn',
+						organizeImports = true, -- use code action for organizeImports
+						showSyntaxErrors = true, -- show syntax error diagnostics
+						codeAction = {
+							disableRuleComment = { enable = false }, -- show code action about rule disabling
+							fixViolation = { enable = false }, -- show code action for autofix violation
+						},
+						format = {			-- use conform.nvim
+							preview = false,
+						},
+						lint = {            -- it links with ruff, but lint.args are different with ruff configuration
+							enable = true,
+						},
+					}
+				},
+				handlers = { -- it seems not work right now
+					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+				}
+			})
+
+			-- It seems that basedpyright give more feature than pyright and pylsp (lsp signature, completion)
+			--
+			lspconfig.basedpyright.setup({ -- use pyright as type checker , for definition/hover
+				on_attach = function (client, bufnr)
+					-- pyright doesn't have FormattingProvider
+					-- client.server_capabilities.hoverProvider = true          -- pylsp gives more params explanation. pyright gives more type explanation
+					-- client.server_capabilities.completionProvider = false    -- use pylsp instead
+					-- client.server_capabilities.signatureHelpProvider = false -- use pylsp instead
+				end,
+				capabilities = capabilities,
+				filetype = {'python'},
+				root_dir = function (fname)
+					return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+				end,
+				settings = { -- see https://docs.basedpyright.com/latest/configuration/language-server-settings/
+					basedpyright = {
+						disableOrganizeImports = true, -- use ruff instead of it
+						analysis = {
+							autoImportCompletions = true,
+							autoSearchPaths = true, -- auto serach command paths like 'src'
+							diagnosticMode = 'openFilesOnly',
+							useLibraryCodeForTypes = true,
+						}
+					},
+				},
+				handlers = {
+					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+				}
+			})
+
+
+			-- -- pylsp is slow?
+			-- lspconfig.pylsp.setup({ -- for completion / hover / lsp_signature, pure pylsp has no ruff configuration,
+				-- 	-- pylsp has FormattingProvider, but I don't set the formatter
+				-- 	on_attach = function (client, bufnr)
+					-- 		client.server_capabilities.documentFormattingProvider = false
+					-- 		client.server_capabilities.documentRangeFormattingProvider = false
+					-- 		client.server_capabilities.documentHighlightProvider = false
+					-- 	end,
+					-- 	capabilities = capabilities, -- required
+					-- 	filetyps = {'python'},
+					-- 	root_dir = function (fname)
+						-- 		return lsp_util.root_pattern('.git')(fname) or vim.fn.getcwd()
+						-- 	end,
+						-- 	settings = {
+							-- 		pylsp = {
+								-- 			plugins = {
+									-- 				autopep8            = { enabled = false },
+									-- 				flake8              = { enabled = false }, -- fast, diagnostics for linting and formatting
+									-- 				jedi_completion     = { -- support completion
+										-- 					enabled = true,
+										-- 					include_params = true, -- required : not default, add () besides of function (little snippet for builtin)
+											-- 					include_class_objects = false,
+											-- 					include_function_objects = false, -- add function object to completion separately. make duplicated item
+											-- 					fuzzy = false,
+											-- 					eager = false,
+											-- 				},
+											-- 				jedi_definition     = { enabled = false }, -- same with pyright
+											-- 				jedi_hover          = { enabled = true }, -- better than pyright. it supports explanation
+											-- 				jedi_references     = { enabled = false },
+											-- 				jedi_signature_help = { enabled = true }, -- support lsp_signature help, more detail than pyright
+											-- 				jedi_symbols        = { enabled = false },
+											-- 				mccabe              = { enabled = false },
+											-- 				preload             = { enabled = false },
+											-- 				pycodestyle         = { enabled = false },
+											-- 				pyflakes            = { enabled = false },
+											-- 				pylint              = { enabled = false }, -- very slow loading to lint
+											-- 				rope_autoimport     = { enabled = false },
+											-- 				yapf                = { enabled = false },
+											-- 			}
+											-- 		}
+											-- 	},
+											-- 	handlers = {
+												-- 		['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+												-- 	}
+												-- })
 
 
 
-		-- ####### autocmd key mapping when LspAttach ######
-		-- vim.api.nvim_create_autocmd('LspAttach', {
-		-- 	desc = 'lsp keybindings when on_attach',
-		-- 	callback = function()
-		-- 		local opts = {buffer = true, silent = true, noremap = true}
-		-- 		-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line function
-		-- 		vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
-		-- 		vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
-		-- 		vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
-		-- 		vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.reference()<cr>', opts)			-- function / var ref
-		-- 		vim.keymap.set('n', 'gs', vim.lsp.buf.code_action)
-		-- 	end
-		-- })
+												-- ####### autocmd key mapping when LspAttach ######
+												-- vim.api.nvim_create_autocmd('LspAttach', {
+													-- 	desc = 'lsp keybindings when on_attach',
+													-- 	callback = function()
+														-- 		local opts = {buffer = true, silent = true, noremap = true}
+														-- 		-- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)	-- hover current line function
+														-- 		vim.keymap.set('n', 'K', ':lua vim.lsp.buf.hover()<cr>', opts)				-- hover current cursor item
+														-- 		vim.keymap.set('n', 'gd', ':lua vim.lsp.buf.definition()<cr>', opts)		-- function / var def
+														-- 		vim.keymap.set('n', 'gD', ':lua vim.lsp.buf.type_definition()<cr>', opts)	-- type def
+														-- 		vim.keymap.set('n', 'gr', ':lua vim.lsp.buf.reference()<cr>', opts)			-- function / var ref
+														-- 		vim.keymap.set('n', 'gs', vim.lsp.buf.code_action)
+														-- 	end
+														-- })
 
-		-- global mapping for diagnostic
-		-- vim.keymap.set('n', 'gk', vim.diagnostic.goto_next) -- show next diagnostic result
+														-- global mapping for diagnostic
+														-- vim.keymap.set('n', 'gk', vim.diagnostic.goto_next) -- show next diagnostic result
 
-	end
+													end
+												}
 }
