@@ -92,10 +92,6 @@ return {
 			})
 
 			-- ####### 2) matlab language server configuration #########
-			local matlab_path = vim.fs.dirname(vim.fn.systemlist('where matlab')[1]):match('(.*[/\\])')
-			if vim.g.has_win32 == 1 then
-				matlab_path:gsub('/','\\')
-			end
 			lspconfig.matlab_ls.setup({
 				on_attach = function (client, bufnr)
 					-- client.server_capabilities.signatureHelpProvider = false -- signature help by matlab lsp is poor
@@ -108,7 +104,7 @@ return {
 				settings = {
 					matlab = {
 						indexWorkspace = true,
-						installPath = matlab_path,
+						installPath = paths.lsp.matlab,
 						matlabConnectionTiming = 'onStart',
 						telemetry = false, -- don't report about any problem
 					},
