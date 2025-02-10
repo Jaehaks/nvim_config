@@ -39,6 +39,9 @@ return {
 {
 	-- graphical color picker
 	'eero-lehtinen/oklch-color-picker.nvim',
+	keys = {
+		{'<leader>cp'},
+	},
 	config = function()
 		require('oklch-color-picker').setup ({
 			highlight = {

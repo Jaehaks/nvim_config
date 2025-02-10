@@ -1,12 +1,13 @@
 return {
 	'RRethy/vim-illuminate',
+	event = 'CursorMoved',
 	config = function()
 
 		-- plugin configuration
 		local illuminate = require('illuminate')
 		illuminate.configure({
 			--providers = {'lsp', 'regex'},
-			providers = {'regex'},	-- if using lsp, entire text in '' is highlighted 
+			providers = {'regex'},	-- if using lsp, entire text in '' is highlighted
 			delay = 300,
 			lcarge_file_curoff = 8000,
 			filetypes_denylist = {

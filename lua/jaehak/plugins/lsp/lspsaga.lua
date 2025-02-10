@@ -163,6 +163,9 @@ return {
 },
 {
 	'luckasRanarison/clear-action.nvim',
+	keys = {
+		{'ga'}
+	},
 	config = function ()
 		local clearaction = require('clear-action')
 		clearaction.setup({

@@ -63,7 +63,8 @@ return {
 {
 	-- rendering help using vimdoc treesitter
 	"OXY2DEV/helpview.nvim",
-	lazy = false, -- Recommended
+	ft = 'help',
+	-- lazy = false, -- Recommended
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter"
 	}

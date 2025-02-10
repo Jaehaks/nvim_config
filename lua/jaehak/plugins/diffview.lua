@@ -1,5 +1,8 @@
 return {
 	'sindrets/diffview.nvim',
+	keys = {
+		{'<leader>gd'}
+	},
 	dependencies = {
 		'nvim-tree/nvim-web-devicons'
 	},
@@ -14,7 +17,7 @@ return {
 					{'n', 'j', actions.prev_entry , {silent = true}},
 					{'n', 'k', actions.next_entry , {silent = true}},
 					{'n', 'q', function()
-						actions.close()		-- close panel 
+						actions.close()		-- close panel
 						actions.close()		-- close view
 					end, {silent = true}},
 				}

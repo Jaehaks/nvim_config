@@ -41,6 +41,14 @@ return {
 	"jake-stewart/multicursor.nvim",
 	enabled = true,
     branch = "1.0",
+	keys = {
+		{'<C-k>'},
+		{'<C-j>'},
+		{'<C-n>'},
+		{'<C-n>'},
+		{'<C-S-n>'},
+		{'<C-b>'},
+	},
 	config = function()
 		local mc = require("multicursor-nvim")
 
@@ -68,7 +76,7 @@ return {
 		end, {desc = '[Multicursor] Delete Current Pos'})
 
 		-- Add Current Cursor position | Deactivate multi-cursor mode
-		vim.keymap.set({"n", "v"}, "<c-b>", function()
+		vim.keymap.set({"n", "v"}, "<C-b>", function()
 			if mc.cursorsEnabled() then
 				mc.disableCursors()
 			else

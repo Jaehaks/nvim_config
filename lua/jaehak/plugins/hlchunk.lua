@@ -1,7 +1,8 @@
+local paths = require('jaehak.core.paths')
 return {{
 	-- show region of indentation block
 	"shellRaining/hlchunk.nvim",
-	enabled = true,
+	ft = paths.Filetypes_ForCode,
 	config = function()
 		local default_exclude_filetype = {
 			dashboard           = true,

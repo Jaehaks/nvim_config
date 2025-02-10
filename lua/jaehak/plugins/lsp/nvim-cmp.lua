@@ -2,14 +2,14 @@ local paths = require('jaehak.core.paths')
 return {
 	'hrsh7th/nvim-cmp',
 	event = 'InsertEnter',		-- load before starting insert mode / replace mode
-	init = function ()
-		-- spell must be true to use cmp-spell
-		-- changing these option must be out of config function of nvim-cmp
-		-- I have no idea what is the reason, but something turns off this option after setting option
-		vim.opt.spell = true
-		vim.opt.spelllang = {'en_us', 'cjk'} -- disable spell check for asian char
-		vim.opt.pumheight = 10			-- maximum item number when show completion
-	end,
+	-- init = function ()
+	-- 	-- spell must be true to use cmp-spell
+	-- 	-- changing these option must be out of config function of nvim-cmp
+	-- 	-- I have no idea what is the reason, but something turns off this option after setting option
+	-- 	vim.opt.spell = true
+	-- 	vim.opt.spelllang = {'en_us', 'cjk'} -- disable spell check for asian char
+	-- 	vim.opt.pumheight = 10			-- maximum item number when show completion
+	-- end,
 	dependencies = {
 		'hrsh7th/cmp-buffer',       -- source for text in buffer
 		-- 'hrsh7th/cmp-path',         -- source for file system path
