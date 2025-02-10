@@ -25,6 +25,7 @@ return {
 		dependencies = {
 			{
 				'folke/neodev.nvim',
+				lazy = true,
 				ft = {'lua'}
 			},
 			'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
