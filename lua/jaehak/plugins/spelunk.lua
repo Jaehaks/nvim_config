@@ -1,6 +1,7 @@
 return {
 	-- persistent mark manager
 	'EvWilson/spelunk.nvim',
+	enabled = false, -- add when I use it
 	dependencies = {
 		'nvim-lua/plenary.nvim',         -- For window drawing utilities
 		'nvim-telescope/telescope.nvim', -- Optional: for fuzzy search capabilities
