@@ -60,8 +60,8 @@ return {
 		require('luasnip.loaders.from_lua').lazy_load({paths = './queries/LuaSnip'})
 
 		------- telescope extension ------------
-		require('telescope').load_extension('luasnip')
-		vim.keymap.set('n', '<leader>fl', require('telescope').extensions.luasnip.luasnip, {desc = 'luasnip browser'})
+		-- require('telescope').load_extension('luasnip')
+		-- vim.keymap.set('n', '<leader>fl', require('telescope').extensions.luasnip.luasnip, {desc = 'luasnip browser'})
 
 	end
 }

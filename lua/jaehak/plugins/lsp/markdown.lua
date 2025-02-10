@@ -242,6 +242,7 @@ return {
 },
 {
 	'crispgm/telescope-heading.nvim',
+	enabled = false,
 	dependencies = {
 		'nvim-telescope/telescope.nvim',
 	},
@@ -371,8 +372,8 @@ return {
 			enable_cmp_integration = true, -- cmp integration requires 14MB RAM
 		})
 
-		local ts = require('telescope').load_extension('emoji')
-		vim.keymap.set({'n', 'i'}, '<M-e>', ts.emoji, { desc = 'Search Emoji' })
+		-- local ts = require('telescope').load_extension('emoji')
+		-- vim.keymap.set({'n', 'i'}, '<M-e>', ts.emoji, { desc = 'Search Emoji' })
 	end
 },
 {
