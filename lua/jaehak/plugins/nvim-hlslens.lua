@@ -1,6 +1,6 @@
 return {
 	'kevinhwang91/nvim-hlslens',
-	event = 'CmdLineEnter',
+	event = 'CmdLineLeave',
 	dependencies = {
 		'Isrothy/neominimap.nvim',
 	},

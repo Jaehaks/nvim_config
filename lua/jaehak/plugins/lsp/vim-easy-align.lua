@@ -1,7 +1,10 @@
 return {
 {
 	'junegunn/vim-easy-align',
-	event = 'BufReadPost',
+	keys = {
+		{'<C-\\>', mode = {'n', 'v'}},
+		{'<C-S-\\>', mode = {'n', 'v'}},
+	},
 	config = function()
 		vim.g.easy_align_delimiters = {
 			[';'] = {				-- add delimiters ';'
@@ -10,7 +13,7 @@ return {
 				right_margin = 1,
 				stick_to_left = 0,
 			},
-			-- alignment rule is identified by a single-character key.  it needs to set ignore_group and \\+ 
+			-- alignment rule is identified by a single-character key.  it needs to set ignore_group and \\+
 			['c'] = {				-- add delimiters '--', lua comment
 				pattern = '--\\+',
 				left_margin = 1,

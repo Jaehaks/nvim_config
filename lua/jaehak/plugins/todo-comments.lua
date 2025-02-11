@@ -1,5 +1,7 @@
+local paths = require('jaehak.core.paths')
 return {
 	'folke/todo-comments.nvim',
+	ft = paths.Filetypes.ForCode,
 	dependencies = {
 		'nvim-lua/plenary.nvim'
 	},

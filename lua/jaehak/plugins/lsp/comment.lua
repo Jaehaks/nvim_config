@@ -1,6 +1,11 @@
 return {
 {
 	'numToStr/Comment.nvim',
+	keys = {
+		{'gl', mode = {'n', 'v'}},
+		{'gb', mode = {'n', 'v'}},
+		{'gL'},
+	},
 	config = function()
 		local ft = require('Comment.ft')
 --		ft.set('matlab', {'%%s', '%{%s%}'})
@@ -28,6 +33,10 @@ return {
 	-- make text object
 	'chrisgrieser/nvim-various-textobjs',
 	commit = '674b7c9', -- use multiCommentedLines until update nvim v.10
+	keys = {
+		{'vii'},
+		{'vic'},
+	},
 	config = function ()
 		local textobjs = require('various-textobjs')
 		textobjs.setup({
@@ -46,6 +55,6 @@ return {
 },
 }
 -- 'nvim-treesitter/nvim-treesitter-textobjects' : it makes textobject with comment line only, not block
--- 'danymat/neogen' : it is useful when I put description for functions even if cursor is in the function. 
+-- 'danymat/neogen' : it is useful when I put description for functions even if cursor is in the function.
 -- 					  it takes the cursor to top of the funciton rapidly. but the template is can be maed by luasnip
 -- 					  I think it can be replaced by luasnip

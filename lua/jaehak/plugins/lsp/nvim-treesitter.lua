@@ -5,6 +5,7 @@ return {
 	'nvim-treesitter/nvim-treesitter',
 	-- enabled = false,
 	lazy = true, -- by telescope
+	ft = paths.Filetypes.ForCode,
 	dependencies = {
 		'HiPhish/rainbow-delimiters.nvim',
 		'RRethy/nvim-treesitter-endwise', -- it requires neovim under v0.11

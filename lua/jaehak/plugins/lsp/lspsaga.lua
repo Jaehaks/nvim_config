@@ -59,7 +59,7 @@ return {
 	-- show signature help when enter functions
 	'ray-x/lsp_signature.nvim',
 	enabled = true,
-	event = 'LspAttach',
+	event = 'InsertEnter',
 	config = function ()
 		local lsp_sig = require('lsp_signature')
 		local cfg = {
@@ -83,7 +83,6 @@ return {
 {
 	-- show code outline
 	'hedyhli/outline.nvim',
-	lazy = true,
 	keys = {
 		{'go', '<Cmd>Outline<CR>', desc = 'LSP - Toggle outline'}
 	},

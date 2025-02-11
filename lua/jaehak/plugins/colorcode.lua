@@ -3,7 +3,9 @@ return {
     "catgoose/nvim-colorizer.lua",
 	enabled = true,
 	branch = 'fix/141-quotes_and_doublequotes',
-    event = "BufReadPre",
+    keys = {
+		{'<leader>cc'}
+	},
 	config = function ()
 		local colorizer = require('colorizer')
 		colorizer.setup({

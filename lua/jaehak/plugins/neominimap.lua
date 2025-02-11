@@ -2,7 +2,11 @@ return {
 	-- show minimap
 	'Isrothy/neominimap.nvim',
 	version = 'v3.*.*',
-	lazy = false,
+	-- lazy = false,
+	lazy = true,
+	keys = {
+		{'<leader>n'},
+	},
 	init = function ()
 		vim.opt.wrap = false       -- default false,
 

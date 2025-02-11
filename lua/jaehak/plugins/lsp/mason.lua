@@ -8,7 +8,6 @@ return {
 		lazy = true,
 	},
 	{
-
 		-- 1) powershell (default in windows)
 		-- 2) git for windows
 		-- 3) tar (default in windows)
@@ -17,7 +16,8 @@ return {
 		-- 6) npm (download)
 		'williamboman/mason.nvim',
 		enabled = true,
-		lazy = false,  	-- lazy-loading is not recommended
+		-- lazy = false,  	-- lazy-loading is not recommended
+		event = 'BufReadPre',  	-- lazy-loading is not recommended
 		config = function()
 			local mason = require('mason')
 			local mason_lspconfig = require('mason-lspconfig')

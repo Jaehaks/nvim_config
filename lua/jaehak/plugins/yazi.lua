@@ -4,8 +4,14 @@ return {
 	-- 			  if current file name change, the change not apply to buffer name immediately
 {
 	"mikavilpas/yazi.nvim",
-	enabled = true,
-	event = "VeryLazy",
+	ft = {'dashboard'},
+	keys = {
+		{'<leader>ee'},
+		{'<leader>ec'},
+		{'<leader>ed'},
+		{'<leader>en'},
+	},
+	-- event = "VeryLazy",
 	config = function ()
 
 		local yazi = require('yazi')

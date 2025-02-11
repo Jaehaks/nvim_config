@@ -3,6 +3,15 @@ return {
 	-- quick add/delete/change surrounding pairs
 	'kylechui/nvim-surround',
 	version = '*',
+	keys = {
+		{'fa', mode = {'n', 'v'}},
+		{'fA', mode = {'n', 'v'}},
+		{'fb', mode = {'n', 'v'}},
+		{'fB', mode = {'n', 'v'}},
+		{'fd', mode = {'n', 'v'}},
+		{'fr', mode = {'n', 'v'}},
+		{'fR', mode = {'n', 'v'}},
+	},
 	config = function ()
 		require('nvim-surround').setup({
 			keymaps = {
@@ -17,10 +26,10 @@ return {
 				change          = "fr",		-- change pairs and remain the linewise
 				change_line     = "fR",		-- change pairs and move to blockwise
 
-				-- all left ([<{  ==> add white space 
-				-- all right )}>] ==> not add white space 
-				-- difference pairs can apply in whole line wise condition,    yssi/<CR>\   
-				-- ysst  => for html tag 
+				-- all left ([<{  ==> add white space
+				-- all right )}>] ==> not add white space
+				-- difference pairs can apply in whole line wise condition,    yssi/<CR>\
+				-- ysst  => for html tag
 				-- 'b' to ')'   'B' to '}'    'r' to ']' 	in yss
 				--
 			},

@@ -21,7 +21,8 @@ local picker_config = {
 
 return {
 	'folke/snacks.nvim',
-	lazy = false,
+	ft = {'dashboard'},
+	lazy = true,
 	opts = {
 		bigfile      = {enabled = false},
 		dashboard    = {enabled = false},

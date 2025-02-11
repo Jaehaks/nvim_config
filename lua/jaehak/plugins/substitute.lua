@@ -1,6 +1,11 @@
 return {
-	-- substitute contents automatically from default register 
+	-- substitute contents automatically from default register
 	'gbprod/substitute.nvim',
+	keys = {
+		{'s', mode = {'n','x'}},
+		{'ss'},
+		{'S'},
+	},
 	config = function ()
 		local sub = require('substitute')
 		sub.setup({

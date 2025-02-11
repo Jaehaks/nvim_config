@@ -21,6 +21,7 @@ return {
 	{
 		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
 		'neovim/nvim-lspconfig',
+		event = 'BufReadPre',
 		-- lazy = true,
 		dependencies = {
 			{

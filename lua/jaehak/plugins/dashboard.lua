@@ -3,8 +3,10 @@ return {
 {
 	-- dashboard is faster a little?
 	'nvimdev/dashboard-nvim',
-	-- enabled = false,
-	event = 'VimEnter',
+	cond = function()
+		return vim.fn.argc() == 0 -- load dashboard when I open nvim using 'nvim' only (no argument)
+	end,
+	-- event = 'VimEnter',
 	init = function ()
 		-- vim.opt_local.modifiable = true
 		vim.opt.modifiable = true

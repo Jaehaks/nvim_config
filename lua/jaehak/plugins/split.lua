@@ -1,5 +1,11 @@
 return {
 	"wurli/split.nvim",
+	keys = {
+        {'gsf', mode = {'n', 'v'}},
+		{'gsb', mode = {'n', 'v'}},
+		{'gsF', mode = {'n', 'v'}},
+		{'gsB', mode = {'n', 'v'}},
+	},
 	opts = {
 		keymaps = {
 			-- interactive : after keymap input, dialog opens to get which character is criteria

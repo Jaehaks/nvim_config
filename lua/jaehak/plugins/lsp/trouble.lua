@@ -1,6 +1,10 @@
 return {
 	'folke/trouble.nvim',
-	event = 'LspAttach',
+	lazy = true,
+	keys = {
+		{'<leader>xt'},
+		{'<leader>xT'},
+	},
 	dependencies = {'nvim-tree/nvim-web-devicons'},
 	config = function ()
 		local trouble = require('trouble')

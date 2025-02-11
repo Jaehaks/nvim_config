@@ -3,7 +3,9 @@ return {
 {
 	-- more works better
 	'iamcco/markdown-preview.nvim',
-	ft = {'markdown'},
+	keys = {
+		{'<leader>mp'}
+	},
 	build = function() vim.fn["mkdp#util#install"]() end,
 	config = function ()
 		vim.g.mkdp_auto_start = 0 -- open preview automatically
@@ -353,7 +355,9 @@ return {
 {
 	-- editing fenced code block using treesitter
 	'AckslD/nvim-FeMaco.lua',
-	ft = {'markdown'},
+	keys = {
+		{'<leader>mc'},
+	},
 	config = function ()
 		local femaco = require('femaco')
 		femaco.setup({ })
@@ -364,9 +368,9 @@ return {
 {
 	'allaman/emoji.nvim',
 	ft = 'markdown',
-	dependencies = {
-		'nvim-telescope/telescope.nvim'
-	},
+	-- dependencies = {
+	-- 	'nvim-telescope/telescope.nvim'
+	-- },
 	config = function ()
 		require('emoji').setup({
 			enable_cmp_integration = true, -- cmp integration requires 14MB RAM
@@ -378,7 +382,10 @@ return {
 },
 {
 	'SCJangra/table-nvim',
-	ft = 'markdown',
+	keys = {
+		{'<leader>mt'},
+		{'<leader>mT'},
+	},
 	opts = {
 		padd_column_separators = true,          -- Insert a space around column separators.
 		mappings = {                            -- next and prev work in Normal and Insert mode. All other mappings work in Normal mode.

@@ -2,7 +2,7 @@ local paths = require('jaehak.core.paths')
 return {
 {
 	"stevearc/conform.nvim",
-	enabled = true,
+	lazy = true,
 	ft = paths.Filetypes.ForCode,
 	config = function()
 		-- configuration
@@ -57,6 +57,7 @@ return {
 },
 {
 	'nmac427/guess-indent.nvim',
+	lazy = true,
 	config = function()
 		require('guess-indent').setup {
 			silent = true, -- don't notify about guess operation

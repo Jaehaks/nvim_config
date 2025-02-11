@@ -4,7 +4,11 @@ return {
 	-- list up important files (add list to nvim-data/grapple)
 	-- Caution!! : file path must not have white space. But it can accept with non-English directory
 	'cbochs/grapple.nvim',
-	event = 'VimEnter',
+	keys = {
+		{'<leader>pa'},
+		{'<leader>pf'},
+	},
+	ft = {'dashboard'},
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 	},
@@ -26,7 +30,10 @@ return {
 },
 {
 	'natecraddock/sessions.nvim',
-	lazy = false, -- for startup window
+	keys = {
+		{'<leader>ps'},
+	},
+	ft = 'dashboard',
 	config = function ()
 		local sessions = require('sessions')
 		local saved_path = paths.session.saved
@@ -75,27 +82,27 @@ return {
 -- gnikdroy/projections.nvim : I cannot see any project in telescope extension... I don't know how to use this..
 -- coffebar/neovim-project : it needs to write project path in configuration file, not in nvim-data
 -- 'otavioschwanck/arrow.nvim' : why doesn't it work?
--- 'natecraddock/workspaces.nvim' : it save cwd as workspace. Opening workspace means that change cd. 
--- 								    it will be useful with hooks after load workspace like telescope find_files, 
--- 								    now From combination of grapple, telescope and oil, it can be replaced to workspace's behavior 
+-- 'natecraddock/workspaces.nvim' : it save cwd as workspace. Opening workspace means that change cd.
+-- 								    it will be useful with hooks after load workspace like telescope find_files,
+-- 								    now From combination of grapple, telescope and oil, it can be replaced to workspace's behavior
 -- 'Rics-Dev/project-explorer.nvim' : how to use? and no docs. default keymapping doesn't work
 --
 
 
 -- ///////// sessions plugins
--- possession.nvim : it support saving session with specific name. it works well, 
--- 					 but it cannot autosave current session when neovim is quit 
+-- possession.nvim : it support saving session with specific name. it works well,
+-- 					 but it cannot autosave current session when neovim is quit
 -- 					 It has long load time >150ms
--- neovim-session-manager : I don't know how to work. It works along to current directory. 
+-- neovim-session-manager : I don't know how to work. It works along to current directory.
 -- 							save the session with current directory name. It cannot save the session except one file
 -- 							It has short load time < 20ms
 -- persisted.nvim : it has long load time
 -- 					it doesn't work.. it saves session as path and show blank buffer window when I load session
--- folke/persistence.nvim : it works well. autosaving on quit. 
+-- folke/persistence.nvim : it works well. autosaving on quit.
 -- 						    it has fast load time <20ms.  it supports only saving last session
 -- 						    it save the session to file with cwd name
 -- 						    it cannot save the session state. only list of buffers
--- natecraddock/sessions.nvim : it is blazingly fast! (<5ms). I don't know what start_autosave() works but 
+-- natecraddock/sessions.nvim : it is blazingly fast! (<5ms). I don't know what start_autosave() works but
 -- 							    auto saving is implemented by autocmd. it save last session
 -- 							    I can set the file name. so all session is saved to one file
 -- 							    usually I will need the last session

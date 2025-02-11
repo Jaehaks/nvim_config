@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 	-- ultimate-autopair.nvim  : it is too bulky and slow
 	-- m4xshen/autoclose.nvim : more simple, but it cannot ignore like the "'" in "'don't"
@@ -6,6 +7,19 @@ return {
 	-- more simple and smart / but it cannot support filetype
 	'echasnovski/mini.pairs',
 	version = false,
+	keys = {
+		{'(', mode = {'i'}},
+		{'[', mode = {'i'}},
+		{'{', mode = {'i'}},
+		{'<', mode = {'i'}},
+		{')', mode = {'i'}},
+		{']', mode = {'i'}},
+		{'}', mode = {'i'}},
+		{'>', mode = {'i'}},
+		{'"', mode = {'i'}},
+		{"'", mode = {'i'}},
+		{"`", mode = {'i'}},
+	},
 	config = function ()
 		require('mini.pairs').setup({
 			modes = { insert = true, command = true, terminal = true },
@@ -33,7 +47,6 @@ return {
 	-- if you use treesitter highlight, must use the rainbow plugins that use treesitter grammar, not regex
 	-- I'll make matlab query some days
 	'HiPhish/rainbow-delimiters.nvim',
-	enabled = true,
 	lazy = true, -- from nvim-treesitter
 	config = function ()
 		-- This module contains a number of default definitions
@@ -100,7 +113,8 @@ return {
 	-- show matchparen of current region
 	"utilyre/sentiment.nvim",
 	version = "*",
-	event = "VeryLazy", -- keep for lazy loading
+	ft = paths.Filetypes.ForCode,
+	-- event = "VeryLazy", -- keep for lazy loading
 	opts = {
 		pairs = {
 			{ '(', ')' },

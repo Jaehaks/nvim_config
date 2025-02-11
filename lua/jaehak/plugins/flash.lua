@@ -1,5 +1,8 @@
 return {
 	'folke/flash.nvim',
+	keys = {
+		{'w'}
+	},
 	config = function ()
 		local flash = require('flash')
 		flash.setup({
