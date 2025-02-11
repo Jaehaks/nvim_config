@@ -3,6 +3,7 @@ return {{
 	-- show region of indentation block
 	"shellRaining/hlchunk.nvim",
 	ft = paths.Filetypes_ForCode,
+	ft = paths.Filetypes.ForCode,
 	config = function()
 		local default_exclude_filetype = {
 			dashboard           = true,

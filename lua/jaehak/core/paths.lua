@@ -47,6 +47,9 @@ M.obsidian = {
 	project = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\Project',
 }
 
-M.Filetypes_ForCode = { 'lua', 'matlab', 'json', 'python' }
+M.Filetypes = {
+	ForIlluminate = { 'lua', 'matlab', 'json', 'python', 'text', 'markdown' },
+	ForCode = { 'lua', 'matlab', 'json', 'python' },
+}
 
 return M

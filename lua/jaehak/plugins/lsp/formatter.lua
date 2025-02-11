@@ -3,7 +3,7 @@ return {
 {
 	"stevearc/conform.nvim",
 	enabled = true,
-	ft = paths.Filetypes_ForCode,
+	ft = paths.Filetypes.ForCode,
 	config = function()
 		-- configuration
 		local conform = require("conform")

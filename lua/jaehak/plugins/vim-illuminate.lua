@@ -1,6 +1,7 @@
 return {
 	'RRethy/vim-illuminate',
 	event = 'CursorMoved',
+	ft = paths.Filetypes.ForIlluminate,
 	config = function()
 
 		-- plugin configuration
