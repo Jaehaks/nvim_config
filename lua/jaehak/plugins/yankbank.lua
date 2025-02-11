@@ -1,6 +1,9 @@
 return {
 	-- save yank history
 	'ptdewey/yankbank-nvim',
+	keys = {
+		{'<leader>y'}
+	},
 	config = function ()
 
 		local yankbank = require('yankbank')
