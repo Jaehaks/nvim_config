@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 return {
 	'RRethy/vim-illuminate',
 	event = 'CursorMoved',
