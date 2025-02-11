@@ -94,19 +94,19 @@ vim.api.nvim_create_autocmd({"VimLeave"}, {
 })
 
 -- Check redundant process and terminate at startup
-vim.api.nvim_create_autocmd({"BufReadPre", "BufNewFile"}, {
-	group = SystemCall,
-	callback = function ()
-		local nvim_process = GetProcessId('nvim.exe')
-		if #nvim_process <= 3 then
-			local harper_ls_process = #GetProcessId('harper-ls.exe')
-			if harper_ls_process > 0 then
-				vim.fn.system('taskkill /F /IM ' .. 'harper-ls.exe')
-			end
-		end
-	end,
-	once = true,
-})
+-- vim.api.nvim_create_autocmd({"BufReadPre", "BufNewFile"}, {
+-- 	group = SystemCall,
+-- 	callback = function ()
+-- 		local nvim_process = GetProcessId('nvim.exe')
+-- 		if #nvim_process <= 3 then
+-- 			local harper_ls_process = #GetProcessId('harper-ls.exe')
+-- 			if harper_ls_process > 0 then
+-- 				vim.fn.system('taskkill /F /IM ' .. 'harper-ls.exe')
+-- 			end
+-- 		end
+-- 	end,
+-- 	once = true,
+-- })
 
 -- auto stop lsp when all buffers related the lsp are deleted
 -- vim.api.nvim_create_autocmd("BufDelete", {
