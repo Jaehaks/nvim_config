@@ -1,3 +1,4 @@
+local paths = require('jaehak.core.paths')
 
 ------------ reload when neovim is focused --------------
 local aug_NvimFocus = vim.api.nvim_create_augroup('aug_NvimFocus', {clear = true})
@@ -78,20 +79,34 @@ end, {nargs = 1})
 
 
 -- clear some procedure after VimLeave
--- vim.api.nvim_create_autocmd({"VimLeave"}, {
--- 	group = SystemCall,
--- 	callback = function ()
--- 		-- delete shada.tmp files which are not deleted after shada is saved
--- 		vim.fn.system('del /Q /F /S "' .. vim.fn.stdpath('data') .. '\\shada\\*tmp*"')
---
--- 		-- terminate process in delete process
--- 		local i = #delete_process_list
--- 		while i > 0 do
--- 			vim.fn.system('taskkill /F /PID ' .. delete_process_list[i])
--- 			i = i - 1
--- 		end
--- 	end
--- })
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+	group = SystemCall,
+	callback = function ()
+		-- delete shada.tmp files which are not deleted after shada is saved
+		-- vim.fn.system('del /Q /F /S "' .. paths.data_dir .. '\\shada\\*tmp*"')
+		local shada_dir = paths.data_dir .. '\\shada\\'
+		local iter, err = vim.uv.fs_scandir(shada_dir)
+
+		while true do
+			local name, type = vim.uv.fs_scandir_next(iter)
+			if not name then break end
+			if name:find("tmp.x") then
+				local full_path = shada_dir .. name
+				local ok, unlink_err = vim.uv.fs_unlink(full_path)
+				if not ok then
+					print('UserError : Fail to delete tmp file')
+				end
+			end
+		end
+
+		-- terminate process in delete process
+		-- local i = #delete_process_list
+		-- while i > 0 do
+		-- 	vim.fn.system('taskkill /F /PID ' .. delete_process_list[i])
+		-- 	i = i - 1
+		-- end
+	end
+})
 
 -- Check redundant process and terminate at startup
 -- vim.api.nvim_create_autocmd({"BufReadPre", "BufNewFile"}, {
