@@ -24,7 +24,6 @@ vim.api.nvim_create_autocmd({'BufReadPre', 'BufNewFile'}, {
 -- show cursorline only current buffer
 opt.cursorline    = true    -- show underline where current cursor is located
 opt.termguicolors = true    -- change cursor line from line to block
-opt.signcolumn    = 'yes'   -- show additional gray column on the leftside of line number
 opt.shellslash    = false    -- if true, '/' is used for expanding directory
 opt.completeslash = 'slash' -- slash is used for path completion
 
@@ -75,6 +74,7 @@ vim.filetype.add({
 opt.inccommand = ''       -- disable show effect of substitute
 opt.number = true         -- set line number
 opt.relativenumber = true -- set relative line number
+opt.signcolumn    = 'number'   -- show additional gray column on the leftside of line number
 opt.tabstop = 4           -- set inserted space in TAB
 opt.shiftwidth = 4        -- set indent space
 -- opt.smarttab = true

@@ -11,9 +11,10 @@ return {
 			changedelete = { text = '~' },
 			untracked    = { text = '┆' },
 		},
-		signs_staged_enable = false,
-		signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+		signs_staged_enable = true,
+		signcolumn = false,  -- Toggle with `:Gitsigns toggle_signs`
 		sign_priority = 10,
+		numhl = true,
 		on_attach = function(bufnr)
 			local gs = package.loaded.gitsigns
 
@@ -50,6 +51,12 @@ return {
 			map({'n', 'v'}, '<leader>hA', ':Gitsigns undo_stage_hunk<CR>', {desc = 'undo staged current contiguous hunks'}) --  git add this hunk
 
 			-- reset_hunk() : reset unstaged hunk, it deletes the modified hunk
+
+			-- set highlights for gitsign
+			vim.api.nvim_set_hl(0, 'GitSignsAdd', {link = 'GitSignsChange'})
+			vim.api.nvim_set_hl(0, 'GitSignsAddNr', {link = 'GitSignsChange'})
+			vim.api.nvim_set_hl(0, 'GitSignsStagedAdd', {link = 'GitSignsStagedChange'})
+			vim.api.nvim_set_hl(0, 'GitSignsStagedAddNr', {link = 'GitSignsStagedChange'})
 
 		end
 	},
