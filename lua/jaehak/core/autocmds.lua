@@ -32,44 +32,44 @@ end
 
 local delete_process_list = {}
 -- get process id of specific lsp to add delete list when VimLeave
-vim.api.nvim_create_autocmd({"LspAttach"}, {
-	group = SystemCall,
-	callback = function (args)
-		local client_id = args.data.client_id
-		local client = vim.lsp.get_client_by_id(client_id)
-
-		if client then
-			-- insert recent harper-ls
-			if client.name == 'harper_ls' then
-				local harper_ls_tbl = GetProcessId('harper-ls.exe')
-				table.insert(delete_process_list, harper_ls_tbl[1])
-			end
-
-			-- insert recent matlab-ls
-			-- matlab lsp executes two process matlab.exe and MATLAB.exe
-			-- and the process run some times after lsp is executes
-			if client.name == 'matlab_ls' then
-				local attempts = 0
-				local max_attempts = 5
-				local timer = vim.loop.new_timer()
-				local matlab_tbl = {}
-				timer:start(3000, 1000, vim.schedule_wrap(function() -- start(start delay[ms], repeat[ms], callback )
-					attempts = attempts + 1
-					if next(matlab_tbl) or attempts >= max_attempts then
-						timer:stop()
-						table.insert(delete_process_list, matlab_tbl[1])
-						table.insert(delete_process_list, matlab_tbl[2])
-						if attempts >= max_attempts then
-							print('over timer')
-						end
-					end
-					matlab_tbl = GetProcessId('matlab.exe')
-				end))
-
-			end
-		end
-	end
-})
+-- vim.api.nvim_create_autocmd({"LspAttach"}, {
+-- 	group = SystemCall,
+-- 	callback = function (args)
+-- 		local client_id = args.data.client_id
+-- 		local client = vim.lsp.get_client_by_id(client_id)
+--
+-- 		if client then
+-- 			-- insert recent harper-ls
+-- 			if client.name == 'harper_ls' then
+-- 				local harper_ls_tbl = GetProcessId('harper-ls.exe')
+-- 				table.insert(delete_process_list, harper_ls_tbl[1])
+-- 			end
+--
+-- 			-- insert recent matlab-ls
+-- 			-- matlab lsp executes two process matlab.exe and MATLAB.exe
+-- 			-- and the process run some times after lsp is executes
+-- 			if client.name == 'matlab_ls' then
+-- 				local attempts = 0
+-- 				local max_attempts = 5
+-- 				local timer = vim.loop.new_timer()
+-- 				local matlab_tbl = {}
+-- 				timer:start(3000, 1000, vim.schedule_wrap(function() -- start(start delay[ms], repeat[ms], callback )
+-- 					attempts = attempts + 1
+-- 					if next(matlab_tbl) or attempts >= max_attempts then
+-- 						timer:stop()
+-- 						table.insert(delete_process_list, matlab_tbl[1])
+-- 						table.insert(delete_process_list, matlab_tbl[2])
+-- 						if attempts >= max_attempts then
+-- 							print('over timer')
+-- 						end
+-- 					end
+-- 					matlab_tbl = GetProcessId('matlab.exe')
+-- 				end))
+--
+-- 			end
+-- 		end
+-- 	end
+-- })
 
 vim.api.nvim_create_user_command("GetProcessId", function (opts)
 	local tbl = GetProcessId('matlab.exe')
@@ -78,20 +78,20 @@ end, {nargs = 1})
 
 
 -- clear some procedure after VimLeave
-vim.api.nvim_create_autocmd({"VimLeave"}, {
-	group = SystemCall,
-	callback = function ()
-		-- delete shada.tmp files which are not deleted after shada is saved
-		vim.fn.system('del /Q /F /S "' .. vim.fn.stdpath('data') .. '\\shada\\*tmp*"')
-
-		-- terminate process in delete process
-		local i = #delete_process_list
-		while i > 0 do
-			vim.fn.system('taskkill /F /PID ' .. delete_process_list[i])
-			i = i - 1
-		end
-	end
-})
+-- vim.api.nvim_create_autocmd({"VimLeave"}, {
+-- 	group = SystemCall,
+-- 	callback = function ()
+-- 		-- delete shada.tmp files which are not deleted after shada is saved
+-- 		vim.fn.system('del /Q /F /S "' .. vim.fn.stdpath('data') .. '\\shada\\*tmp*"')
+--
+-- 		-- terminate process in delete process
+-- 		local i = #delete_process_list
+-- 		while i > 0 do
+-- 			vim.fn.system('taskkill /F /PID ' .. delete_process_list[i])
+-- 			i = i - 1
+-- 		end
+-- 	end
+-- })
 
 -- Check redundant process and terminate at startup
 -- vim.api.nvim_create_autocmd({"BufReadPre", "BufNewFile"}, {
