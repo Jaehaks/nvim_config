@@ -55,25 +55,6 @@ return {
 			local lsp_util = require('lspconfig.util')
 			local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-			-- set up signs for diagnostics for line number highlights
-			-- it must be in config not init
-			local signs = {
-				Error = '',
-				Warn = '',
-				Hint = '',
-				Info = '',
-			}
-
-			for type, icon in pairs(signs) do
-				local hl = 'DiagnosticSign' .. type
-				vim.fn.sign_define(hl, {
-					text = icon,
-					numhl = 'DiagnosticSign' .. type
-				})
-			end
-
-			vim.api.nvim_set_hl(0, 'DiagnosticSignError', {fg = '#FF0000'})
-
 			-- ####### 1) lua language server configuration #########
 			lspconfig.lua_ls.setup({
 				settings = {	-- settings of lua_ls document
