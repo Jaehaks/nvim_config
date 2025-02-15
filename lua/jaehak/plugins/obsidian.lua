@@ -10,68 +10,65 @@ return {
 			'nvim-lua/plenary.nvim',
 			-- 'nvim-telescope/telescope.nvim',
 		},
-		init = function ()
-			-- vim.opt.conceallevel = 2 -- set conceallevel (but markdown.nvim will changes)
-		end,
-		config = function ()
+		opts = {
+			workspaces = { -- this directory must exist
+				{
+					name = 'Personal',
+					path = paths.obsidian.personal
+				},
+				{
+					name = 'Project',
+					path = paths.obsidian.project
+				},
+			},
+			mappings = {}, -- disable default keymapping
+			new_notes_location = 'current_dir',
+			preferred_link_style = 'markdown',
+			follow_url_func = function (url) -- command for follow url
+				vim.fn.system('start ' .. url)
+			end,
+			attachments = {
+				confirm_img_paste = false,  -- show confirm message when paste
+				img_folder = '', 			-- use path with img_name_func only
+				img_name_func = function () -- download clipboard image to filename folder
+					return string.format("%s\\%s-", vim.fn.expand('%:p:r'), os.date('%y%m%d'))
+				end,
+				img_text_func = function (client, path)
+					-- path : absolute path of image file
+					-- client:vault_relative_path(path) : relative to vault
+
+					-- set link name with relative to current file path not vault
+					path = path:relative_to(vim.fn.expand('%:p:h'))
+					return string.format("![%s](%s)", path.name, path)
+				end
+			},
+			ui = {
+				enable = false, -- use markdown.nvim as renderer
+				checkboxes = {
+					[" "] = { char = "", hl_group = 'ObsidianTodo'},
+					["x"] = { char = "󰄲", hl_group = 'ObsidianDone'},
+					["-"] = { char = "󱋭"},
+				}
+			},
+			note_id_func = function (title) -- set note id automatically when :ObsidianNew
+				if title == nil then
+					title = 'NewFile'
+				else
+					title = title:gsub(' ','_')
+					-- Having whitespace in title and id works well when I search string or open file.
+					-- But if title has whitespace, ' ' must be changed with %20 to insert link.
+				end
+				-- return tostring(os.date('%y%m%d')) .. '_' .. title
+				return title
+			end,
+		},
+		config = function (_, opts)
 			-- ####################################################
 			-- * obsidian's setting
 			-- ####################################################
+			-- it need to use command
 			local obsidian = require('obsidian')
-			obsidian.setup({
-				workspaces = { -- this directory must exist
-					{
-						name = 'Personal',
-						path = paths.obsidian.personal
-					},
-					{
-						name = 'Project',
-						path = paths.obsidian.project
-					},
-				},
-				mappings = {}, -- disable default keymapping
-				new_notes_location = 'current_dir',
-				preferred_link_style = 'markdown',
-				follow_url_func = function (url) -- command for follow url
-					vim.fn.system('start ' .. url)
-				end,
-				attachments = {
-					confirm_img_paste = false,  -- show confirm message when paste
-					img_folder = '', 			-- use path with img_name_func only
-					img_name_func = function () -- download clipboard image to filename folder
-						return string.format("%s\\%s-", vim.fn.expand('%:p:r'), os.date('%y%m%d'))
-					end,
-					img_text_func = function (client, path)
-						-- path : absolute path of image file
-						-- client:vault_relative_path(path) : relative to vault
-
-						-- set link name with relative to current file path not vault
-						path = path:relative_to(vim.fn.expand('%:p:h'))
-						return string.format("![%s](%s)", path.name, path)
-					end
-				},
-				ui = {
-					enable = false, -- use markdown.nvim as renderer
-					checkboxes = {
-						[" "] = { char = "", hl_group = 'ObsidianTodo'},
-						["x"] = { char = "󰄲", hl_group = 'ObsidianDone'},
-						["-"] = { char = "󱋭"},
-					}
-				},
-				note_id_func = function (title) -- set note id automatically when :ObsidianNew
-					if title == nil then
-						title = 'NewFile'
-					else
-						title = title:gsub(' ','_')
-						-- Having whitespace in title and id works well when I search string or open file.
-						-- But if title has whitespace, ' ' must be changed with %20 to insert link.
-					end
-					-- return tostring(os.date('%y%m%d')) .. '_' .. title
-					return title
-				end,
-			})
-
-
+			obsidian.setup(opts)
 
 			-- ####################################################
 			-- * Keymaps

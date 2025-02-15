@@ -6,18 +6,16 @@ return {
 		vim.opt.timeoutlen = 500
 	end,
 	opts = {
+		plugins = {
+			presets = {
+				operators = false,
+				z = false,
+			}
+		},
 	},
-	config = function()
+	config = function(_, opts)
 		local wk = require('which-key')
-		-- which-key plugin setup
-		wk.setup({
-			plugins = {
-				presets = {
-					operators = false,
-					z = false,
-				}
-			},
-		})
+		wk.setup(opts)
 
 		wk.add({
 			{'<leader>c', group = 'Color'               , mode = 'n'},

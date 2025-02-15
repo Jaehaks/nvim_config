@@ -152,8 +152,7 @@ return {
 	"OXY2DEV/markview.nvim",
 	enabled = true,
 	ft = {'markdown'},
-	config = function ()
-
+	opts = function()
 		-- set highlights
 		vim.api.nvim_set_hl(0, "@markup.italic"       , {fg = '#3DC5DA' , italic = true})
 		vim.api.nvim_set_hl(0, "@markup.strong"       , {fg = '#E39AA6' , bold = true})
@@ -167,7 +166,7 @@ return {
 		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled', {fg = '#999999'})
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault', {link = 'Normal'}) -- default block quote color
 
-		require('markview').setup({
+		return{
 			preview = {
 				hybrid_modes         = {'n'}, -- disable conceal specific region under cursor
 				linewise_hybrid_mode = true,  -- apply hybrid mode with line-wise not block-wise
@@ -239,8 +238,8 @@ return {
 			latex = { enable = true, }, -- $ $ for inline rendering / $$ $$ for block rendering
 			typst = { enable = false, },
 			yaml  = { enable = false, }
-		})
-	end
+		}
+	end,
 },
 {
 	'crispgm/telescope-heading.nvim',
@@ -289,35 +288,13 @@ return {
 	'mcauley-penney/autolist.nvim',
 	enabled = true,
 	ft = {'markdown', 'text'},
-	config = function ()
-
+	opts = function ()
 		local list_patterns = { -- patterns which is used for autolist
 			unordered = "[-+*>]", -- use -,+,*,> for unordered list
 			digit = "%d+[.)]", -- 1. or 1)
 			ascii = "%a[.)]", -- a. or a)
 			roman = "%u*[.)]", -- I. or I)
 		}
-
-		local autolist = require('autolist')
-		autolist.setup({
-			lists = {
-				markdown = {
-					list_patterns.unordered,
-					list_patterns.digit,
-					list_patterns.ascii,
-					list_patterns.roman,
-				},
-				text = {
-					list_patterns.unordered,
-					list_patterns.digit,
-					list_patterns.ascii,
-					list_patterns.roman,
-				}
-			}
-		})
-
-
-
 
 		-- keymap set for markdown
 		local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
@@ -343,7 +320,24 @@ return {
 			end
 		})
 
-	end
+		return {
+			lists = {
+				markdown = {
+					list_patterns.unordered,
+					list_patterns.digit,
+					list_patterns.ascii,
+					list_patterns.roman,
+				},
+				text = {
+					list_patterns.unordered,
+					list_patterns.digit,
+					list_patterns.ascii,
+					list_patterns.roman,
+				}
+			}
+		}
+
+	end,
 },
 
 -- roodolv/markdown-toggle : autolist.nvim has more feature, but it has some bug about indent
@@ -356,29 +350,18 @@ return {
 	-- editing fenced code block using treesitter
 	'AckslD/nvim-FeMaco.lua',
 	keys = {
-		{'<leader>mc'},
+		{'<leader>mc', function () require('femaco.edit').edit_code_block() end, noremap = true, desc = 'Edit code block'},
 	},
-	config = function ()
-		local femaco = require('femaco')
-		femaco.setup({ })
-		vim.keymap.set('n', '<leader>mc', require('femaco.edit').edit_code_block, {noremap = true, desc = 'Edit code block'})
-	end
+	opts = {
 
+	},
 },
 {
 	'allaman/emoji.nvim',
 	ft = 'markdown',
-	-- dependencies = {
-	-- 	'nvim-telescope/telescope.nvim'
-	-- },
-	config = function ()
-		require('emoji').setup({
-			enable_cmp_integration = true, -- cmp integration requires 14MB RAM
-		})
-
-		-- local ts = require('telescope').load_extension('emoji')
-		-- vim.keymap.set({'n', 'i'}, '<M-e>', ts.emoji, { desc = 'Search Emoji' })
-	end
+	opts = {
+		enable_cmp_integration = true, -- cmp integration requires 14MB RAM
+	}
 },
 {
 	'SCJangra/table-nvim',

@@ -19,33 +19,37 @@ end
 
 return {
 	{
+		-- ######## setup neodev configuration, must be start #######
+		-- feature : vim object completion / require completion
+		-- it must be called before lspconfig's setup
+		'folke/neodev.nvim',
+		lazy = true,
+		opts = {
+			setup_jsonls = false,
+			library = {
+				enabled = true,
+				runtime = true,			-- runtime path
+				types = true,			-- vim.api / vim.lsp completion
+				plugins = false,		-- installed plugins completion (too long loading time)
+			}
+		}
+	},
+	{
 		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
 		'neovim/nvim-lspconfig',
 		event = 'BufReadPre',
-		-- lazy = true,
 		dependencies = {
-			{
-				'folke/neodev.nvim',
-				lazy = true,
-				ft = {'lua'}
-			},
 			'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
+			'folke/neodev.nvim',
 		},
 		init = function ()
 			vim.env.RUFF_CACHE_DIR = paths.lsp.ruff.cache_path --  set ruff cache directory
 		end,
 		config = function()
-			-- ######## setup neodev configuration, must be start #######
-			-- feature : vim object completion / require completion
-			require('neodev').setup({
-				setup_jsonls = false,
-				library = {
-					enabled = true,
-					runtime = true,			-- runtime path
-					types = true,			-- vim.api / vim.lsp completion
-					plugins = false,		-- installed plugins completion (too long loading time)
-				}
-			})
+			-- configuration lspconfig using opt field of lazy.nvim doesn't work.
+			-- I don't know what is the reason
+			-- neodev must call setup in lspconfig's config field
+
 
 			local lspconfig = require('lspconfig')
 			local lsp_util = require('lspconfig.util')
@@ -114,6 +118,7 @@ return {
 				handlers = {
 					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
 				}
+
 			})
 
 			-- grammar-guard.nvim : deprecated
@@ -122,39 +127,39 @@ return {
 
 			-- ####### 6) harper_ls language server configuration #########
 			-- more faster than ltex
-			lspconfig.harper_ls.setup({
-				filetypes = {'gitcommit', 'markdown', 'text', 'NeogitStatus', 'lua'},
-				settings = {
-					['harper-ls'] = {
-						linters = {
-							spell_check                  = true,
-							spelled_numbers              = false,
-							an_a                         = true,
-							sentence_capitalization      = false,
-							unclosed_quotes              = true,
-							wrong_quotes                 = true,
-							long_sentences               = false,
-							repeated_words               = false,
-							spaces                       = true,
-							matcher                      = true,
-							correct_number_suffix        = false,
-							number_suffix_capitalization = false,
-							multiple_sequential_pronouns = true,
-							linking_verbs                = true,
-							avoid_curses                 = false,
-							terminating_conjuctions      = true,
-						},
-						diagnosticSeverity = 'hint', -- show the spell check as hint
-						codeActions = {
-							forceStable = true
-						}
-					}
-				},
-				handlers = {
-					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank3)
-				}
-
-			})
+			-- lspconfig.harper_ls.setup({
+			-- 	filetypes = {'gitcommit', 'markdown', 'text', 'NeogitStatus', 'lua'},
+			-- 	settings = {
+			-- 		['harper-ls'] = {
+			-- 			linters = {
+			-- 				spell_check                  = true,
+			-- 				spelled_numbers              = false,
+			-- 				an_a                         = true,
+			-- 				sentence_capitalization      = false,
+			-- 				unclosed_quotes              = true,
+			-- 				wrong_quotes                 = true,
+			-- 				long_sentences               = false,
+			-- 				repeated_words               = false,
+			-- 				spaces                       = true,
+			-- 				matcher                      = true,
+			-- 				correct_number_suffix        = false,
+			-- 				number_suffix_capitalization = false,
+			-- 				multiple_sequential_pronouns = true,
+			-- 				linking_verbs                = true,
+			-- 				avoid_curses                 = false,
+			-- 				terminating_conjuctions      = true,
+			-- 			},
+			-- 			diagnosticSeverity = 'hint', -- show the spell check as hint
+			-- 			codeActions = {
+			-- 				forceStable = true
+			-- 			}
+			-- 		}
+			-- 	},
+			-- 	handlers = {
+			-- 		['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank3)
+			-- 	}
+			--
+			-- })
 
 
 			-- ###### 6) python language server configuration ###########
@@ -170,7 +175,7 @@ return {
 			--      On the other hand, pyright does not support linting(better style checker)
 			--      but for trivial error, ruff / flake8 / pyright detect in the same time
 			-- (241117) : ruff_lsp is deprecated
-
+			--
 			lspconfig.ruff.setup({ -- use ruff as python linter
 				on_attach = function (client, bufnr)
 					-- lsp use ruff to formatter

@@ -3,7 +3,7 @@ return {{
 	-- show region of indentation block
 	"shellRaining/hlchunk.nvim",
 	ft = paths.Filetypes.ForCode,
-	config = function()
+	opts = function ()
 		local default_exclude_filetype = {
 			dashboard           = true,
 			TelescopePrompt     = true,
@@ -14,7 +14,7 @@ return {{
 			markdown            = true,
 			text                = true,
 		}
-		require("hlchunk").setup({
+		return {
 			chunk = {
 				enable = true,
 				exclude_filetypes = default_exclude_filetype,
@@ -31,7 +31,7 @@ return {{
 				enable = false,
 				exclude_filetypes = default_exclude_filetype,
 			}
-		})
+		}
 	end
 }
 }

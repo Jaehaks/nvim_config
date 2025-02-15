@@ -3,17 +3,24 @@ local picker_config = {
 		cwd_bonus = true,
 	},
 	ui_select = true,
+	layout = {
+		preset = 'vertical'
+	},
 	win = {
 		input = { -- keys in normal mode
 			keys = {
 				['j'] = 'list_up',
 				['k'] = 'list_down',
+				['<c-j>'] = 'preview_scroll_up',
+				['<c-k>'] = 'preview_scroll_down',
 			}
 		},
 		list = {
 			keys = {
 				['j'] = 'list_up',
 				['k'] = 'list_down',
+				['<c-j>'] = 'preview_scroll_up',
+				['<c-k>'] = 'preview_scroll_down',
 			}
 		}
 	}

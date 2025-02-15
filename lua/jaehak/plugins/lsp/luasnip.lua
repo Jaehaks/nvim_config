@@ -4,15 +4,6 @@ return {
 	lazy = true,
 	-- I failed to link when using make, use other way like luarocks
 	-- build = vim.fn.has('win32') ~= 0 and 'make install_jsregexp' or nil,
-	dependencies = {
-		{
-			'benfowler/telescope-luasnip.nvim',
-			dependencies = {
-				'nvim-telescope/telescope.nvim',
-			},
-			module = 'telescope._extensions.luasnip'
-		}
-	},
 	config = function ()
 		-- /////// configuration of luasnip //////////////
 		local ls = require('luasnip')
@@ -58,10 +49,5 @@ return {
 
 		-- load luasnip queries, snippets in [filetype].lua apply to each filetype
 		require('luasnip.loaders.from_lua').lazy_load({paths = './queries/LuaSnip'})
-
-		------- telescope extension ------------
-		-- require('telescope').load_extension('luasnip')
-		-- vim.keymap.set('n', '<leader>fl', require('telescope').extensions.luasnip.luasnip, {desc = 'luasnip browser'})
-
 	end
 }

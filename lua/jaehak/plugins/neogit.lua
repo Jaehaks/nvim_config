@@ -8,41 +8,37 @@ return {
 		"nvim-lua/plenary.nvim",         -- required
 		"sindrets/diffview.nvim",        -- optional - Diff integration
 	},
-	config = function ()
-		local neogit = require('neogit')
-		neogit.setup({
-			-- use_default_keymaps = true,
-			disable_insert_on_commit      = false,
-			commit_date_format            = "%Y-%m-%d %H:%M",
-			log_date_format               = "%Y-%m-%d %H:%M",
-			process_spinner				  = false, -- show message when git command is running
-			disable_line_numbers          = false,
-			disable_relative_line_numbers = false,
-			kind = 'tab', -- default window of opening neogit
+	opts = {
+		-- use_default_keymaps = true,
+		disable_insert_on_commit      = false,
+		commit_date_format            = "%Y-%m-%d %H:%M",
+		log_date_format               = "%Y-%m-%d %H:%M",
+		process_spinner				  = false, -- show message when git command is running
+		disable_line_numbers          = false,
+		disable_relative_line_numbers = false,
+		kind = 'tab', -- default window of opening neogit
+		status = {
+			recent_commit_count = 20,
+		},
+		commit_editor = {
+			kind = 'split', -- horizontal split below
+			show_staged_diff = false,	-- disable diff in commit message
+		},
+		console_timeout = 10000,	-- neogit loading slow.
+		auto_show_console = false,
+		integrations = {
+			telescope = false,
+			diffview = true,
+			fzf_lua = false,
+		},
+		mappings = {
 			status = {
-				recent_commit_count = 20,
-			},
-			commit_editor = {
-				kind = 'split', -- horizontal split below
-				show_staged_diff = false,	-- disable diff in commit message
-			},
-			console_timeout = 10000,	-- neogit loading slow.
-			auto_show_console = false,
-			integrations = {
-				telescope = false,
-				diffview = true,
-				fzf_lua = false,
-			},
-			mappings = {
-				status = {
-					['k'] = 'MoveDown',
-					['j'] = 'MoveUp',
-				}
-			},
-		})
+				['k'] = 'MoveDown',
+				['j'] = 'MoveUp',
+			}
+		},
 
-		-- vim.keymap.set('n', '<leader>go', neogit.open, {desc = 'open neogit default'})
-	end
+	}
 },
 {
 	-- install libgit2 : choco install libgit2

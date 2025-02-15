@@ -1,15 +1,17 @@
 return {
 	'kevinhwang91/nvim-hlslens',
-	event = 'CmdLineLeave',
+	-- event = 'CmdLineLeave',
+	event = 'CmdLineEnter',
 	dependencies = {
 		'Isrothy/neominimap.nvim',
 	},
-	config = function ()
+	opts = {
+		calm_down = true, -- when the cursor is out of range of matched instance, clear highlight
+		nearest_only = true, -- add lens only current matched instance
+	},
+	config = function (_, opts)
 		local hlslens = require('hlslens')
-		hlslens.setup({
-			calm_down = true, -- when the cursor is out of range of matched instance, clear highlight
-			nearest_only = true, -- add lens only current matched instance
-		})
+		hlslens.setup(opts)
 
 		local kopts = {noremap = true, silent = true}
 		local neominimap = require('neominimap')

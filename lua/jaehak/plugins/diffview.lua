@@ -1,14 +1,14 @@
 return {
 	'sindrets/diffview.nvim',
 	keys = {
-		{'<leader>gd'}
+		{'<leader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'open Diffview of .git with HEAD~1'}
 	},
 	dependencies = {
 		'nvim-tree/nvim-web-devicons'
 	},
-	config = function ()
+	opts = function ()
 		local actions = require('diffview.actions')
-		require('diffview').setup({
+		return {
 			keymaps = {
 				view = {
 					{'n', 'q', actions.close}
@@ -22,9 +22,6 @@ return {
 					end, {silent = true}},
 				}
 			}
-		})
-
-		vim.keymap.set('n', '<leader>gd', '<Cmd>DiffviewOpen<CR>', {desc = 'open Diffview of .git with HEAD~1'})
-
-	end
+		}
+	end,
 }

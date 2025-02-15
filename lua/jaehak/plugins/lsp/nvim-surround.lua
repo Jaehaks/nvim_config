@@ -12,28 +12,26 @@ return {
 		{'fr', mode = {'n', 'v'}},
 		{'fR', mode = {'n', 'v'}},
 	},
-	config = function ()
-		require('nvim-surround').setup({
-			keymaps = {
-				-- insert / insert_line mode does not work
-				normal          = "fa",		-- [linewise] ysiw"(word), ysl', yst;},(from current to jumpted location)
-				normal_cur      = "fA",		-- [linewise] yss"  (current whole line)
-				normal_line     = "fb",		-- [blockwise] ySiw"(word),
-				normal_cur_line = "fB",		-- [blockwise] ySS" (current whole line), enter " above and below of cur line
-				visual          = "fa",		-- [linewise] (v)S" left and right pairs of visual block
-				visual_line     = "fb",		-- [blockwise] (v)gS" above and below pairs of visual block
-				delete          = "fd",		-- delete
-				change          = "fr",		-- change pairs and remain the linewise
-				change_line     = "fR",		-- change pairs and move to blockwise
+	opts = {
+		keymaps = {
+			-- insert / insert_line mode does not work
+			normal          = "fa",		-- [linewise] ysiw"(word), ysl', yst;},(from current to jumpted location)
+			normal_cur      = "fA",		-- [linewise] yss"  (current whole line)
+			normal_line     = "fb",		-- [blockwise] ySiw"(word),
+			normal_cur_line = "fB",		-- [blockwise] ySS" (current whole line), enter " above and below of cur line
+			visual          = "fa",		-- [linewise] (v)S" left and right pairs of visual block
+			visual_line     = "fb",		-- [blockwise] (v)gS" above and below pairs of visual block
+			delete          = "fd",		-- delete
+			change          = "fr",		-- change pairs and remain the linewise
+			change_line     = "fR",		-- change pairs and move to blockwise
 
-				-- all left ([<{  ==> add white space
-				-- all right )}>] ==> not add white space
-				-- difference pairs can apply in whole line wise condition,    yssi/<CR>\
-				-- ysst  => for html tag
-				-- 'b' to ')'   'B' to '}'    'r' to ']' 	in yss
-				--
-			},
-			move_cursor = false, 				-- after surrounding operation, don't move cursor to beginning
-		})
-	end
+			-- all left ([<{  ==> add white space
+			-- all right )}>] ==> not add white space
+			-- difference pairs can apply in whole line wise condition,    yssi/<CR>\
+			-- ysst  => for html tag
+			-- 'b' to ')'   'B' to '}'    'r' to ']' 	in yss
+			--
+		},
+		move_cursor = false, 				-- after surrounding operation, don't move cursor to beginning
+	}
 }

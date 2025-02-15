@@ -4,58 +4,46 @@ return {
 	enabled = true,
 	branch = 'fix/141-quotes_and_doublequotes',
     keys = {
-		{'<leader>cc'}
+		{'<leader>cc', '<Cmd>ColorizerToggle<CR>', mode = 'n', desc = 'Show color code toggle'}
 	},
-	config = function ()
-		local colorizer = require('colorizer')
-		colorizer.setup({
-			filetypes = {}, -- disable colorizing as default
-			user_commands = {'ColorizerToggle'}, -- only enable this command
-			user_default_options = {
-				names = false, -- disable colorizing for name
-				names_custom = {
-					["'r'"] = "#FF0000",
-					['"r"'] = "#FF0000",
-					["'g'"] = "#00FF00",
-					['"g"'] = "#00FF00",
-					["'b'"] = "#0000FF",
-					['"b"'] = "#0000FF",
-					["'c'"] = "#00FFFF",
-					['"c"'] = "#00FFFF",
-					["'m'"] = "#FF00FF",
-					['"m"'] = "#FF00FF",
-					["'y'"] = "#FFFF00",
-					['"y"'] = "#FFFF00",
-					["'k'"] = "#000000",
-					['"k"'] = "#000000",
-					["'w'"] = "#FFFFFF",
-					['"w"'] = "#FFFFFF",
-				}
+	opts = {
+		filetypes = {}, -- disable colorizing as default
+		user_commands = {'ColorizerToggle'}, -- only enable this command
+		user_default_options = {
+			names = false, -- disable colorizing for name
+			names_custom = {
+				["'r'"] = "#FF0000",
+				['"r"'] = "#FF0000",
+				["'g'"] = "#00FF00",
+				['"g"'] = "#00FF00",
+				["'b'"] = "#0000FF",
+				['"b"'] = "#0000FF",
+				["'c'"] = "#00FFFF",
+				['"c"'] = "#00FFFF",
+				["'m'"] = "#FF00FF",
+				['"m"'] = "#FF00FF",
+				["'y'"] = "#FFFF00",
+				['"y"'] = "#FFFF00",
+				["'k'"] = "#000000",
+				['"k"'] = "#000000",
+				["'w'"] = "#FFFFFF",
+				['"w"'] = "#FFFFFF",
 			}
+		}
 
-		})
-
-		vim.keymap.set('n','<leader>cc', '<Cmd>ColorizerToggle<CR>', {desc = 'Show color code toggle'})
-	end
+	},
 },
 {
 	-- graphical color picker
 	'eero-lehtinen/oklch-color-picker.nvim',
 	keys = {
-		{'<leader>cp'},
+		{'<leader>cp', function() require('oklch-color-picker').pick_under_cursor() end, desc = 'Color pick under cursor' },
 	},
-	config = function()
-		require('oklch-color-picker').setup ({
-			highlight = {
-				enabled = false, -- disable highlighting colorcode pattern
-			}
-		})
-
-		-- One handed keymaps recommended, you will be using the mouse
-		vim.keymap.set('n', '<leader>cp', function()
-			require('oklch-color-picker').pick_under_cursor()
-		end, { desc = 'Color pick under cursor' })
-	end,
+	opts = {
+		highlight = {
+			enabled = false, -- disable highlighting colorcode pattern
+		}
+	},
 },
 }
 

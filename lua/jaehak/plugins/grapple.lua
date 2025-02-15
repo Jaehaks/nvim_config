@@ -5,52 +5,39 @@ return {
 	-- Caution!! : file path must not have white space. But it can accept with non-English directory
 	'cbochs/grapple.nvim',
 	keys = {
-		{'<leader>pa'},
-		{'<leader>pf'},
+		{'<leader>pa', function() require('grapple').toggle() end, desc = 'add/delete this file to grapple list'},
+		{'<leader>pf', function() require('grapple').toggle_tags() end, desc = 'open grapple file list'},
 	},
 	ft = {'dashboard'},
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 	},
-	config = function ()
-		local grapple = require('grapple')
-
-		grapple.setup({
-			scope = 'global',
-			prune = nil, -- unset prune timer?
-			style = 'basename',
-		})
+	opts = {
+		scope = 'global',
+		prune = nil, -- unset prune timer?
+		style = 'basename',
 		-- telescope extension : it does not support 'basename' style. (grapple use grapple's telescope setting)
-
-		vim.keymap.set('n', '<leader>pa', grapple.toggle, {desc = 'add/delete this file to grapple list'})
-		vim.keymap.set('n', '<leader>pf', grapple.toggle_tags, {desc = 'open grapple file list'})
-	end
+	},
 	-- grapple.toggle_tags() : show files list that are added
 	-- grapple.toggle_loaded() : show directories which include buffer that has tag and is "loaded"
 },
 {
 	'natecraddock/sessions.nvim',
 	keys = {
-		{'<leader>ps'},
+		-- keymap for load session
+		{'<leader>ps', function ()
+			require('sessions').load(paths.session.saved, {autosave = false})
+		end, desc = 'load last session'},
 	},
 	ft = 'dashboard',
-	config = function ()
+	opts = {
+		events = {'VimLeavePre'},
+		session_filepath = paths.session.saved,
+		absolute = true,
+	},
+	config = function (_, opts)
 		local sessions = require('sessions')
-		local saved_path = paths.session.saved
-		if vim.g.has_win32 == 1 then
-			saved_path = saved_path:gsub('/','\\')
-		end
-		sessions.setup({
-			events = {'VimLeavePre'},
-			session_filepath = saved_path,
-			absolute = true,
-		})
-
-		-- keymap for load session
-		local session_load = function ()
-			sessions.load(saved_path, {autosave = false})
-		end
-		vim.keymap.set('n', '<leader>ps', session_load, {desc = 'load last session'})
+		sessions.setup(opts)
 
 		-- Save sessions on vim exit
 		local User_augroup = vim.api.nvim_create_augroup('sessions',{clear = true})
@@ -58,7 +45,7 @@ return {
 			group = User_augroup,
 			pattern = '*',
 			callback = function ()
-				sessions.save(saved_path, {autosave = false})
+				require('sessions').save(paths.session.saved, {autosave = false})
 			end
 		})
 	end

@@ -20,27 +20,25 @@ return {
 		{"'", mode = {'i'}},
 		{"`", mode = {'i'}},
 	},
-	config = function ()
-		require('mini.pairs').setup({
-			modes = { insert = true, command = true, terminal = true },
+	opts = {
+		modes = { insert = true, command = true, terminal = true },
 
-			mappings = {
-				['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
-				['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
-				['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
-				['<'] = { action = 'open', pair = '<>', neigh_pattern = '[^\\].' },
+		mappings = {
+			['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].' },
+			['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].' },
+			['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].' },
+			['<'] = { action = 'open', pair = '<>', neigh_pattern = '[^\\].' },
 
-				[')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
-				[']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
-				['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
-				['>'] = { action = 'close', pair = '<>', neigh_pattern = '[^\\].' },
+			[')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+			[']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+			['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
+			['>'] = { action = 'close', pair = '<>', neigh_pattern = '[^\\].' },
 
-				['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
-				["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\%]\'].', register = { cr = false } },
-				['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%`].', register = { cr = false } },
-			},
-		})
-	end
+			['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
+			["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\%]\'].', register = { cr = false } },
+			['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%`].', register = { cr = false } },
+		},
+	}
 },
 {
 	-- auto highlight to brackets
@@ -48,13 +46,9 @@ return {
 	-- I'll make matlab query some days
 	'HiPhish/rainbow-delimiters.nvim',
 	lazy = true, -- from nvim-treesitter
-	config = function ()
-		-- This module contains a number of default definitions
+	opts = function()
 		local rainbow_delimiters = require('rainbow-delimiters')
-		local rainbow_delimiters_setup = require('rainbow-delimiters.setup')
-
-		-- rainbow_delimiters.config
-		rainbow_delimiters_setup.setup({
+		return {
 			strategy = {
 				[''] = function(bufnr)
 					local lc = vim.api.nvim_buf_line_count(bufnr)
@@ -82,23 +76,24 @@ return {
 				'RainbowDelimiterViolet',
 				'RainbowDelimiterCyan',
 			},
-		})
+		}
+	end,
+	config = function (_, opts)
+		-- This module contains a number of default definitions
+		local rainbow_delimiters_setup = require('rainbow-delimiters.setup')
+
+		-- rainbow_delimiters.config
+		rainbow_delimiters_setup.setup(opts)
 
 		-- if there is not matlab query directory, make it
-		local source_dir = vim.fn.stdpath('config') .. '/queries/rainbow-delimiters.nvim/matlab/'
-		local dest_dir = vim.fn.stdpath('data') .. '/lazy/rainbow-delimiters.nvim/queries/matlab/'
-		if vim.g.has_win32 == 1 then
-			source_dir = source_dir:gsub('/', '\\')
-			dest_dir = dest_dir:gsub('/', '\\')
-		end
+		local source_dir = paths.nvim.rainbow_queries .. '\\matlab\\'
+		local dest_dir = paths.data_dir .. '\\lazy\\rainbow-delimiters.nvim\\queries\\matlab\\'
 		vim.uv.fs_scandir(dest_dir , function (err, userdata)
-				if err then
-					vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'
-					vim.uv.fs_copyfile(source_dir .. 'rainbow-delimiters.scm', dest_dir .. 'rainbow-delimiters.scm')
-				end
+			if err then
+				vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'
+				vim.uv.fs_copyfile(source_dir .. 'rainbow-delimiters.scm', dest_dir .. 'rainbow-delimiters.scm')
+			end
 		end)
-
-
 	end
 },
 {

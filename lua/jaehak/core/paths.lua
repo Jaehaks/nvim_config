@@ -1,12 +1,18 @@
 local M = {}
 
+local config_dir = vim.fn.stdpath('config')
+local data_dir   = vim.fn.stdpath('data')
+local cache_dir  = vim.fn.stdpath('cache')
+local home_dir   = vim.fn.expand('$HOME')
+
 M.nvim = {
-	config             = vim.fn.stdpath("config") .. "\\lua\\jaehak\\plugins",
-	data               = vim.fn.stdpath("data") .. "\\lazy",
-	python             = vim.fn.stdpath('config') .. '\\.Nvim_venv\\Scripts\\python',		-- use python support
-	luarocks           = vim.fn.expand('$HOME\\scoop\\apps\\luarocks\\current\\rocks\\share\\lua\\5.4'),
-	treesitter_queries = vim.fn.stdpath("config") .. "\\queries\\nvim-treesitter",
-	wordlist_korean    = vim.fn.stdpath('config') .. '\\queries\\dictionary\\wordslist_korean.txt',
+	config             = config_dir .. "\\lua\\jaehak\\plugins",
+	data               = data_dir .. "\\lazy",
+	python             = config_dir .. '\\.Nvim_venv\\Scripts\\python',		-- use python support
+	luarocks           = home_dir .. '\\scoop\\apps\\luarocks\\current\\rocks\\share\\lua\\5.4',
+	treesitter_queries = config_dir .. "\\queries\\nvim-treesitter",
+	wordlist_korean    = config_dir .. '\\queries\\dictionary\\wordslist_korean.txt',
+	rainbow_queries    = config_dir .. '\\queries\\rainbow-delimiters.nvim',
 }
 
 local check_matlab_dir = function ()
@@ -27,9 +33,9 @@ end
 
 M.lsp = {
 	ruff = {
-		config_path   = vim.fn.stdpath('config') .. '\\queries\\ruff\\ruff.toml',
-		cache_path    = vim.fn.stdpath('cache') .. '\\.ruff_cache',
-		log_path      = vim.fn.stdpath('data') .. '\\ruff.log',
+		config_path   = config_dir .. '\\queries\\ruff\\ruff.toml',
+		cache_path    = cache_dir .. '\\.ruff_cache',
+		log_path      = data_dir .. '\\ruff.log',
 	},
 	matlab = check_matlab_dir()
 }
@@ -39,17 +45,22 @@ M.project = {
 }
 
 M.session = {
-	saved = vim.fn.stdpath('data') .. '\\sessions\\session_saved.txt'
+	saved = data_dir .. '\\sessions\\session_saved.txt'
 }
 
 M.obsidian = {
-	personal = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\Personal',
-	project = vim.fn.expand('$HOME') .. '\\Obsidian_Nvim\\Project',
+	personal = home_dir .. '\\Obsidian_Nvim\\Personal',
+	project = home_dir .. '\\Obsidian_Nvim\\Project',
 }
 
 M.Filetypes = {
 	ForIlluminate = { 'lua', 'matlab', 'json', 'python', 'text', 'markdown' },
 	ForCode = { 'lua', 'matlab', 'json', 'python' },
 }
+
+M.config_dir = config_dir
+M.data_dir   = data_dir
+M.cache_dir  = cache_dir
+M.home_dir   = home_dir
 
 return M

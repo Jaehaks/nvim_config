@@ -10,34 +10,33 @@ return {
 		'HiPhish/rainbow-delimiters.nvim',
 		'RRethy/nvim-treesitter-endwise', -- it requires neovim under v0.11
 	},
-	build = ':TSUpdate',
+	main = 'nvim-treesitter.configs',
+	-- build = ':TSUpdate',
 	init= function ()
 		vim.opt.rtp:prepend(paths.nvim.treesitter_queries)
 		vim.opt.rtp:prepend(paths.nvim.luarocks)
 	end,
-	config = function()
-		local configs = require('nvim-treesitter.configs')
+	opts = function()
 		local installs = require('nvim-treesitter.install')
-		-- local TShighlight = require('nvim-treesitter.highlight')
 
 		installs.prefer_git = false -- sometimes curl has an error (60), it is solved after I execute nvim-qt in terminal
 		installs.compilers = {'gcc'}
-
-		configs.setup({
+		return {
 			-- :TSInstall does not work, but :TSInstallSync works
-			ensure_installed = { 'lua', 'luadoc', 'luap', 'luau',
-								 'c',
-								 'matlab',
-								 'python',
-								 'vim', 'vimdoc',
-								 'markdown', 'markdown_inline',
-								 'html', 'json', 'toml',
-								 'diff', 'regex', 'ssh_config', 'powershell',
-							   	 'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
+			ensure_installed = {
+				'lua', 'luadoc', 'luap', 'luau',
+				'c',
+				'matlab',
+				'python',
+				'vim', 'vimdoc',
+				'markdown', 'markdown_inline',
+				'html', 'json', 'toml',
+				'diff', 'regex', 'ssh_config', 'powershell',
+				'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
 			},
 			highlight = {
 				enable = true,  -- if highlight, cannot use rainbow bracket.
-								-- because treesitter managed highlighting bracket also.
+				-- because treesitter managed highlighting bracket also.
 				-- treesitter highlight decrease overall performance.
 				-- highlight off if the file has too long lines, like help file lspconfig-server-configuration.md
 				-- it means that conceal of treesitter is disabled also.
@@ -55,10 +54,7 @@ return {
 			endwise = {			-- nvim-treesitter-endwise
 				enable = true
 			},
-		})
-
-		-- custom_captures for latex not work
-		-- vim.api.nvim_set_hl(0, "@markup.math.latex" , { link = 'NightflyYello'}) -- it has bug. but is the best...
+		}
 	end,
 },
 {
@@ -66,8 +62,5 @@ return {
 	"OXY2DEV/helpview.nvim",
 	ft = 'help',
 	-- lazy = false, -- Recommended
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter"
-	}
 }
 }

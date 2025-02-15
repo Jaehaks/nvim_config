@@ -7,26 +7,23 @@ return {
 		{'<leader>tk', '<Cmd>Translate KO -output=floating<CR><Esc>', mode = {'n', 'v'}, desc = 'Translate to KO with floating'},
 		{'<leader>tK', '<Cmd>Translate kO -output=replace<CR><Esc>' , mode = {'n', 'v'}, desc = 'Translate to KO with replace'} ,
 	},
-	config = function ()
-		local translate = require('translate')
-		translate.setup({
-			default = {
-				commnad = 'google',
-				output = 'floating',
-			},
-			preset = {
-				command = {
-					google = {
-						args = { -- arguments to be passed to curl command
-							'--retry',
-							'5', -- retry when curl has error
-						}
+	opts = {
+		default = {
+			commnad = 'google',
+			output = 'floating',
+		},
+		preset = {
+			command = {
+				google = {
+					args = { -- arguments to be passed to curl command
+						'--retry',
+						'5', -- retry when curl has error
 					}
-				},
+				}
 			},
-			silent = true,
-		})
-	end
+		},
+		silent = true,
+	}
 }
 }
 -- 'potamides/pantran.nvim' : using motion_translate or interactive mode, 'redraw' executes and it makes noisy background

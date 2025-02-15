@@ -12,80 +12,80 @@ return {
 		vim.opt.modifiable = true
 	end,
 	dependencies = { {'nvim-tree/nvim-web-devicons'}},
-	config = function()
-		local yazi_conf = require('yazi')
-		require('dashboard').setup {
-			theme = 'doom',
-			hide = {
-				statusline = true,
-				tabline = true,
-				winbar = true
-			},
-			config = { -- doom configuration
-				center = {
-					{
-						icon = '',
-						desc = 'New File', desc_hl = 'String',
-						key = 'e', key_hl = 'DashboardShortCut',
-						action = 'ene',
-					},
-					{
-						icon = '',
-						desc = 'Recent Files', desc_hl = 'String',
-						key = 'r', key_hl = 'DashboardShortCut',
-						action = function () Snacks.picker.recent({ filter = { [vim.fn.stdpath('data')] = true, } }) end,
-					},
-					{
-						icon = '',
-						desc = 'Folder : Config', desc_hl = 'String',
-						key = 'c', key_hl = 'DashboardShortCut',
-						action = function () yazi_conf.yazi(yazi_conf.config, paths.nvim.config) end,
-					},
-					{
-						icon = '',
-						desc = 'Folder : D:\\MATLAB_Project', desc_hl = 'String',
-						key = 'd', key_hl = 'DashboardShortCut',
-						action = function () yazi_conf.yazi(yazi_conf.config, paths.project.matlab) end,
-					},
-					{
-						icon = '',
-						desc = 'Folder : Note', desc_hl = 'String',
-						key = 'n', key_hl = 'DashboardShortCut',
-						action = function () yazi_conf.yazi(yazi_conf.config, paths.obsidian.personal) end,
-					},
-					{
-						icon = '',
-						desc = 'Bookmark Files', desc_hl = 'String',
-						key = 'p', key_hl = 'DashboardShortCut',
-						action = function () require('grapple').toggle_tags() end,
-					},
-					{
-						icon = '',
-						desc = 'Last Sessions', desc_hl = 'String',
-						key = 's', key_hl = 'DashboardShortCut',
-						action = function () require('sessions').load(paths.session.saved, {autosave = false}) end,
-					},
+	opts = {
+		theme = 'doom',
+		hide = {
+			statusline = true,
+			tabline = true,
+			winbar = true
+		},
+		config = { -- doom configuration
+			center = {
+				{
+					icon = '',
+					desc = 'New File', desc_hl = 'String',
+					key = 'e', key_hl = 'DashboardShortCut',
+					action = 'ene',
 				},
-				footer = function()
-					local stats = require("lazy").stats()
-					local ms = stats.startuptime
-					local days = {
-						'Sunday',
-						'Monday',
-						'Tuesday',
-						'Wednesday',
-						'Thursday',
-						'Friday',
-						'Saturday',
-					}
-					return {
-						'Today : ' .. os.date('%Y-%m-%d %H:%M, ') .. days[tonumber(os.date('%w')+1)],
-						'Startup Time : ' .. ms .. 'ms',
-						'Plugins : ' .. stats.loaded .. ' loaded / ' .. stats.count .. ' installed'
-					}
-				end,
-			}
+				{
+					icon = '',
+					desc = 'Recent Files', desc_hl = 'String',
+					key = 'r', key_hl = 'DashboardShortCut',
+					action = function () Snacks.picker.recent({ filter = { [vim.fn.stdpath('data')] = true, } }) end,
+				},
+				{
+					icon = '',
+					desc = 'Folder : Config', desc_hl = 'String',
+					key = 'c', key_hl = 'DashboardShortCut',
+					action = function () require('yazi').yazi(nil, paths.nvim.config) end,
+				},
+				{
+					icon = '',
+					desc = 'Folder : D:\\MATLAB_Project', desc_hl = 'String',
+					key = 'd', key_hl = 'DashboardShortCut',
+					action = function () require('yazi').yazi(nil, paths.project.matlab) end,
+				},
+				{
+					icon = '',
+					desc = 'Folder : Note', desc_hl = 'String',
+					key = 'n', key_hl = 'DashboardShortCut',
+					action = function () require('yazi').yazi(nil, paths.obsidian.personal) end,
+				},
+				{
+					icon = '',
+					desc = 'Bookmark Files', desc_hl = 'String',
+					key = 'p', key_hl = 'DashboardShortCut',
+					action = function () require('grapple').toggle_tags() end,
+				},
+				{
+					icon = '',
+					desc = 'Last Sessions', desc_hl = 'String',
+					key = 's', key_hl = 'DashboardShortCut',
+					action = function () require('sessions').load(paths.session.saved, {autosave = false}) end,
+				},
+			},
+			footer = function()
+				local stats = require("lazy").stats()
+				local ms = stats.startuptime
+				local days = {
+					'Sunday',
+					'Monday',
+					'Tuesday',
+					'Wednesday',
+					'Thursday',
+					'Friday',
+					'Saturday',
+				}
+				return {
+					'Today : ' .. os.date('%Y-%m-%d %H:%M, ') .. days[tonumber(os.date('%w')+1)],
+					'Startup Time : ' .. ms .. 'ms',
+					'Plugins : ' .. stats.loaded .. ' loaded / ' .. stats.count .. ' installed'
+				}
+			end,
 		}
+	},
+	config = function(_, opts)
+		require('dashboard').setup(opts)
 
 		if vim.o.filetype == "lazy" then
 			vim.cmd.close()

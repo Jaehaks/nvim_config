@@ -1,17 +1,16 @@
 return {
 {
 	'tamton-aquib/staline.nvim',
-	lazy = false,
+	-- lazy = false,
+	event = 'BufReadPre',
 	init = function ()
 		vim.opt.laststatus = 2
 		vim.opt.showtabline = 2
 		vim.opt.termguicolors = true
 	end,
-	config = function ()
+	opts = function ()
 		local util = require("staline.utils")
-
-		-- ///////// status line configuration /////////////
-		require('staline').setup({
+		return {
 			defaults = {
 				line_column = '[%l/%L]:%c', -- line/total : column
 				mod_symbol = '',
@@ -42,17 +41,22 @@ return {
 			},
 			sections = {
 				left = {'- ', '-mode', 'left_sep_double',
-						{'StalineFileSize','file_size'},
-						{'StalineBranch','branch'} },
+				{'StalineFileSize','file_size'},
+				{'StalineBranch','branch'} },
 				mid = {{'Normal', 'file_name'},
-						'lsp'},
+				'lsp'},
 				right = {function() return  vim.bo[0].fileencoding .. ' ' end , '',
-						'cool_symbol', ' ',
-						function() return util.get_file_icon(vim.fn.expand('%:t'), vim.fn.expand('%:e')) .. ' ' .. vim.bo[0].filetype end,
-						'right_sep_double', '-line_column'}
-		},
-		special_table = nil,
-		})
+				'cool_symbol', ' ',
+				function() return util.get_file_icon(vim.fn.expand('%:t'), vim.fn.expand('%:e')) .. ' ' .. vim.bo[0].filetype end,
+				'right_sep_double', '-line_column'}
+			},
+			special_table = nil,
+		}
+	end,
+	config = function (_, opts)
+
+		-- ///////// status line configuration /////////////
+		require('staline').setup(opts)
 
 		-- ///////// buffer line configuration /////////////
 		-- require('stabline').setup({
@@ -74,12 +78,13 @@ return {
 },
 {
 	'willothy/nvim-cokeline',
-	enabled = true,
-	dependencies = {
-		"nvim-lua/plenary.nvim",        -- Required for v0.4.0+
-		"nvim-tree/nvim-web-devicons", -- If you want devicons
+	event = 'BufReadPre',
+	keys = {
+		{'<leaderbp>', function () require('cokeline.mappings').pick('focus') end		, desc = '[Cokeline] pick a buffer'},
+		{'<M-m>'     , function () require('cokeline.mappings').by_step('focus', 1) end	, desc = '[Cokeline] go to next buffer'},
+		{'<M-n>'     , function () require('cokeline.mappings').by_step('focus', -1) end, desc = '[Cokeline] go to previous buffer'},
 	},
-	config = function ()
+	opts = function ()
 		vim.api.nvim_set_hl(0, "BufferActive", { bg = "#986FEC", fg = "#000000" })
 		vim.api.nvim_set_hl(0, "BufferInActive", { bg = "#131313", fg = "#AAAAAA" })
 		vim.api.nvim_set_hl(0, "TabLineFill", { bg = "#131313"}) -- fill color remained region of tabline
@@ -92,7 +97,7 @@ return {
 		local red = vim.g.terminal_color_1
 		-- local yellow = vim.g.terminal_color_3
 
-		cokeline.setup({
+		return {
 			mappings = {
 				cycle_prev_next = false, -- don't cycle when focus/switch
 				disable_mouse = false,
@@ -156,21 +161,9 @@ return {
 					bg = get_hex('BufferInActive', 'bg'),
 				},
 			}
-		})
-
-		vim.keymap.set('n', '<leader>bp', function ()
-			require('cokeline.mappings').pick('focus')
-		end, {desc = '[Cokeline] pick a buffer'})
-
-		vim.keymap.set('n', '<M-m>', function ()
-			require('cokeline.mappings').by_step('focus', 1)
-		end, {desc = '[Cokeline] go to next buffer'})
-
-		vim.keymap.set('n', '<M-n>', function ()
-			require('cokeline.mappings').by_step('focus', -1)
-		end, {desc = '[Cokeline] go to previous buffer'})
+		}
 	end
-}
+	},
 }
 -- staline.nvim : blazed fast loading time, it covers both statusline and tabline and very flexible/configurable supports
 -- 				  it doesn't support dynamic rendering of bufferline when too many buffers are listed

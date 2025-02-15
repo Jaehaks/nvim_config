@@ -3,81 +3,78 @@ return {
 	-- improved lsp actions
 	'nvimdev/lspsaga.nvim',
 	event = 'LspAttach',
-	dependencies = {
-		'nvim-treesitter/nvim-treesitter',
-		'nvim-tree/nvim-web-devicons'
+	opts = {
+		-- ////// code action : select behavior when diagnostics show //////////
+		-- lspsaga show code action with
+		code_action = { -- builtin lsp use line diagnostics / lspsaga use cursor diagnostics
+			num_shortcut = true,
+			extend_gitsigns = false, -- extend gitsign plugin diff action
+		},
+		-- ////// definition : peek_definition //////////
+		definition = {
+			keys = {
+				edit = 'oo' ,  -- peek_definition is shown in floating window, when 'o' entered, go to the definition file
+				vsplit = 'ov', -- open definition file in vsplit
+				split = 'oh',  -- open definition file in horizontal split
+				quit = 'q',
+				close = '<C-c>k'
+			}
+		},
+		-- ////// hover : library definition //////////
+		hover = {					-- "KK" makes cursor move into hover window
+			open_link = '<C-]>',   -- it can use website link also.
+			open_cmd = '!chrome'
+		},
+		-- ////// outline : code tree //////////
+		outline = {
+			layout = 'float',
+			detail = true,
+		},
+		-- ////// lightbulb : code action notify ////////
+		lightbulb = {
+			enable = false,		-- lightbulb makes screen shake, I don't know why
+		},
+
 	},
-	config = function ()
-		require('lspsaga').setup({
-			-- ////// code action : select behavior when diagnostics show //////////
-			-- lspsaga show code action with
-			code_action = { -- builtin lsp use line diagnostics / lspsaga use cursor diagnostics
-				num_shortcut = true,
-				extend_gitsigns = false, -- extend gitsign plugin diff action
-			},
-			-- ////// definition : peek_definition //////////
-			definition = {
-				keys = {
-					edit = 'oo' ,  -- peek_definition is shown in floating window, when 'o' entered, go to the definition file
-					vsplit = 'ov', -- open definition file in vsplit
-					split = 'oh',  -- open definition file in horizontal split
-					quit = 'q',
-					close = '<C-c>k'
-				}
-			},
-			-- ////// hover : library definition //////////
-			hover = {					-- "KK" makes cursor move into hover window
-				open_link = '<C-]>',   -- it can use website link also.
-				open_cmd = '!chrome'
-			},
-			-- ////// outline : code tree //////////
-			outline = {
-				layout = 'float',
-				detail = true,
-			},
-			-- ////// lightbulb : code action notify ////////
-			lightbulb = {
-				enable = false,		-- lightbulb makes screen shake, I don't know why
-			},
-		})
+	keys = {
 		-- gk : 1) lspsaga has strong advantage about peek_definition because it shows code_action together
 		-- 		   but sometimes, lspsaga's peek_definition invokes error. I have to restart neovim after error
 		-- 		2) lspsaga shows always one diagnostic even though there are multiple diagnostic in the line
 		-- vim.keymap.set('n', 'go' , '<Cmd>Lspsaga outline<CR>'                   , {desc = 'outline', silent = true, noremap = true})
-		vim.keymap.set('n', 'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , {desc = 'LSP - hover_doc'                 , silent = true, noremap = true})
-		vim.keymap.set('n', '<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , {desc = 'LSP - hover_doc ++keep'          , silent = true, noremap = true})
-		vim.keymap.set('n', 'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , {desc = 'LSP - peek_definition'           , silent = true, noremap = true})
-		vim.keymap.set('n', 'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , {desc = 'LSP - peek_type_definition'      , silent = true, noremap = true})
-		-- vim.keymap.set('n', 'gk'     , '<Cmd>Lspsaga diagnostic_jump_next<CR>'      , {desc = 'LSP - diagnostics_jump_next', silent = true, noremap = true})
-		vim.keymap.set('n', 'gk'     , vim.diagnostic.goto_next                     , {desc = 'LSP - diagnostics_jump_next'     , silent = true, noremap = true})
-		vim.keymap.set('n', 'gK'     , '<Cmd>Lspsaga show_workspace_diagnostics<CR>', {desc = 'LSP - show_workspace_diagnostics', silent = true, noremap = true})
+		{'K'      , '<Cmd>Lspsaga hover_doc<CR>'                 , desc = 'LSP - hover_doc'                 , silent = true, noremap = true},
+		{'<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , desc = 'LSP - hover_doc ++keep'          , silent = true, noremap = true},
+		{'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , desc = 'LSP - peek_definition'           , silent = true, noremap = true},
+		{'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , desc = 'LSP - peek_type_definition'      , silent = true, noremap = true},
+		{'gk'     , vim.diagnostic.goto_next                     , desc = 'LSP - diagnostics_jump_next'     , silent = true, noremap = true},
+		{'gK'     , '<Cmd>Lspsaga show_workspace_diagnostics<CR>', desc = 'LSP - show_workspace_diagnostics', silent = true, noremap = true},
 		-- Lspsaga rename() include all project files, not current buffer
-	end
-	-- caution!!) lspsga has error for some lsp diagnostic
+		-- caution!!) lspsga has error for some lsp diagnostic
+	},
 },
 {
 	-- show signature help when enter functions
 	'ray-x/lsp_signature.nvim',
 	enabled = true,
 	event = 'InsertEnter',
-	config = function ()
+	keys = {
+		{'<C-s>', function() require('lsp_signature').toggle_float_win() end, silent = true, noremap = true, desc = 'LSP - toggle signature help' }
+	},
+	opts = {
+		doc_lines = 100,           -- line length to fetch document
+		max_height = 12,           -- line length to show floating window
+		hint_enable     = false,   -- hint_inline option does not work
+		toggle_key      = '<C-s>', -- turn off signature help temporary in insert mode
+		move_cursor_key = '<C-w>', -- go to signature help window in insert mode (in normal mode, use <C-w>w)
+
+		bind = true,
+		floating_window_off_x = -100,
+		floating_window_off_y = 100,
+	},
+	config = function (_, opts)
 		local lsp_sig = require('lsp_signature')
-		local cfg = {
-			doc_lines = 100,           -- line length to fetch document
-			max_height = 12,           -- line length to show floating window
-			hint_enable     = false,   -- hint_inline option does not work
-			toggle_key      = '<C-s>', -- turn off signature help temporary in insert mode
-			move_cursor_key = '<C-w>', -- go to signature help window in insert mode (in normal mode, use <C-w>w)
+		lsp_sig.setup(opts )
+		lsp_sig.on_attach(opts) -- it is deprecated, but it need to lsp_signature automatically, i don't know why
 
-			bind = true,
-			floating_window_off_x = -100,
-			floating_window_off_y = 100,
-
-		}
-		lsp_sig.setup(cfg)
-		lsp_sig.on_attach(cfg) -- it is deprecated, but it need to lsp_signature automatically, i don't know why
-
-		vim.keymap.set({ 'n' }, '<C-s>', lsp_sig.toggle_float_win , {silent = true, noremap = true, desc = 'LSP - toggle signature help'})
 	end
 },
 {
@@ -127,56 +124,10 @@ return {
 	}
 },
 {
-	'aznhe21/actions-preview.nvim',
-	enabled = false,
-	lazy = true,
-	event = 'LspAttach',
-	config = function ()
-		local ap = require('actions-preview')
-		ap.setup({
-			telescope = {
-				sorting_strategy = "ascending",
-				layout_strategy = "vertical",
-				layout_config = {
-					width = 0.8,
-					height = 0.5,
-					prompt_position = "top",
-					preview_cutoff = 20,
-					preview_height = function(_, _, max_lines)
-						return max_lines - 15
-					end,
-					},
-				},
-		})
-		vim.keymap.set({'n', 'v'}, 'ga', function ()
-			vim.diagnostic.goto_next() -- move cursor to diagnostics location
-			ap.code_actions()           -- code_actions() execute only current cursor location
-		end , {noremap = true, desc = 'LSP - goto next action-preview'})
-		vim.keymap.set({'n', 'v'}, 'gs', function ()
-			vim.diagnostic.goto_prev() -- move cursor to diagnostics location
-			ap.code_actions()           -- code_actions() execute only current cursor location
-		end , {noremap = true, desc = 'LSP - goto prev action-preview'})
-	end
-	-- sometime native code_actions() is ignored
-
-},
-{
 	'luckasRanarison/clear-action.nvim',
-	keys = {
-		{'ga'}
-	},
-	config = function ()
-		local clearaction = require('clear-action')
-		clearaction.setup({
-			signs = {
-				enable = false,
-			},
-			popup = {
-				enable = true,
-				hide_cursor = false,
-			},
-		})
-
+	enabled = false,
+	-- BUG: 'ga' doesn't work
+	keys = function ()
 		-- keymap : first detect code action under cursor and go to next code action if it doesn't exist
 		local code_action_next = function ()
 			local params = vim.lsp.util.make_range_params()
@@ -191,7 +142,7 @@ return {
 				require('clear-action.actions').code_action()
 			end)
 		end
-		vim.keymap.set('n', 'ga', code_action_next, {desc = 'code action'})
+		-- vim.keymap.set('n', 'ga', code_action_next, {desc = 'code action'})
 
 		-- keymap : go to next code action if window of code action is opened
 		local User_codeAction = vim.api.nvim_create_augroup('User_codeAction', {clear = true})
@@ -206,7 +157,20 @@ return {
 				end, {buffer = 0, noremap = true, desc = 'quit and code action next'})
 			end
 		})
-	end
+
+		return {
+			{'ga', code_action_next, desc = 'code action'}
+		}
+	end,
+	opts = {
+		signs = {
+			enable = false,
+		},
+		popup = {
+			enable = true,
+			hide_cursor = false,
+		},
+	}
 }
 }
 -- toggle term : must close using :q! not :q

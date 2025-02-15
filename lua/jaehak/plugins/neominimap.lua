@@ -89,9 +89,8 @@ return {
 				vim.g.neominimap_manual = false
 			end
 		end, {noremap = true, desc = 'Toggle minimap'})
-	end,
-	config = function ()
+
 		vim.api.nvim_set_hl(0, "NeominimapSearchIcon", {fg = "#FFFF00" }) -- searched sign color
 		vim.api.nvim_set_hl(0, "NeominimapSearchSign", {fg = "#FFFF00" }) -- searched icon color
-	end
+	end,
 }

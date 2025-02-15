@@ -37,6 +37,7 @@ return {
 			'micangl/cmp-vimtex', 		-- source of vimtex for latex
 		},
 	},
+
 	config = function()
 		local cmp = require('cmp')
 		local compare = require('cmp.config.compare')

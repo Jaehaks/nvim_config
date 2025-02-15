@@ -40,26 +40,26 @@ return {
 {
 	"jake-stewart/multicursor.nvim",
 	enabled = true,
+	lazy = true,
     branch = "1.0",
 	keys = {
-		{'<C-k>'},
-		{'<C-j>'},
-		{'<C-n>'},
-		{'<C-n>'},
-		{'<C-S-n>'},
-		{'<C-b>'},
+		{'<C-k>', function () require("multicursor-nvim").addCursor('k') end, desc = '[Multicursor] Add below char', mode = {'n', 'v'}},
+		{'<C-j>', function () require("multicursor-nvim").addCursor('j') end, desc = '[Multicursor] Add above char', mode = {'n', 'v'}},
+		{'<C-n>', function () require("multicursor-nvim").matchAllAddCursors(1) end, desc = '[Multicursor] Add next cword', mode = {'n', 'v'}},
+		{'<C-S-n>', function () require("multicursor-nvim").matchAllAddCursors() end, desc = '[Multicursor] Add all cword', mode = {'n', 'v'}},
+		{'<C-b>', function ()
+			local mc = require('multicursor-nvim')
+			if mc.cursorsEnabled() then
+				mc.disableCursors()
+			else
+				mc.addCursor()
+			end
+		end, desc = '[Multicursor] Add Current Pos | Deactivate', mode = {'n', 'v'}},
 	},
-	config = function()
+	opts = function ()
 		local mc = require("multicursor-nvim")
 
-		mc.setup()
-
-		-- Add cursors above/below the main cursor.
-		vim.keymap.set({"n", "v"}, "<C-k>", function() mc.addCursor("k") end, {desc = '[Multicursor] Add below char'})
-		vim.keymap.set({"n", "v"}, "<C-j>", function() mc.addCursor("j") end, {desc = '[Multicursor] Add above char'})
-		vim.keymap.set({"n", "v"}, "<C-n>", function() mc.matchAddCursor(1) end, {desc = '[Multicursor] Add next cword'})
 		vim.keymap.set({"n", "v"}, "<leader>q", function() mc.matchSkipCursor(1) end, {desc = '[Multicursor] Add next cword'})
-		vim.keymap.set({"n", "v"}, "<C-S-n>", function() mc.matchAllAddCursors() end, {desc = '[Multicursor] Add all cword'})
 
 		-- Rotate the main cursor within multi-cursors
 		vim.keymap.set({"n", "v"}, "<C-l>", function ()
@@ -74,15 +74,6 @@ return {
 				mc.deleteCursor()
 			end
 		end, {desc = '[Multicursor] Delete Current Pos'})
-
-		-- Add Current Cursor position | Deactivate multi-cursor mode
-		vim.keymap.set({"n", "v"}, "<C-b>", function()
-			if mc.cursorsEnabled() then
-				mc.disableCursors()
-			else
-				mc.addCursor()
-			end
-		end, {desc = '[Multicursor] Add Current Pos | Deactivate'})
 
 		-- Lock Cursor
 		vim.keymap.set({"n"}, "<leader>l", function()
@@ -120,7 +111,9 @@ return {
 		vim.api.nvim_set_hl(0, "MultiCursorVisual"          , { bg = "#647B13" }) -- cursor color when multicursor enabled
 		vim.api.nvim_set_hl(0, "MultiCursorDisabledCursor"  , { fg = 'black', bg = "#955441" }) -- cursor color when multicursor paused
 		vim.api.nvim_set_hl(0, "MultiCursorDisabledVisual"  , { bg = "#5C533B" }) -- cursor color when multicursor enabled
-	end,
+
+		return {}
+	end
 },
 {
 	-- multiple cursor : change string

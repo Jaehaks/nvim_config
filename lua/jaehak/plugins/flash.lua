@@ -1,20 +1,16 @@
 return {
 	'folke/flash.nvim',
 	keys = {
-		{'w'}
+		{'w', function () require('flash').jump() end, desc = 'flash jump' }
 	},
-	config = function ()
-		local flash = require('flash')
-		flash.setup({
-			modes = {
-				search = {
-					enabled = false,
-				},
-				char = {	-- enhanced f, F, t, T
-					enabled = true,
-				}
+	opts = {
+		modes = {
+			search = {
+				enabled = false,
+			},
+			char = {	-- enhanced f, F, t, T
+				enabled = true,
 			}
-		})
-		vim.keymap.set({'n','x','o'}, 'w', flash.jump, {desc = 'flash jump'})
-	end
+		}
+	}
 }
