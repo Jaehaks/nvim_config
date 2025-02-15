@@ -3,9 +3,6 @@ return {
 	keys = {
 		{'<leader>gd', '<Cmd>DiffviewOpen<CR>', desc = 'open Diffview of .git with HEAD~1'}
 	},
-	dependencies = {
-		'nvim-tree/nvim-web-devicons'
-	},
 	opts = function ()
 		local actions = require('diffview.actions')
 		return {

@@ -5,7 +5,6 @@ return {
 		{'<leader>go', '<Cmd>Neogit<CR>', desc = 'open neogit default', 'n'}
 	},
 	dependencies = {
-		"nvim-lua/plenary.nvim",         -- required
 		"sindrets/diffview.nvim",        -- optional - Diff integration
 	},
 	opts = {
@@ -60,8 +59,6 @@ return {
 	},
 	dependencies = {
 		'MunifTanjim/nui.nvim',
-		'nvim-tree/nvim-web-devicons',
-		'nvim-lua/plenary.nvim',
 		{
 			'chrisgrieser/nvim-tinygit', -- optional: for Github PR view
 			dependencies = { 'stevearc/dressing.nvim' }

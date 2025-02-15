@@ -2,8 +2,7 @@ return {
 	-- persistent mark manager
 	'EvWilson/spelunk.nvim',
 	dependencies = {
-		'nvim-lua/plenary.nvim',         -- For window drawing utilities
-		'nvim-telescope/telescope.nvim', -- Optional: for fuzzy search capabilities
+		-- 'nvim-telescope/telescope.nvim', -- Optional: for fuzzy search capabilities
 	},
 	opts = {
 		base_mappings = {

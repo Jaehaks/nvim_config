@@ -6,10 +6,6 @@ return {
 		'Jaehaks/obsidian.nvim',
 		lazy = true,
 		ft = 'markdown',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			-- 'nvim-telescope/telescope.nvim',
-		},
 		opts = {
 			workspaces = { -- this directory must exist
 				{

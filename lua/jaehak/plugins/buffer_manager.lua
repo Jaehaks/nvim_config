@@ -5,9 +5,6 @@ return {
 	-- branch = 'main',
 	'Jaehaks/buffer_manager.nvim',
 	branch = 'fix/short_file_name_properly',
-	dependencies = {
-		'nvim-lua/plenary.nvim'
-	},
 	config = function ()
 		local bm = require('buffer_manager')
 		local bmui = require('buffer_manager.ui')

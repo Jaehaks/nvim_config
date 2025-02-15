@@ -9,9 +9,6 @@ return {
 		{'<leader>pf', function() require('grapple').toggle_tags() end, desc = 'open grapple file list'},
 	},
 	ft = {'dashboard'},
-	dependencies = {
-		'nvim-tree/nvim-web-devicons',
-	},
 	opts = {
 		scope = 'global',
 		prune = nil, -- unset prune timer?
