@@ -50,6 +50,7 @@ if vim.g.has_win32 == 1 then
 	vim.g.python3_host_prog = paths.nvim.python
 	opt.path:append(vim.fn.stdpath("config") .. "\\**10")
 	opt.path:append(vim.fn.stdpath("data") .. "\\**10")
+	opt.path:prepend(paths.home_dir .. '\\scoop\\apps\\neovim\\current\\bin')
 else
 	vim.g.python3_host_prog = '~/.config/.Nvim_venv/bin/python'		-- use python support
 	opt.path:append(vim.fn.stdpath() .. "/**10")
@@ -133,9 +134,17 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 -- opt.clipboard:append('unnamedplus') -- share clipboard between vim and system
                                     -- "*p doest not need to paste from system clipboard
                                     -- it makes editing very slower, set keymap to use system clipboard instead of it
+vim.g.clipboard = {
+	name = 'win32yank',
+	copy = {
+		["+"] = 'win32yank.exe -i --crlf',
+		["*"] = 'win32yank.exe -i --crlf',
+	},
+	paste = {
+		["+"] = 'win32yank.exe -o --lf',
+		["*"] = 'win32yank.exe -o --lf',
+	},
+	cache_enabled = 0,
+}
 opt.iskeyword:append('-')           -- i don't know
-
-
-
-
 
