@@ -76,10 +76,10 @@ return {
 			end
 		end, desc = 'Show files in git dir or cwd', mode = {'n'}},
 
-		{ '<leader>fn', function () Snacks.picker.git_log_file()
+		{ '<leader>fl', function () Snacks.picker.git_log_file()
 		end, desc = 'Show git logs of current file', mode = {'n'}},
 
-		{ '<leader>fN', function () Snacks.picker.git_log()
+		{ '<leader>fL', function () Snacks.picker.git_log()
 		end, desc = 'Show git logs of git directory', mode = {'n'}},
 
 		{ '<leader>fg', function () Snacks.picker.lines({ -- is sorts by lnum
