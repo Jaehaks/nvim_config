@@ -221,9 +221,9 @@ return {
 					default = { hl = "MarkviewHighlights" }
 				},
 				checkboxes = {
-					checked   = { text = "", hl = "MarkviewCheckboxChecked", scope_hl = "MarkviewCheckboxChecked" },
-					unchecked = { text = "", hl = "MarkviewCheckboxUnchecked", scope_hl = "MarkviewCheckboxUnchecked" },
-					["-"]     = { text = "󱋭", hl = "MarkviewCheckboxCancelled", scope_hl = "MarkviewCheckboxCancelled" },
+					checked   = { text = "", hl = "MarkviewCheckboxChecked", scope_hl = false },
+					unchecked = { text = "", hl = "MarkviewCheckboxUnchecked", scope_hl = false},
+					["-"]     = { text = "󱋭", hl = "MarkviewCheckboxCancelled", scope_hl =  "MarkviewCheckboxCancelled"},
 				},
 				emoji_shorthands = { enable = false, },
 				images = {
