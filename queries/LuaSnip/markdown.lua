@@ -35,6 +35,7 @@ local callout = s({
 		t('IMPORTANT'),
 		t('EXAMPLE'),
 		t('QUESTION'),
+		t('ANSWER'),
 		t('FAQ'),
 		t('HELP'),
 		t('QUOTE'),

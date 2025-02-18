@@ -164,6 +164,7 @@ return {
 		vim.api.nvim_set_hl(0, 'MarkviewHeading5'     , {fg = '#F0FF7C',  bg = '#2D2F1D'})
 		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled', {fg = '#999999'})
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault', {link = 'Normal'}) -- default block quote color
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer', {default = true, fg = '#FE86D8'}) -- default block quote color
 
 		return{
 			preview = {
@@ -215,6 +216,15 @@ return {
 					marker_dot         = { add_padding = false, },            -- When using '.'
 					marker_parenthesis = { add_padding = false, },            -- When using '1), 2)'
 				},
+				block_quotes = {
+					["ANSWER"] = {
+						preview = " Answer",
+						hl = "MarkviewBlockQuoteAnswer",
+						title = true,
+						icon = "",
+						border = "▋"
+					},
+				}
 			},
 			markdown_inline = {
 				highlights = { -- pattern "==word=="
