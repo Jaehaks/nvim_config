@@ -228,6 +228,8 @@ return {
 			},
 			markdown_inline = {
 				highlights = { -- pattern "==word=="
+					padding_left = "",
+					padding_right = "",
 					default = { hl = "MarkviewHighlights" }
 				},
 				checkboxes = {
