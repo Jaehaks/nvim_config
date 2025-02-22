@@ -31,7 +31,7 @@ return {
 				'vim', 'vimdoc',
 				'markdown', 'markdown_inline',
 				'html', 'json', 'toml',
-				'diff', 'regex', 'ssh_config', 'powershell',
+				'diff', 'regex', 'ssh_config', 'powershell', 'bash',
 				'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
 			},
 			highlight = {
