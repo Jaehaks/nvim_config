@@ -120,6 +120,18 @@ return {
 	},
 	init = function()
 		vim.g.loaded_matchparen = 1
+
+		vim.api.nvim_create_autocmd("BufEnter", {
+			pattern = "*",
+			callback = function ()
+				if vim.bo.filetype == 'markdown' then
+					require('sentiment').disable()
+				else
+					require('sentiment').enable()
+				end
+			end
+		})
+
 	end,
 }
 }
