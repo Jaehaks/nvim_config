@@ -31,7 +31,6 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.lsp.vim-easy-align' , enabled = true},
 		{import = 'jaehak.plugins.colorcode'          , enabled = true},
 		{import = 'jaehak.plugins.diffview'           , enabled = true},
-		{import = 'jaehak.plugins.dressing'           , enabled = true},
 		{import = 'jaehak.plugins.fidget'             , enabled = true},
 		{import = 'jaehak.plugins.flash'              , enabled = true},
 		{import = 'jaehak.plugins.gitsigns'           , enabled = true},
