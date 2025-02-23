@@ -10,7 +10,7 @@ return {
 		},
 		select = {
 			enabled = true,
-			backend = {'telescope', 'builtin'}, 	-- use my telescope ui first
+			backend = {'snacks_picker', 'telescope', 'builtin'}, 	-- use my telescope ui first
 		}
 	}
 }
