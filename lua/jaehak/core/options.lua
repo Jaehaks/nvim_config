@@ -134,17 +134,5 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
 -- opt.clipboard:append('unnamedplus') -- share clipboard between vim and system
                                     -- "*p doest not need to paste from system clipboard
                                     -- it makes editing very slower, set keymap to use system clipboard instead of it
-vim.g.clipboard = {
-	name = 'win32yank',
-	copy = {
-		["+"] = 'win32yank.exe -i --crlf',
-		["*"] = 'win32yank.exe -i --crlf',
-	},
-	paste = {
-		["+"] = 'win32yank.exe -o --lf',
-		["*"] = 'win32yank.exe -o --lf',
-	},
-	cache_enabled = 0,
-}
 opt.iskeyword:append('-')           -- i don't know
 
