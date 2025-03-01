@@ -1,9 +1,13 @@
-local paths = require('jaehak.core.paths')
 return {
 	'tzachar/local-highlight.nvim',
-	ft = paths.Filetypes.ForIlluminate,
+	event = 'BufReadPre',
 	opts = {
-		disable_file_types = {'help'},
+        disable_file_types = {
+            'help',
+            'dashboard',
+            'NeogitStatus',
+			'gitcommit',
+        },
 		min_match_len = 2,
 		highlight_single_match = false,
 		animate = {
