@@ -19,19 +19,19 @@ end
 
 return {
 	{
-		-- ######## setup neodev configuration, must be start #######
-		-- feature : vim object completion / require completion
-		-- it must be called before lspconfig's setup
-		'folke/neodev.nvim',
-		lazy = true,
+		-- replacement of neodev, for neovim config
+		-- but it doesn't supports highlights for vim global variable
+		'folke/lazydev.nvim',
+		ft = 'lua',
 		opts = {
-			setup_jsonls = false,
 			library = {
-				enabled = true,
-				runtime = true,			-- runtime path
-				types = true,			-- vim.api / vim.lsp completion
-				plugins = false,		-- installed plugins completion (too long loading time)
-			}
+				-- default : vim global variable's auto completion excepts vim.uv
+				{ path = '${3rd}\\luv\\library', words = {'vim%.uv'} }, -- for vim.uv auto completion
+				-- `Snacks` library useful when I configure this plugin, it can check undefined variable
+			},
+			enabled = function (root_dir)
+				return vim.bo.filetype == 'lua'
+			end
 		}
 	},
 	{
@@ -40,7 +40,6 @@ return {
 		event = 'BufReadPre',
 		dependencies = {
 			'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
-			'folke/neodev.nvim',
 		},
 		init = function ()
 			vim.env.RUFF_CACHE_DIR = paths.lsp.ruff.cache_path --  set ruff cache directory
@@ -55,6 +54,7 @@ return {
 			local lsp_util = require('lspconfig.util')
 			local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+			local test = vim.uv.fs_stat('test')
 			-- ####### 1) lua language server configuration #########
 			lspconfig.lua_ls.setup({
 				settings = {	-- settings of lua_ls document
