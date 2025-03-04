@@ -54,7 +54,26 @@ return {
 			local lsp_util = require('lspconfig.util')
 			local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-			local test = vim.uv.fs_stat('test')
+			-- ####### set diagnostics as numhl to distinguish with gitsign
+			local signs = {
+				Error = '',
+				Warn = '',
+				Hint = '',
+				Info = ''
+			}
+
+			vim.api.nvim_set_hl(0, 'DiagnosticSignError', {fg = '#FF0000'})
+			vim.api.nvim_set_hl(0, 'DiagnosticSignWarn', {fg = '#FFFF00'})
+
+			for type, icon in pairs(signs) do
+				local hl = 'DiagnosticSign' .. type
+				vim.fn.sign_define(hl, {
+					text = icon,
+					numhl = 'DiagnosticSign' .. type
+				})
+			end
+
+
 			-- ####### 1) lua language server configuration #########
 			lspconfig.lua_ls.setup({
 				settings = {	-- settings of lua_ls document
