@@ -136,3 +136,21 @@ opt.smartcase = true		-- when pattern has upper case, disable ignorecase
                                     -- it makes editing very slower, set keymap to use system clipboard instead of it
 opt.iskeyword:append('-')           -- i don't know
 
+
+
+
+
+---------- file type ---------
+if vim.g.has_win32 ~= 1 then
+	-- set filetype of zsh as sh to recognize bash treesitter
+	vim.filetype.add({
+		extension = {
+			zsh = 'sh',
+			sh = 'sh'
+		},
+		filename = {
+			['.zshrc'] = 'sh',
+			['.zshenv']= 'sh',
+		}
+	})
+end
