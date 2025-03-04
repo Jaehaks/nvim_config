@@ -29,6 +29,7 @@ local picker_config = {
 return {
 	'folke/snacks.nvim',
 	ft = {'dashboard'},
+	event = 'User VimUISelect', -- when vim.ui.select() is called
 	lazy = true,
 	opts = {
 		bigfile      = {enabled = false},

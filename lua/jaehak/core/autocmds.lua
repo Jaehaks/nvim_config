@@ -204,3 +204,22 @@ vim.api.nvim_create_user_command("Perplexity", function (opts)
 	os.execute('start brave ' .. url .. query)
 end, {nargs = 1})
 
+
+
+------------ vim.ui.select() -----------
+-- set autocmd when vim.ui.select() is executed
+local origin_vim_ui_select = vim.ui.select
+vim.ui.select = function (items, opts, on_choice)
+	vim.api.nvim_exec_autocmds('User', {
+		pattern = 'VimUISelect'
+	})
+
+	local snacks = require('snacks')
+	if package.loaded['snacks'] then
+		snacks.picker.select(items, opts, on_choice)
+	else
+		vim.schedule(function ()
+			snacks.picker.select(items, opts, on_choice)
+		end)
+	end
+end
