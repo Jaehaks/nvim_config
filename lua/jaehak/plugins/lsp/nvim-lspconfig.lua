@@ -76,6 +76,7 @@ return {
 							version = 'LuaJIT',
 						},
 						workspace = {
+							ignoreDir = {'.git'},
 							checkThirdParty = false,
 							library = {
 								vim.env.VIMRUMTIME,
