@@ -12,8 +12,11 @@ return {
 		{'<leader>ed', function () require('yazi').yazi(nil, paths.nvim.data) end        , desc = 'Open yazi at nvim-data dir'},
 		{'<leader>en', function () require('yazi').yazi(nil, paths.obsidian.personal) end, desc = 'Open yazi at note dir(personal)'},
 	},
+	init = function ()
+		vim.g.loaded_netrwPlugin = 1
+	end,
 	opts = {
-		open_for_directories = false, -- open yazi instead of netrw (call yazi.setup())
+		open_for_directories = true, -- open yazi instead of netrw (call yazi.setup())
 		keymaps = {
 			show_help                            = '<f1>',
 			open_file_in_vertical_split          = '<c-v>',
