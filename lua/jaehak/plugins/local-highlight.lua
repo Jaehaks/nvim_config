@@ -7,6 +7,7 @@ return {
             'dashboard',
             'NeogitStatus',
 			'gitcommit',
+			'markdown',
         },
 		min_match_len = 2,
 		highlight_single_match = false,
