@@ -91,9 +91,6 @@ return {
 							globals = {'vim', 'Snacks'},	-- recognize 'vim' global to language server
 							undefined_global = false,
 						},
-						runtime = {
-							version = 'LuaJIT',
-						},
 						workspace = {
 							ignoreDir = {'.git'},
 							checkThirdParty = false,
