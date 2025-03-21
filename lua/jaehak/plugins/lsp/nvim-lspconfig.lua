@@ -62,8 +62,8 @@ return {
 				Info = ''
 			}
 
-			vim.api.nvim_set_hl(0, 'DiagnosticSignError', {fg = '#FF0000'})
-			vim.api.nvim_set_hl(0, 'DiagnosticSignWarn', {fg = '#FFFF00'})
+			vim.api.nvim_set_hl(0, 'DiagnosticSignError', {fg = '#FFFFFF', bg='#FC5142'})
+			vim.api.nvim_set_hl(0, 'DiagnosticSignWarn' , {fg = '#000000', bg='#E3C505'})
 
 			for type, icon in pairs(signs) do
 				local hl = 'DiagnosticSign' .. type
