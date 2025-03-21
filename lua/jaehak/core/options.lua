@@ -6,18 +6,8 @@ local paths = require('jaehak.core.paths')
 opt.guifont       = 'FiraCode Nerd Font Mono:h11'
 opt.guifontwide   = '나눔고딕:h11'
 local aug_UserOptions = vim.api.nvim_create_augroup('aug_UserOptions', {clear = true})
-vim.api.nvim_create_autocmd({'BufReadPre', 'BufNewFile'}, {
-	group = aug_UserOptions,
-	pattern = '*',
-	callback = function(event)
-		local ext = string.match(event.file, '%.([^.]+)$') -- check extension from the file name
-		if ext == 'reg' then
-			opt.fileencodings = {'utf-8', 'utf-16le'}	 -- for windows registry
-		else
-			opt.fileencodings = {'utf-8', 'cp949'}	 -- for other document
-		end
-	end
-})
+opt.encoding      = 'utf-8'                         -- set utf-8 without BOM as default encoding
+opt.fileencodings = { 'ucs-bom', 'utf-8', 'cp949' } -- consider ucs-bom for encoding with BOM like utf-16le
 
 
 ------------ gui windows ------------------------
