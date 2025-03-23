@@ -48,6 +48,10 @@ M.session = {
 	saved = data_dir .. '\\sessions\\session_saved.txt'
 }
 
+M.last_session = {
+	saved = data_dir .. '\\last-sessions\\last-session_saved.txt'
+}
+
 M.obsidian = {
 	personal = home_dir .. '\\Obsidian_Nvim\\Personal',
 	project = home_dir .. '\\Obsidian_Nvim\\Project',
