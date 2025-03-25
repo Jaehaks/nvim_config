@@ -377,8 +377,8 @@ return {
 {
 	'SCJangra/table-nvim',
 	keys = {
-		{'<leader>mt'},
-		{'<leader>mT'},
+		{'<leader>mt', function() require('table-nvim.edit').insert_table() end, 'n'},
+		{'<leader>mT', function() require('table-nvim.edit').insert_table_alt() end, 'n'},
 	},
 	opts = {
 		padd_column_separators = true,          -- Insert a space around column separators.
