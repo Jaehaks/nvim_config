@@ -10,10 +10,8 @@ local create_custom_handler = function (priority)
 	return function (err, result, ctx, config)
 		config = config or {}
 		config.signs = config.signs or {}
-		config.signs.priority= priority
-		config.severity_sort = true -- if true, priority is set automatically
-		config.virtual_text = false -- disable virtual text
-		vim.lsp.diagnostic.on_publish_diagnostics(err, result, ctx, config)
+		config.signs.priority = priority
+		vim.lsp.diagnostic.handler.on_publish_diagnostics(err, result, ctx, config)
 	end
 end
 
@@ -55,23 +53,26 @@ return {
 			local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 			-- ####### set diagnostics as numhl to distinguish with gitsign
-			local signs = {
-				Error = '',
-				Warn = '',
-				Hint = '',
-				Info = ''
-			}
-
-			vim.api.nvim_set_hl(0, 'DiagnosticSignError', {fg = '#FFFFFF', bg='#FC5142'})
-			vim.api.nvim_set_hl(0, 'DiagnosticSignWarn' , {fg = '#000000', bg='#E3C505'})
-
-			for type, icon in pairs(signs) do
-				local hl = 'DiagnosticSign' .. type
-				vim.fn.sign_define(hl, {
-					text = icon,
-					numhl = 'DiagnosticSign' .. type
-				})
-			end
+			-- global lsp diagnostic configuration at neovim v0.11
+			vim.diagnostic.config({
+				signs = {
+					text = {
+						[vim.diagnostic.severity.ERROR] = '',
+						[vim.diagnostic.severity.WARN]  = '',
+						[vim.diagnostic.severity.INFO]  = '',
+						[vim.diagnostic.severity.HINT]  = '',
+					},
+					numhl = {
+						[vim.diagnostic.severity.ERROR] = 'DiagnosticERRORReverse',
+						[vim.diagnostic.severity.WARN]  = 'DiagnosticWARNReverse',
+						[vim.diagnostic.severity.INFO]  = 'DiagnosticINFOReverse',
+						[vim.diagnostic.severity.HINT]  = 'DiagnosticHINTReverse',
+					}
+				},
+				underline     = false, -- disable underline representation
+				severity_sort = true,  -- enable sort by severity when it collide in one line
+				virtual_text  = false  -- default is false in neovim v0.11
+			})
 
 
 			-- ####### 1) lua language server configuration #########
