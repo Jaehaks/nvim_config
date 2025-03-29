@@ -62,36 +62,36 @@ vim.filetype.add({
 
 
 ------------- editing -----------------------
-opt.inccommand = ''       -- disable show effect of substitute
-opt.number = true         -- set line number
-opt.relativenumber = true -- set relative line number
-opt.signcolumn    = 'yes'   -- show additional gray column on the leftside of line number
-opt.statuscolumn = '%=%l%s' -- change order of signcolumn. line number(left), sign(right)
-opt.tabstop = 4           -- set inserted space in TAB
-opt.shiftwidth = 4        -- set indent space
--- opt.smarttab = true
-opt.autoindent = true     -- when enter next line, automatically indent from start line
--- opt.smartindent = true    -- smart autoindent when starting new line
-                          -- when 'cindent' is on  (or) 'indentexpr' is set => smartindent is no effect
-                          -- it add indent after { or 'if, else ... '
-                          -- so in markdown, 'indentexpr' is nil as default. so it requires smartindent
-                          -- but smartindent makes new line and indent after {.
-                          -- and then, if I enter } at the next line, outdent occurs.
-                          -- so <autoclose> plugins are not works directly
-                          -- plus, '#' removes all indent at the line, but not works?
-                          -- if '#' is located at first column, '>>' doesn't work
-						  -- I'll use nvim-FeMaco.lua in markdown instead of it
+opt.inccommand     = ''       -- disable show effect of substitute
+opt.number         = true     -- set line number
+opt.relativenumber = true     -- set relative line number
+opt.signcolumn     = 'yes'    -- show additional gray column on the leftside of line number
+opt.statuscolumn   = '%=%l%s' -- change order of signcolumn. line number(left), sign(right)
+opt.tabstop        = 4        -- set inserted space in TAB
+opt.shiftwidth     = 4        -- set indent space
+                              -- opt.smarttab = true
+opt.autoindent     = true     -- when enter next line, automatically indent from start line
+                              -- opt.smartindent = true    -- smart autoindent when starting new line
+                              -- when 'cindent' is on  (or) 'indentexpr' is set => smartindent is no effect
+                              -- it add indent after { or 'if, else ... '
+                              -- so in markdown, 'indentexpr' is nil as default. so it requires smartindent
+                              -- but smartindent makes new line and indent after {.
+                              -- and then, if I enter } at the next line, outdent occurs.
+                              -- so <autoclose> plugins are not works directly
+                              -- plus, '#' removes all indent at the line, but not works?
+                              -- if '#' is located at first column, '>>' doesn't work
+                              -- I'll use nvim-FeMaco.lua in markdown instead of it
 
-opt.wrap = false          -- disable line wrapping
-opt.splitright = true	  -- focus to new window when vsplit
--- opt.splitbelow = true	  -- focus to new window when split
-opt.scrolloff = 5		  -- scroll start offset line
-opt.foldenable = false    -- disable folding automatically with marker (ex, toml )
+opt.wrap       = false -- disable line wrapping
+opt.splitright = true  -- focus to new window when vsplit
+                       -- opt.splitbelow = true	  -- focus to new window when split
+opt.scrolloff  = 5     -- scroll start offset line
+opt.foldenable = false -- disable folding automatically with marker (ex, toml )
 
 -- for nvim-cmp (init() of lazy.nvim is slow)
-vim.opt.spell = true
+vim.opt.spell     = true
 vim.opt.spelllang = {'en_us', 'cjk'} -- disable spell check for asian char
-vim.opt.pumheight = 10			-- maximum item number when show completion
+vim.opt.pumheight = 10               -- maximum item number when show completion
 
 -- set local options for markdown because markdown's ftplugin must set expandtab
 vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim focused
@@ -110,16 +110,16 @@ opt.diffopt = {'internal', 'filler', 'closeoff', 'linematch:60'}
 
 
 ------------- output file -------------------
-opt.swapfile = false		-- no swap file when file is created
-opt.backup = false 			-- no backup file when file is created
+opt.swapfile = false -- no swap file when file is created
+opt.backup   = false -- no backup file when file is created
 --opt.shell = 'cmd "C:\\Users\\USER\\user_installed\\cmder_mini\\vendor\\init.bat"'
 
 opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize" -- get rid of 'blank,buffers' to remove unlisted buffer
 													 -- get rid of 'help, terminal'
 
 ------------- case sensitive ----------------
-opt.ignorecase = true		-- ignore case when searching
-opt.smartcase = true		-- when pattern has upper case, disable ignorecase
+opt.ignorecase = true -- ignore case when searching
+opt.smartcase  = true -- when pattern has upper case, disable ignorecase
 --vim.cmd[[set mouse=ni]]		-- disable mouse operation
 								-- In neovim, mouse is disabled after entered visual mode, it is weird
 -- opt.clipboard:append('unnamedplus') -- share clipboard between vim and system
