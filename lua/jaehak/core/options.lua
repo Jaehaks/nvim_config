@@ -66,6 +66,7 @@ opt.inccommand = ''       -- disable show effect of substitute
 opt.number = true         -- set line number
 opt.relativenumber = true -- set relative line number
 opt.signcolumn    = 'yes'   -- show additional gray column on the leftside of line number
+opt.statuscolumn = '%=%l%s' -- change order of signcolumn. line number(left), sign(right)
 opt.tabstop = 4           -- set inserted space in TAB
 opt.shiftwidth = 4        -- set indent space
 -- opt.smarttab = true
