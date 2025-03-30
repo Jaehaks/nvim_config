@@ -27,7 +27,7 @@ local check_matlab_dir = function ()
 		end
 	end
 
-	vim.api.nvim_err_writeln('User Error : matlab doesn\'t be installed')
+	vim.api.nvim_echo({{'User Error : matlab doesn\'t be installed'}}, true, {err = true})
 	return ''
 end
 
