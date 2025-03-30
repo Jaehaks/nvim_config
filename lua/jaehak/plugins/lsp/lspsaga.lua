@@ -45,7 +45,7 @@ return {
 		{'<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , desc = 'LSP - hover_doc ++keep'          , silent = true, noremap = true},
 		{'gd'     , '<Cmd>Lspsaga peek_definition<CR>'           , desc = 'LSP - peek_definition'           , silent = true, noremap = true},
 		{'gt'     , '<Cmd>Lspsaga peek_type_definition<CR>'      , desc = 'LSP - peek_type_definition'      , silent = true, noremap = true},
-		{'gk'     , vim.diagnostic.goto_next                     , desc = 'LSP - diagnostics_jump_next'     , silent = true, noremap = true},
+		{'gk'     , function() vim.diagnostic.jump({count=1, float=true}) end, desc = 'LSP - diagnostics_jump_next'     , silent = true, noremap = true},
 		{'gK'     , '<Cmd>Lspsaga show_workspace_diagnostics<CR>', desc = 'LSP - show_workspace_diagnostics', silent = true, noremap = true},
 		-- Lspsaga rename() include all project files, not current buffer
 		-- caution!!) lspsga has error for some lsp diagnostic
