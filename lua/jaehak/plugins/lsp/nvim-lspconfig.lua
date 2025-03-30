@@ -6,6 +6,7 @@ local sign_priority = {
 	-- sign of gitsign.nvim is 10
 }
 
+-- TODO: the diagnostics behavior is weird when I set this.  it will be corrected
 -- local create_custom_handler = function (priority)
 -- 	return function (err, result, ctx, config)
 -- 		if err then
