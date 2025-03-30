@@ -8,10 +8,33 @@ local sign_priority = {
 
 local create_custom_handler = function (priority)
 	return function (err, result, ctx, config)
-		config = config or {}
+		if err then
+			vim.notify('err : ' .. err.message, vim.log.levels.ERROR)
+			return
+		end
+
+		-- override to default diagnostic config
+		local default_config = vim.diagnostic.config()
+		config = vim.tbl_deep_extend('force', default_config or {}, config or {})
 		config.signs = config.signs or {}
 		config.signs.priority = priority
-		vim.lsp.diagnostic.handler.on_publish_diagnostics(err, result, ctx, config)
+
+		-- set missed field like lnum, col in diagnostics to use vim.diagnostics.set()
+		local diagnostics = {}
+		for _, diagnostic in ipairs(result.diagnostics or {}) do
+			table.insert(diagnostics, {
+				lnum     = diagnostic.range.start.line,
+				col      = diagnostic.range.start.character,
+				end_lnum = diagnostic.range["end"].line or nil,
+				end_col  = diagnostic.range["end"].character or nil,
+				message  = diagnostic.message,
+				severity = diagnostic.severity,
+				source   = diagnostic.source,
+			})
+		end
+
+		-- apply configuration
+		vim.diagnostic.set(ctx.client_id, ctx.bufnr or vim.api.nvim_get_current_buf(), diagnostics, config)
 	end
 end
 
