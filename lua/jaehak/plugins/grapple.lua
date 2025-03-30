@@ -107,3 +107,5 @@ return {
 -- 							    auto saving is implemented by autocmd. it save last session
 -- 							    I can set the file name. so all session is saved to one file
 -- 							    usually I will need the last session
+-- 							    I erase it because :mksession wrapper plugins have some disadvantages like
+-- 							    neovim's mksession cannot work correctly. it cannot open what I saw the last before vim closed
