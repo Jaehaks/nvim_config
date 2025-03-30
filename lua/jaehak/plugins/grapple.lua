@@ -50,7 +50,7 @@ return {
 },
 {
 	'Jaehaks/last-session.nvim',
-	branch = 'main',
+	ft = {'dashboard'},
 	opts = {
 		auto_save = true,
 		path = paths.last_session.saved,
