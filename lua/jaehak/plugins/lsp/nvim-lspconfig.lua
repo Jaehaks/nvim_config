@@ -6,37 +6,37 @@ local sign_priority = {
 	-- sign of gitsign.nvim is 10
 }
 
-local create_custom_handler = function (priority)
-	return function (err, result, ctx, config)
-		if err then
-			vim.notify('err : ' .. err.message, vim.log.levels.ERROR)
-			return
-		end
-
-		-- override to default diagnostic config
-		local default_config = vim.diagnostic.config()
-		config = vim.tbl_deep_extend('force', default_config or {}, config or {})
-		config.signs = config.signs or {}
-		config.signs.priority = priority
-
-		-- set missed field like lnum, col in diagnostics to use vim.diagnostics.set()
-		local diagnostics = {}
-		for _, diagnostic in ipairs(result.diagnostics or {}) do
-			table.insert(diagnostics, {
-				lnum     = diagnostic.range.start.line,
-				col      = diagnostic.range.start.character,
-				end_lnum = diagnostic.range["end"].line or nil,
-				end_col  = diagnostic.range["end"].character or nil,
-				message  = diagnostic.message,
-				severity = diagnostic.severity,
-				source   = diagnostic.source,
-			})
-		end
-
-		-- apply configuration
-		vim.diagnostic.set(ctx.client_id, ctx.bufnr or vim.api.nvim_get_current_buf(), diagnostics, config)
-	end
-end
+-- local create_custom_handler = function (priority)
+-- 	return function (err, result, ctx, config)
+-- 		if err then
+-- 			vim.notify('err : ' .. err.message, vim.log.levels.ERROR)
+-- 			return
+-- 		end
+--
+-- 		-- override to default diagnostic config
+-- 		local default_config = vim.diagnostic.config()
+-- 		config = vim.tbl_deep_extend('force', default_config or {}, config or {})
+-- 		config.signs = config.signs or {}
+-- 		config.signs.priority = priority
+--
+-- 		-- set missed field like lnum, col in diagnostics to use vim.diagnostics.set()
+-- 		local diagnostics = {}
+-- 		for _, diagnostic in ipairs(result.diagnostics or {}) do
+-- 			table.insert(diagnostics, {
+-- 				lnum     = diagnostic.range.start.line,
+-- 				col      = diagnostic.range.start.character,
+-- 				end_lnum = diagnostic.range["end"].line or nil,
+-- 				end_col  = diagnostic.range["end"].character or nil,
+-- 				message  = diagnostic.message,
+-- 				severity = diagnostic.severity,
+-- 				source   = diagnostic.source,
+-- 			})
+-- 		end
+--
+-- 		-- apply configuration
+-- 		vim.diagnostic.set(ctx.client_id, ctx.bufnr or vim.api.nvim_get_current_buf(), diagnostics, config)
+-- 	end
+-- end
 
 return {
 	{
@@ -119,7 +119,7 @@ return {
 							ignoreDir = {'.git'},
 							checkThirdParty = false,
 							library = {
-								vim.env.VIMRUNTIME,
+								-- vim.env.VIMRUNTIME,
 								vim.api.nvim_get_runtime_file('lua',true),
 
 								-- ## below two directories make lsp loading too slow
@@ -131,9 +131,9 @@ return {
 					}
 				},
 				capabilities = capabilities,
-				handlers = {
-					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-				}
+				-- handlers = {
+				-- 	['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+				-- }
 			})
 
 			-- ####### 2) matlab language server configuration #########
@@ -155,9 +155,9 @@ return {
 					},
 				},
 				single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
-				handlers = {
-					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-				}
+				-- handlers = {
+				-- 	['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+				-- }
 
 			})
 
@@ -248,9 +248,9 @@ return {
 						},
 					}
 				},
-				handlers = { -- it seems not work right now
-					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-				}
+				-- handlers = { -- it seems not work right now
+				-- 	['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+				-- }
 			})
 
 			-- It seems that basedpyright give more feature than pyright and pylsp (lsp signature, completion)
@@ -278,9 +278,9 @@ return {
 						}
 					},
 				},
-				handlers = {
-					['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
-				}
+				-- handlers = {
+				-- 	['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
+				-- }
 			})
 		end
 	},
