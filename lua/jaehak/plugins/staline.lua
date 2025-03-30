@@ -43,7 +43,7 @@ return {
 				left = {'- ', '-mode', 'left_sep_double',
 				{'StalineFileSize','file_size'},
 				{'StalineBranch','branch'} },
-				mid = {{'Normal', 'file_name'},
+				mid = {{'Staline', 'file_name'},
 				'lsp'},
 				right = {function() return  vim.bo[0].fileencoding .. ' ' end , '',
 				'cool_symbol', ' ',
