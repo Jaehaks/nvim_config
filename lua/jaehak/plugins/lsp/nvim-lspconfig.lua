@@ -96,7 +96,7 @@ return {
 							ignoreDir = {'.git'},
 							checkThirdParty = false,
 							library = {
-								vim.env.VIMRUMTIME,
+								vim.env.VIMRUNTIME,
 								vim.api.nvim_get_runtime_file('lua',true),
 
 								-- ## below two directories make lsp loading too slow
