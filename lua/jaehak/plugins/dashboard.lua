@@ -60,7 +60,7 @@ return {
 					desc = 'Last Sessions', desc_hl = 'String',
 					key = 's', key_hl = 'DashboardShortCut',
 					-- action = function () require('sessions').load(paths.session.saved, {autosave = false}) end,
-					action = function () require('last-session.sessions').restore_session() end,
+					action = function () require('last-session').load_session() end,
 				},
 			},
 			footer = function()
