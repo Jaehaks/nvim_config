@@ -2,6 +2,9 @@ local paths = require('jaehak.core.paths')
 return {
 	{
 		'williamboman/mason-lspconfig.nvim', -- for connection with nvim-lspconfig
+		-- notice paths of lsp execution file to neovim
+		-- install automatically at startup and update of lsp
+		enabled = false,
 		lazy = true,
 		-- event = 'BufReadPre',
 		opts = {
@@ -19,7 +22,10 @@ return {
 	},
 	{
 		'WhoIsSethDaniel/mason-tool-installer.nvim',
+		-- install automatically at startup and update of formatter, lineter others
+		enabled = false,
 		lazy = true,
+		-- cmd = {'Mason'},
 		-- event = 'BufReadPre',
 		opts = {
 			ensure_installed = {
@@ -38,6 +44,8 @@ return {
 		-- 5) curl (default in windows)
 		-- 6) npm (download)
 		'williamboman/mason.nvim',
+		-- installation of lsp, formatter, linter, debugger
+		cmd = {'Mason'},
 		enabled = true,
 		lazy = true,  	-- lazy-loading is not recommended
 		opts = {
