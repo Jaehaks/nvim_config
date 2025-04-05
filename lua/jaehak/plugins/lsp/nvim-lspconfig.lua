@@ -59,6 +59,7 @@ return {
 	{
 		-- nvim-lspconfig must be loaded after than mason. If not, spawning server warning fired
 		'neovim/nvim-lspconfig',
+		enabled = false,
 		event = 'BufReadPre',
 		dependencies = {
 			'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig

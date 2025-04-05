@@ -13,6 +13,8 @@ M.nvim = {
 	treesitter_queries = config_dir .. "\\queries\\nvim-treesitter",
 	wordlist_korean    = config_dir .. '\\queries\\dictionary\\wordslist_korean.txt',
 	rainbow_queries    = config_dir .. '\\queries\\rainbow-delimiters.nvim',
+	mason              = data_dir .. '\\mason\\bin',
+	lsp                = config_dir .. '\\lsp',
 }
 
 local check_matlab_dir = function ()

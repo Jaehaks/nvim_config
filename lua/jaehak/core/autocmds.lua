@@ -223,3 +223,22 @@ vim.ui.select = function (items, opts, on_choice)
 		end)
 	end
 end
+
+
+
+
+
+---------- Lsp -----------
+vim.api.nvim_create_user_command("LspInfo", function (opts)
+	vim.cmd('checkhealth vim.lsp')
+end, {desc = 'LspInfo'})
+
+
+
+
+
+
+
+
+
+
