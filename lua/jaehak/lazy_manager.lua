@@ -84,3 +84,6 @@ else		-- for vscode
 			},
 		})
 end
+
+
+require("jaehak.core.lsp")

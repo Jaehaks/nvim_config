@@ -37,13 +37,6 @@ vim.diagnostic.config({
 -- #############################################################
 -- vim.lsp.config is extension of vim.lsp.ClientConfig
 vim.lsp.config['*'] = {
-	-- capabilities = {
-	-- 	textDocument = {
-	-- 		semanticTokens = {
-	-- 			multilineTokenSupport = true,
-	-- 		}
-	-- 	}
-	-- },
 	root_dir = function (bufnr, cb)
 		local root = vim.fs.find({'.git'}, {upward = true})[1]
 		-- root directory must be transferred to callback function to recognize
