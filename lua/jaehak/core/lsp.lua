@@ -51,8 +51,6 @@ vim.lsp.config['*'] = {
 
 
 
-
-
 -- WARN: it doesn't matter what you set the config name, but it must not contains underscore('_') in the name
 -- #############################################################
 -- ####### lus-ls config
@@ -79,7 +77,7 @@ vim.lsp.config['lua-ls'] = {
 				ignoreDir = {'.git'},
 				checkThirdParty = false,
 				library = {
-					-- vim.env.VIMRUNTIME,
+					vim.env.VIMRUNTIME,
 					vim.api.nvim_get_runtime_file('lua',true),
 
 					-- ## below two directories make lsp loading too slow
@@ -235,13 +233,9 @@ vim.lsp.config['basedpyright'] = {
 -- #############################################################
 -- ####### lsp enable
 -- #############################################################
-vim.lsp.enable({
-	'lua-ls',
-	'matlab-ls',
-	-- 'harper-ls',
-	'ruff',
-	'basedpyright'
-})
-
+vim.lsp.enable('lua-ls')
+vim.lsp.enable('matlab-ls')
+vim.lsp.enable('ruff')
+vim.lsp.enable('baesdpyright')
 
 
