@@ -37,13 +37,22 @@ vim.diagnostic.config({
 -- #############################################################
 -- vim.lsp.config is extension of vim.lsp.ClientConfig
 vim.lsp.config['*'] = {
-	capabilities = {
-		textDocument = {
-			semanticTokens = {
-				multilineTokenSupport = true,
-			}
-		}
-	},
+	-- capabilities = {
+	-- 	textDocument = {
+	-- 		semanticTokens = {
+	-- 			multilineTokenSupport = true,
+	-- 		}
+	-- 	}
+	-- },
+	root_dir = function (bufnr, cb)
+		local root = vim.fs.find({'.git'}, {upward = true})[1]
+		-- root directory must be transferred to callback function to recognize
+		if root then
+			cb(vim.fs.dirname(root))
+		else
+			cb(vim.fn.getcwd())
+		end
+	end,
 }
 
 
@@ -57,7 +66,6 @@ vim.lsp.config['*'] = {
 -- #############################################################
 vim.lsp.config['lua-ls'] = {
 	cmd = {'lua-language-server'},
-	root_markers = {'.git', '.luarc.json'},
 	filetypes = {'lua'},
 	settings = {
 		Lua = {
@@ -98,15 +106,6 @@ vim.lsp.config['lua-ls'] = {
 vim.lsp.config['matlab-ls'] = {
 	cmd = {'matlab-language-server', '--stdio'},
 	filetypes = {'matlab'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.find({'.git'}, {upward = true})[1]
-		-- root directory must be transferred to callback function to recognize
-		if root then
-			cb(vim.fs.dirname(root))
-		else
-			cb(vim.fn.getcwd())
-		end
-	end,
 	settings = {
 		matlab = {
 			indexWorkspace = true,
@@ -129,15 +128,6 @@ vim.lsp.config['matlab-ls'] = {
 vim.lsp.config['harper-ls'] = {
 	cmd = {'harper-ls', '--stdio'},
 	filetypes = {'gitcommit', 'markdown', 'text', 'NeogitStatus', 'lua'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.find({'.git'}, {upward = true})[1]
-		-- root directory must be transferred to callback function to recognize
-		if root then
-			cb(vim.fs.dirname(root))
-		else
-			cb(vim.fn.getcwd())
-		end
-	end,
 	settings = {
 		['harper-ls'] = {
 			linters = {
@@ -189,22 +179,13 @@ vim.lsp.config['harper-ls'] = {
 vim.lsp.config['ruff'] = {
 	cmd = {'ruff', 'server'},
 	filetypes = {'python'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.find({'.git'}, {upward = true})[1]
-		-- root directory must be transferred to callback function to recognize
-		if root then
-			cb(vim.fs.dirname(root))
-		else
-			cb(vim.fn.getcwd())
-		end
-	end,
 	on_attach = function (client, bufnr)
 		-- lsp use ruff to formatter
 		client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
 		client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
 		client.server_capabilities.hoverProvider = false                   -- use pylsp
 	end,
-		init_options = {
+	init_options = {
 		settings = {
 			configuration = paths.lsp.ruff.config_path,
 			logFile = paths.lsp.ruff.log_path,
@@ -221,7 +202,7 @@ vim.lsp.config['ruff'] = {
 			lint = {            -- it links with ruff, but lint.args are different with ruff configuration
 				enable = true,
 			},
-		}
+		},
 	},
 	single_file_support = true,
 }
@@ -234,15 +215,6 @@ vim.lsp.config['ruff'] = {
 vim.lsp.config['basedpyright'] = {
 	cmd = {'basedpyright-langserver', '--stdio'},
 	filetypes = {'python'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.find({'.git'}, {upward = true})[1]
-		-- root directory must be transferred to callback function to recognize
-		if root then
-			cb(vim.fs.dirname(root))
-		else
-			cb(vim.fn.getcwd())
-		end
-	end,
 	on_attach = function (client, bufnr)
 		-- pyright doesn't have FormattingProvider
 		-- client.server_capabilities.hoverProvider = true          -- pylsp gives more params explanation. pyright gives more type explanation
