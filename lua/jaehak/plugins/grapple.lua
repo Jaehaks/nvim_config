@@ -50,7 +50,7 @@ return {
 },
 {
 	'Jaehaks/last-session.nvim',
-	ft = {'dashboard'},
+	lazy = false,
 	opts = {
 		auto_save = true,
 		path = paths.last_session.saved,
