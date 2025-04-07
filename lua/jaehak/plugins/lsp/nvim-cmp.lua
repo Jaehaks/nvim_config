@@ -144,6 +144,7 @@ return {
 						spell      = '[SPELL]',
 						-- dictionary = '[Dict]',
 						cmdline    = '[CMD]',
+						lazydev    = '[LAZYDEV]',
 						vimtex     = item.menu, -- show packages as menu
 					}
 					item.menu = menu_icon[entry.source.name] -- change kind field
@@ -185,6 +186,11 @@ return {
 					max_item_count = 5,
 					priority = 1000,
 					-- show_autosnippets : it true, show autosnip, but it is expanded automatically when word selected in cmp window
+				},
+				{
+					name = 'lazydev',
+					max_item_count = 5,
+					priority = 501,
 				},
 				{
 					name = 'nvim_lsp',

@@ -77,13 +77,14 @@ vim.lsp.config['lua-ls'] = {
 				ignoreDir = {'.git'},
 				checkThirdParty = false,
 				library = {
-					vim.env.VIMRUNTIME,
-					vim.api.nvim_get_runtime_file('lua',true),
+					-- vim.env.VIMRUNTIME,
+					-- vim.api.nvim_get_runtime_file('lua',true),
 
-					-- ## below two directories make lsp loading too slow
-					-- I think stdpath('data') load all plugins even though it has "enabled = false"
-					--							vim.fn.stdpath('config'),
-					--							vim.fn.stdpath('data'),
+					-- `lazydev` imports vim.env.VIMRUNTIME automatically in `library` field.
+					-- so you don't need to set in `library` field with `lazydev`
+					-- it loads libraries which is what you declared in lua file using `require()` function when it detects.
+					-- it is very convenient to write neovim lua plugins.
+					-- plus, If you add source 'lazydev' in nvim-cmp, it suggests the installed plugin names in `require()`
 				}
 			},
 		},

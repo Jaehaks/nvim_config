@@ -44,7 +44,7 @@ return {
 		-- replacement of neodev, for neovim config
 		-- but it doesn't supports highlights for vim global variable
 		'folke/lazydev.nvim',
-		enabled = false,
+		enabled = true,
 		ft = 'lua',
 		opts = {
 			library = {
