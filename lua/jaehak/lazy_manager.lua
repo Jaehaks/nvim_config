@@ -63,6 +63,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.lsp.mason'          , enabled = true},
 		{import = 'jaehak.plugins.lsp.nvim-lspconfig' , enabled = true},
 		{import = 'jaehak.plugins.lsp.nvim-cmp'       , enabled = true},
+		{import = 'jaehak.plugins.lsp.blink-cmp'      , enabled = false},
 		{import = 'jaehak.plugins.lsp.luasnip'        , enabled = true},
 		{import = 'jaehak.plugins.lsp.markdown'       , enabled = true},
 		{import = 'jaehak.plugins.lsp.nvim-surround'  , enabled = true},
