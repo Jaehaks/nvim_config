@@ -22,7 +22,7 @@ vim.opt.rtp:prepend(lazypath)
 if vim.g.vscode == nil then
 	require('lazy').setup({
 		{import = 'jaehak.plugins.auxiliary'     	  , enabled = true},
-		{import = 'jaehak.plugins.buffer_manager'     , enabled = false},
+		{import = 'jaehak.plugins.buffer_manager'     , enabled = false}, -- false
 		{import = 'jaehak.plugins.colorscheme'        , enabled = true},
 		{import = 'jaehak.plugins.snacks'             , enabled = true},
 		{import = 'jaehak.plugins.dashboard'          , enabled = true},
@@ -44,14 +44,13 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.nvim-context-vt'    , enabled = true},
 		{import = 'jaehak.plugins.nvim-hlslens'       , enabled = true},
 		{import = 'jaehak.plugins.obsidian'           , enabled = true},
-		{import = 'jaehak.plugins.spelunk'            , enabled = false},
+		{import = 'jaehak.plugins.spelunk'            , enabled = false}, -- false
 		{import = 'jaehak.plugins.split'              , enabled = true},
 		{import = 'jaehak.plugins.staline'            , enabled = true},
 		{import = 'jaehak.plugins.substitute'         , enabled = true},
-		{import = 'jaehak.plugins.telescope'          , enabled = false},
+		{import = 'jaehak.plugins.telescope'          , enabled = false}, -- false
 		{import = 'jaehak.plugins.todo-comments'      , enabled = true},
 		{import = 'jaehak.plugins.translate'          , enabled = true},
-		-- {import = 'jaehak.plugins.vim-illuminate'     , enabled = true},
 		{import = 'jaehak.plugins.local-highlight'    , enabled = true},
 		{import = 'jaehak.plugins.vim-visual-multi'   , enabled = true},
 		{import = 'jaehak.plugins.which-key'          , enabled = true},
