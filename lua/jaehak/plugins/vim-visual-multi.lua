@@ -45,7 +45,7 @@ return {
 	keys = {
 		{'<C-k>', function () require("multicursor-nvim").addCursor('k') end, desc = '[Multicursor] Add below char', mode = {'n', 'v'}},
 		{'<C-j>', function () require("multicursor-nvim").addCursor('j') end, desc = '[Multicursor] Add above char', mode = {'n', 'v'}},
-		{'<C-n>', function () require("multicursor-nvim").matchAllAddCursors(1) end, desc = '[Multicursor] Add next cword', mode = {'n', 'v'}},
+		{'<C-n>', function () require("multicursor-nvim").matchAddCursor(1) end, desc = '[Multicursor] Add next cword', mode = {'n', 'v'}},
 		{'<C-S-n>', function () require("multicursor-nvim").matchAllAddCursors() end, desc = '[Multicursor] Add all cword', mode = {'n', 'v'}},
 		{'<C-b>', function ()
 			local mc = require('multicursor-nvim')
