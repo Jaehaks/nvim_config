@@ -236,6 +236,6 @@ vim.lsp.config['basedpyright'] = {
 vim.lsp.enable('lua-ls')
 vim.lsp.enable('matlab-ls')
 vim.lsp.enable('ruff')
-vim.lsp.enable('baesdpyright')
+vim.lsp.enable('basedpyright')
 
 
