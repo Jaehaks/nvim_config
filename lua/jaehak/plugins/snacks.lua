@@ -130,6 +130,9 @@ return {
 		end, desc = 'Show marks', mode = {'n'}},
 
 		{ '<leader>fo', function () Snacks.picker.recent({
+			sort = {
+				fields = {'time:desc'}
+			},
 			filter = {
 				[vim.fn.stdpath('data')] = true,
 			}
