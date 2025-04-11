@@ -4,7 +4,7 @@ return {
 {
 	'nvim-treesitter/nvim-treesitter',
 	-- enabled = false,
-	lazy = true, -- by telescope
+	event = {'BufReadPost'},
 	ft = paths.Filetypes.ForIlluminate,
 	dependencies = {
 		'HiPhish/rainbow-delimiters.nvim',
