@@ -32,7 +32,8 @@
 > `scoop bucket add main extras versions java`
 
 ```powershell
-	scoop 7zip bat clipboard cmake curl eza fd fzf gawk gho
+	scoop install ffmpeg 7zip jq poppler fd ripgrep fzf zoxide resvg imagemagick bat clipboard unar wget curl unzip gzip tar pwsh openjdk11 go rustup python tree-sitter git
+	scoop install lua luarocks mingw neovim neovim-qt iconv uutils-coreutils less sed grep obs-studio scoop-search ghostscript windows-terminal yazi zip eza gawk
 ```
 
 1. ffmpeg (for yazi)
