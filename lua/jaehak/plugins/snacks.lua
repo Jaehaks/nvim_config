@@ -134,7 +134,7 @@ return {
 				fields = {'time:desc'}
 			},
 			filter = {
-				[vim.fn.stdpath('data')] = true,
+				[vim.fn.stdpath('data')] = false,
 			}
 		}) end, desc = 'Show oldfiles', mode = {'n'}},
 
