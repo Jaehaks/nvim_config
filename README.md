@@ -97,8 +97,8 @@
 	- `pdflatex` for `snacks`
 	- `latexmk` for `vimtex`
 	- It is more convenient to install packages over than `scoop` package
-
-
+5. [Obsidian](https://obsidian.md/download)
+	- for personal markdown notes
 
 #### mason
 
