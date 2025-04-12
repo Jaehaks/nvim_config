@@ -37,13 +37,13 @@ vim.diagnostic.config({
 -- #############################################################
 -- vim.lsp.config is extension of vim.lsp.ClientConfig
 -- but root_dir must be set by independent lsp server
-vim.lsp.config['*'] = {
+vim.lsp.config('*', {
 	root_dir = function (bufnr, cb)
 		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
 		-- root directory must be transferred to callback function to recognize
 		cb(root)
 	end,
-}
+})
 
 
 
@@ -52,14 +52,9 @@ vim.lsp.config['*'] = {
 -- #############################################################
 -- ####### lus-ls config
 -- #############################################################
-vim.lsp.config['lua-ls'] = {
+vim.lsp.config('lua-ls', {
 	cmd = {'lua-language-server'},
 	filetypes = {'lua'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
-		-- root directory must be transferred to callback function to recognize
-		cb(root)
-	end,
 	settings = {
 		Lua = {
 			completion = {
@@ -92,19 +87,14 @@ vim.lsp.config['lua-ls'] = {
 		},
 		single_file_support = true,
 	},
-}
+})
 
 -- #############################################################
 -- ####### matlab-ls config
 -- #############################################################
-vim.lsp.config['matlab-ls'] = {
+vim.lsp.config('matlab-ls', {
 	cmd = {'matlab-language-server', '--stdio'},
 	filetypes = {'matlab'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
-		-- root directory must be transferred to callback function to recognize
-		cb(root)
-	end,
 	settings = {
 		matlab = {
 			indexWorkspace = true,
@@ -114,7 +104,7 @@ vim.lsp.config['matlab-ls'] = {
 		},
 	},
 	single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
-}
+})
 
 
 
@@ -124,14 +114,9 @@ vim.lsp.config['matlab-ls'] = {
 -- #############################################################
 -- ####### harper_ls language server configuration (more faster than ltex)
 -- #############################################################
-vim.lsp.config['harper-ls'] = {
+vim.lsp.config('harper-ls', {
 	cmd = {'harper-ls', '--stdio'},
 	filetypes = {'gitcommit', 'markdown', 'text', 'NeogitStatus', 'lua'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
-		-- root directory must be transferred to callback function to recognize
-		cb(root)
-	end,
 	settings = {
 		['harper-ls'] = {
 			linters = {
@@ -159,7 +144,7 @@ vim.lsp.config['harper-ls'] = {
 		}
 	},
 	single_file_support = false,
-}
+})
 
 
 
@@ -180,14 +165,9 @@ vim.lsp.config['harper-ls'] = {
 -- #############################################################
 -- ####### ruff : linter
 -- #############################################################
-vim.lsp.config['ruff'] = {
+vim.lsp.config('ruff', {
 	cmd = {'ruff', 'server'},
 	filetypes = {'python'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
-		-- root directory must be transferred to callback function to recognize
-		cb(root)
-	end,
 	on_attach = function (client, bufnr)
 		-- lsp use ruff to formatter
 		client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
@@ -214,21 +194,16 @@ vim.lsp.config['ruff'] = {
 		},
 	},
 	single_file_support = true,
-}
+})
 
 
 -- #############################################################
 -- ####### basedpyright
 -- #############################################################
 -- it supports lsp functions like lspsaga
-vim.lsp.config['basedpyright'] = {
+vim.lsp.config('basedpyright', {
 	cmd = {'basedpyright-langserver', '--stdio'},
 	filetypes = {'python'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
-		-- root directory must be transferred to callback function to recognize
-		cb(root)
-	end,
 	on_attach = function (client, bufnr)
 		-- pyright doesn't have FormattingProvider
 		-- client.server_capabilities.hoverProvider = true          -- pylsp gives more params explanation. pyright gives more type explanation
@@ -247,7 +222,7 @@ vim.lsp.config['basedpyright'] = {
 		},
 	},
 	single_file_support = true,
-}
+})
 
 
 
@@ -256,9 +231,13 @@ vim.lsp.config['basedpyright'] = {
 -- #############################################################
 -- ####### lsp enable
 -- #############################################################
-vim.lsp.enable('lua-ls')
-vim.lsp.enable('matlab-ls')
-vim.lsp.enable('ruff')
-vim.lsp.enable('basedpyright')
+vim.lsp.enable({
+	'lua-ls',
+	'matlab-ls',
+	-- 'harper-ls',
+	'ruff',
+	'basedpyright',
+
+})
 
 
