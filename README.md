@@ -8,6 +8,23 @@
 
 ### For Windows
 
+#### pre-required environment variable
+
+
+1. `HOME` : `%USERPROFILE%`
+2. `PATH` :
+	- `%USERPROFILE%\.config\Dotfiles\clink`
+	- `%USERPROFILE%\user_installed\SumatraPDF`
+	- `%USERPROFILE%\user_installed\<clinkpath>`
+	- `%USERPROFILE%\user_installed\MikTeX\miktex\bin\x64`
+	- `%USERPROFILE%\scoop\apps\openjdk11\current\bin`
+	- `%USERPROFILE%\Vim\vim90`
+3. `CC` : `gcc`
+4. `XDG_CONFIG_HOME` : `%USERPROFILE%\.config`
+4. `XDG_DATA_HOME` : `%USERPROFILE%\.config`
+4. `XDG_STATE_HOME` : `%USERPROFILE%\.config`
+4. `XDG_RUNTIME_DIR` : `C:\WINDOWS\TEMP\nvim.user`
+
 #### using `scoop`
 
 > [!NOTE]
