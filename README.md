@@ -4,22 +4,100 @@
     - Windows 10
     -
 
-## Installation sequence
+## Installation requirement
 
 ### For Windows
-1. mason.nvim
-    1) pwsh
-    2) git
-    3) GNU tar
-    4) 7zip
-2. unzip
-3. wget
-4. curl
-5. gzip
-6. tar
-7. bash
-8. sh
 
+#### using `scoop`
+
+> [!NOTE]
+> To add buckets put this code in cmd prompt
+> `scoop bucket add main extras versions java`
+
+```powershell
+	scoop 7zip bat clipboard cmake curl eza fd fzf gawk gho
+```
+
+1. ffmpeg (for yazi)
+2. 7zip (for yazi, neovim/mason)
+3. jq (for yazi)
+4. poppler (for yazi)
+5. fd (for yazi, neovim/snacks)
+6. ripgrep (for yazi, neovim/snacks)
+7. fzf (for yazi)
+8. zoxide (for yazi, clink)
+9. resvg (for yazi)
+10. imagemagick (for yazi)
+11. bat (for yazi)
+12. clipboard (for yazi)
+13. unar (for yazi/lsar.yazi)
+14. wget (for neovim/mason)
+15. curl (for neovim/mason)
+16. unzip (for neovim/mason)
+17. gzip (for neovim/mason)
+18. tar (for neovim/mason)
+19. pwsh (for neovim/mason)
+	- or [download link](https://github.com/PowerShell/PowerShell/releases)
+20. openjdk11 (for neovim/mason)
+21. go (for neovim/go)
+22. rustup (for neovim/mason)
+23. python (for neovim/mason, neovim provider)
+24. tree-sitter (for neovim/nvim-treesitter)
+25. git (for neovim/lazy.nvim, neovim/snacks)
+26. lua (for neovim)
+27. luarocks (for neovim)
+28. mingw (for neovim)
+	- gcc (for neovim/nvim-treesitter)
+29. neovim (for neovim)
+30. neovim-qt (for neovim)
+31. iconv (for `clink/fzff.cmd` and `clink/fzfd.cmd`)
+32. uutils-coreutils (for linux command)
+33. less (for linux command)
+34. sed (for linux command)
+35. grep (for linux command)
+36. obs-studio (for recording screen)
+35. scoop-search (for search scoop package)
+37. ghostscript
+38. windows-terminal
+39. yazi
+40. zip
+41. eza
+42. gawk
+
+#### using manual download
+
+1. [sumatraPDF](https://www.sumatrapdfreader.org/free-pdf-reader)
+	- program from `scoop` has some bug
+2. [clink](https://github.com/chrisant996/clink/releases)
+	- it needs to copy or link files from `dotfiles` to the install path of clink
+3. [node.js](https://nodejs.org/ko/download) (for neovim/mason)
+	- version v20
+	- npm (for neovim/mason)
+		- `npm install -g neovim` for `vim.g.loaded_node_provider = 1`
+		- `vim.g.loaded_perl_provider = 0` for disable provider warning
+4. [MikTeX](https://miktex.org/download)
+	- `pdflatex` for `snacks`
+	- `latexmk` for `vimtex`
+	- It is more convenient to install packages over than `scoop` package
+
+
+
+#### mason
+
+- `mason` is loaded by `cmd` for lazy load. Parsers must be installed manually
+
+* 🟩 required lsp
+	- json-lsp
+	- basedpyright
+	- lua-language-server
+	- matlab-languager-server
+
+* 🟩 required linter
+	- ruff
+
+* 🟩 required formatter
+	- latexindent
+	- stylua
 
 ### For Ubuntu 22.04
 
