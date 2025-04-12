@@ -46,6 +46,7 @@ else
 	opt.path:append(paths.config_dir .. "/**10")
 	opt.path:append(paths.data_dir .. "/**10")
 end
+vim.g.loaded_perl_provider = 0 -- disable perl provider warning
 
 
 -- change
