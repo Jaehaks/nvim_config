@@ -21,9 +21,9 @@
 	- `%USERPROFILE%\Vim\vim90`
 3. `CC` : `gcc`
 4. `XDG_CONFIG_HOME` : `%USERPROFILE%\.config`
-4. `XDG_DATA_HOME` : `%USERPROFILE%\.config`
-4. `XDG_STATE_HOME` : `%USERPROFILE%\.config`
-4. `XDG_RUNTIME_DIR` : `C:\WINDOWS\TEMP\nvim.user`
+5. `XDG_DATA_HOME` : `%USERPROFILE%\.config`
+6. `XDG__HOME` : `%USERPROFILE%\.config`
+7. `XDG_RUNTIME_DIR` : `C:\WINDOWS\TEMP\nvim.user`
 
 #### using `scoop`
 
