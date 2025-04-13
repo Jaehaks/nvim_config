@@ -179,6 +179,10 @@ vim.api.nvim_create_autocmd('CursorHold', {
 		end
 
 		vim.api.nvim_exec_autocmds('BufWritePre', {buffer = 0}) -- force execute BufWritePre event
+		local ok, err = pcall(vim.cmd, 'write')
+		if not ok then -- when write is protected
+			vim.notify('AutoCmd : Failed to write this file', vim.log.levels.WARN)
+		end
 		vim.cmd('write') -- because cmd('write') doesn't invokes BufWritePre
 	end
 })
