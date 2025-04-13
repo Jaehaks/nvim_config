@@ -52,9 +52,10 @@ return {
 				{ path = '${3rd}\\luv\\library', words = {'vim%.uv'} }, -- for vim.uv auto completion
 				-- `Snacks` library useful when I configure this plugin, it can check undefined variable
 			},
-			enabled = function (root_dir)
-				return vim.bo.filetype == 'lua'
-			end
+			-- -- load lazydev always even though there are .luarc.json
+			-- enabled = function (root_dir)
+			-- 	return vim.bo.filetype == 'lua'
+			-- end
 		}
 	},
 	{
