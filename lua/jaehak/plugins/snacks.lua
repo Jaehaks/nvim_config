@@ -2,7 +2,7 @@ local picker_config = {
 	matcher = {
 		cwd_bonus = true,
 	},
-	ui_select = true,
+	ui_select = false,
 	layout = {
 		preset = 'vertical'
 	},
