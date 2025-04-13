@@ -370,6 +370,7 @@ return {
 },
 {
 	'allaman/emoji.nvim',
+	enabled = false,
 	ft = 'markdown',
 	opts = {
 		enable_cmp_integration = true, -- cmp integration requires 14MB RAM
@@ -403,3 +404,4 @@ return {
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
 -- HakonHarnes/img-clip.nvim : it replaced with obisidian.nvim's paste function.
+-- 'allaman/emoji.nvim' : it is replaced with

@@ -54,7 +54,7 @@ return {
 {
 	-- show signature help when enter functions
 	'ray-x/lsp_signature.nvim',
-	enabled = true,
+	enabled = false, -- it will be replaced with blink.cmp's feature
 	event = 'InsertEnter',
 	keys = {
 		{'<C-s>', function() require('lsp_signature').toggle_float_win() end, silent = true, noremap = true, desc = 'LSP - toggle signature help' }
