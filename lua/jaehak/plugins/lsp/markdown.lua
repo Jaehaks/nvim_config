@@ -166,6 +166,7 @@ return {
 		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled', {fg = '#999999'})
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault', {link = 'Normal'}) -- default block quote color
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer', {default = true, fg = '#FE86D8'}) -- default block quote color
+		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign', {link = 'markdownH1'})
 
 		return{
 			preview = {
