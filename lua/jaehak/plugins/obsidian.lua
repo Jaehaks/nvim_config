@@ -4,12 +4,10 @@ return {
 	{
 		-- 'epwalsh/obsidian.nvim',
 		'Jaehaks/obsidian.nvim',
+		branch = 'fix/all',
 		lazy = true,
 		ft = 'markdown',
 		opts = {
-			completion = {
-				nvim_cmp = false,
-			},
 			workspaces = { -- this directory must exist
 				{
 					name = 'Personal',
@@ -19,6 +17,11 @@ return {
 					name = 'Project',
 					path = paths.obsidian.project
 				},
+			},
+			completion = {
+				nvim_cmp  = false,
+				blink     = true,
+				min_chars = 2,
 			},
 			mappings = {}, -- disable default keymapping
 			new_notes_location = 'current_dir',
@@ -60,6 +63,17 @@ return {
 				-- return tostring(os.date('%y%m%d')) .. '_' .. title
 				return title
 			end,
+			picker = {
+				name = 'snacks.pick',
+				note_mappings = {
+					new         = "<C-x>", -- Create a new note from your query.
+					insert_link = "<C-l>", -- Insert a link to the selected note.
+				},
+				tag_mappings = {
+					tag_note   = "<C-x>", -- Add tag(s) to current note.
+					insert_tag = "<C-l>", -- Insert a tag at the current location.
+				},
+			}
 		},
 		config = function (_, opts)
 			-- ####################################################
@@ -70,10 +84,10 @@ return {
 			obsidian.setup(opts)
 
 			-- register completion for blink.compat
-			local cmp = require('cmp')
-			cmp.register_source('obsidian', require('cmp_obsidian').new())
-			cmp.register_source('obsidian_new', require('cmp_obsidian_new').new())
-			cmp.register_source('obsidian_tags', require('cmp_obsidian_tags').new())
+			-- local cmp = require('cmp')
+			-- cmp.register_source('obsidian', require('cmp_obsidian').new())
+			-- cmp.register_source('obsidian_new', require('cmp_obsidian_new').new())
+			-- cmp.register_source('obsidian_tags', require('cmp_obsidian_tags').new())
 
 
 			-- ####################################################

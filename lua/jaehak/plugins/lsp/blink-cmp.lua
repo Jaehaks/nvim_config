@@ -74,7 +74,7 @@ return {
 			per_filetype = {
 				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'path', 'cmdline'},
 				matlab = {},
-				markdown = {'snippets', 'buffer', 'path', 'emoji', 'spell', 'obsidian', 'obsidian_new', 'obsidian_tags'},
+				markdown = {'snippets', 'buffer', 'path', 'emoji', 'spell'}, -- obsidian added
 				gitcommit = {'buffer', 'emoji', 'spell'}
 			},
 			providers = {
@@ -132,18 +132,18 @@ return {
 					module = 'lazydev.integrations.blink',
 					score_offset = 100,
 				},
-				obsidian = {
-					name = 'obsidian',
-					module = 'blink.compat.source'
-				},
-				obsidian_new = {
-					name = 'obsidian_new',
-					module = 'blink.compat.source'
-				},
-				obsidian_tags = {
-					name = 'obsidian_tags',
-					module = 'blink.compat.source'
-				},
+				-- obsidian = {
+				-- 	name = 'obsidian',
+				-- 	module = 'blink.compat.source'
+				-- },
+				-- obsidian_new = {
+				-- 	name = 'obsidian_new',
+				-- 	module = 'blink.compat.source'
+				-- },
+				-- obsidian_tags = {
+				-- 	name = 'obsidian_tags',
+				-- 	module = 'blink.compat.source'
+				-- },
 			},
 		},
 	},
