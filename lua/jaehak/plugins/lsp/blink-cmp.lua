@@ -5,17 +5,18 @@ return {
 	dependencies = {
 		'moyiz/blink-emoji.nvim',
 		'ribru17/blink-cmp-spell',
-		'L3MON4D3/LuaSnip'
+		'L3MON4D3/LuaSnip',
+		'saghen/blink.compat',
 	},
 	opts =  {
 		keymap = { -- Applied only completion menu
 			preset = 'none',
-			['<Tab>'] = { 'select_next', 'fallback_to_mappings' },
+			['<Tab>']   = { 'select_next', 'fallback_to_mappings' },
 			['<S-Tab>'] = { 'select_prev', 'fallback_to_mappings' },
-			['<C-p>'] = { 'snippet_forward', 'fallback' }, -- for choice mode
-			['<C-S-p>'] = { 'snippet_backward', 'fallback' }, -- for choice mode
+			['<C-n>']   = { 'snippet_forward', 'fallback' }, -- for choice mode
+			['<C-S-n>'] = { 'snippet_backward', 'fallback' }, -- for choice mode
 			-- FIXME: select_choice() cannot insert the result
-			['<C-n>'] = {
+			['<C-p>'] = {
 				function(cmp)
 					if require('luasnip').expand_or_locally_jumpable() then
 						return require('luasnip.extras.select_choice')()
@@ -26,14 +27,15 @@ return {
 				'fallback',
 			},
 			['<C-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
-			['<C-e>'] = { 'hide' },
-			['<C-k>'] = { 'show', 'show_documentation', 'hide_documentation' },
+			-- ['<C-e>'] = { 'hide' },
+			-- ['<C-k>'] = { 'show', 'show_documentation', 'hide_documentation' },
 			['<CR>'] = {
 			    'accept',
-				function(cmp)
-					local keys = vim.api.nvim_replace_termcodes( require('mini.pairs').cr(), true, true, true)
-					vim.api.nvim_feedkeys(keys, 'n', false)
-				end
+				-- function(cmp)
+				-- 	local keys = vim.api.nvim_replace_termcodes( require('mini.pairs').cr(), true, true, true)
+				-- 	vim.api.nvim_feedkeys(keys, 'n', false)
+				-- end
+				'fallback',
 			},
 			-- BUG: fallback() for <CR> cannot return to behavior of require('mini.pairs').cr(). so we treat like above
 			-- BUG: <C-Space> doesn't work
@@ -72,7 +74,7 @@ return {
 			per_filetype = {
 				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'path', 'cmdline'},
 				matlab = {},
-				markdown = {'snippets', 'buffer', 'path', 'emoji', 'spell'},
+				markdown = {'snippets', 'buffer', 'path', 'emoji', 'spell', 'obsidian', 'obsidian_new', 'obsidian_tags'},
 				gitcommit = {'buffer', 'emoji', 'spell'}
 			},
 			providers = {
@@ -129,7 +131,19 @@ return {
 					name = "LazyDev",
 					module = 'lazydev.integrations.blink',
 					score_offset = 100,
-				}
+				},
+				obsidian = {
+					name = 'obsidian',
+					module = 'blink.compat.source'
+				},
+				obsidian_new = {
+					name = 'obsidian_new',
+					module = 'blink.compat.source'
+				},
+				obsidian_tags = {
+					name = 'obsidian_tags',
+					module = 'blink.compat.source'
+				},
 			},
 		},
 	},
@@ -142,7 +156,8 @@ return {
 	end
 }
 -- require('blink.cmp').get_lsp_capabilities() is merged to lsp automatically when it is loaded
-
+-- blink-cmp-dictionary : I tried to test it. but its recommendation performance is not better than blink-spell
+-- 						  Using korean Dictionary, the Dictionary text file has poor data to use completion
 
 
 

@@ -7,6 +7,9 @@ return {
 		lazy = true,
 		ft = 'markdown',
 		opts = {
+			completion = {
+				nvim_cmp = false,
+			},
 			workspaces = { -- this directory must exist
 				{
 					name = 'Personal',
@@ -65,6 +68,13 @@ return {
 			-- it need to use command
 			local obsidian = require('obsidian')
 			obsidian.setup(opts)
+
+			-- register completion for blink.compat
+			local cmp = require('cmp')
+			cmp.register_source('obsidian', require('cmp_obsidian').new())
+			cmp.register_source('obsidian_new', require('cmp_obsidian_new').new())
+			cmp.register_source('obsidian_tags', require('cmp_obsidian_tags').new())
+
 
 			-- ####################################################
 			-- * Keymaps
