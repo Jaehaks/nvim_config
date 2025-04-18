@@ -376,7 +376,7 @@ local AddStrong = function (args)
 	-- check end col regardless of non-ASCII char
 	local lines = vim.api.nvim_buf_get_lines(0, end_row - 1, end_row, false)
 	if start_row == end_row then -- if 'marks' is added in same line, it is included in end_col calculation
-		end_col = end_col + #marks_e
+		end_col = end_col + #marks
 	end
 
 	local end_bytecol = vim.str_utfindex(lines[1], end_col)
