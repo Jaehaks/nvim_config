@@ -7,6 +7,7 @@ else
 	require("jaehak.core.keymaps")
 	require("jaehak.core.options")
 	require("jaehak.core.utils")
+	require("jaehak.core.usercmds")
 	require("jaehak.lazy_manager")
 	require("jaehak.core.lsp")
 end
