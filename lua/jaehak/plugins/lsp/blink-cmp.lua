@@ -7,6 +7,7 @@ return {
 		'ribru17/blink-cmp-spell',
 		'L3MON4D3/LuaSnip',
 		'saghen/blink.compat',
+		'Kaiser-Yang/blink-cmp-git', -- needs `gh` or `curl`
 	},
 	opts =  {
 		keymap = { -- Applied only completion menu
@@ -75,7 +76,7 @@ return {
 				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'path', 'cmdline'},
 				matlab = {},
 				markdown = {'snippets', 'buffer', 'path', 'emoji', 'spell'}, -- obsidian added
-				gitcommit = {'buffer', 'emoji', 'spell'}
+				gitcommit = {'git', 'buffer', 'emoji', 'spell'}
 			},
 			providers = {
 				lsp = {
@@ -132,18 +133,15 @@ return {
 					module = 'lazydev.integrations.blink',
 					score_offset = 100,
 				},
-				-- obsidian = {
-				-- 	name = 'obsidian',
-				-- 	module = 'blink.compat.source'
-				-- },
-				-- obsidian_new = {
-				-- 	name = 'obsidian_new',
-				-- 	module = 'blink.compat.source'
-				-- },
-				-- obsidian_tags = {
-				-- 	name = 'obsidian_tags',
-				-- 	module = 'blink.compat.source'
-				-- },
+				git = {
+					module = 'blink-cmp-git',
+					name = 'Git',
+					opts = {
+						-- '#' to search for issues
+						-- ':' to search for commits
+						-- '@' to search for users
+					},
+				}
 			},
 		},
 	},
