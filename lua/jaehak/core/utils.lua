@@ -362,7 +362,13 @@ local AddStrong = function (args)
 		vim.api.nvim_err_writeln('Error(AddStrong) : use string for args')
 		return
 	end
+
 	local marks = args or '**' -- set marks to add
+	local marks_e = marks
+	local tag = marks:match('^<([^>]+)>$')
+	if tag then
+		marks_e = '</' .. tag .. '>'
+	end
 
 	-- Add asterisks at the start of the selection
 	vim.api.nvim_buf_set_text(0, start_row - 1, start_col - 1, start_row - 1, start_col - 1, {marks})
@@ -370,7 +376,7 @@ local AddStrong = function (args)
 	-- check end col regardless of non-ASCII char
 	local lines = vim.api.nvim_buf_get_lines(0, end_row - 1, end_row, false)
 	if start_row == end_row then -- if 'marks' is added in same line, it is included in end_col calculation
-		end_col = end_col + #marks
+		end_col = end_col + #marks_e
 	end
 
 	local end_bytecol = vim.str_utfindex(lines[1], end_col)
@@ -382,7 +388,7 @@ local AddStrong = function (args)
 	end
 
 	-- Add asterisks at the end of the selection
-	vim.api.nvim_buf_set_text(0, end_row - 1, end_col - 1 , end_row - 1, end_col - 1, {marks})
+	vim.api.nvim_buf_set_text(0, end_row - 1, end_col - 1 , end_row - 1, end_col - 1, {marks_e})
 
 	-- go to normal mode
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)

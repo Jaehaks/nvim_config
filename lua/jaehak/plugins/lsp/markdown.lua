@@ -328,6 +328,7 @@ return {
 				vim.keymap.set('v', '<leader>mb', function () utils.AddStrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
 				vim.keymap.set('v', '<leader>mh', function () utils.AddStrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
 				vim.keymap.set('v', '<leader>ms', function () utils.AddStrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
+				vim.keymap.set('v', '<leader>mu', function () utils.AddStrong('<u>') end, {buffer = true, desc = 'Enclose with <u>(underline)'})
 
 				-- Don't remap to <C-m>, it synchronize with <CR>
 			end
