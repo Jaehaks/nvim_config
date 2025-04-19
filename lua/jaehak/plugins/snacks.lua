@@ -68,6 +68,9 @@ return {
 
 		{ '<leader>fD', function () Snacks.picker.diagnostics({
 			-- sort cwd first than severity
+			filter = {
+				cwd = vim.fs.root(0, {'.git'}) or true -- show all opened buffer diagnostics in project
+			},
 			layout = {
 				preset = 'vertical',
 				layout = {
