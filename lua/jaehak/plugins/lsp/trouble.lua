@@ -1,6 +1,7 @@
 return {
 	'folke/trouble.nvim',
 	lazy = true,
+	cmd = 'Trouble',
 	opts = {
 		auto_close   = true,
 		auto_preview = true, -- move view to the selected item automatically
