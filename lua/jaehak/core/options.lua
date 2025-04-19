@@ -91,9 +91,9 @@ opt.foldenable = false -- disable folding automatically with marker (ex, toml )
 opt.editorconfig = false
 
 -- for nvim-cmp (init() of lazy.nvim is slow)
-vim.opt.spell     = true
-vim.opt.spelllang = {'en_us', 'cjk'} -- disable spell check for asian char
-vim.opt.pumheight = 10               -- maximum item number when show completion
+opt.spell     = true
+opt.spelllang = {'en_us', 'cjk'} -- disable spell check for asian char
+opt.pumheight = 10               -- maximum item number when show completion
 
 -- set local options for markdown because markdown's ftplugin must set expandtab
 vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim focused
