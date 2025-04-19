@@ -57,11 +57,23 @@ return {
 		{ '<leader>fd', function () Snacks.picker.diagnostics_buffer({
 			sort = {
 				fields = {'severity', 'file', 'lnum'} -- sort and show high severity at first
+			},
+			layout = {
+				preset = 'vertical',
+				layout = {
+					width = 0.9,
+				}
 			}
 		}) end, desc = 'Show diagnostics of current buffer', mode = {'n'}},
 
 		{ '<leader>fD', function () Snacks.picker.diagnostics({
 			-- sort cwd first than severity
+			layout = {
+				preset = 'vertical',
+				layout = {
+					width = 0.9,
+				}
+			}
 		}) end, desc = 'Show diagnostics all of cwd', mode = {'n'}},
 
 		{ '<leader>ff', function ()
