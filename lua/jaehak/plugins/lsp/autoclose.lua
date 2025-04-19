@@ -11,6 +11,7 @@ return {
 	-- 'windwp/nvim-autopairs' : it is lightweight if I don't use `check_ts`
 	-- 							 it supports auto indent when I enter <CR> even though fallback() is executed
 	-- 							 it supports adding endwise rule also without treesitter-endwise
+	-- 							 but it cannot supports autoclose in cmdline
 {
 	'windwp/nvim-autopairs',
 	event = 'InsertEnter',
