@@ -13,19 +13,7 @@ return {
 	-- 							 it supports adding endwise rule also without treesitter-endwise
 {
 	'windwp/nvim-autopairs',
-	keys = {
-		{'(', mode = {'i'}},
-		{'[', mode = {'i'}},
-		{'{', mode = {'i'}},
-		{'<', mode = {'i'}},
-		{')', mode = {'i'}},
-		{']', mode = {'i'}},
-		{'}', mode = {'i'}},
-		{'>', mode = {'i'}},
-		{'"', mode = {'i'}},
-		{"'", mode = {'i'}},
-		{"`", mode = {'i'}},
-	},
+	event = 'InsertEnter',
 	opts = {
 		disable_filetype = {
 		    "TelescopePrompt",
@@ -35,40 +23,51 @@ return {
 		},
 		ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
 		check_ts = false, -- don't use treesitter
-		map_cr = true, -- make {|} to indented brackets
-		map_bs = true,
-		map_c_h = false,
-		map_c_w = false,
+		map_cr   = true,  -- make {|} to indented brackets
+		map_bs   = false,
+		map_c_h  = false,
+		map_c_w  = false,
 	},
 	config = function (_, opts)
-		local npairs = require('nvim-autopairs')
-		local Rule = require('nvim-autopairs.rule')
-		local basic = require('nvim-autopairs.rules.basic')
+		local npairs  = require('nvim-autopairs')
+		local Rule    = require('nvim-autopairs.rule')
+		local cond    = require('nvim-autopairs.conds')
+		local ts_cond = require('nvim-autopairs.ts-conds')
 		local endwise = require('nvim-autopairs.ts-rule').endwise
 
 		-- nvim-autopairs setup
 		npairs.setup(opts)
 
 		-- additional rules
-		local bracket = basic.bracket_creator(opts)
 		npairs.add_rules({
-			bracket('<','>')
+			-- add auto indent when <CR>
+			Rule('<','>'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('{','}'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('[',']'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('(',')'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
 		})
-
-
-
 
 		-- endwise setup without treesitter
 		npairs.add_rules({
 			-- lua
-			endwise('then$', 'end', 'lua', 'if_statement'),                    -- if  <right condition> then
-			endwise('do$', 'end', 'lua', 'for_statement'),                     -- for <right condition> do
-			endwise('do$', 'end', 'lua', 'while_statement'),                   -- while <right condition> do
-			endwise('do$', 'end', 'lua', 'do_statement'),                      -- do <right condition> do
-			endwise('function.*$', 'end', 'lua', 'function_declaration'),      -- local function a()
-			endwise('function.*%(.*%)$', 'end', 'lua', 'function_definition'), -- local a = function()
-		})
+			endwise('then$', 'end', 'lua', 'if_statement'),    -- if  <right condition> then
+			endwise('do$'  , 'end', 'lua', 'for_statement'),   -- for <right condition> do
+			endwise('do$'  , 'end', 'lua', 'while_statement'), -- while <right condition> do
+			endwise('do$'  , 'end', 'lua', 'do_statement'),    -- do <right condition> do
+			endwise('repeat$'  , 'until', 'lua', 'do_statement'),    -- do <right condition> do
+			endwise('function.*%(.*%)$', 'end', 'lua', {'function_definition', 'local_function', 'function'}), -- function
 
+			-- matlab
+			endwise('if%s.+$'      , 'end', 'matlab', 'ERROR'), -- it doesn't work in comment node
+			endwise('while%s.+$'   , 'end', 'matlab', 'ERROR'),
+			endwise('for%s.+$'     , 'end', 'matlab', 'ERROR'),
+			endwise('switch.*$'    , 'end', 'matlab', 'ERROR'),
+			endwise('try.*$'       , 'end', 'matlab', 'ERROR'),
+			endwise('classdef%s.+$', 'end', 'matlab', 'ERROR'),
+			endwise('properties.*$', 'end', 'matlab', {'class_definition', 'methods'}),
+			endwise('methods.*$'   , 'end', 'matlab', {'class_definition', 'methods'}),
+			endwise('function%s.+$', 'end', 'matlab', 'ERROR'),
+		})
 	end
 },
 {

@@ -73,8 +73,8 @@ return {
 		sources = {
 			default = {'snippets', 'lsp', 'buffer', 'spell', 'path', 'cmdline'},
 			per_filetype = {
-				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'path', 'cmdline'},
-				matlab = {},
+				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'path'},
+				matlab = {'snippets', 'lsp', 'buffer', 'spell', 'path'},
 				markdown = {'snippets', 'buffer', 'path', 'emoji', 'spell'}, -- obsidian added
 				gitcommit = {'git', 'buffer', 'emoji', 'spell'}
 			},
