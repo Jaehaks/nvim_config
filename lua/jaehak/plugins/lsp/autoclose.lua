@@ -1,11 +1,80 @@
 local paths = require('jaehak.core.paths')
 return {
+	-- tpope/vim-endwise : it doesn't work
 	-- ultimate-autopair.nvim  : it is too bulky and slow
 	-- m4xshen/autoclose.nvim : more simple, but it cannot ignore like the "'" in "'don't"
 	-- 							and it change some keymaps in settings automatically
+	-- 'echasnovski/mini.pairs' : it works good and is lightweight but has some bugs with completion plugins
+	-- 							  It supports auto indent when I enter <CR> inside {}, but this way use keycodes
+	-- 							  not function. it returns the characters like '\r'
+	-- 							  It returns original <CR> behavior when I execute fallback() for <CR> in blink.cmp
+	-- 'windwp/nvim-autopairs' : it is lightweight if I don't use `check_ts`
+	-- 							 it supports auto indent when I enter <CR> even though fallback() is executed
+	-- 							 it supports adding endwise rule also without treesitter-endwise
+{
+	'windwp/nvim-autopairs',
+	keys = {
+		{'(', mode = {'i'}},
+		{'[', mode = {'i'}},
+		{'{', mode = {'i'}},
+		{'<', mode = {'i'}},
+		{')', mode = {'i'}},
+		{']', mode = {'i'}},
+		{'}', mode = {'i'}},
+		{'>', mode = {'i'}},
+		{'"', mode = {'i'}},
+		{"'", mode = {'i'}},
+		{"`", mode = {'i'}},
+	},
+	opts = {
+		disable_filetype = {
+		    "TelescopePrompt",
+		    "spectre_panel",
+		    "snacks_picker_input",
+			"dashboard"
+		},
+		ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
+		check_ts = false, -- don't use treesitter
+		map_cr = true, -- make {|} to indented brackets
+		map_bs = true,
+		map_c_h = false,
+		map_c_w = false,
+	},
+	config = function (_, opts)
+		local npairs = require('nvim-autopairs')
+		local Rule = require('nvim-autopairs.rule')
+		local basic = require('nvim-autopairs.rules.basic')
+		local endwise = require('nvim-autopairs.ts-rule').endwise
+
+		-- nvim-autopairs setup
+		npairs.setup(opts)
+
+		-- additional rules
+		local bracket = basic.bracket_creator(opts)
+		npairs.add_rules({
+			bracket('<','>')
+		})
+
+
+
+
+		-- endwise setup without treesitter
+		npairs.add_rules({
+			-- lua
+			endwise('then$', 'end', 'lua', 'if_statement'),                    -- if  <right condition> then
+			endwise('do$', 'end', 'lua', 'for_statement'),                     -- for <right condition> do
+			endwise('do$', 'end', 'lua', 'while_statement'),                   -- while <right condition> do
+			endwise('do$', 'end', 'lua', 'do_statement'),                      -- do <right condition> do
+			endwise('function.*$', 'end', 'lua', 'function_declaration'),      -- local function a()
+			endwise('function.*%(.*%)$', 'end', 'lua', 'function_definition'), -- local a = function()
+		})
+
+	end
+},
 {
 	-- more simple and smart / but it cannot support filetype
 	'echasnovski/mini.pairs',
+	enabled = false,
 	version = false,
 	keys = {
 		{'(', mode = {'i'}},
@@ -96,14 +165,6 @@ return {
 		end)
 	end
 },
-{
-	-- add endwise, i think it would be useful when use language which does not support snippet
-	'RRethy/nvim-treesitter-endwise',
-	lazy = true, -- from nvim-treesitter
-	config = function ()
-	end
-},
--- tpope/vim-endwise : it doesn't work
 {
 	-- show matchparen of current region
 	"utilyre/sentiment.nvim",

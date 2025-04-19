@@ -51,9 +51,6 @@ return {
 			indent = {
 				enable = false,
 			},
-			endwise = {			-- nvim-treesitter-endwise
-				enable = true
-			},
 		}
 	end,
 },
