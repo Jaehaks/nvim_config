@@ -28,16 +28,9 @@ return {
 				'fallback',
 			},
 			['<C-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
-			-- ['<C-e>'] = { 'hide' },
+			['<C-q>'] = { 'hide' },
 			-- ['<C-k>'] = { 'show', 'show_documentation', 'hide_documentation' },
-			['<CR>'] = {
-			    'accept',
-				-- function(cmp)
-				-- 	local keys = vim.api.nvim_replace_termcodes( require('mini.pairs').cr(), true, true, true)
-				-- 	vim.api.nvim_feedkeys(keys, 'n', false)
-				-- end
-				'fallback',
-			},
+			['<CR>'] = { 'accept', 'fallback', },
 			-- BUG: fallback() for <CR> cannot return to behavior of require('mini.pairs').cr(). so we treat like above
 			-- BUG: <C-Space> doesn't work
 		},
