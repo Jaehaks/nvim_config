@@ -180,8 +180,14 @@ vim.api.nvim_create_autocmd('CursorHold', {
 
 		vim.api.nvim_exec_autocmds('BufWritePre', {buffer = 0}) -- force execute BufWritePre event
 		local ok, err = pcall(vim.cmd, 'write')
-		if not ok then -- when write is protected
+		if not ok then -- when write is protected, autocmd is removed in this buffer
 			vim.notify('AutoCmd : Failed to write this file', vim.log.levels.WARN)
+			vim.api.nvim_del_autocmd(vim.api.nvim_get_autocmds({
+				group = aug_TrimWhiteSpace,
+				event = 'CursorHold',
+				buffer = event.buf,
+			})[1].id)
+			return
 		end
 		vim.cmd('write') -- because cmd('write') doesn't invokes BufWritePre
 	end
