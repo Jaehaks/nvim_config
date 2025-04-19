@@ -24,7 +24,7 @@ return {
 		ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
 		check_ts = false, -- don't use treesitter
 		map_cr   = true,  -- make {|} to indented brackets
-		map_bs   = false,
+		map_bs   = true,
 		map_c_h  = false,
 		map_c_w  = false,
 	},
@@ -42,9 +42,14 @@ return {
 		npairs.add_rules({
 			-- add auto indent when <CR>
 			Rule('<','>'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('{','}'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('[',']'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('(',')'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('[',']','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('(',')','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
+			Rule('{','}','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
+
+			Rule('<','>','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('[',']','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
+			Rule('(',')','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('{','}','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
 		})
 
 		-- endwise setup without treesitter
