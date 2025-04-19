@@ -88,6 +88,7 @@ opt.splitright = true  -- focus to new window when vsplit
                        -- opt.splitbelow = true	  -- focus to new window when split
 opt.scrolloff  = 5     -- scroll start offset line
 opt.foldenable = false -- disable folding automatically with marker (ex, toml )
+opt.editorconfig = false
 
 -- for nvim-cmp (init() of lazy.nvim is slow)
 vim.opt.spell     = true
