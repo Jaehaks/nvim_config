@@ -69,7 +69,7 @@ return {
 				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'path'},
 				matlab = {'snippets', 'lsp', 'buffer', 'spell', 'path'},
 				markdown = {'snippets', 'buffer', 'path', 'emoji', 'spell'}, -- obsidian added
-				gitcommit = {'git', 'buffer', 'emoji', 'spell'}
+				gitcommit = {'git', 'buffer', 'spell'}
 			},
 			providers = {
 				lsp = {
