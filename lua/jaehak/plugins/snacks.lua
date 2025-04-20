@@ -146,11 +146,8 @@ return {
 
 		{ '<leader>fo', function () Snacks.picker.recent({
 			sort = {
-				fields = {'time:desc'}
+				fields = {'score:desc', 'time:desc', '#text', 'idx'}
 			},
-			filter = {
-				[vim.fn.stdpath('data')] = false,
-			}
 		}) end, desc = 'Show oldfiles', mode = {'n'}},
 
 		{ '<leader>fu', function () Snacks.picker.undo({

@@ -29,7 +29,11 @@ return {
 					icon = '',
 					desc = 'Recent Files', desc_hl = 'String',
 					key = 'r', key_hl = 'DashboardShortCut',
-					action = function () Snacks.picker.recent({ filter = { [vim.fn.stdpath('data')] = true, } }) end,
+					action = function () Snacks.picker.recent({
+						sort = {
+							fields = {'score:desc', 'time:desc', '#text', 'idx'}
+						},
+					}) end,
 				},
 				{
 					icon = '',
