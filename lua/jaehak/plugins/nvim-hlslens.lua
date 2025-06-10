@@ -14,7 +14,7 @@ return {
 		hlslens.setup(opts)
 
 		local kopts = {noremap = true, silent = true}
-		local neominimap = require('neominimap')
+		local neominimap = require('neominimap.api')
 		local neovar = require('neominimap.variables')
 		-- local min_line = 200 -- turn on minimap in file which has more lines than this value
 		local min_line = 2 -- turn on minimap in file which has more lines than this value
@@ -34,13 +34,13 @@ return {
 				end
 
 				vim.opt_local.sidescrolloff = 36
-				neominimap.on()
-				neominimap.winOff(winid_other) -- turn off neominimap except current window
-				neominimap.winOn({winid_cur}) -- turn on neominimap in current window
+				neominimap.enable()
+				neominimap.win.disable(winid_other) -- turn off neominimap except current window
+				neominimap.win.enable({winid_cur}) -- turn on neominimap in current window
 
 			elseif vim.v.hlsearch == 0 and neovar.g.enabled then
 				vim.opt_local.sidescrolloff = 0
-				neominimap.off()
+				neominimap.disable()
 			end
 		end
 
@@ -64,7 +64,7 @@ return {
 				if not vim.g.neominimap_manual then -- if not manual mode,
 					if vim.v.hlsearch == 0 and neovar.g.enabled then
 						vim.opt_local.sidescrolloff = 0
-						neominimap.off()
+						neominimap.disable()
 					end
 				end
 			end,

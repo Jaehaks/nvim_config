@@ -2,7 +2,6 @@ return {
 	-- show minimap
 	'Isrothy/neominimap.nvim',
 	version = 'v3.*.*',
-	-- lazy = false,
 	lazy = true,
 	keys = {
 		{'<leader>n'},
@@ -64,11 +63,14 @@ return {
 				enabled = true,
 			}
 		}
-
+	end,
+	config = function ()
+		-- set highlight
+		vim.api.nvim_set_hl(0, "NeominimapSearchIcon", {fg = "#FFFF00" }) -- searched sign color
+		vim.api.nvim_set_hl(0, "NeominimapSearchSign", {fg = "#FFFF00" }) -- searched icon color
 
 		-- neominimap toggle
-		local neominimap = require('neominimap')
-
+		local neominimap = require('neominimap.api')
 		vim.g.neominimap_manual = false
 		vim.keymap.set('n', '<leader>n', function ()
 			local winid_list = vim.api.nvim_list_wins()
@@ -83,14 +85,12 @@ return {
 			neominimap.toggle()
 			if require('neominimap.variables').g.enabled then
 				vim.g.neominimap_manual = true
-				neominimap.winOff(winid_other) -- turn off neominimap except current window
-				neominimap.winOn({winid_cur}) -- turn on neominimap in current window
+				neominimap.win.disable(winid_other) -- turn off neominimap except current window
+				neominimap.win.enable({winid_cur}) -- turn on neominimap in current window
 			else
 				vim.g.neominimap_manual = false
 			end
 		end, {noremap = true, desc = 'Toggle minimap'})
 
-		vim.api.nvim_set_hl(0, "NeominimapSearchIcon", {fg = "#FFFF00" }) -- searched sign color
-		vim.api.nvim_set_hl(0, "NeominimapSearchSign", {fg = "#FFFF00" }) -- searched icon color
-	end,
+	end
 }
