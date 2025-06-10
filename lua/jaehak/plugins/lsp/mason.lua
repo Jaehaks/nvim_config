@@ -43,8 +43,10 @@ return {
 		-- 4) 7zip (download)
 		-- 5) curl (default in windows)
 		-- 6) npm (download)
-		'williamboman/mason.nvim',
 		-- installation of lsp, formatter, linter, debugger
+		-- 'williamboman/mason.nvim',
+		'mason-org/mason.nvim',
+		version = '*', -- choose recent stable release version
 		cmd = {'Mason'},
 		enabled = true,
 		lazy = true,  	-- lazy-loading is not recommended
