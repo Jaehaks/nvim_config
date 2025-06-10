@@ -3,14 +3,13 @@ local paths = require('jaehak.core.paths')
 return {
 {
 	'nvim-treesitter/nvim-treesitter',
-	-- enabled = false,
 	event = {'BufReadPost'},
 	ft = paths.Filetypes.ForIlluminate,
 	dependencies = {
 		'HiPhish/rainbow-delimiters.nvim',
 		'RRethy/nvim-treesitter-endwise', -- it requires neovim under v0.11
 	},
-	main = 'nvim-treesitter.configs',
+	main = 'nvim-treesitter.configs', -- it needs require('nvim-treesitter.configs').setup() before `master` branch
 	-- build = ':TSUpdate',
 	init= function ()
 		vim.opt.rtp:prepend(paths.nvim.treesitter_queries)
