@@ -19,7 +19,8 @@
 	- `%USERPROFILE%\user_installed\MikTeX\miktex\bin\x64`
 	- `%USERPROFILE%\scoop\apps\openjdk11\current\bin`
 	- `%USERPROFILE%\Vim\vim90`
-3. `CC` : `gcc`
+	- `%USERPROFILE%\user_installed\node-v24.2.0-win-x64` (for nvim-treesitter's main branch)
+3. `CC` : `gcc` (for nvim-treesitter's main branch)
 4. `XDG_CONFIG_HOME` : `%USERPROFILE%\.config`
 5. `XDG_DATA_HOME` : `%USERPROFILE%\.config`
 6. `XDG__HOME` : `%USERPROFILE%\.config`
@@ -60,13 +61,13 @@
 21. [go](https://github.com/golang/go) (for neovim/go)
 22. [rustup](https://github.com/rust-lang/rustup) (for neovim/mason)
 23. [python](https://www.python.org/) (for neovim/mason, neovim provider)
-24. [tree-sitter](https://tree-sitter.github.io/tree-sitter/) (for neovim/nvim-treesitter)
+24. [tree-sitter](https://tree-sitter.github.io/tree-sitter/) (for neovim/nvim-treesitter) (0.25.0 or later for nvim-treesitter's main branch)
 25. [git](https://github.com/git/git) (for neovim/lazy.nvim, neovim/snacks)
 26. [gh](https://cli.github.com/) (for neovim/blink-cmp-git)
 27. [lua](https://github.com/LuaLS/lua-language-server) (for neovim)
 28. [luarocks](https://luarocks.org/) (for neovim)
 29. [mingw](https://www.mingw-w64.org/) (for neovim)
-	- gcc (for neovim/nvim-treesitter)
+	- gcc (for neovim/nvim-treesitter main branch), set `CC` to gcc for using c compiler
 30. [neovim](https://github.com/neovim/neovim) (for neovim)
 31. [neovim-qt](https://github.com/equalsraf/neovim-qt) (for neovim)
 32. [iconv](https://github.com/processone/iconv) (for `clink/fzff.cmd` and `clink/fzfd.cmd`)
@@ -90,7 +91,7 @@
 2. [clink](https://github.com/chrisant996/clink/releases)
 	- it needs to copy or link files from `dotfiles` to the install path of clink
 3. [node.js](https://nodejs.org/ko/download) (for neovim/mason)
-	- version v20
+	- select version `> v23.x` for `nvim-treesitter's main branch` and download portable version for convenient installation
 	- npm (for neovim/mason)
 		- `npm install -g neovim` for `vim.g.loaded_node_provider = 1`
 		- `vim.g.loaded_perl_provider = 0` for disable provider warning
