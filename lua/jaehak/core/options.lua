@@ -107,7 +107,13 @@ vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim 
 })
 
 ------------- diff -----------------------
-opt.diffopt = {'internal', 'filler', 'closeoff', 'linematch:60'}
+opt.diffopt = {
+    'internal',
+    'filler',
+    'closeoff',
+	'linematch:60', -- match 2 buffer diff hunk of 30 lines each,
+	'iwhite',       -- ignore white space change to more exact diff result
+}
 
 
 
