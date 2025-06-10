@@ -12,7 +12,7 @@ return {
 	main = 'nvim-treesitter.configs', -- it needs require('nvim-treesitter.configs').setup() before `master` branch
 	-- build = ':TSUpdate',
 	init= function ()
-		vim.opt.rtp:prepend(paths.nvim.treesitter_queries)
+		vim.opt.rtp:prepend(paths.nvim.treesitter_queries) -- for user defined queries
 		vim.opt.rtp:prepend(paths.nvim.luarocks)
 	end,
 	opts = function()
