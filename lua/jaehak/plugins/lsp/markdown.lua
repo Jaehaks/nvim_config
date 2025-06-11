@@ -29,11 +29,11 @@ return {
 		vim.api.nvim_set_hl(0, "MarkviewListItemMinus", {fg = '#F68C6B'} )
 		vim.api.nvim_set_hl(0, "MarkviewListItemPlus" , {fg = '#b1c61c'} )
 		vim.api.nvim_set_hl(0, "MarkviewListItemStar" , {fg = '#00d1dd'} )
-		vim.api.nvim_set_hl(0, 'MarkviewHeading5'     , {fg = '#F0FF7C',  bg = '#2D2F1D'})
 		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled', {fg = '#999999'})
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault', {link = 'Normal'}) -- default block quote color
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer', {default = true, fg = '#FE86D8'}) -- default block quote color
 		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign', {link = 'markdownH1'})
+		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown'     , {link = 'markdownH1'}) -- heading highlights in insert mode
 
 		return{
 			preview = {
