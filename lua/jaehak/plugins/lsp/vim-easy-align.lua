@@ -32,7 +32,7 @@ return {
 				pattern       = ',',
 				left_margin   = 0,
 				right_margin  = 1,
-				stick_to_left = 0,
+				stick_to_left = 1,
 			}
 		}
 	end
