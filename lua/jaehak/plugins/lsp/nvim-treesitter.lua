@@ -1,5 +1,7 @@
 local paths = require('jaehak.core.paths')
 
+-- RRethy/nvim-treesitter-endwise : it doesn't need anymore because nvim-autopairs does same one
+-- goldos24/rainbow-variables-nvim : it seems doesn't supports many languages yet.
 return {
 {
 	'nvim-treesitter/nvim-treesitter',
@@ -7,7 +9,6 @@ return {
 	ft = paths.Filetypes.ForIlluminate,
 	dependencies = {
 		'HiPhish/rainbow-delimiters.nvim',
-		-- 'RRethy/nvim-treesitter-endwise', -- it requires neovim under v0.11
 	},
 	branch = 'main',
 	build = ':TSUpdate',
@@ -52,5 +53,5 @@ return {
 	"OXY2DEV/helpview.nvim",
 	ft = 'help',
 	-- lazy = false, -- Recommended
-}
+},
 }
