@@ -52,7 +52,7 @@ vim.lsp.config('*', {
 -- #############################################################
 -- ####### lus-ls config
 -- #############################################################
-vim.lsp.config('lua-ls', {
+vim.lsp.config('lua_ls', {
 	cmd = {'lua-language-server'},
 	filetypes = {'lua'},
 	settings = {
@@ -232,7 +232,7 @@ vim.lsp.config('basedpyright', {
 -- ####### lsp enable
 -- #############################################################
 vim.lsp.enable({
-	'lua-ls',
+	'lua_ls',
 	'matlab-ls',
 	-- 'harper-ls',
 	'ruff',
