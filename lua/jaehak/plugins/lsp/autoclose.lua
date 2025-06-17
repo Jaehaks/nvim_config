@@ -39,6 +39,10 @@ return {
 		-- nvim-autopairs setup
 		npairs.setup(opts)
 
+		-- remove rules
+		npairs.remove_rule('```') -- ``` makes one more ``` by default.
+		npairs.get_rules("`")[1]:with_pair(cond.not_before_regex("[%w%`]")) -- ignore autopair after ``, it makes ```
+
 		-- additional rules
 		npairs.add_rules({
 			-- add auto indent when <CR>
