@@ -1,4 +1,5 @@
 local paths = require('jaehak.core.paths')
+local utils = require('jaehak.core.utils')
 
 -- RRethy/nvim-treesitter-endwise : it doesn't need anymore because nvim-autopairs does same one
 -- goldos24/rainbow-variables-nvim : it seems doesn't supports many languages yet.
@@ -45,6 +46,20 @@ return {
 		-- I don't use other features like `Folds` and `Indentation`
 		-- If you want adding queries, 1) add .scm file in queries/<language> which is added in rtp.
 		-- 							   2) add `; extends` marks at the top of the .scm file
+
+
+		vim.api.nvim_create_user_command('ShowHeaders', function (args)
+			local min_level = tonumber(args.args)
+			utils.Show_Headers(min_level)
+		end, {desc = 'Show headers in markdown', nargs = '*'})
+
+		vim.api.nvim_create_autocmd('FileType', {
+			pattern = 'markdown',
+			callback = function ()
+				vim.keymap.set('n', '<leader>mh', utils.Show_Headers, {buffer = true, desc = 'show headers'})
+			end
+		})
+
 	end
 
 },

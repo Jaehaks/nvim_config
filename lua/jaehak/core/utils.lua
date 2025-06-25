@@ -398,6 +398,114 @@ M.AddStrong = AddStrong
 
 
 
+-- ####################################################
+-- * Markdown : Get list of header
+-- ####################################################
 
+local Get_Headers = function(min_level)
+	local minlevel = min_level or 6
+
+	-- check buffer
+	local cur_bufid = vim.api.nvim_get_current_buf()
+	local ft = vim.api.nvim_get_option_value('filetype', {buf = cur_bufid})
+	if ft ~= 'markdown' then
+		vim.notify(' Please execute this function in markdown ', vim.log.levels.ERROR)
+		return
+	end
+
+	local parser = vim.treesitter.get_parser(cur_bufid, ft)
+	if not parser then
+		vim.notify(' No Treesitter parser found for the filetype : ' .. ft, vim.log.levels.ERROR)
+		return
+	end
+
+	local tree = parser:parse()[1]
+	if not tree then
+		vim.notify(' No Treesitter tree found for this buffer : ' .. ft, vim.log.levels.ERROR)
+		return
+	end
+
+	local root = tree:root()
+	local query = vim.treesitter.query.parse(ft, '(atx_heading) @header')
+	if not query then
+		vim.notify(' Error parsing treesitter query ', vim.log.levels.ERROR)
+		return
+	end
+
+	local headers = {}
+	local matches = query:iter_captures(root, cur_bufid, 0, -1)
+	for _, node, _, _ in matches do
+		local row, col = node:start()  -- line number of header
+		local text = vim.treesitter.get_node_text(node, 0) -- get text of captured node
+		local child = node:child(0) -- get first child
+		local child_type
+		if child then
+			child_type = child:type()
+		else
+			vim.notify('child is nil')
+			return
+		end
+
+		if child_type:sub(1, 5) == 'atx_h' then
+			local level = tonumber(child_type:sub(6, 6))
+
+			if level <= minlevel then
+				table.insert(headers, {
+					data = {
+						-- level = indent .. "H" .. level,
+						level = "H" .. level,
+					},
+					-- text = indent .. "H" .. level .. " " .. string.gsub(text:sub(level+1), "^%s+", ""),
+					text = string.gsub(text:sub(level+1), "^%s+", ""),
+					file = vim.api.nvim_buf_get_name(cur_bufid),
+					pos = {row + 1, col + 1} -- cursor location, it can be used in preview
+				})
+			end
+		end
+	end
+
+	if #headers == 0 then
+		vim.notify('No headers found at level ' .. min_level .. ' or higher.', vim.log.levels.INFO)
+		return
+	end
+
+	return headers
+end
+
+local Show_Headers = function (min_level)
+	-- check snacks is loaded
+	local snacks_ok, snacks = pcall(require, 'snacks')
+	if not snacks_ok then
+		vim.notify('snacks.nvim is not installed', vim.log.levels.ERROR)
+		return
+	end
+
+	snacks.picker.pick({
+		finder = function ()
+			local items = Get_Headers(min_level)
+			if items then
+				return items
+			end
+			return {}
+		end,
+		format = function (item, picker)
+			local a = snacks.picker.util.align -- for setting strict width
+			local ret = {}
+			ret[#ret +1] = {a(item.data.level, 4), 'SnacksPickerGitCommit'}
+			ret[#ret +1] = {item.text}
+			snacks.picker.highlight.markdown(ret) -- set highlight for other text
+			return ret
+		end,
+		preview = 'file',
+		confirm = function (picker, item)
+			picker:close()
+			if item then
+				vim.api.nvim_win_set_cursor(0, {item.pos[1], item.pos[2]}) -- go to cursor
+			end
+		end,
+
+	})
+end
+M.Show_Headers = Show_Headers
 
 return M
