@@ -1,8 +1,9 @@
+-- global snacks.picker configuration
 local picker_config = {
 	matcher = {
 		cwd_bonus = true,
 	},
-	ui_select = false,
+	ui_select = true,
 	layout = {
 		preset = 'vertical'
 	},
