@@ -1,4 +1,3 @@
-
 lspconfig.ruff.setup({ -- use ruff as python linter
   on_attach = function (client, bufnr)
     -- lsp use ruff to formatter
@@ -34,9 +33,9 @@ lspconfig.ruff.setup({ -- use ruff as python linter
   handlers = {
     -- ['textDocument/publishDiagnostics'] = create_custom_handler(sign_priority.rank1)
     ['textDocument/publishDiagnostics'] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = false,
-    }
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+      }
     )
   }
 })
@@ -78,3 +77,14 @@ return {
     end
 
   }
+
+
+
+  -- additional rules
+  npairs.add_rules({
+    Rule('<','>')
+    :with_cr(cond.done())
+    :replace_map_cr(function ()
+      return '<C-g>u<CR><C-c>O<Tab>'
+    end)
+  })
