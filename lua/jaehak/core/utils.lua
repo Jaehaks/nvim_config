@@ -448,17 +448,17 @@ local Get_Headers = function(min_level)
 
 		if child_type:sub(1, 5) == 'atx_h' then
 			local level = tonumber(child_type:sub(6, 6))
+			local heading = string.gsub(text:sub(level+1), "^%s+", "")
 
 			if level <= minlevel then
 				table.insert(headers, {
 					data = {
-						-- level = indent .. "H" .. level,
 						level = "H" .. level,
+						heading = heading,
 					},
-					-- text = indent .. "H" .. level .. " " .. string.gsub(text:sub(level+1), "^%s+", ""),
-					text = string.gsub(text:sub(level+1), "^%s+", ""),
+					text = "H" .. level .. " " .. heading, -- it is used for searching only
 					file = vim.api.nvim_buf_get_name(cur_bufid),
-					pos = {row + 1, col + 1} -- cursor location, it can be used in preview
+					pos = {row + 1, col + 1}, -- cursor location, it can be used in preview
 				})
 			end
 		end
@@ -492,7 +492,7 @@ local Show_Headers = function (min_level)
 			local a = snacks.picker.util.align -- for setting strict width
 			local ret = {}
 			ret[#ret +1] = {a(item.data.level, 4), 'SnacksPickerGitCommit'}
-			ret[#ret +1] = {item.text}
+			ret[#ret +1] = {item.data.heading}
 			snacks.picker.highlight.markdown(ret) -- set highlight for other text
 			return ret
 		end,
@@ -501,6 +501,7 @@ local Show_Headers = function (min_level)
 			picker:close()
 			if item then
 				vim.api.nvim_win_set_cursor(0, {item.pos[1], item.pos[2]}) -- go to cursor
+				vim.cmd("normal! zt")
 			end
 		end,
 
