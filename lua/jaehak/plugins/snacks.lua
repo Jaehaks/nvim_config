@@ -149,6 +149,9 @@ return {
 			sort = {
 				fields = {'score:desc', 'time:desc', '#text', 'idx'}
 			},
+			filter = {
+				paths = false -- include all recent files without filter paths
+			}
 		}) end, desc = 'Show oldfiles', mode = {'n'}},
 
 		{ '<leader>fu', function () Snacks.picker.undo({
