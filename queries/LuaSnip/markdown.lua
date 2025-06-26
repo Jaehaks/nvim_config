@@ -4,6 +4,7 @@ local s = ls.snippet
 local t = ls.text_node
 local i = ls.insert_node
 local c = ls.choice_node
+local f = ls.function_node
 
 local snippets, autosnippets = {}, {}
 
@@ -21,34 +22,36 @@ local code_block = s({
 table.insert(autosnippets, code_block)
 
 -- 2) make callout
+local callout_list = {
+	t('NOTE'),
+	t('ABSTRACT'),
+	t('SUMMARY'),
+	t('CHECK'),
+	t('IMPORTANT'),
+	t('EXAMPLE'),
+	t('QUESTION'),
+	t('ANSWER'),
+	t('FAQ'),
+	t('HELP'),
+	t('QUOTE'),
+	t('CITE'),
+	t('TIP'),
+	t('HINT'),
+	t('INFO'),
+	t('TODO'),
+	t('CAUTION'),
+	t('WARNING'),
+	t('DANGER'),
+	t('MISSING'),
+}
+
 local callout = s({
 	trig = ']!',
 	name = 'callout',
 	desc = 'select callout',
 	}, {
 	t({'> [!'}),
-	c(1,{
-		t('NOTE'),
-		t('ABSTRACT'),
-		t('SUMMARY'),
-		t('CHECK'),
-		t('IMPORTANT'),
-		t('EXAMPLE'),
-		t('QUESTION'),
-		t('ANSWER'),
-		t('FAQ'),
-		t('HELP'),
-		t('QUOTE'),
-		t('CITE'),
-		t('TIP'),
-		t('HINT'),
-		t('INFO'),
-		t('TODO'),
-		t('CAUTION'),
-		t('WARNING'),
-		t('DANGER'),
-		t('MISSING'),
-	}),
+	c(1, callout_list),
 	t({']',''}),
 	t({'> '}), i(0,'')
 })
