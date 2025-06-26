@@ -128,7 +128,7 @@ local FollowLink = function ()
 		if IsUrl(url) then
 			os.execute('start brave ' .. url) -- if url is web link, use brave web browser
 		else
-			vim.api.nvim_command(':ObsidianFollowLink hsplit') -- if the link is file, open the link file in horizontal split view
+			vim.api.nvim_command(':Obsidian follow_link hsplit') -- if the link is file, open the link file in horizontal split view
 		end
 		return
 	end
@@ -195,7 +195,7 @@ local ClipboardPaste = function ()
 		vim.api.nvim_feedkeys(termcodes,'n', true)
 
 	else -- if it is image, paste Image with obsidian function
-		vim.api.nvim_command('ObsidianPasteImg')
+		vim.api.nvim_command('Obsidian paste_img')
 	end
 end
 

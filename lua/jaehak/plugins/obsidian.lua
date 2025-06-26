@@ -3,8 +3,8 @@ local utils = require('jaehak.core.utils')
 return {
 	{
 		-- 'epwalsh/obsidian.nvim',
-		'Jaehaks/obsidian.nvim',
-		branch = 'fix/all',
+		-- 'Jaehaks/obsidian.nvim',
+		'obsidian-nvim/obsidian.nvim',
 		lazy = true,
 		ft = 'markdown',
 		opts = {
@@ -23,15 +23,15 @@ return {
 				blink     = true,
 				min_chars = 2,
 			},
-			mappings = {}, -- disable default keymapping
 			new_notes_location = 'current_dir',
 			preferred_link_style = 'markdown',
 			follow_url_func = function (url) -- command for follow url
-				vim.fn.system('start ' .. url)
+				vim.ui.open(url, {cmd = "chrome"})
 			end,
+			open_notes_in = "hsplit",	-- only open in a horizontal split if a hsplit does not
 			attachments = {
-				confirm_img_paste = false,  -- show confirm message when paste
-				img_folder = '', 			-- use path with img_name_func only
+				-- confirm_img_paste = false,  -- show confirm message when paste
+				-- img_folder = '', 			-- use path with img_name_func only
 				img_name_func = function () -- download clipboard image to filename folder
 					return string.format("%s\\%s-", vim.fn.expand('%:p:r'), os.date('%y%m%d'))
 				end,
@@ -106,11 +106,11 @@ return {
 				end
 			})
 
-			vim.keymap.set('n', '<leader>mw', '<Cmd>ObsidianWorkspace<CR>'     , {noremap = true, desc = '(Obsidian)switch another workspace'})
-			vim.keymap.set('n', '<leader>ms', '<Cmd>ObsidianQuickSwitch<CR>'   , {noremap = true, desc = '(Obsidian)Switch another file'})
-			vim.keymap.set('n', '<leader>mn', '<Cmd>ObsidianNew<CR>'           , {noremap = true, desc = '(Obsidian)Make new obsidian note'})
-			vim.keymap.set('n', '<leader>mo', '<Cmd>ObsidianOpen<CR>'          , {noremap = true, desc = '(Obsidian)Open a note in obsidian app'})
-			vim.keymap.set('n', '<C-c>'		, '<Cmd>ObsidianToggleCheckbox<CR>', {noremap = true, desc = '(Obsidian)Toggle checkbox'})
+			vim.keymap.set('n', '<leader>mw', '<Cmd>Obsidian Workspace<CR>',       {noremap = true, desc = '(Obsidian)switch another workspace'})
+			vim.keymap.set('n', '<leader>ms', '<Cmd>Obsidian quick_switch<CR>',    {noremap = true, desc = '(Obsidian)Switch another file'})
+			vim.keymap.set('n', '<leader>mn', '<Cmd>Obsidian new<CR>',             {noremap = true, desc = '(Obsidian)Make new obsidian note'})
+			vim.keymap.set('n', '<leader>mo', '<Cmd>Obsidian open<CR>',            {noremap = true, desc = '(Obsidian)Open a note in obsidian app'})
+			vim.keymap.set('n', '<C-c>',      '<Cmd>Obsidian toggle_checkbox<CR>', {noremap = true, desc = '(Obsidian)Toggle checkbox'})
 			-- ObsidianTOC() : use telescope-heading instead of it
 			-- ObsidianQuickSwitch() : it can be replaced with oil or telescope,
 			-- 						   but, this func can add file link directly
