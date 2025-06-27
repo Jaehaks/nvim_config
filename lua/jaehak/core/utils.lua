@@ -138,6 +138,7 @@ local FollowLink = function ()
 	local curdir = vim.fn.expand('%:p:h') -- get current buffer's dir
 	local path = url
 	path = path:gsub('/','\\') -- change for windows dir format
+	path = string.gsub(path, '%%20',' ') -- decode white space
 	if not IsAbsolutePath(url) then
 		path = curdir .. '\\' .. path
 	end
@@ -146,7 +147,7 @@ local FollowLink = function ()
 	if os.getenv('WEZTERM_PANE') ~= nil then
 		vim.api.nvim_command('silent !wezterm cli split-pane --horizontal -- powershell wezterm imgcat ' .. '\'' ..  path .. '\'' .. ' ; pause')
 	else
-		os.execute('start ' .. path) -- use default open tool for windows
+		os.execute('start "" "' .. path .. '"') -- use default open tool for windows
 	end
 
 end
