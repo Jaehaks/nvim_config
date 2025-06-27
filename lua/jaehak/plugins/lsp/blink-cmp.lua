@@ -1,3 +1,4 @@
+utils = require('jaehak.core.utils')
 return {
 	'saghen/blink.cmp',
 	event = 'InsertEnter',
@@ -17,16 +18,17 @@ return {
 			['<C-n>']   = { 'snippet_forward', 'fallback' }, -- for choice mode
 			['<C-S-n>'] = { 'snippet_backward', 'fallback' }, -- for choice mode
 			-- FIXME: select_choice() cannot insert the result
-			['<C-p>'] = {
-				function(cmp)
-					if require('luasnip').expand_or_locally_jumpable() then
-						return require('luasnip.extras.select_choice')()
-					else
-						return cmp.snippet_forward()
-					end
-				end,
-				'fallback',
-			},
+			-- ['<C-p>'] = {
+			-- 	function(cmp)
+			-- 		if require('luasnip').expand_or_locally_jumpable() then
+			-- 			return require('luasnip.extras.select_choice')()
+			-- 			-- return utils.CalloutSnippet()
+			-- 		else
+			-- 			return cmp.snippet_forward()
+			-- 		end
+			-- 	end,
+			-- 	'fallback',
+			-- },
 			['<C-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
 			['<C-q>'] = { 'hide' },
 			-- ['<C-k>'] = { 'show', 'show_documentation', 'hide_documentation' },

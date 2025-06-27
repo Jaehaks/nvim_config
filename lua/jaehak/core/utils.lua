@@ -509,4 +509,50 @@ local Show_Headers = function (min_level)
 end
 M.Show_Headers = Show_Headers
 
+
+
+-- ####################################################
+-- * Markdown : callout snippet
+-- ####################################################
+
+local CalloutSnippet = function ()
+	local callouts = {
+		'NOTE',
+		'ABSTRACT',
+		'SUMMARY',
+		'CHECK',
+		'IMPORTANT',
+		'EXAMPLE',
+		'QUESTION',
+		'ANSWER',
+		'FAQ',
+		'HELP',
+		'QUOTE',
+		'CITE',
+		'TIP',
+		'HINT',
+		'INFO',
+		'TODO',
+		'CAUTION',
+		'WARNING',
+		'DANGER',
+		'MISSING',
+	}
+
+	vim.ui.select(callouts, {
+		prompt = 'Select callouts:',
+		format_item = function (item)
+			return item
+		end
+	}, function (choice)
+		if choice then
+			local line1 = "> [!" .. choice .. "]"
+			local line2 = "> "
+			vim.api.nvim_put({line1, line2}, 'c', true, true)
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('a', true, false, true), 'n', false)
+		end
+	end)
+end
+M.CalloutSnippet = CalloutSnippet
+
 return M
