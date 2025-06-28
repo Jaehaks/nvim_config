@@ -19,36 +19,6 @@ return {
 	-- grapple.toggle_loaded() : show directories which include buffer that has tag and is "loaded"
 },
 {
-	'natecraddock/sessions.nvim',
-	enabled = false,
-	keys = {
-		-- keymap for load session
-		{'<leader>ps', function ()
-			require('sessions').load(paths.session.saved, {autosave = false})
-		end, desc = 'load last session'},
-	},
-	ft = 'dashboard',
-	opts = {
-		events = {'VimLeavePre'},
-		session_filepath = paths.session.saved,
-		absolute = true,
-	},
-	config = function (_, opts)
-		local sessions = require('sessions')
-		sessions.setup(opts)
-
-		-- Save sessions on vim exit
-		local User_augroup = vim.api.nvim_create_augroup('sessions',{clear = true})
-		vim.api.nvim_create_autocmd('VimLeavePre', {
-			group = User_augroup,
-			pattern = '*',
-			callback = function ()
-				require('sessions').save(paths.session.saved, {autosave = false})
-			end
-		})
-	end
-},
-{
 	'Jaehaks/last-session.nvim',
 	lazy = false,
 	opts = {
