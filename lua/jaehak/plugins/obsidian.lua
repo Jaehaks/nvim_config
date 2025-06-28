@@ -111,7 +111,7 @@ return {
 					vim.keymap.set({'n', 'v'}, 'P', utils.ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
 					vim.keymap.set('n', 'gf', utils.FollowLink , {buffer = 0, noremap = true, desc = 'follow image link'})
 					vim.keymap.set('n', 'gd', utils.GotoCursor,  {buffer = 0, noremap = true, desc = '(Obsidian)open file in floating window'})
-					vim.keymap.set('i', '<C-p>', utils.CalloutSnippet,  {buffer = 0, noremap = true, desc = '(Obsidian)Insert Callouts'})
+					-- vim.keymap.set('i', '<C-p>', utils.CalloutSnippet,  {buffer = 0, noremap = true, desc = '(Obsidian)Insert Callouts'})
 				end
 			})
 
