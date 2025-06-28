@@ -120,6 +120,10 @@ return {
 			yaml  = { enable = false, }
 		}
 	end,
+	config = function (opts)
+		vim.g.markview_blink_loaded = true -- disable callout completion of markview for blink.cmp
+		require('markview').setup(opts)
+	end
 },
 {
 	'crispgm/telescope-heading.nvim',
