@@ -93,7 +93,15 @@ return {
 			-- ####################################################
 			-- * Keymaps
 			-- ####################################################
-			--
+
+			-- remove default mapping from obsidian
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "ObsidianNoteEnter",
+				callback = function (ev)
+					vim.keymap.del('n', '<CR>', {buffer = ev.buf})
+				end
+			})
+
 			local User_markdown2 = vim.api.nvim_create_augroup('User_markdown2', {clear = true})
 			-- set clipboardPaste keymap for only markdown
 			vim.api.nvim_create_autocmd('FileType',{
