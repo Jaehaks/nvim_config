@@ -35,11 +35,13 @@ return {
 	opts = {
 		bigfile      = {enabled = false},
 		dashboard    = {enabled = false},
+		explorer     = {enabled = false},	-- it has many bugs with file managing
 		indent       = {enabled = false},
 		input        = {enabled = false},
 		picker       = picker_config,
 		notifier     = {enabled = false},
 		quickfile    = {enabled = false},
+		scope    	 = {enabled = false},
 		scroll       = {enabled = false},
 		statuscolumn = {enabled = false},
 		words        = {enabled = false},
