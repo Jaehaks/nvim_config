@@ -39,19 +39,19 @@ return {
 					icon = '',
 					desc = 'Folder : Config', desc_hl = 'String',
 					key = 'c', key_hl = 'DashboardShortCut',
-					action = function () require('yazi').yazi(nil, paths.nvim.config) end,
+					action = function () require('oil').open_float(paths.nvim.config) end,
 				},
 				{
 					icon = '',
 					desc = 'Folder : D:\\MATLAB_Project', desc_hl = 'String',
 					key = 'd', key_hl = 'DashboardShortCut',
-					action = function () require('yazi').yazi(nil, paths.project.matlab) end,
+					action = function () require('oil').open_float(paths.nvim.data) end,
 				},
 				{
 					icon = '',
 					desc = 'Folder : Note', desc_hl = 'String',
 					key = 'n', key_hl = 'DashboardShortCut',
-					action = function () require('yazi').yazi(nil, paths.obsidian.personal) end,
+					action = function () require('oil').open_float(paths.obsidian.personal) end,
 				},
 				{
 					icon = '',

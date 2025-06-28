@@ -57,6 +57,9 @@ return {
 		ignored_list = {
 			ignored_type = {
 				'help',
+				'oil',
+				'snacks_picker_input',
+				'checkhealth',
 			},
 			ignored_dir = {
 				'doc\\'
