@@ -7,7 +7,7 @@ return {
 	lazy = true,
 	ft = {'dashboard'},
 	keys = {
-		{'<leader>ee', function () require('yazi').yazi(nil, '') end                     , desc = 'Open yazi at current buffer dir'},
+		{'<leader>ee', function () require('yazi').yazi(nil, vim.fn.getcwd()) end                     , desc = 'Open yazi at current buffer dir'},
 		{'<leader>ec', function () require('yazi').yazi(nil, paths.nvim.config) end      , desc = 'Open yazi at nvim-config dir'},
 		{'<leader>ed', function () require('yazi').yazi(nil, paths.nvim.data) end        , desc = 'Open yazi at nvim-data dir'},
 		{'<leader>en', function () require('yazi').yazi(nil, paths.obsidian.personal) end, desc = 'Open yazi at note dir(personal)'},
