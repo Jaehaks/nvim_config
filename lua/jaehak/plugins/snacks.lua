@@ -24,6 +24,16 @@ local picker_config = {
 				['<c-k>'] = 'preview_scroll_down',
 			}
 		}
+	},
+	sources = {
+		recent = {
+			sort = {
+				fields = {'score:desc', 'time:desc', '#text', 'idx'}
+			},
+			filter = {
+				paths = false -- include all recent files without filter paths
+			}
+		}
 	}
 }
 
@@ -148,12 +158,6 @@ return {
 		end, desc = 'Show marks', mode = {'n'}},
 
 		{ '<leader>fo', function () Snacks.picker.recent({
-			sort = {
-				fields = {'score:desc', 'time:desc', '#text', 'idx'}
-			},
-			filter = {
-				paths = false -- include all recent files without filter paths
-			}
 		}) end, desc = 'Show oldfiles', mode = {'n'}},
 
 		{ '<leader>fu', function () Snacks.picker.undo({
