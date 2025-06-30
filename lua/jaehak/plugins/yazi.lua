@@ -37,6 +37,7 @@ return {
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 		'refractalize/oil-git-status.nvim',
+		'JezerM/oil-lsp-diagnostics.nvim',
 	},
 	lazy = true,
 	ft = {'dashboard'},
@@ -68,6 +69,7 @@ return {
 		})
 
 		require('oil-git-status').setup({}) -- oil-git-status setup must be called after 'oil' loading
+		require('oil-lsp-diagnostics').setup({})
 	end,
 }
 }
