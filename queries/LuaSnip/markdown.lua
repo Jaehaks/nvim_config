@@ -44,6 +44,11 @@ local callout_list = {
 	t('DANGER'),
 	t('MISSING'),
 }
+local callout_title = function (args)
+	local title = args[1][1]
+
+	return string.sub(title,1,1) .. string.lower(string.sub(title,2)) .. ': '
+end
 
 local callout = s({
 	trig = ']!',
@@ -52,7 +57,10 @@ local callout = s({
 	}, {
 	t({'> [!'}),
 	c(1, callout_list),
-	t({']',''}),
+	t({'] '}),
+	f(callout_title, {1}, {}),
+	i(2,''),
+	t({'', ''}),
 	t({'> '}), i(0,'')
 })
 table.insert(autosnippets, callout)
