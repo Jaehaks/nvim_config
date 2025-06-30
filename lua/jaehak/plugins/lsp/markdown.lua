@@ -120,7 +120,7 @@ return {
 			yaml  = { enable = false, }
 		}
 	end,
-	config = function (opts)
+	config = function (_, opts)
 		vim.g.markview_blink_loaded = true -- disable callout completion of markview for blink.cmp
 		require('markview').setup(opts)
 	end
