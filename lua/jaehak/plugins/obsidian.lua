@@ -113,6 +113,7 @@ return {
 					vim.keymap.set('n', 'gd', utils.GotoCursor,  {buffer = 0, noremap = true, desc = '(Obsidian)open file in floating window'})
 					-- vim.keymap.set('i', '<C-p>', utils.CalloutSnippet,  {buffer = 0, noremap = true, desc = '(Obsidian)Insert Callouts'})
 					vim.keymap.set('n', '<leader>mh', utils.Show_Headers, {buffer = true, desc = 'show headers'})
+					vim.keymap.set('n', '<leader>ml', utils.Show_Linklist, {buffer = true, desc = 'show linklist'})
 				end
 			})
 			vim.api.nvim_create_user_command('GetLinklist', function (args)

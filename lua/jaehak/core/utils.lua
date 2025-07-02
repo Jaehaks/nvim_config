@@ -103,6 +103,27 @@ local url_decode = function(url)
     end)
 end
 
+--- Get image_flag / text / link from "![text](link)"
+--- @param url string link pattern
+--- @return table? Components of link url
+local ResolveUrl = function (url)
+	local c1, c2, c3 = string.match(url, "(!?)%[([^%]]*)%]%(([^)]*)%)")
+	local link = {}
+
+	-- insert items
+	link.is_image = (c1 == "!")
+	link.title = c2
+	link.link = c3
+	link.category = link.is_image and 'I' or (IsUrl(link.link) and 'W' or 'L') -- image(I), web(W), link(L)
+	link.icon = (link.category == 'I') and '' or ( (link.category == 'W') and '󰖟' or '')
+
+	if link.link then
+		return link
+	else
+		return nil
+	end
+end
+
 
 
 -- ####################################################
@@ -531,6 +552,105 @@ local Show_Headers = function (min_level)
 end
 M.Show_Headers = Show_Headers
 
+
+-- ####################################################
+-- * Markdown : Get link list
+-- ####################################################
+local Get_Linklist = function()
+
+	-- check buffer
+	local cur_bufid = vim.api.nvim_get_current_buf()
+	local pattern = [[
+		(image) @link_node
+		(inline_link) @link_node
+	]]
+	-- local pattern = '(inline_link) @link_node'
+	local root, query = GetPattern(cur_bufid, 'markdown_inline', pattern)
+	if not root or not query then
+		return
+	end
+
+	local items = {}
+	local maxlen = 0
+	local matches = query:iter_captures(root, cur_bufid, 0, -1)
+	for _, node, _, _ in matches do
+		local row, col = node:start()  -- line number of header
+		local text = vim.treesitter.get_node_text(node, 0) -- get text of captured node
+		local link = ResolveUrl(text)
+		if not link then
+			vim.notify('No links found' , vim.log.levels.INFO)
+			return
+		end
+
+		-- find max title length
+		if #link.title > maxlen then
+			maxlen = #link.title
+		end
+
+		table.insert(items, {
+			data = link,
+			text = link.category .. ' ' .. link.title .. ' ' .. link.link,
+			file = vim.api.nvim_buf_get_name(cur_bufid),
+			pos = {row + 1, col + 1},
+		})
+	end
+
+	-- insert max_title length
+	for _, item in ipairs(items) do
+		item.data.maxlen = maxlen
+	end
+
+	if #items == 0 then
+		vim.notify('No items found' , vim.log.levels.INFO)
+		return
+	end
+
+	return items
+end
+M.Get_Linklist = Get_Linklist
+
+--- Show all links in current buffer
+local Show_Linklist = function ()
+	-- check snacks is loaded
+	local snacks_ok, snacks = pcall(require, 'snacks')
+	if not snacks_ok then
+		vim.notify('snacks.nvim is not installed', vim.log.levels.ERROR)
+		return
+	end
+
+	snacks.picker.pick({
+		finder = function ()
+			local items = Get_Linklist()
+			if items then
+				return items
+			end
+			return {}
+		end,
+		format = function (item, picker)
+			local a = snacks.picker.util.align -- for setting strict width
+			local ret = {}
+			local row_highlight = item.data.category == "I" and 'SnacksPickerCode' or (
+								  item.data.category == "W" and 'MarkviewHyperlink' or (
+								  item.data.category == 'L' and 'MarkviewEmail' or nil))
+			ret[#ret +1] = {a(item.data.icon, 2), row_highlight}
+			ret[#ret +1] = {a(item.data.category, 2), row_highlight}
+			ret[#ret +1] = {a(item.data.title, item.data.maxlen + 2), row_highlight}
+			ret[#ret +1] = {item.data.link}
+			snacks.picker.highlight.markdown(ret) -- set highlight for other text
+			return ret
+		end,
+		preview = 'file',
+		confirm = function (picker, item)
+			picker:close()
+			if item then
+				vim.api.nvim_win_set_cursor(0, {item.pos[1], item.pos[2]}) -- go to cursor
+				vim.cmd("normal! zt")
+			end
+		end,
+
+	})
+end
+M.Show_Linklist = Show_Linklist
 
 
 -- ####################################################
