@@ -403,33 +403,52 @@ M.AddStrong = AddStrong
 -- * Markdown : Get list of header
 -- ####################################################
 
+--- Get root, query treesitter of current buffer from parsing pattern
+--- @param bufid number buffer id
+--- @param ft_parsing string parser name
+--- @param pattern string parsing pattern
+--- @return TSNode? Root object of treesitter tree
+--- @return vim.treesitter.Query? Query object of treesitter tree
+local GetPattern = function (bufid, ft_parsing, pattern)
+	local ft = vim.api.nvim_get_option_value('filetype', {buf = bufid})
+	if ft ~= 'markdown' then
+		vim.notify(' Please execute this function in markdown ', vim.log.levels.ERROR)
+		return nil, nil
+	end
+
+	local parser = vim.treesitter.get_parser(bufid, ft_parsing)
+	if not parser then
+		vim.notify(' No Treesitter parser found for the filetype : ' .. ft_parsing, vim.log.levels.ERROR)
+		return nil, nil
+	end
+
+	local tree = parser:parse()[1]
+	if not tree then
+		vim.notify(' No Treesitter tree found for this buffer : ' .. ft_parsing, vim.log.levels.ERROR)
+		return nil, nil
+	end
+
+	local root = tree:root()
+	local query = vim.treesitter.query.parse(ft_parsing, pattern)
+	if not query then
+		vim.notify(' Error parsing treesitter query ', vim.log.levels.ERROR)
+		return nil, nil
+	end
+
+	return root, query
+end
+
+--- Get items from parser to use snacks picker list
+--- @param min_level number minimal level of header to be shown in snacks picker
+--- @return table? items to show in snacks picker
 local Get_Headers = function(min_level)
 	local minlevel = min_level or 6
 
 	-- check buffer
 	local cur_bufid = vim.api.nvim_get_current_buf()
-	local ft = vim.api.nvim_get_option_value('filetype', {buf = cur_bufid})
-	if ft ~= 'markdown' then
-		vim.notify(' Please execute this function in markdown ', vim.log.levels.ERROR)
-		return
-	end
-
-	local parser = vim.treesitter.get_parser(cur_bufid, ft)
-	if not parser then
-		vim.notify(' No Treesitter parser found for the filetype : ' .. ft, vim.log.levels.ERROR)
-		return
-	end
-
-	local tree = parser:parse()[1]
-	if not tree then
-		vim.notify(' No Treesitter tree found for this buffer : ' .. ft, vim.log.levels.ERROR)
-		return
-	end
-
-	local root = tree:root()
-	local query = vim.treesitter.query.parse(ft, '(atx_heading) @header')
-	if not query then
-		vim.notify(' Error parsing treesitter query ', vim.log.levels.ERROR)
+	local pattern = '(atx_heading) @header'
+	local root, query = GetPattern(cur_bufid, 'markdown', pattern)
+	if not root or not query then
 		return
 	end
 
