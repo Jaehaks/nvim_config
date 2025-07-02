@@ -492,6 +492,8 @@ local Get_Headers = function(min_level)
 	return headers
 end
 
+--- Show headers using snacks picker
+--- @param min_level number minimal level of header to be shown in snacks picker
 local Show_Headers = function (min_level)
 	-- check snacks is loaded
 	local snacks_ok, snacks = pcall(require, 'snacks')
