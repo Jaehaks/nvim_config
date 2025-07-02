@@ -112,8 +112,12 @@ return {
 					vim.keymap.set('n', 'gf', utils.FollowLink , {buffer = 0, noremap = true, desc = 'follow image link'})
 					vim.keymap.set('n', 'gd', utils.GotoCursor,  {buffer = 0, noremap = true, desc = '(Obsidian)open file in floating window'})
 					-- vim.keymap.set('i', '<C-p>', utils.CalloutSnippet,  {buffer = 0, noremap = true, desc = '(Obsidian)Insert Callouts'})
+					vim.keymap.set('n', '<leader>mh', utils.Show_Headers, {buffer = true, desc = 'show headers'})
 				end
 			})
+			vim.api.nvim_create_user_command('GetLinklist', function (args)
+				utils.Get_Linklist()
+			end, {desc = 'Show headers in markdown', nargs = '*'})
 
 			vim.keymap.set('n', '<leader>mw', '<Cmd>Obsidian Workspace<CR>',       {noremap = true, desc = '(Obsidian)switch another workspace'})
 			vim.keymap.set('n', '<leader>ms', '<Cmd>Obsidian quick_switch<CR>',    {noremap = true, desc = '(Obsidian)Switch another file'})
