@@ -5,6 +5,21 @@ local paths = require('jaehak.core.paths')
 vim.g.has_win32 = vim.fn.has('win32')
 opt.tabstop        = 4        -- set inserted space in TAB
 opt.shiftwidth     = 4        -- set indent space
+if vim.g.has_win32 ~= 1 then
+	vim.g.clipboard = {
+		name = 'wslclipboard',
+		copy = {
+			['+'] = 'win32yank.exe -i --crlf',
+			['*'] = 'win32yank.exe -i --crlf',
+		},
+		paste = {
+			['+'] = 'win32yank.exe -o --lf',
+			['*'] = 'win32yank.exe -o --lf',
+		},
+		cache_enabled = true,
+	}
+end
+
 
 ------------- font setting -----------------------
 opt.guifont       = 'FiraCode Nerd Font Mono:h11'
