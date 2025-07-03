@@ -1,3 +1,4 @@
+local utils = require('jaehak.core.utils')
 local M = {}
 
 local config_dir = vim.fn.stdpath('config')
@@ -68,5 +69,9 @@ M.config_dir = config_dir
 M.data_dir   = data_dir
 M.cache_dir  = cache_dir
 M.home_dir   = home_dir
+
+if vim.fn.has('win32') == 0 then -- vim.g.has_win32 cannot be loaded in this situation
+	M = utils.SlashChange(M, '\\', '/')
+end
 
 return M

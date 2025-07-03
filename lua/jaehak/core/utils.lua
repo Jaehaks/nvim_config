@@ -124,6 +124,36 @@ local ResolveUrl = function (url)
 	end
 end
 
+--- change slash direction in all paths
+--- @param T string|table value is paths
+--- @param from string slash from
+--- @param to string slash to
+--- @return string?|table? Changed paths
+local SlashChange = function(T, from, to)
+	local result = {}
+	local e_from = from or '/'
+	local e_to = to or '\\'
+
+	--- @param item table|string|any
+	--- @return table|string|any
+	local function process_item(item)
+		if type(item) == 'table' then
+			local result = {}
+			for key, value in pairs(item) do
+				result[key] = process_item(value) -- use recursive for multiple table
+			end
+			return result
+		elseif type(item) == 'string' then
+			-- vim.print({ item, e_from, e_to })
+			return string.gsub(item, e_from, e_to)
+		else
+			return item
+		end
+	end
+
+	return process_item(T)
+end
+M.SlashChange = SlashChange
 
 
 -- ####################################################
