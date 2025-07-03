@@ -51,7 +51,8 @@ return {
 			pattern = {'/', '?'},
 			callback = function ()
 				vim.schedule(function ()
-					if vim.fn.searchcount({recompute = 1}).total > 0 then -- check searched word is existed
+					local word = vim.fn.searchcount({recompute = 1})
+					if word and word.total > 0 then
 						check_search_highlight()
 					end
 				end)
