@@ -79,6 +79,7 @@ end, {nargs = 1})
 
 
 -- clear some procedure after VimLeave
+if vim.g.win32 == 1 then
 vim.api.nvim_create_autocmd({"VimEnter"}, {
 	group = SystemCall,
 	callback = function ()
@@ -107,6 +108,7 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 		-- end
 	end
 })
+end
 
 -- Check redundant process and terminate at startup
 -- vim.api.nvim_create_autocmd({"BufReadPre", "BufNewFile"}, {
