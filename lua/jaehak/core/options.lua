@@ -1,6 +1,10 @@
 local opt = vim.opt 		-- for conciseness
 local paths = require('jaehak.core.paths')
 
+-- first
+vim.g.has_win32 = vim.fn.has('win32')
+opt.tabstop        = 4        -- set inserted space in TAB
+opt.shiftwidth     = 4        -- set indent space
 
 ------------- font setting -----------------------
 opt.guifont       = 'FiraCode Nerd Font Mono:h11'
@@ -37,7 +41,6 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 
 -- register config / data directory to runtimepath
 -- register python program
-vim.g.has_win32 = vim.fn.has('win32')
 if vim.g.has_win32 == 1 then
 	vim.g.python3_host_prog = paths.nvim.python
 	opt.path:append(paths.config_dir .. "\\**10")
@@ -70,8 +73,6 @@ opt.number         = true     -- set line number
 opt.relativenumber = true     -- set relative line number
 opt.signcolumn     = 'yes'    -- show additional gray column on the leftside of line number
 opt.statuscolumn   = '%=%l%s' -- change order of signcolumn. line number(left), sign(right)
-opt.tabstop        = 4        -- set inserted space in TAB
-opt.shiftwidth     = 4        -- set indent space
                               -- opt.smarttab = true
 opt.autoindent     = true     -- when enter next line, automatically indent from start line
                               -- opt.smartindent = true    -- smart autoindent when starting new line
