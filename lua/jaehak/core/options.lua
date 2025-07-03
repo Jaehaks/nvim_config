@@ -14,8 +14,10 @@ opt.fileencodings = { 'ucs-bom', 'utf-8', 'cp949' } -- consider ucs-bom for enco
 -- show cursorline only current buffer
 opt.cursorline    = true    -- show underline where current cursor is located
 opt.termguicolors = true    -- change cursor line from line to block
-opt.shellslash    = false    -- if true, '/' is used for expanding directory
-opt.completeslash = 'slash' -- slash is used for path completion
+if vim.g.has_win32 == 1 then
+	opt.shellslash    = false    -- if true, '/' is used for expanding directory
+	opt.completeslash = 'slash' -- slash is used for path completion
+end
 
 -- cursor line in only active window
 -- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window
