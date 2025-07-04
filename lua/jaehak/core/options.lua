@@ -77,12 +77,6 @@ vim.g.loaded_ruby_provider = 0 -- disable ruby provider warning
 opt.autochdir = true	-- change pwd where current buffer is located
 --opt.autoread = true		-- auto reload when file has been changed outside of vim
 
--- force modify filetype
-vim.filetype.add({
-	extension = {
-		scm = 'query', -- .scm is 'scheme' as default, 'query' is more colorful
-	}
-})
 
 
 
@@ -162,6 +156,13 @@ opt.iskeyword:append('-')           -- i don't know
 
 
 ---------- file type ---------
+-- force modify filetype
+vim.filetype.add({
+	extension = {
+		scm = 'query', -- .scm is 'scheme' as default, 'query' is more colorful
+	}
+})
+
 if vim.g.has_win32 ~= 1 then
 	-- set filetype of zsh as sh to recognize bash treesitter
 	vim.filetype.add({
