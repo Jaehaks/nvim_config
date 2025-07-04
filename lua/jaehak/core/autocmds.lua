@@ -79,7 +79,7 @@ end, {nargs = 1})
 
 
 -- clear some procedure after VimLeave
-if vim.g.win32 == 1 then
+if vim.g.has_win32 == 1 then
 vim.api.nvim_create_autocmd({"VimEnter"}, {
 	group = SystemCall,
 	callback = function ()
