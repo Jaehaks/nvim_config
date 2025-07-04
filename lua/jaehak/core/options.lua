@@ -17,6 +17,8 @@ if vim.g.has_win32 ~= 1 then
 			['*'] = 'win32yank.exe -o --lf',
 		},
 		cache_enabled = true,
+		-- if cache is enabled, copying and pasting to system clipboard operate asynchronously
+		-- it makes some delay to real action but it protect neovim operation after copying and pasting
 	}
 end
 
@@ -67,6 +69,8 @@ else
 	opt.path:append(paths.data_dir .. "/**10")
 end
 vim.g.loaded_perl_provider = 0 -- disable perl provider warning
+vim.g.loaded_ruby_provider = 0 -- disable ruby provider warning
+
 
 
 -- change
