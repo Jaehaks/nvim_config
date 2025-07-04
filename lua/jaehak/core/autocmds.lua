@@ -171,7 +171,10 @@ vim.api.nvim_create_autocmd('CursorHold', {
 	group = aug_TrimWhiteSpace,
 	callback = function (event)
 
-		if vim.bo.buftype ~= '' or NotHasFileName() or not vim.bo.modified then
+		if vim.bo.buftype ~= '' or
+			NotHasFileName() or
+			not vim.bo.modified or
+			vim.b[event.buf].disable_aug_TrimWhiteSpace then
 			return
 		end
 
@@ -182,16 +185,11 @@ vim.api.nvim_create_autocmd('CursorHold', {
 
 		vim.api.nvim_exec_autocmds('BufWritePre', {buffer = 0}) -- force execute BufWritePre event
 		local ok, err = pcall(vim.cmd, 'write')
-		if not ok then -- when write is protected, autocmd is removed in this buffer
+		if not ok then -- when write is protected, do not write anymore in this buffer
 			vim.notify('AutoCmd : Failed to write this file', vim.log.levels.WARN)
-			vim.api.nvim_del_autocmd(vim.api.nvim_get_autocmds({
-				group = aug_TrimWhiteSpace,
-				event = 'CursorHold',
-				buffer = event.buf,
-			})[1].id)
+			vim.b[event.buf].disable_aug_TrimWhiteSpace = true
 			return
 		end
-		vim.cmd('write') -- because cmd('write') doesn't invokes BufWritePre
 	end
 })
 
