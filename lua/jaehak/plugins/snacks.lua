@@ -165,6 +165,12 @@ return {
 
 		{ '<leader>fz', function () Snacks.picker.zoxide({
 		}) end, desc = 'Show files using zoxide', mode = {'n'}},
+
+		{ '<leader>bd', function () Snacks.bufdelete({
+		}) end, desc = 'Delete current buffer without quitting window', mode = {'n'}},
+
+		{ '<leader>bD', function () Snacks.bufdelete.other({
+		}) end, desc = 'Delete all buffer except current one without quitting window', mode = {'n'}},
 	}
 	-- cliphist() doesn't work in windows
 	-- icons : show nerd icons
