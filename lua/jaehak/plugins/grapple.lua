@@ -21,6 +21,9 @@ return {
 {
 	'Jaehaks/last-session.nvim',
 	lazy = false,
+	keys = {
+		{'<leader>ps', function () require('last-session').load_session() end, desc = 'Load last session'},
+	},
 	opts = {
 		auto_save = true,
 		path = paths.last_session.saved,
