@@ -4,7 +4,9 @@ return {
 	-- 			  if current file name change, the change not apply to buffer name immediately
 {
 	"mikavilpas/yazi.nvim",
-	enabled = false,
+	cond = function ()
+		return vim.g.has_win32 and false or true
+	end,
 	lazy = true,
 	ft = {'dashboard'},
 	keys = {
@@ -34,6 +36,9 @@ return {
 },
 {
 	'stevearc/oil.nvim',
+	cond = function ()
+		return vim.g.has_win32 and true or false
+	end,
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
 		'refractalize/oil-git-status.nvim',
