@@ -371,7 +371,7 @@ local GotoCursor = function()
 		end
 	end
 
-	if vim.g.has_win32 == 1 then
+	if vim.g.has_win32 then
 		path = path:gsub('/', '\\')
 	end
 

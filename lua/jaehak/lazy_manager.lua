@@ -1,6 +1,6 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if vim.g.has_win32 == 1 then
+if vim.g.has_win32 then
 	lazypath = lazypath:gsub('/', '\\')
 end
 

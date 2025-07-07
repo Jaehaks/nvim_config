@@ -2,10 +2,10 @@ local opt = vim.opt 		-- for conciseness
 local paths = require('jaehak.core.paths')
 
 -- first
-vim.g.has_win32 = vim.fn.has('win32')
+vim.g.has_win32 = vim.fn.has('win32') == 1 and true or false
 opt.tabstop        = 4        -- set inserted space in TAB
 opt.shiftwidth     = 4        -- set indent space
-if vim.g.has_win32 ~= 1 then
+if not vim.g.has_win32 then
 	vim.g.clipboard = {
 		name = 'wslclipboard',
 		copy = {
@@ -35,7 +35,7 @@ opt.fileencodings = { 'ucs-bom', 'utf-8', 'cp949' } -- consider ucs-bom for enco
 -- show cursorline only current buffer
 opt.cursorline    = true    -- show underline where current cursor is located
 opt.termguicolors = true    -- change cursor line from line to block
-if vim.g.has_win32 == 1 then
+if vim.g.has_win32 then
 	opt.shellslash    = false    -- if true, '/' is used for expanding directory
 	opt.completeslash = 'slash' -- slash is used for path completion
 end
@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 
 -- register config / data directory to runtimepath
 -- register python program
-if vim.g.has_win32 == 1 then
+if vim.g.has_win32 then
 	vim.g.python3_host_prog = paths.nvim.python
 	opt.path:append(paths.config_dir .. "\\**10")
 	opt.path:append(paths.data_dir .. "\\**10")
@@ -163,7 +163,7 @@ vim.filetype.add({
 	}
 })
 
-if vim.g.has_win32 ~= 1 then
+if not vim.g.has_win32 then
 	-- set filetype of zsh as sh to recognize bash treesitter
 	vim.filetype.add({
 		extension = {

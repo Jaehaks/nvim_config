@@ -3,7 +3,7 @@ local paths = require('jaehak.core.paths')
 -- #############################################################
 -- ####### environment variable for lsp
 -- #############################################################
-local sep = vim.g.has_win32 == 1 and ';' or ':'
+local sep = vim.g.has_win32 and ';' or ':'
 vim.env.PATH = paths.nvim.mason .. sep .. vim.env.PATH -- call lsp without mason
 vim.env.RUFF_CACHE_DIR = paths.lsp.ruff.cache_path --  set ruff cache directory
 
