@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 return {
 	{
 		'williamboman/mason-lspconfig.nvim', -- for connection with nvim-lspconfig

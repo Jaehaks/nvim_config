@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 local sign_priority = {
 	rank1 = 20,
 	rank2 = 10, -- default of lsp
@@ -67,7 +66,7 @@ return {
 			'williamboman/mason.nvim',	-- to recognize language server ahead of lspconfig
 		},
 		init = function ()
-			vim.env.RUFF_CACHE_DIR = paths.lsp.ruff.cache_path --  set ruff cache directory
+			vim.env.RUFF_CACHE_DIR = require('jaehak.core.paths').lsp.ruff.cache_path --  set ruff cache directory
 		end,
 		config = function()
 			-- configuration lspconfig using opt field of lazy.nvim doesn't work.
@@ -153,7 +152,7 @@ return {
 				settings = {
 					matlab = {
 						indexWorkspace = true,
-						installPath = paths.lsp.matlab,
+						installPath = require('jaehak.core.paths').lsp.matlab,
 						matlabConnectionTiming = 'onStart',
 						telemetry = false, -- don't report about any problem
 					},
@@ -235,8 +234,8 @@ return {
 				single_file_support = true,
 				init_options = {
 					settings = {
-						configuration = paths.lsp.ruff.config_path,
-						logFile = paths.lsp.ruff.log_path,
+						configuration = require('jaehak.core.paths').lsp.ruff.config_path,
+						logFile = require('jaehak.core.paths').lsp.ruff.log_path,
 						logLevel = 'warn',
 						organizeImports = true, -- use code action for organizeImports
 						showSyntaxErrors = true, -- show syntax error diagnostics

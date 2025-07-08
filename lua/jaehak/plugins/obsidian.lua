@@ -11,11 +11,11 @@ return {
 			workspaces = { -- this directory must exist
 				{
 					name = 'Personal',
-					path = paths.obsidian.personal
+					path = require('jaehak.core.paths').obsidian.personal
 				},
 				{
 					name = 'Project',
-					path = paths.obsidian.project
+					path = require('jaehak.core.paths').obsidian.project
 				},
 			},
 			completion = {

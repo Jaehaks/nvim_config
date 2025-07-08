@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 local utils = require('jaehak.core.utils')
 
 -- RRethy/nvim-treesitter-endwise : it doesn't need anymore because nvim-autopairs does same one
@@ -7,7 +6,7 @@ return {
 {
 	'nvim-treesitter/nvim-treesitter',
 	event = {'BufReadPost'},
-	ft = paths.Filetypes.ForIlluminate,
+	ft = require('jaehak.core.paths').Filetypes.ForIlluminate,
 	dependencies = {
 		'HiPhish/rainbow-delimiters.nvim',
 	},
@@ -18,7 +17,7 @@ return {
 
 		-- change install paths
 		ts.setup({
-			install_dir = paths.data_dir .. '/nvim-treesitter/site'
+			install_dir = require('jaehak.core.paths').data_dir .. '/nvim-treesitter/site'
 		})
 
 		-- install parsers asynchronously

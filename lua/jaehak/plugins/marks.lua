@@ -1,8 +1,7 @@
-local paths = require('jaehak.core.paths')
 return {
 	-- display marks in signcolumn
 	'chentoast/marks.nvim',
-	ft = paths.Filetypes.ForCode,
+	ft = require('jaehak.core.paths').Filetypes.ForCode,
 	opts = {
 		default_mappings = true,
 		sign = true, -- show marks name in signcolumn

@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 return {
 {
 	-- list up important files (add list to nvim-data/grapple)
@@ -26,7 +25,7 @@ return {
 	},
 	opts = {
 		auto_save = true,
-		path = paths.last_session.saved,
+		path = require('jaehak.core.paths').last_session.saved,
 		ignored_list = {
 			ignored_type = {
 				'help',

@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 return {
 	-- lir.nvim : very simple and good to operate, but i think oil.nvim is more expandable
 	-- 			  if current file name change, the change not apply to buffer name immediately
@@ -11,9 +10,9 @@ return {
 	ft = {'dashboard'},
 	keys = {
 		{'<leader>ee', function () require('yazi').yazi(nil, vim.fn.getcwd()) end                     , desc = 'Open yazi at current buffer dir'},
-		{'<leader>ec', function () require('yazi').yazi(nil, paths.nvim.config) end      , desc = 'Open yazi at nvim-config dir'},
-		{'<leader>ed', function () require('yazi').yazi(nil, paths.nvim.data) end        , desc = 'Open yazi at nvim-data dir'},
-		{'<leader>en', function () require('yazi').yazi(nil, paths.obsidian.personal) end, desc = 'Open yazi at note dir(personal)'},
+		{'<leader>ec', function () require('yazi').yazi(nil, require('jaehak.core.paths').nvim.config) end      , desc = 'Open yazi at nvim-config dir'},
+		{'<leader>ed', function () require('yazi').yazi(nil, require('jaehak.core.paths').nvim.data) end        , desc = 'Open yazi at nvim-data dir'},
+		{'<leader>en', function () require('yazi').yazi(nil, require('jaehak.core.paths').obsidian.personal) end, desc = 'Open yazi at note dir(personal)'},
 	},
 	init = function ()
 		vim.g.loaded_netrwPlugin = 1
@@ -48,9 +47,9 @@ return {
 	ft = {'dashboard'},
 	keys = {
 		{'<leader>ee', function () require('oil').open_float() end,                        desc = 'Open Oil Explorer (cwd)'},
-		{'<leader>ec', function () require('oil').open_float(paths.nvim.config) end,       desc = 'Open Oil Explorer (config)'},
-		{'<leader>ed', function () require('oil').open_float(paths.nvim.data) end,         desc = 'Open Oil Explorer (data)'},
-		{'<leader>en', function () require('oil').open_float(paths.obsidian.personal) end, desc = 'Open Oil Explorer (personal)'},
+		{'<leader>ec', function () require('oil').open_float(require('jaehak.core.paths').nvim.config) end,       desc = 'Open Oil Explorer (config)'},
+		{'<leader>ed', function () require('oil').open_float(require('jaehak.core.paths').nvim.data) end,         desc = 'Open Oil Explorer (data)'},
+		{'<leader>en', function () require('oil').open_float(require('jaehak.core.paths').obsidian.personal) end, desc = 'Open Oil Explorer (personal)'},
 	},
 	config = function ()
 		vim.api.nvim_set_hl(0, "OilSize"     , {fg = "#32CD32"})

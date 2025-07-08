@@ -1,7 +1,7 @@
 local paths = require('jaehak.core.paths')
 return {
 	'folke/todo-comments.nvim',
-	ft = paths.Filetypes.ForCode,
+	ft = require('jaehak.core.paths').Filetypes.ForCode,
 	keys = {
 		{']t'        , function() require('todo-comments').jump_next() end, desc = 'Next todo comments'},
 		{'[t'        , function() require('todo-comments').jump_prev() end, desc = 'Prev todo comments'},

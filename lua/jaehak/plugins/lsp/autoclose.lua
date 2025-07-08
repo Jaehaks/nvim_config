@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 return {
 	-- tpope/vim-endwise : it doesn't work
 	-- ultimate-autopair.nvim  : it is too bulky and slow
@@ -164,8 +163,12 @@ return {
 		rainbow_delimiters_setup.setup(opts)
 
 		-- if there is not matlab query directory, make it
-		local source_dir = paths.nvim.rainbow_queries .. '\\matlab\\'
-		local dest_dir = paths.data_dir .. '\\lazy\\rainbow-delimiters.nvim\\queries\\matlab\\'
+		local source_dir = require('jaehak.core.paths').nvim.rainbow_queries .. '\\matlab\\'
+		local dest_dir = require('jaehak.core.paths').data_dir .. '\\lazy\\rainbow-delimiters.nvim\\queries\\matlab\\'
+		if not vim.g.has_win32 then
+			string.gsub(source_dir, '\\', '/')
+			string.gsub(dest_dir, '\\', '/')
+		end
 		vim.uv.fs_scandir(dest_dir , function (err, userdata)
 			if err then
 				vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'
@@ -178,7 +181,7 @@ return {
 	-- show matchparen of current region
 	"utilyre/sentiment.nvim",
 	version = "*",
-	ft = paths.Filetypes.ForCode,
+	ft = require('jaehak.core.paths').Filetypes.ForCode,
 	-- event = "VeryLazy", -- keep for lazy loading
 	opts = {
 		pairs = {

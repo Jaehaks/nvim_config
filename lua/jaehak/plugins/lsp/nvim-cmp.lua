@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 return {
 	'hrsh7th/nvim-cmp',
 	event = 'InsertEnter',		-- load before starting insert mode / replace mode
@@ -24,7 +23,7 @@ return {
 		-- 	opts ={
 		-- 		paths = { -- this word file is too much to load for RAM
 		-- 			-- vim.fn.stdpath('data') .. '\\lazy\\english-words\\words_alpha.txt',
-		-- 			-- paths.nvim.wordlist_korean,
+		-- 			-- require('jaehak.core.paths').nvim.wordlist_korean,
 		-- 		}
 		-- 	}
 		-- },

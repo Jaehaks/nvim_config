@@ -37,9 +37,9 @@ return {
 					key = 'c', key_hl = 'DashboardShortCut',
 					action = function ()
 						if vim.g.has_win32 then
-							require('oil').open_float(paths.nvim.config)
+							require('oil').open_float(require('jaehak.core.paths').nvim.config)
 						else
-							require('yazi').yazi(nil, paths.nvim.config)
+							require('yazi').yazi(nil, require('jaehak.core.paths').nvim.config)
 						end
 					end,
 				},
@@ -49,9 +49,9 @@ return {
 					key = 'd', key_hl = 'DashboardShortCut',
 					action = function ()
 						if vim.g.has_win32 then
-							require('oil').open_float(paths.project.matlab)
+							require('oil').open_float(require('jaehak.core.paths').project.matlab)
 						else
-							require('yazi').yazi(nil, paths.project.matlab)
+							require('yazi').yazi(nil, require('jaehak.core.paths').project.matlab)
 						end
 					end,
 				},
@@ -59,7 +59,7 @@ return {
 					icon = '',
 					desc = 'Folder : Note', desc_hl = 'String',
 					key = 'n', key_hl = 'DashboardShortCut',
-					action = function () require('oil').open_float(paths.obsidian.personal) end,
+					action = function () require('oil').open_float(require('jaehak.core.paths').obsidian.personal) end,
 				},
 				{
 					icon = '',
@@ -71,7 +71,7 @@ return {
 					icon = '',
 					desc = 'Last Sessions', desc_hl = 'String',
 					key = 's', key_hl = 'DashboardShortCut',
-					-- action = function () require('sessions').load(paths.session.saved, {autosave = false}) end,
+					-- action = function () require('sessions').load(require('jaehak.core.paths').session.saved, {autosave = false}) end,
 					action = function () require('last-session').load_session() end,
 				},
 			},

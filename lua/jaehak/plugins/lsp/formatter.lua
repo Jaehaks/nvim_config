@@ -1,9 +1,8 @@
-local paths = require('jaehak.core.paths')
 return {
 {
 	"stevearc/conform.nvim",
 	lazy = true,
-	ft = paths.Filetypes.ForCode,
+	ft = require('jaehak.core.paths').Filetypes.ForCode,
 	keys = {
 		{'<leader>wf', function ()
 			require('conform').format({
@@ -29,7 +28,7 @@ return {
 				command = 'ruff',
 				args = {
 					'format',
-					'--config=' .. paths.lsp.ruff.config_path,
+					'--config=' .. require('jaehak.core.paths').lsp.ruff.config_path,
 					'--force-exclude',
 					'--stdin-filename',
 					'$FILENAME',
