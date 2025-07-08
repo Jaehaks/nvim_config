@@ -4,17 +4,17 @@ return {
 	keys = {
 		-- open grug-far about current file, current word, it supports visual block
 		{'<leader>sf', function ()
-			require('grug-far').grug_far({
+			require('grug-far').open({
 				prefills = {
 					search = vim.fn.expand('<cword>'),
 					paths = vim.fn.expand('%')
-				}
+				},
 			})
 		end,  desc = "Find and replace on current file", mode = {'n', 'x'} },
 
 		-- open grug-far about project file
 		{'<leader>sF', function ()
-			require('grug-far').grug_far({
+			require('grug-far').open({
 				prefills = {
 					search = vim.fn.expand('<cword>'),
 				}
@@ -22,6 +22,11 @@ return {
 		end,  desc = "Find and replace on all project files", mode = {'n', 'x'} },
 	},
 	opts = {
+		engines = {
+			ripgrep = {
+				showReplaceDiff = false -- don't show Diff view
+			}
+		},
 		windowCreationCommand = 'botright split', -- window location
 		keymaps = {
 			replace           = { n = '<localleader>r' }, -- replace all
