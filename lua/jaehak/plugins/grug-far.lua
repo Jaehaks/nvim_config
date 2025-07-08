@@ -28,6 +28,9 @@ return {
 			}
 		},
 		windowCreationCommand = 'botright split', -- window location
+		openTargetWindow ={
+			preferredLocation = 'above' -- focused window direction of open/gotolcation
+		},
 		keymaps = {
 			replace           = { n = '<localleader>r' }, -- replace all
 			qflist            = { n = '<localleader>q' }, -- (not useful)
