@@ -4,7 +4,7 @@ return {
 {
 	"mikavilpas/yazi.nvim",
 	cond = function ()
-		return vim.g.has_win32 and false or true
+		return not vim.g.has_win32
 	end,
 	lazy = true,
 	ft = {'dashboard'},
@@ -36,7 +36,7 @@ return {
 {
 	'stevearc/oil.nvim',
 	cond = function ()
-		return vim.g.has_win32 and true or false
+		return vim.g.has_win32
 	end,
 	dependencies = {
 		'nvim-tree/nvim-web-devicons',
