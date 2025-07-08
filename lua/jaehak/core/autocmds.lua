@@ -1,5 +1,3 @@
-local paths = require('jaehak.core.paths')
-
 ------------ reload when neovim is focused --------------
 local aug_NvimFocus = vim.api.nvim_create_augroup('aug_NvimFocus', {clear = true})
 vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nvim focused
@@ -84,8 +82,8 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 	group = SystemCall,
 	callback = function ()
 		-- delete shada.tmp files which are not deleted after shada is saved
-		-- vim.fn.system('del /Q /F /S "' .. paths.data_dir .. '\\shada\\*tmp*"')
-		local shada_dir = paths.data_dir .. '\\shada\\'
+		-- vim.fn.system('del /Q /F /S "' .. require('jaehak.core.paths').data_dir .. '\\shada\\*tmp*"')
+		local shada_dir = require('jaehak.core.paths').data_dir .. '\\shada\\'
 		local iter, err = vim.uv.fs_scandir(shada_dir)
 
 		while true do

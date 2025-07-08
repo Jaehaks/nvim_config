@@ -1,5 +1,4 @@
 local opt = vim.opt 		-- for conciseness
-local paths = require('jaehak.core.paths')
 
 -- first
 vim.g.has_win32 = vim.fn.has('win32') == 1 and true or false
@@ -59,14 +58,14 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 -- register config / data directory to runtimepath
 -- register python program
 if vim.g.has_win32 then
-	vim.g.python3_host_prog = paths.nvim.python
-	opt.path:append(paths.config_dir .. "\\**10")
-	opt.path:append(paths.data_dir .. "\\**10")
-	opt.path:prepend(paths.home_dir .. '\\scoop\\apps\\neovim\\current\\bin')
+	vim.g.python3_host_prog = require('jaehak.core.paths').nvim.python
+	opt.path:append(require('jaehak.core.paths').config_dir .. "\\**10")
+	opt.path:append(require('jaehak.core.paths').data_dir .. "\\**10")
+	opt.path:prepend(require('jaehak.core.paths').home_dir .. '\\scoop\\apps\\neovim\\current\\bin')
 else
 	vim.g.python3_host_prog = '~/.config/.Nvim_venv/bin/python'		-- use python support
-	opt.path:append(paths.config_dir .. "/**10")
-	opt.path:append(paths.data_dir .. "/**10")
+	opt.path:append(require('jaehak.core.paths').config_dir .. "/**10")
+	opt.path:append(require('jaehak.core.paths').data_dir .. "/**10")
 end
 vim.g.loaded_perl_provider = 0 -- disable perl provider warning
 vim.g.loaded_ruby_provider = 0 -- disable ruby provider warning

@@ -1,11 +1,9 @@
-local paths = require('jaehak.core.paths')
-
 -- #############################################################
 -- ####### environment variable for lsp
 -- #############################################################
 local sep = vim.g.has_win32 and ';' or ':'
-vim.env.PATH = paths.nvim.mason .. sep .. vim.env.PATH -- call lsp without mason
-vim.env.RUFF_CACHE_DIR = paths.lsp.ruff.cache_path --  set ruff cache directory
+vim.env.PATH = require('jaehak.core.paths').nvim.mason .. sep .. vim.env.PATH -- call lsp without mason
+vim.env.RUFF_CACHE_DIR = require('jaehak.core.paths').lsp.ruff.cache_path --  set ruff cache directory
 
 -- #############################################################
 -- ####### set diagnostics as numhl to distinguish with gitsign
@@ -98,7 +96,7 @@ vim.lsp.config('matlab-ls', {
 	settings = {
 		matlab = {
 			indexWorkspace = true,
-			installPath = paths.lsp.matlab,
+			installPath = require('jaehak.core.paths').lsp.matlab,
 			matlabConnectionTiming = 'onStart',
 			telemetry = false, -- don't report about any problem
 		},
@@ -176,8 +174,8 @@ vim.lsp.config('ruff', {
 	end,
 	init_options = {
 		settings = {
-			configuration = paths.lsp.ruff.config_path,
-			logFile = paths.lsp.ruff.log_path,
+			configuration = require('jaehak.core.paths').lsp.ruff.config_path,
+			logFile = require('jaehak.core.paths').lsp.ruff.log_path,
 			logLevel = 'warn',
 			organizeImports = true, -- use code action for organizeImports
 			showSyntaxErrors = true, -- show syntax error diagnostics
