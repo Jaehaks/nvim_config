@@ -45,12 +45,12 @@ end
 vim.api.nvim_create_autocmd({'WinLeave'}, {
 	group = aug_UserOptions,
 	pattern = '*',
-	callback = function() vim.opt_local.cursorline = false end
+	callback = function() vim.wo.cursorline = false end
 })
 vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 	group = aug_UserOptions,
 	pattern = '*',
-	callback = function() vim.opt_local.cursorline = true end
+	callback = function() vim.wo.cursorline = true end
 })
 
 ------------- file detect -----------------------
