@@ -32,25 +32,29 @@ opt.fileencodings = { 'ucs-bom', 'utf-8', 'cp949' } -- consider ucs-bom for enco
 
 ------------ gui windows ------------------------
 -- show cursorline only current buffer
-opt.cursorline    = true    -- show underline where current cursor is located
-opt.termguicolors = true    -- change cursor line from line to block
+opt.cursorline    = true        -- show underline where current cursor is located
+opt.termguicolors = true        -- change cursor line from line to block
 if vim.g.has_win32 then
-	opt.shellslash    = false    -- if true, '/' is used for expanding directory
+	opt.shellslash    = false   -- if true, '/' is used for expanding directory
 	opt.completeslash = 'slash' -- slash is used for path completion
 end
 
--- cursor line in only active window
+-- set cursor line higlight for active/inactive window (to separate highlight of each window for grug-far.nvim)
 -- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window
 -- becase when :bn, BufRead invoked but WinEnter didn't not invoke
 vim.api.nvim_create_autocmd({'WinLeave'}, {
 	group = aug_UserOptions,
 	pattern = '*',
-	callback = function() vim.wo.cursorline = false end
+	callback = function()
+		vim.opt_local.winhighlight = "CursorLine:CursorLineInActive"
+	end
 })
 vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 	group = aug_UserOptions,
 	pattern = '*',
-	callback = function() vim.wo.cursorline = true end
+	callback = function()
+		vim.opt_local.winhighlight = "CursorLine:CursorLine"
+	end
 })
 
 ------------- file detect -----------------------

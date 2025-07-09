@@ -28,6 +28,7 @@ return{{
 				vim.api.nvim_set_hl(0, "NormalFloat" , { bg = "#131313"})                  -- black
 				vim.api.nvim_set_hl(0, "MatchParen"  , { fg = "#000000", bg = "#FE00FF"})  -- for match paren
 				vim.api.nvim_set_hl(0, "Visual"  	 , { link = 'CursorLine'})
+				vim.api.nvim_set_hl(0, "CursorLineInActive"  , { bg = "#343434" })
 			end,
 			group = custom_highlight,
 		})
