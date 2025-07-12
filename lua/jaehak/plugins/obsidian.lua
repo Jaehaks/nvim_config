@@ -8,6 +8,7 @@ return {
 		lazy = true,
 		ft = 'markdown',
 		opts = {
+			legacy_commands = false,
 			workspaces = { -- this directory must exist
 				{
 					name = 'Personal',
