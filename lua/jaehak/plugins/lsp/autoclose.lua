@@ -76,6 +76,13 @@ return {
 			endwise('properties.*$', 'end', 'matlab', {'class_definition', 'methods'}),
 			endwise('methods.*$'   , 'end', 'matlab', {'class_definition', 'methods'}),
 			endwise('function%s.+$', 'end', 'matlab', 'ERROR'),
+
+			-- sh, zsh
+			endwise('then$', 'fi', 'sh', 'if_statement'),    -- if  <right condition> then
+			endwise('do$', 'done', 'sh', 'for_statement'),    -- for  <right condition> do
+			endwise('do$', 'done', 'sh', 'while_statement'),    -- while  <right condition> do
+			endwise('do$', 'done', 'sh', 'until_statement'),    -- until  <right condition> do
+			endwise('in$', 'esac', 'sh', 'case_statement'),    -- until  <right condition> do
 		})
 	end
 },
