@@ -57,6 +57,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.which-key'          , enabled = true},
 		{import = 'jaehak.plugins.yankbank'           , enabled = true},
 		{import = 'jaehak.plugins.vim-coach'          , enabled = true},
+		{import = 'jaehak.plugins.scrollbar'          , enabled = true},
 		{import = 'jaehak.plugins.lsp.autoclose'      , enabled = true},
 		{import = 'jaehak.plugins.lsp.comment'        , enabled = true},
 		{import = 'jaehak.plugins.lsp.latex'          , enabled = true},
