@@ -8,16 +8,17 @@ if not vim.g.has_win32 then
 	vim.g.clipboard = {
 		name = 'wslclipboard',
 		copy = {
-			['+'] = 'win32yank.exe -i --crlf',
-			['*'] = 'win32yank.exe -i --crlf',
+			['+'] = 'xclip -in -selection clipboard',
+			['*'] = 'xclip -in -selection clipboard',
 		},
 		paste = {
-			['+'] = 'win32yank.exe -o --lf',
-			['*'] = 'win32yank.exe -o --lf',
+			['+'] = 'xclip -out -selection clipboard',
+			['*'] = 'xclip -out -selection clipboard',
 		},
 		cache_enabled = true,
 		-- if cache is enabled, copying and pasting to system clipboard operate asynchronously
 		-- it makes some delay to real action but it protect neovim operation after copying and pasting
+		-- xclip connects with windows system clipboard in wsl. it is very must faster than win32yank.exe
 	}
 end
 
