@@ -177,7 +177,11 @@ local FollowLink = function ()
 	-- if the url is not image, it is regarded as .md file or web link
 	if not IsImage(url) then
 		if IsUrl(url) then
-			os.execute('start brave ' .. url) -- if url is web link, use brave web browser
+			if vim.g.has_win32 then
+				os.execute('start brave ' .. url) -- if url is web link, use brave web browser
+			else
+				os.execute('firefox ' .. '\'' ..  url .. '\'' .. ' > /dev/null 2>&1 &') -- if url is web link, use brave web browser
+			end
 		else
 			vim.api.nvim_command(':Obsidian follow_link hsplit') -- if the link is file, open the link file in horizontal split view
 		end
