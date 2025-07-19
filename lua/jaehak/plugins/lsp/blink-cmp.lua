@@ -88,6 +88,8 @@ return {
 				path = { -- triggered by '/'
 					fallbacks = {},
 					opts = {
+						trailing_slash = false, -- do not attach '/' automatically, it prevent to completion with triggering with '/'
+						label_trailing_slash = true,
 						show_hidden_files_by_default = true,
 					}
 				},
