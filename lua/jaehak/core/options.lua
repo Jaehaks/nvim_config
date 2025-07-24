@@ -164,6 +164,9 @@ opt.iskeyword:append('-')           -- i don't know
 vim.filetype.add({
 	extension = {
 		scm = 'query', -- .scm is 'scheme' as default, 'query' is more colorful
+	},
+	filename = {
+		['.vindrc'] = 'vim',
 	}
 })
 
