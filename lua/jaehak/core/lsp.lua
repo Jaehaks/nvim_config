@@ -37,7 +37,11 @@ vim.diagnostic.config({
 -- but root_dir must be set by independent lsp server
 vim.lsp.config('*', {
 	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {'.git', 'luarc.json', '.luarc.json'}) or vim.fn.getcwd()
+		local root = vim.fs.root(bufnr, {
+		    'luarc.json',
+		    '.luarc.json',
+		    '.git'
+		}) or vim.fn.getcwd()
 		-- root directory must be transferred to callback function to recognize
 		cb(root)
 	end,
