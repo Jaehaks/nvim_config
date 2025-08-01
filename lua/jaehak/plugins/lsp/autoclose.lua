@@ -44,7 +44,7 @@ return {
 
 		-- additional rules
 		npairs.add_rules({
-			-- add auto indent when <CR>
+			-- ===== add auto indent when <CR> ====================
 			Rule('<','>'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
 			Rule('[',']','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
 			Rule('(',')','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
@@ -54,10 +54,14 @@ return {
 			Rule('[',']','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
 			Rule('(',')','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
 			Rule('{','}','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
-		})
 
-		-- endwise setup without treesitter
-		npairs.add_rules({
+			-- python must removed `vim.opt_local.indentexpr` by after/indent/python.vim to remove additional indent
+			Rule('<','>','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('[',']','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('(',')','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule("{","}",'python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+
+			-- ====== endwise setup without treesitter =================
 			-- lua
 			endwise('then$', 'end', 'lua', 'if_statement'),    -- if  <right condition> then
 			endwise('do$'  , 'end', 'lua', 'for_statement'),   -- for <right condition> do
