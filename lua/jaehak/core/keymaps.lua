@@ -10,6 +10,9 @@ vim.keymap.set({'n'}, '<C-w>k', '<C-w>j', opts)
 vim.keymap.set({'n'}, '<C-w>j', '<C-w>k', opts)
 vim.keymap.set({'i'}, 'jk', '<Esc>', opts)      -- must be lowercase to esc
 vim.keymap.set({'n'}, '<C-o>', '<C-o>zz', opts) -- move center of screen after restore cursor location
+vim.keymap.set({'n'}, 'L', 'zL', opts)          -- move screen only to right half page
+vim.keymap.set({'n'}, 'H', 'zH', opts)          -- move screen only to left half page
+-- <C-e> / <C-y> means moving screen only one line
 
 
 -- set cursor move key in insert mode and command mode
