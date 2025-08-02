@@ -96,3 +96,14 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 -- set file managing
 vim.keymap.set('n', '<C-g>', '<Cmd>echom expand("%:p")<CR>', opts)
 
+vim.api.nvim_create_autocmd({'Filetype'}, {
+	group = vim.api.nvim_create_augroup('aug_ManPage', {clear = true}),
+	pattern = 'man',
+	callback = function ()
+		local man_opts = {noremap = true, silent = true, buffer = true}
+		vim.keymap.set({'n','v'}, 'j', 'k', man_opts)
+		vim.keymap.set({'n','v'}, 'k', 'j', man_opts)
+		vim.keymap.set({'i'}, 'jk', '<Esc>', man_opts)      -- must be lowercase to esc
+		vim.keymap.set({'n'}, '<C-o>', '<C-o>zz', man_opts) -- move center of screen after restore cursor location
+	end
+})
