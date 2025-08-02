@@ -71,7 +71,8 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.lsp.markdown'       , enabled = true},
 		{import = 'jaehak.plugins.lsp.nvim-surround'  , enabled = true},
 		{import = 'jaehak.plugins.lsp.trouble'        , enabled = true},
-		{import = 'jaehak.plugins.lsp.fastaction'        , enabled = true},
+		{import = 'jaehak.plugins.lsp.fastaction'     , enabled = true},
+		{import = 'jaehak.plugins.lsp.uv'             , enabled = true},
 		-- {import = 'jaehak.plugins'},
 		-- {import = 'jaehak.plugins.lsp'}
 	}, {
