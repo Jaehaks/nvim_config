@@ -25,6 +25,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.auxiliary'     	  , enabled = true},
 		{import = 'jaehak.plugins.buffer_manager'     , enabled = false}, -- false
 		{import = 'jaehak.plugins.colorscheme'        , enabled = true},
+		{import = 'jaehak.plugins.comfy-line-numbers' , enabled = true},
 		{import = 'jaehak.plugins.snacks'             , enabled = true},
 		{import = 'jaehak.plugins.dashboard'          , enabled = true},
 		{import = 'jaehak.plugins.yazi'               , enabled = true},
