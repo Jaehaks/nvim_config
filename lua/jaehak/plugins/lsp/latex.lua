@@ -12,13 +12,28 @@ return {
 	init = function()
 
 		-- /////// compiler setting
-		vim.g.vimtex_view_method = 'general' -- to use sumatraPDF as general viewer
-		vim.g.vimtex_view_general_viewer = 'SumatraPDF'
-		vim.g.vimtex_view_general_options = "-reuse-instance -forward-search @tex @line @pdf "
-			-- this option set forward search behavior,
-			-- :VimtexView(<leader>lv) open a pdf if the viewer is not opened and do forward search if the viewer is opened
-			-- -reverse-search cannot work in nvim-qt I thought. I have no idea
-		vim.g.vimtex_compiler_method = 'latexmk' -- it supports continuous compile (compile when *.tex is saved)
+		-- vim.g.vimtex_view_method = 'general' -- to use sumatraPDF as general viewer
+		-- vim.g.vimtex_view_general_viewer = 'SumatraPDF'
+		-- vim.g.vimtex_view_general_options = "-reuse-instance -forward-search @tex @line @pdf "
+		-- 	-- this option set forward search behavior,
+		-- 	-- :VimtexView(<leader>lv) open a pdf if the viewer is not opened and do forward search if the viewer is opened
+		-- 	-- -reverse-search cannot work in nvim-qt I thought. I have no idea
+		-- vim.g.vimtex_compiler_method = 'latexmk' -- it supports continuous compile (compile when *.tex is saved)
+
+		if vim.g.has_win32 then
+			-- if I set vimtex_view_method = sioyek, it adds additional console to control sioyek. it's annoying
+			vim.g.vimtex_view_method = 'general'
+			vim.g.vimtex_view_general_viewer = 'sioyek'
+			vim.g.vimtex_callback_progpath = 'nvim'
+			local args1 = '--reuse-window --nofocus' -- nofocus option doesn't work in 'main' sioyek
+			local args2 = '--forward-search-file @tex --forward-search-line @line' -- set forward search
+			-- local args3 = '--inverse-search "nvim --remote-silent @tex"' -- how to?
+			-- local args3 = '--inverse-search "sioyek_inv_search.cmd @tex"' -- how to?
+			local args3 = ''
+			vim.g.vimtex_view_general_options = args1 .. ' ' .. args2 .. ' ' .. args3
+
+			vim.g.vimtex_compiler_method = 'latexmk' -- it supports continuous compile (compile when *.tex is saved)
+		end
 
 		-- ////// configuration
 		vim.g.vimtex_matchparen_enabled = 0 -- \begin <-> \end highlight
