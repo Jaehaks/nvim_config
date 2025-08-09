@@ -57,9 +57,9 @@ return {
 
 			-- python must removed `vim.opt_local.indentexpr` by after/indent/python.vim to remove additional indent
 			Rule('<','>','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('[',']','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('(',')','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule("{","}",'python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
+			Rule('[',']','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><BS><BS><C-c>O<BS>' end),
+			Rule('(',')','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><BS><BS><C-c>O<BS>' end),
+			Rule("{","}",'python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><BS><BS><C-c>O<BS>' end),
 
 			-- ====== endwise setup without treesitter =================
 			-- lua
