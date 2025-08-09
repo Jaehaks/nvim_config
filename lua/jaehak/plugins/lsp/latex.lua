@@ -2,12 +2,36 @@ vim.g.maplocalleader = ' ' -- for vimtex
 
 return {
 {
+	'Jaehaks/texflow.nvim',
+	dependencies = {
+		'j-hui/fidget.nvim',
+	},
+	ft = {'tex'},
+	keys = {
+		{'<leader>ll', function() require('texflow').compile() end, mode = 'n', desc = 'test'}
+	},
+	opts = {
+		latex = {
+			engine = 'latexmk',
+			args = {
+				'-pdf',                     -- make pdf for output
+				'-outdir=@texname',			-- output folder after build
+				'-interaction=nonstopmode', -- continuous mode compilation
+				'-synctex=1',               -- enable synctex and make synctex.gz for forward/inverse search
+				'@tex',                     -- current file
+			},
+		},
+
+	},
+
+},
+{
 	-- 1) scoop install MikTex ⇒ compiler (for latexmk)
 	-- 2) scoop install biber ⇒ syntax check / linting
 	-- 3) scoop install mupdf ⇒ PDF viewer
 	-- 4) treesitter-latex must be uninstalled
 	'lervag/vimtex', -- it use lazy load default, do not set lazy
-	enabled = true,
+	enabled = false,
 	ft = {'tex'},
 	init = function()
 

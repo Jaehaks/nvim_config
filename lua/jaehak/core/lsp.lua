@@ -229,6 +229,84 @@ vim.lsp.config('basedpyright', {
 
 
 
+-- #############################################################
+-- ####### texlab
+-- #############################################################
+-- it supports lsp functions for latex
+-- 1) install miktex from https://miktex.org/download not scoop
+-- 2) set <miktex_install_path>/miktex/bin/x64 to PATH to make latexmk executable
+-- 3) j
+--
+-- comments:
+-- texlab supports build / forward search / reverse search and the building process is notified with fidget.nvim
+-- but some operation is weak
+-- %l cannot be recognized (bug), it prevent forward search
+-- %f, %l must be independent item in table. I want to write -outdir depends on filename, it cannot use
+-- OnSave feature is good, but I want to turn on/off like vimtex
+-- sioyek main branch cannot recognize toggle_synctex at startup
+vim.lsp.config('texlab', {
+	on_attach = function (client, bufnr)
+		-- local opts = {silent = true, buffer = bufnr}
+		-- local params = {
+		-- 	textDocument = {
+		-- 		uri = vim.uri_from_bufnr(bufnr) -- get absolute path with 'file://' prefix
+		-- 	},
+		-- 	position = {
+		-- 		line = vim.fn.line('.') - 1,
+		-- 		character = vim.fn.col('.') - 1,
+		-- 	}
+		-- }
+		-- local handler = function (err, result, ctx)
+		-- 	if err then
+		-- 		vim.notify('Error: ' .. tostring(err), vim.log.levels.ERROR)
+		-- 	end
+		-- end
+		--
+		-- -- keymap for forwardsearch
+		-- vim.keymap.set('n', '<leader>lv', function ()
+		-- 	client:request('textDocument/forwardSearch', params, handler, bufnr)
+		-- end, opts)
+		-- -- keymap for build
+		-- vim.keymap.set('n', '<leader>lf', function ()
+		-- 	client:request('textDocument/build', params, handler, bufnr)
+		-- end, opts)
+	end,
+	cmd = {'texlab'},
+	filetypes = {'tex', 'plaintex', 'bib'},
+	settings = { -- see https://github.com/latex-lsp/texlab/wiki/Configuration
+		texlab = {
+			build = {
+				executable = 'latexmk',
+				args = {
+					'-interaction=nonstopmode', -- continuous mode compilation
+					'%f',                       -- current file
+				},
+				onSave = false,                 -- build on save (it works when :w but not autocmd save)
+				forwardSearchAfter = false,     -- perform forward search after build
+			},
+			forwardSearch = {
+				executable = 'sioyek',
+				args = {
+					"--reuse-window",
+					"--inverse-search",
+					"texlab inverse-search -i \"%%1\" -l %%2",
+					"--forward-search-file",
+					"%f",
+					"--forward-search-line",
+					"%l",
+					"%p",
+				},
+			},
+			latexFormatter = 'latexindent',
+			latexindent = {
+				modifyLineBreaks = false,
+			}
+		},
+	},
+})
+
+
+
 
 -- #############################################################
 -- ####### lsp enable
@@ -239,7 +317,16 @@ vim.lsp.enable({
 	-- 'harper-ls',
 	'ruff',
 	'basedpyright',
-
+	'texlab',
 })
 
 
+-- #############################################################
+-- ####### Tips
+-- #############################################################
+--
+-- vim.lsp.get_active_clients() : get active client list table
+-- vim.lsp.get_active_clients()[1].server_info : server name & version
+-- vim.lsp.get_active_clients()[1]._log_prefix : client name like LSP[texlab]
+-- vim.lsp.get_active_clients()[1].server_capabilities : support server capabilities
+-- vim.lsp.get_active_clients()[1].capabilities : what?
