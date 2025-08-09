@@ -188,6 +188,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
 			vim.b[event.buf].disable_aug_TrimWhiteSpace = true
 			return
 		end
+		vim.api.nvim_exec_autocmds('BufWritePost', {buffer = 0}) -- force execute BufWritePost event
 	end
 })
 
