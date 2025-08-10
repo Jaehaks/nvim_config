@@ -77,12 +77,13 @@ return {
 	end
 },
 {
+	-- bufferline
 	'willothy/nvim-cokeline',
 	event = 'BufReadPre',
 	keys = {
-		{'<leaderbp>', function () require('cokeline.mappings').pick('focus') end		, desc = '[Cokeline] pick a buffer'},
-		{'<M-m>'     , function () require('cokeline.mappings').by_step('focus', 1) end	, desc = '[Cokeline] go to next buffer'},
-		{'<M-n>'     , function () require('cokeline.mappings').by_step('focus', -1) end, desc = '[Cokeline] go to previous buffer'},
+		{'<leader>bp', function () require('cokeline.mappings').pick('focus') end		, desc = '[Cokeline] pick a buffer'},
+		{'<M-m>'     , ']b' , desc = 'go to next buffer'},
+		{'<M-n>'     , '[b' , desc = 'go to previous buffer'},
 	},
 	opts = function ()
 		vim.api.nvim_set_hl(0, "BufferActive", { bg = "#986FEC", fg = "#000000" })
