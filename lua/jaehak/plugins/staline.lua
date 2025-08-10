@@ -82,8 +82,6 @@ return {
 	event = 'BufReadPre',
 	keys = {
 		{'<leader>bp', function () require('cokeline.mappings').pick('focus') end		, desc = '[Cokeline] pick a buffer'},
-		{'<M-m>'     , ']b' , desc = 'go to next buffer'},
-		{'<M-n>'     , '[b' , desc = 'go to previous buffer'},
 	},
 	opts = function ()
 		vim.api.nvim_set_hl(0, "BufferActive", { bg = "#986FEC", fg = "#000000" })
