@@ -45,7 +45,8 @@ return {
 		{'<C-S-K>', '<Cmd>Lspsaga hover_doc ++keep<CR>'          , desc = 'LSP - hover_doc ++keep'          , silent = true, noremap = true},
 		{'gd'     , function ()
 			if next(vim.lsp.get_clients({bufnr = vim.api.nvim_get_current_buf()})) then -- check lsp is attached to current buffer
-				vim.lsp.buf.definition()
+				-- vim.lsp.buf.definition()
+				vim.cmd('Lspsaga peek_definition')
 			else
 				vim.cmd('tag ' .. vim.fn.expand('<cword>'))
 			end
