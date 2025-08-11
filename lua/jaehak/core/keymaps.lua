@@ -15,8 +15,6 @@ vim.keymap.set({'n'}, 'H', 'zH', opts)          -- move screen only to left half
 -- <C-e> / <C-y> means moving screen only one line
 vim.keymap.set({'n', 'i', 'x', 't'}, '<C-]>', '<Esc>', opts) -- To avoid keymap from to_gui_normal of win-vind app
 															 -- use 'gd' to go to tag
--- vim.keymap.set({'n'}, '<M-m>', '<Cmd>bnext<CR>', opts) -- go to next buffer
--- vim.keymap.set({'n'}, '<M-n>', '<Cmd>bprev<CR>', opts) -- go to previous buffer
 
 
 -- set cursor move key in insert mode and command mode
