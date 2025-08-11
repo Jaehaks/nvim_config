@@ -82,6 +82,9 @@ return {
 	event = 'BufReadPre',
 	keys = {
 		{'<leader>bp', function () require('cokeline.mappings').pick('focus') end		, desc = '[Cokeline] pick a buffer'},
+		-- [b, ]b mapping has bug that moving focus of buffer doesn't meet my expectation
+		{'<M-m>'     , function () require('cokeline.mappings').by_step('focus', 1) end	, desc = '[Cokeline] go to next buffer'},
+		{'<M-n>'     , function () require('cokeline.mappings').by_step('focus', -1) end, desc = '[Cokeline] go to previous buffer'},
 	},
 	opts = function ()
 		vim.api.nvim_set_hl(0, "BufferActive", { bg = "#986FEC", fg = "#000000" })
