@@ -144,6 +144,18 @@ opt.backup   = false -- no backup file when file is created
 
 opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize" -- get rid of 'blank,buffers' to remove unlisted buffer
 													 -- get rid of 'help, terminal'
+-- which information will be saved after neovim session terminates
+-- the number after mark is history maximum number
+-- ! : global variables with Start uppercase letter (not lower case)
+-- % : buffer list (we use last-session.nvim)
+-- ' : edited files for mark, jumptlist, changelist
+-- / : search pattern history
+-- : : command line history
+-- > : each register lines
+-- f : marks
+-- h : disable effect of hlsearch result
+-- s10 : contents over 10kB are skipped
+opt.shada = "!,'100,<50,s10,h,:10"
 
 ------------- case sensitive ----------------
 opt.ignorecase = true -- ignore case when searching
