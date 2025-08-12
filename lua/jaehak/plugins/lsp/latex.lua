@@ -6,10 +6,7 @@ return {
 	dependencies = {
 		'j-hui/fidget.nvim',
 	},
-	ft = {'tex'},
-	keys = {
-		{'<leader>ll', function() require('texflow').compile() end, mode = 'n', desc = 'test'}
-	},
+	ft = {'tex', 'latex', 'plaintex'},
 	opts = {
 		latex = {
 			engine = 'latexmk',
@@ -21,8 +18,33 @@ return {
 				'@tex',                     -- current file
 			},
 		},
-
+		viewer = {
+			engine = 'sioyek',
+			args = {
+				'--reuse-window',
+				'--forward-search-file @tex',
+				'--forward-search-line @line',
+				'@pdf',
+			},
+			focus = false,
+		},
 	},
+	config = function (_, opts)
+		local texflow = require('texflow')
+		texflow.setup(opts)
+
+		local TexFlowMaps = vim.api.nvim_create_augroup('TexFlowMaps', {clear = true})
+		vim.api.nvim_create_autocmd('FileType', {
+			group = TexFlowMaps,
+			pattern = {'tex', 'latex', 'plaintex'},
+			callback = function ()
+				vim.keymap.set('n', '<leader>ll', function () texflow.compile(_, {openAfter = true}) end, { buffer = true, desc = '[TexFlow] compile tex file', silent = true })
+				vim.keymap.set('n', '<leader>lf', function () texflow.compile(_) end, { buffer = true, desc = '[TexFlow] compile tex file', silent = true })
+				vim.keymap.set('n', '<leader>lv', function () texflow.view() end, { buffer = true, desc = '[TexFlow] view pdf file', silent = true })
+			end
+		})
+
+	end
 
 },
 {
