@@ -24,6 +24,11 @@ vim.diagnostic.config({
 			[vim.diagnostic.severity.HINT]  = 'DiagnosticHINTReverse',
 		}
 	},
+	float = {
+		format = function (diag)
+			return string.format('%s (%s)', diag.message, diag.source)
+		end
+	},
 	underline     = false, -- disable underline representation
 	severity_sort = true,  -- enable sort by severity when it collide in one line
 	virtual_text  = false  -- default is false in neovim v0.11
