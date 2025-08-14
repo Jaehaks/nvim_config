@@ -465,12 +465,13 @@ M.AddStrong = AddStrong
 --- @return TSNode? Root object of treesitter tree
 --- @return vim.treesitter.Query? Query object of treesitter tree
 local GetPattern = function (bufid, ft_parsing, pattern)
-	local ft = vim.api.nvim_get_option_value('filetype', {buf = bufid})
-	if ft ~= 'markdown' then
-		vim.notify(' Please execute this function in markdown ', vim.log.levels.ERROR)
-		return nil, nil
-	end
+	-- local ft = vim.api.nvim_get_option_value('filetype', {buf = bufid})
+	-- if ft ~= 'markdown' then
+	-- 	vim.notify(' Please execute this function in markdown ', vim.log.levels.ERROR)
+	-- 	return nil, nil
+	-- end
 
+	ft_parsing = ft_parsing or vim.bo.filetype
 	local parser = vim.treesitter.get_parser(bufid, ft_parsing)
 	if not parser then
 		vim.notify(' No Treesitter parser found for the filetype : ' .. ft_parsing, vim.log.levels.ERROR)
@@ -484,6 +485,10 @@ local GetPattern = function (bufid, ft_parsing, pattern)
 	end
 
 	local root = tree:root()
+	if not pattern then
+		return root, nil
+	end
+
 	local query = vim.treesitter.query.parse(ft_parsing, pattern)
 	if not query then
 		vim.notify(' Error parsing treesitter query ', vim.log.levels.ERROR)
