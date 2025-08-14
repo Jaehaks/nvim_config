@@ -4,6 +4,7 @@ local opt = vim.opt 		-- for conciseness
 vim.g.has_win32 = vim.fn.has('win32') == 1 and true or false
 opt.tabstop        = 4        -- set inserted space in TAB
 opt.shiftwidth     = 4        -- set indent space
+opt.shiftround     = true     -- adjust tab size to match shiftwidth if not the same with
 if not vim.g.has_win32 then
 	vim.g.clipboard = {
 		name = 'wslclipboard',
@@ -148,14 +149,14 @@ opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize" -- get rid of 'blan
 -- the number after mark is history maximum number
 -- ! : global variables with Start uppercase letter (not lower case)
 -- % : buffer list (we use last-session.nvim)
--- ' : edited files for mark, jumptlist, changelist
+-- ' : edited files for mark, jumptlist, changelist (oldfiles)
 -- / : search pattern history
 -- : : command line history
 -- > : each register lines
 -- f : marks
 -- h : disable effect of hlsearch result
 -- s10 : contents over 10kB are skipped
-opt.shada = "!,'100,<50,s10,h,:10"
+opt.shada = "'100,s10,h,:10"
 
 ------------- case sensitive ----------------
 opt.ignorecase = true -- ignore case when searching
