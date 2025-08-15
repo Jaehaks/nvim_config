@@ -27,6 +27,13 @@ return {
 		map_bs   = true,
 		map_c_h  = false,
 		map_c_w  = false,
+		fast_wrap = { -- add close parentheses like flash.nvim
+			map = '<M-e>', -- do this at cursor | in "(|test test1 test" in insert mode
+			end_key = '$',
+			before_key = 'h', -- use 'H' if you want to set cursor to (test|) rather than (|test)
+			after_key = 'l', -- use 'L' if you want to set cursor to (test)| rather than (test|) -- BUT BUG here
+			cursor_pos_before = true,
+		},
 	},
 	config = function (_, opts)
 		local npairs  = require('nvim-autopairs')
