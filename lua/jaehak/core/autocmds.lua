@@ -178,7 +178,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
 		end
 
 		vim.api.nvim_exec_autocmds('BufWritePre', {buffer = 0}) -- force execute BufWritePre event
-		local ok, err = pcall(vim.cmd, 'write')
+		local ok, _ = pcall(function () vim.cmd('write') end)
 		if not ok then -- when write is protected, do not write anymore in this buffer
 			vim.notify('AutoCmd : Failed to write this file', vim.log.levels.WARN)
 			vim.b[event.buf].disable_aug_TrimWhiteSpace = true
@@ -197,26 +197,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end
 })
 
-
-
-
------------- vim.ui.select() -----------
--- set autocmd when vim.ui.select() is executed
-local origin_vim_ui_select = vim.ui.select
--- vim.ui.select = function (items, opts, on_choice)
--- 	vim.api.nvim_exec_autocmds('User', {
--- 		pattern = 'VimUISelect'
--- 	})
---
--- 	local snacks = require('snacks')
--- 	if package.loaded['snacks'] then
--- 		snacks.picker.select(items, opts, on_choice)
--- 	else
--- 		vim.schedule(function ()
--- 			snacks.picker.select(items, opts, on_choice)
--- 		end)
--- 	end
--- end
 
 
 
