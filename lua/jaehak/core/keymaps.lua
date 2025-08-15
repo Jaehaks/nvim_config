@@ -46,6 +46,8 @@ vim.keymap.set('n', 'zf', '[s1z=', opts)          -- replace current/previous wo
 vim.keymap.set('n', 'Y', '"*yy', opts)            -- copy a line using system clipboard
 vim.keymap.set('v', 'Y', '"*y', opts)             -- copy a visual block using system clipboard
 vim.keymap.set('n', 'P', '"*p', opts)             -- paste from system clipboard
+vim.keymap.set('v', '<', '<gv', opts)             -- continuous moving indent
+vim.keymap.set('v', '>', '>gv', opts)             -- continuous moving indent
 
 -- set diff keymaps
 vim.keymap.set({'n', 'v'}, 'do', ':diffg<CR>', {silent = true, noremap = true}) -- copy continuous region of change from other to cursor
