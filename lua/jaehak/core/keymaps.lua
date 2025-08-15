@@ -1,7 +1,7 @@
 -- change leader key
 vim.g.mapleader = ' '
 
-local opts = {noremap = true}
+local opts = {noremap = true} -- if silent = true, ':' doesn't show immediately
 
 -- change cursor move key in normal mode
 vim.keymap.set({'n','v'}, 'j', 'k', opts)
@@ -112,3 +112,7 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 		vim.keymap.set({'n'}, '<C-o>', '<C-o>zz', man_opts) -- move center of screen after restore cursor location
 	end
 })
+
+
+-- smart folding ----------------------------------------------
+vim.keymap.set({'n', 'v'}, 'zv', require('jaehak.core.utils').smart_fold, opts)

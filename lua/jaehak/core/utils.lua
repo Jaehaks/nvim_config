@@ -497,6 +497,7 @@ local GetPattern = function (bufid, ft_parsing, pattern)
 
 	return root, query
 end
+M.GetPattern = GetPattern
 
 --- Get items from parser to use snacks picker list
 --- @param min_level number minimal level of header to be shown in snacks picker
@@ -735,5 +736,96 @@ local CalloutSnippet = function ()
 	end)
 end
 M.CalloutSnippet = CalloutSnippet
+
+
+-- ####################################################
+-- * keymap : smart folding
+-- ####################################################
+
+-- check current node under cursor is target_node
+---@param targets string|table target node to check this region under cursor is the node
+--- @return TSNode? Object of treesitter tree
+local function is_node(targets)
+	if type(targets) == 'string' then
+		targets = { targets }
+	end
+	-- get treesitter root
+	local root = require('jaehak.core.utils').GetPattern(0)
+	if not root then
+		return nil
+	end
+
+	-- get super parent node at cursor position
+	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+	row = row - 1
+	local node = root:named_descendant_for_range(row, col, row, col)
+	while node do
+		local t = node:type()
+		for _, target in ipairs(targets) do
+			if t == target then
+				return node
+			end
+		end
+		node = node:parent()
+	end
+
+	return nil
+end
+-- M.is_node = is_node
+
+-- smart fold
+-- if the node is comment|string under cursor, fold the reigon
+local function smart_fold()
+	local foldlevel = vim.fn.foldlevel('.')
+	if foldlevel == 1 then
+		vim.cmd('normal! za') -- toggle fold if there are fold
+	elseif foldlevel > 1 then
+		vim.cmd('normal! zv') -- open fold recursive until show the line
+	else
+		local mode = vim.fn.mode()
+		if mode == 'v' or mode == 'V' then -- if current mode is visual mode ('v') or line mode ('V')
+			vim.cmd('normal! zf')
+		else
+			local node = is_node({'comment', 'string'})
+			if node then
+				local start_row, _, end_row, _ = node:range()
+
+				-- detect proximity same type node
+				local prev_node = node:prev_named_sibling()
+				local next_node = node:next_named_sibling()
+
+				-- find consecutively adjacent previous nodes (don't detect node which separated with new line)
+				while prev_node and prev_node:type() == node:type() do
+					local prev_start_row, _, prev_end_row, _ = prev_node:range()
+					if prev_end_row + 1 == start_row then
+						start_row = prev_start_row
+						prev_node = prev_node:prev_named_sibling()
+					else
+						break
+					end
+				end
+
+				-- find consecutively adjacent next nodes (don't detect node which separated with new line)
+				while next_node and next_node:type() == node:type() do
+					local next_start_row, _, next_end_row, _ = next_node:range()
+					if next_start_row == end_row + 1 then
+						end_row = next_end_row
+						next_node = next_node:next_named_sibling()
+					else
+						break
+					end
+				end
+
+				vim.api.nvim_win_set_cursor(0, {start_row + 1, 0})
+				vim.cmd('normal! V')
+				vim.api.nvim_win_set_cursor(0, {end_row + 1, 0})
+				vim.cmd('normal! zf')
+			end
+		end
+	end
+
+end
+M.smart_fold = smart_fold
+
 
 return M
