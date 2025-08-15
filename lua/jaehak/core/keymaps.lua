@@ -104,6 +104,7 @@ vim.keymap.set('n', '<C-g>', '<Cmd>echom expand("%:p")<CR>', opts)
 
 -- smart folding
 vim.keymap.set({'n', 'v'}, 'zv', require('jaehak.core.utils').smart_fold, opts)
+vim.keymap.set({'n'}, '<Tab>', 'za', opts) -- toggle fold using tab
 
 
 -- linux setting -----------------------------------------------------------------------------
