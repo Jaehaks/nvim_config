@@ -105,6 +105,8 @@ opt.autoindent     = true     -- when enter next line, automatically indent from
 opt.wrap       = false -- disable line wrapping
 opt.splitright = true  -- focus to new window when vsplit
                        -- opt.splitbelow = true	  -- focus to new window when split
+opt.splitbelow = true  -- create window below of current buffer when vertical split
+opt.errorbells = false
 opt.scrolloff  = 5     -- scroll start offset line
 opt.foldenable = false -- disable folding automatically with marker (ex, toml )
 vim.g.editorconfig = false
@@ -166,7 +168,7 @@ opt.smartcase  = true -- when pattern has upper case, disable ignorecase
 -- opt.clipboard:append('unnamedplus') -- share clipboard between vim and system
                                     -- "*p doest not need to paste from system clipboard
                                     -- it makes editing very slower, set keymap to use system clipboard instead of it
-opt.iskeyword:append('-')           -- i don't know
+opt.iskeyword:append('-')           -- add characters to include word to recognize word wise block "test-test" is one word
 
 
 

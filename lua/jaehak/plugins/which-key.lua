@@ -4,6 +4,7 @@ return {
 	init = function()
 		vim.opt.timeout = true
 		vim.opt.timeoutlen = 500
+		vim.opt.ttimeoutlen = 0 -- for terminal key timeout
 	end,
 	opts = {
 		plugins = {
