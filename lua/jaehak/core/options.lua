@@ -140,6 +140,8 @@ opt.diffopt = {
 opt.swapfile = false -- no swap file when file is created
 opt.backup   = false -- no backup file when file is created
 --opt.shell = 'cmd "C:\\Users\\USER\\user_installed\\cmder_mini\\vendor\\init.bat"'
+opt.undodir = require('jaehak.core.paths').nvim.undo
+opt.undofile = true -- permanent undo, it is possible to undo even though after restart neovim,
 
 opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize" -- get rid of 'blank,buffers' to remove unlisted buffer
 													 -- get rid of 'help, terminal'

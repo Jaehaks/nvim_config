@@ -16,6 +16,7 @@ M.nvim = {
 	rainbow_queries    = config_dir .. '\\queries\\rainbow-delimiters.nvim',
 	mason              = data_dir .. '\\mason\\bin',
 	lsp                = config_dir .. '\\lsp',
+	undo               = data_dir .. '\\undo',
 }
 
 local check_matlab_dir = function ()
