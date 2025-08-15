@@ -1,7 +1,6 @@
 local opt = vim.opt 		-- for conciseness
 
 -- first
-vim.g.has_win32 = vim.fn.has('win32') == 1 and true or false
 opt.tabstop        = 4        -- set inserted space in TAB
 opt.shiftwidth     = 4        -- set indent space
 opt.shiftround     = true     -- adjust tab size to match shiftwidth if not the same with
@@ -27,7 +26,6 @@ end
 ------------- font setting -----------------------
 opt.guifont       = 'FiraCode Nerd Font Mono:h11'
 opt.guifontwide   = '나눔고딕:h11'
-local aug_UserOptions = vim.api.nvim_create_augroup('aug_UserOptions', {clear = true})
 opt.encoding      = 'utf-8'                         -- set utf-8 without BOM as default encoding
 opt.fileencodings = { 'ucs-bom', 'utf-8', 'cp949' } -- consider ucs-bom for encoding with BOM like utf-16le
 
@@ -45,14 +43,14 @@ end
 -- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window
 -- becase when :bn, BufRead invoked but WinEnter didn't not invoke
 vim.api.nvim_create_autocmd({'WinLeave'}, {
-	group = aug_UserOptions,
+	group = 'UserSettings',
 	pattern = '*',
 	callback = function()
 		vim.opt_local.winhighlight = "CursorLine:CursorLineInActive"
 	end
 })
 vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
-	group = aug_UserOptions,
+	group = 'UserSettings',
 	pattern = '*',
 	callback = function()
 		vim.opt_local.winhighlight = "CursorLine:CursorLine"
@@ -118,7 +116,7 @@ opt.pumheight = 10               -- maximum item number when show completion
 
 -- set local options for markdown because markdown's ftplugin must set expandtab
 vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim focused
-	group = aug_UserOptions,
+	group = 'UserSettings',
 	pattern = 'markdown',
 	callback = function ()
 		vim.opt_local.expandtab = false

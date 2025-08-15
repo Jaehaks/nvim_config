@@ -68,9 +68,8 @@ vim.keymap.set('n', '<CR>', 'o<esc>', {silent = true, noremap = true})       -- 
 vim.keymap.set('n', '<C-i>', 'a<CR><esc><Up>$', {silent = true, noremap = true}) -- new line with split(i heard it works only gui)
 
 -- use q instead of :q when close some filetype
-local aug_QuickQuit = vim.api.nvim_create_augroup("aug_QuickQuit", { clear = true })
 vim.api.nvim_create_autocmd({'Filetype'}, {
-	group = aug_QuickQuit,
+	group = 'UserSettings',
 	pattern = {
 		'help',
 		'qf',
@@ -101,18 +100,22 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 -- set file managing
 vim.keymap.set('n', '<C-g>', '<Cmd>echom expand("%:p")<CR>', opts)
 
-vim.api.nvim_create_autocmd({'Filetype'}, {
-	group = vim.api.nvim_create_augroup('aug_ManPage', {clear = true}),
-	pattern = 'man',
-	callback = function ()
-		local man_opts = {noremap = true, silent = true, buffer = true}
-		vim.keymap.set({'n','v'}, 'j', 'k', man_opts)
-		vim.keymap.set({'n','v'}, 'k', 'j', man_opts)
-		vim.keymap.set({'i'}, 'jk', '<Esc>', man_opts)      -- must be lowercase to esc
-		vim.keymap.set({'n'}, '<C-o>', '<C-o>zz', man_opts) -- move center of screen after restore cursor location
-	end
-})
 
 
 -- smart folding ----------------------------------------------
 vim.keymap.set({'n', 'v'}, 'zv', require('jaehak.core.utils').smart_fold, opts)
+-- linux setting -----------------------------------------------------------------------------
+if not vim.g.has_win32 then
+	-- change keymap when open man using neovim
+	vim.api.nvim_create_autocmd({'Filetype'}, {
+		group = 'UserSettings',
+		pattern = 'man',
+		callback = function ()
+			local man_opts = {noremap = true, silent = true, buffer = true}
+			vim.keymap.set({'n','v'}, 'j', 'k', man_opts)
+			vim.keymap.set({'n','v'}, 'k', 'j', man_opts)
+			vim.keymap.set({'i'}, 'jk', '<Esc>', man_opts)      -- must be lowercase to esc
+			vim.keymap.set({'n'}, '<C-o>', '<C-o>zz', man_opts) -- move center of screen after restore cursor location
+		end
+	})
+end

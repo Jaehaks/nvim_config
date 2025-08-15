@@ -70,7 +70,7 @@ M.data_dir   = data_dir
 M.cache_dir  = cache_dir
 M.home_dir   = home_dir
 
-if vim.fn.has('win32') == 0 then -- vim.g.has_win32 cannot be loaded in this situation
+if not vim.g.has_win32 then -- vim.g.has_win32 cannot be loaded in this situation
 	M = utils.SlashChange(M, '\\', '/')
 end
 

@@ -43,12 +43,11 @@ end
 -- #############################################
 -- ### Set autocmd for transition of IME #######
 -- #############################################
-local ime_group = vim.api.nvim_create_augroup("ime_toggle", { clear = true })
 
 -- Get the IME handler associated with the Neovim window
 -- Runs only once when an InsertEnter/CmdlineEnter event occurs.
 vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
-    group = ime_group,
+    group = 'UserSettings',
     once = true,
     desc = "Get ime control hwnd attached to nvim window",
     callback = function()
@@ -59,7 +58,7 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
 
 -- Automatically switches IME to English mode when returning to Normal mode.
 vim.api.nvim_create_autocmd({ "InsertLeave", "CmdlineLeave" }, {
-    group = ime_group,
+    group = 'UserSettings',
     desc = "Switch IME to English mode when entering Normal mode",
     callback = function()
 		vim.g.ime_mode_in_insert = get_ime_mode() -- save current IME mode
@@ -71,7 +70,7 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "CmdlineLeave" }, {
 
 -- Automatically switches IME to Korean mode when entering Insert mode.
 vim.api.nvim_create_autocmd("InsertEnter", {
-    group = ime_group,
+    group = 'UserSettings',
     desc = "Switch IME to Korean mode when entering insert mode",
     callback = function()
 		if vim.g.ime_mode_in_insert ~= get_ime_mode() then
