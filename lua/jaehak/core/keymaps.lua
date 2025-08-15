@@ -100,10 +100,10 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 -- set file managing
 vim.keymap.set('n', '<C-g>', '<Cmd>echom expand("%:p")<CR>', opts)
 
-
-
--- smart folding ----------------------------------------------
+-- smart folding
 vim.keymap.set({'n', 'v'}, 'zv', require('jaehak.core.utils').smart_fold, opts)
+
+
 -- linux setting -----------------------------------------------------------------------------
 if not vim.g.has_win32 then
 	-- change keymap when open man using neovim
