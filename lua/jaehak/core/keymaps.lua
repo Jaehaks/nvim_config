@@ -17,6 +17,12 @@ vim.keymap.set({'n', 'i', 'x', 't'}, '<C-]>', '<Esc>', opts) -- To avoid keymap 
 															 -- use 'gd' to go to tag
 
 
+-- resize window-- resize window-- resize window
+vim.keymap.set({'n'}, '<C-Up>', '<Cmd>resize +2<CR>', opts)
+vim.keymap.set({'n'}, '<C-Down>', '<Cmd>resize -2<CR>', opts)
+vim.keymap.set({'n'}, '<C-Left>', '<Cmd>vertical resize -2<CR>', opts)
+vim.keymap.set({'n'}, '<C-Right>', '<Cmd>vertical resize +2<CR>', opts)
+
 -- set cursor move key in insert mode and command mode
 vim.keymap.set({'i','c','t'}, '<C-h>', '<Left>', opts)
 vim.keymap.set({'i','c','t'}, '<C-j>', '<Up>', opts)
