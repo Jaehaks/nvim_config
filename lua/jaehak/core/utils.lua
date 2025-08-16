@@ -125,12 +125,11 @@ local ResolveUrl = function (url)
 end
 
 --- change slash direction in all paths
---- @param T string|table value is paths
---- @param from string slash from
---- @param to string slash to
---- @return string?|table? Changed paths
+--- @param T string|table|any value is paths
+--- @param from? string slash from
+--- @param to? string slash to
+--- @return table|string|any Changed paths
 local SlashChange = function(T, from, to)
-	local result = {}
 	local e_from = from or '/'
 	local e_to = to or '\\'
 
@@ -145,7 +144,8 @@ local SlashChange = function(T, from, to)
 			return result
 		elseif type(item) == 'string' then
 			-- vim.print({ item, e_from, e_to })
-			return string.gsub(item, e_from, e_to)
+			local result_str, _ = string.gsub(item, e_from, e_to)
+			return result_str
 		else
 			return item
 		end
