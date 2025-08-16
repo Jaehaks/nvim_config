@@ -112,6 +112,9 @@ vim.keymap.set('n', '<C-g>', '<Cmd>echom expand("%:p")<CR>', opts)
 vim.keymap.set({'n', 'v'}, 'zv', require('jaehak.core.utils').smart_fold, opts)
 vim.keymap.set({'n'}, '<Tab>', 'za', opts) -- toggle fold using tab
 
+-- run script
+vim.keymap.set({'n'}, '<F5>', require('jaehak.core.utils').run, opts)
+
 
 -- linux setting -----------------------------------------------------------------------------
 if not vim.g.has_win32 then

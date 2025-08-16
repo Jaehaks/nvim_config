@@ -828,4 +828,40 @@ end
 M.smart_fold = smart_fold
 
 
+-- ####################################################
+-- * keymap : run
+-- ####################################################
+
+---@param file string|nil absolute path of file which runs
+local function run(file)
+	file = file or vim.api.nvim_buf_get_name(0)
+
+	-- check unsaved file
+	if file == '' then
+		vim.notify('It needs to save file', vim.log.levels.ERROR)
+		return
+	end
+
+	-- check runner by filetype
+	local extension = vim.fn.fnamemodify(file, ':t:e')
+	local cmd = nil
+	if vim.tbl_contains({'py'}, extension) then
+		cmd = 'python'
+	end
+
+	if cmd then
+		vim.fn.jobstart({ cmd, vim.fn.fnameescape(file) },{
+			stdout_buffered = true,
+			stderr_buffered = true,
+			on_stdout = function (_, data, _)
+				vim.notify(table.concat(data, "\n"), vim.log.levels.TRACE)
+			end,
+			on_stderr = function (_, data, _)
+				vim.notify(table.concat(data, "\n"), vim.log.levels.ERROR)
+			end,
+		})
+	end
+end
+M.run = run
+
 return M

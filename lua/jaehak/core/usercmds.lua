@@ -50,3 +50,14 @@ vim.api.nvim_create_user_command("Tabgit", function (opts)
 		vim.api.nvim_win_set_cursor(0, pos)
 	end
 end, {desc = 'Toggle to make tab size 2'})
+
+
+---------- compile ------------
+-- run specific file
+vim.api.nvim_create_user_command("Run", function (opts)
+	local file = nil
+	if opts.fargs[1] and opts.fargs[1] ~= '' then
+		file = opts.fargs[1]
+	end
+	require('jaehak.core.utils').run(file)
+end, {nargs = '*', complete = 'file'})
