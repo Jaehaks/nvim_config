@@ -50,7 +50,7 @@ local GetLink = function ()
 
 		-- if link doesn't exist
 		if not s or not e then
-			vim.api.nvim_err_writeln('Link doese not exist under the cursor!')
+			vim.notify('Link doese not exist under the cursor!', vim.log.levels.ERROR)
 			return nil
 		end
 		start_idx = s
@@ -348,14 +348,14 @@ local GotoCursor = function()
 	-- capture file name in ()
 	local link_name = string.match(url, '%[.-%]%((.-)%)')
 	if IsImage(link_name) or IsUrl(link_name) then
-		vim.api.nvim_err_writeln('Error(GotoCursor) : It is not file link')
+		vim.notify('Error(GotoCursor) : It is not file link', vim.log.levels.ERROR)
 		return
 	end
 
 	-- separate path and tag with #
 	local path, tag = require('obsidian.util').strip_anchor_links(link_name)
 	if not path then
-		vim.api.nvim_err_writeln('Error(GotoCursor) : It is not file path')
+		vim.notify('Error(GotoCursor) : It is not file path', vim.log.levels.ERROR)
 		return
 	end
 
@@ -393,7 +393,7 @@ local GotoCursor = function()
 		-- open the buffer in floating window
 		create_hover_window(path, anchor_match)
 	else
-		vim.api.nvim_err_writeln('Error(GotoCursor) : Cannot find this file link')
+		vim.notify('Error(GotoCursor) : Cannot find this file link', vim.log.levels.ERROR)
 	end
 
 end
@@ -415,7 +415,7 @@ local AddStrong = function (args)
 	vim.print({end_row, end_col})
 
 	if type(args) ~= 'string' then
-		vim.api.nvim_err_writeln('Error(AddStrong) : use string for args')
+		vim.notify('Error(AddStrong) : use string for args', vim.log.levels.ERROR)
 		return
 	end
 
@@ -439,7 +439,7 @@ local AddStrong = function (args)
 	if end_bytecol then
 		end_col = vim.str_byteindex(lines[1], end_bytecol) + 1 -- move cursor to next of word
 	else
-		vim.api.nvim_err_writeln('Error(AddStrong) : end_bytecol is nil')
+		vim.notify('Error(AddStrong) : end_bytecol is nil', vim.log.levels.ERROR)
 		return
 	end
 
