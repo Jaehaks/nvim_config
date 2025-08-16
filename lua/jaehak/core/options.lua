@@ -60,16 +60,18 @@ vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 ------------- file detect -----------------------
 
 -- register config / data directory to runtimepath
--- register python program
+-- add path for gf
+opt.path:append('.') -- current directory
+opt.path:append('**') -- sub directory of cwd
+opt.wildignore:append('**/.git/*')
+opt.wildignore:append('**/node_modules/*')
 if vim.g.has_win32 then
+	-- register python program
 	vim.g.python3_host_prog = require('jaehak.core.paths').nvim.python
-	opt.path:append(require('jaehak.core.paths').config_dir .. "\\**10")
-	opt.path:append(require('jaehak.core.paths').data_dir .. "\\**10")
-	opt.path:prepend(require('jaehak.core.paths').home_dir .. '\\scoop\\apps\\neovim\\current\\bin')
+	opt.path:append(require('jaehak.core.paths').config_dir .. "\\**") -- config directory
 else
 	vim.g.python3_host_prog = '~/.config/.Nvim_venv/bin/python'		-- use python support
-	opt.path:append(require('jaehak.core.paths').config_dir .. "/**10")
-	opt.path:append(require('jaehak.core.paths').data_dir .. "/**10")
+	opt.path:append(require('jaehak.core.paths').config_dir .. "/**")
 end
 vim.g.loaded_perl_provider = 0 -- disable perl provider warning
 vim.g.loaded_ruby_provider = 0 -- disable ruby provider warning
