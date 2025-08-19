@@ -52,6 +52,11 @@ vim.api.nvim_create_user_command("Tabgit", function (opts)
 end, {desc = 'Toggle to make tab size 2'})
 
 
+vim.api.nvim_create_user_command('ToggleScrollBind', function ()
+	require('jaehak.core.utils').toggle_scrollbind()
+end, {desc = 'Toggle scrollbind for all win'})
+
+
 ---------- compile ------------
 -- run specific file
 vim.api.nvim_create_user_command("Run", function (opts)

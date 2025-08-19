@@ -871,4 +871,20 @@ local function run(file)
 end
 M.run = run
 
+
+
+-- ####################################################
+-- * keymap : scrollbind
+-- ####################################################
+
+M.toggle_scrollbind = function ()
+	local is_active = vim.api.nvim_get_option_value('scrollbind', {win = 0})
+	is_active = not is_active
+
+	local win_list = vim.api.nvim_tabpage_list_wins(0)
+	for _, wid in ipairs(win_list) do
+		vim.api.nvim_set_option_value('scrollbind', is_active, {win = wid})
+	end
+end
+
 return M
