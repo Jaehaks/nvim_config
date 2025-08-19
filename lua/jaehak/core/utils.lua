@@ -847,6 +847,13 @@ local function run(file)
 	local cmd = nil
 	if vim.tbl_contains({'py'}, extension) then
 		cmd = 'python'
+	elseif vim.tbl_contains({'lua'}, extension) then
+		if vim.fs.root(0, 'nvim') then
+			vim.cmd('luafile %')
+			return
+		else
+			cmd = 'lua'
+		end
 	end
 
 	if cmd then
