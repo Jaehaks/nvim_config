@@ -172,14 +172,15 @@ vim.lsp.config('harper-ls', {
 -- #############################################################
 -- ####### ruff : linter
 -- #############################################################
+-- main purpose is fast linting diagnostics
 vim.lsp.config('ruff', {
 	cmd = {'ruff', 'server'},
 	filetypes = {'python'},
-	on_attach = function (client, bufnr)
+	on_attach = function (client, _)
 		-- lsp use ruff to formatter
 		client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
 		client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
-		client.server_capabilities.hoverProvider = false                   -- use pylsp
+		client.server_capabilities.hoverProvider = false                   -- use basedpyrigt
 	end,
 	init_options = {
 		settings = {
@@ -207,15 +208,17 @@ vim.lsp.config('ruff', {
 -- #############################################################
 -- ####### basedpyright
 -- #############################################################
--- it supports lsp functions like lspsaga
+-- main purpose is exact type checking diagnostics
+-- It has very slow lsp completion to use
 vim.lsp.config('basedpyright', {
 	cmd = {'basedpyright-langserver', '--stdio'},
 	filetypes = {'python'},
-	on_attach = function (client, bufnr)
-		-- pyright doesn't have FormattingProvider
-		-- client.server_capabilities.hoverProvider = true          -- pylsp gives more params explanation. pyright gives more type explanation
-		-- client.server_capabilities.completionProvider = false    -- use pylsp instead
-		-- client.server_capabilities.signatureHelpProvider = false -- use pylsp instead
+	on_attach = function (client, _)
+		client.server_capabilities.completionProvider = false        -- use pyrefly for fast response
+		client.server_capabilities.definitionProvider = false        -- use pyrefly for fast response
+		client.server_capabilities.documentHighlightProvider = false -- use pyrefly for fast response
+		client.server_capabilities.renameProvider = false            -- use pyrefly as I think it is stable
+		client.server_capabilities.semanticTokensProvider = false    -- use pyrefly it is more rich
 	end,
 	settings = { -- see https://docs.basedpyright.com/latest/configuration/language-server-settings/
 		basedpyright = {
@@ -231,6 +234,34 @@ vim.lsp.config('basedpyright', {
 	single_file_support = true,
 })
 
+-- #############################################################
+-- ####### pyrefly
+-- #############################################################
+-- main purpose is fast completion/semanticTokens
+-- the alternative of it is ty, but it is experimental yet
+vim.lsp.config('pyrefly', {
+	cmd = {'pyrefly', 'lsp'},
+	filetypes = {'python'},
+	root_dir = function (bufnr, cb)
+		local root = vim.fs.root(bufnr, {
+		    'pyrefly.toml',
+		    'pyproject.toml',
+		    '.git'
+		}) or vim.fn.getcwd()
+		-- root directory must be transferred to callback function to recognize
+		cb(root)
+	end,
+	on_attach = function (client, _)
+		client.server_capabilities.codeActionProvider = false     -- basedpyright has more kinds
+		client.server_capabilities.documentSymbolProvider = false -- basedpyright has more kinds
+		client.server_capabilities.hoverProvider = false          -- basedpyright has more kinds
+		client.server_capabilities.inlayHintProvider = false      -- basedpyright has more kinds
+		client.server_capabilities.referenceProvider = false      -- basedpyright has more kinds
+		client.server_capabilities.signatureHelpProvider = false  -- basedpyright has more kinds
+	end,
+	settings = {
+	},
+})
 
 
 
@@ -321,6 +352,7 @@ vim.lsp.enable({
 	'matlab-ls',
 	-- 'harper-ls',
 	'ruff',
+	'pyrefly',
 	'basedpyright',
 	'texlab',
 })
@@ -330,8 +362,8 @@ vim.lsp.enable({
 -- ####### Tips
 -- #############################################################
 --
--- vim.lsp.get_active_clients() : get active client list table
--- vim.lsp.get_active_clients()[1].server_info : server name & version
--- vim.lsp.get_active_clients()[1]._log_prefix : client name like LSP[texlab]
--- vim.lsp.get_active_clients()[1].server_capabilities : support server capabilities
--- vim.lsp.get_active_clients()[1].capabilities : what?
+-- vim.lsp.get_clients() : get active client list table
+-- vim.lsp.get_clients()[1].server_info : server name & version
+-- vim.lsp.get_clients()[1]._log_prefix : client name like LSP[texlab]
+-- vim.lsp.get_clients()[1].server_capabilities : support server capabilities
+-- vim.lsp.get_clients()[1].capabilities : what?

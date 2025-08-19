@@ -50,7 +50,18 @@ return {
 		enabled = true,
 		lazy = true,  	-- lazy-loading is not recommended
 		opts = {
+			-- #### installed packages #########
 
+			-- basedpyright
+			-- json-lsp
+			-- latexindent
+			-- lua-language-server
+			-- matlab-language-server
+			-- pyrefly
+			-- ruff
+			-- stylua
+			-- texlab
+			-- vim-language-server
 		}
 	}
 }
