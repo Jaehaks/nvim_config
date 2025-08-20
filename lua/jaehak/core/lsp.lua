@@ -43,8 +43,6 @@ vim.diagnostic.config({
 vim.lsp.config('*', {
 	root_dir = function (bufnr, cb)
 		local root = vim.fs.root(bufnr, {
-		    'luarc.json',
-		    '.luarc.json',
 		    '.git'
 		}) or vim.fn.getcwd()
 		-- root directory must be transferred to callback function to recognize
@@ -59,9 +57,18 @@ vim.lsp.config('*', {
 -- #############################################################
 -- ####### lus-ls config
 -- #############################################################
+local root_dir_lua = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'luarc.json',
+		'.luarc.json',
+		'.git'
+	}) or vim.fn.getcwd()
+	cb(root)
+end
 vim.lsp.config('lua_ls', {
 	cmd = {'lua-language-server'},
 	filetypes = {'lua'},
+	root_dir = root_dir_lua,
 	settings = {
 		Lua = {
 			completion = {
@@ -173,9 +180,19 @@ vim.lsp.config('harper-ls', {
 -- ####### ruff : linter
 -- #############################################################
 -- main purpose is fast linting diagnostics
+local root_dir_ruff = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'pyproject.toml',
+		'ruff.toml',
+		'.ruff.toml',
+		'.git'
+	}) or vim.fn.getcwd()
+	cb(root)
+end
 vim.lsp.config('ruff', {
 	cmd = {'ruff', 'server'},
 	filetypes = {'python'},
+	root_dir = root_dir_ruff,
 	on_attach = function (client, _)
 		-- lsp use ruff to formatter
 		client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
@@ -210,9 +227,18 @@ vim.lsp.config('ruff', {
 -- #############################################################
 -- main purpose is exact type checking diagnostics
 -- It has very slow lsp completion to use
+local root_dir_basedpyright = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'pyproject.toml',
+		'pyrightconfig.json',
+		'.git'
+	}) or vim.fn.getcwd()
+	cb(root)
+end
 vim.lsp.config('basedpyright', {
 	cmd = {'basedpyright-langserver', '--stdio'},
 	filetypes = {'python'},
+	root_dir = root_dir_basedpyright,
 	on_attach = function (client, _)
 		client.server_capabilities.completionProvider = false        -- use pyrefly for fast response
 		client.server_capabilities.definitionProvider = false        -- use pyrefly for fast response
@@ -231,7 +257,7 @@ vim.lsp.config('basedpyright', {
 			}
 		},
 	},
-	single_file_support = true,
+	-- single_file_support = true,
 })
 
 -- #############################################################
@@ -239,18 +265,18 @@ vim.lsp.config('basedpyright', {
 -- #############################################################
 -- main purpose is fast completion/semanticTokens
 -- the alternative of it is ty, but it is experimental yet
+local root_dir_pyrefly = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'pyproject.toml',
+		'pyrefly.roml',
+		'.git'
+	}) or vim.fn.getcwd()
+	cb(root)
+end
 vim.lsp.config('pyrefly', {
 	cmd = {'pyrefly', 'lsp'},
 	filetypes = {'python'},
-	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {
-		    'pyrefly.toml',
-		    'pyproject.toml',
-		    '.git'
-		}) or vim.fn.getcwd()
-		-- root directory must be transferred to callback function to recognize
-		cb(root)
-	end,
+	root_dir = root_dir_pyrefly,
 	on_attach = function (client, _)
 		client.server_capabilities.codeActionProvider = false     -- basedpyright has more kinds
 		client.server_capabilities.documentSymbolProvider = false -- basedpyright has more kinds
