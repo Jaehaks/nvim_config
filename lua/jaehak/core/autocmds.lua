@@ -6,6 +6,17 @@ vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nv
 })
 
 
+------------ Change pwd to project folder --------------
+vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter'}, {    -- inquire file reload when nvim focused
+	group = 'UserSettings',
+	pattern = '*',
+	callback = function (ev)
+		local root_pattern = require('jaehak.core.utils').GetRootPattern(ev.buf)
+		local root = vim.fs.root(ev.buf, root_pattern) or vim.fn.getcwd()
+		vim.cmd('lcd ' .. root)
+	end
+})
+
 
 ------------ TaskKill redundant Process --------------
 

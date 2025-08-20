@@ -156,6 +156,23 @@ end
 M.SlashChange = SlashChange
 
 
+---@param bufnr integer buffer number
+local GetRootPattern = function (bufnr)
+	local filepath = vim.api.nvim_buf_get_name(bufnr)
+	local ext = vim.fn.fnamemodify(filepath, ':e')
+	local root_pattern = {}
+	if vim.tbl_contains({'lua'}, ext) then
+		root_pattern = {'luarc.json', '.luarc.json', '.git'}
+	elseif vim.tbl_contains({'py'}, ext) then
+		root_pattern = {'pyproject.toml', 'ruff.toml', '.ruff.toml', 'pyrightconfig.json', 'pyrefly.roml', '.git'}
+	else
+		root_pattern = {'.git'}
+	end
+
+	return root_pattern
+end
+M.GetRootPattern = GetRootPattern
+
 -- ####################################################
 -- * Markdown : Follow image link with wezterm
 -- ####################################################

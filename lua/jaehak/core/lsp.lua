@@ -42,9 +42,7 @@ vim.diagnostic.config({
 -- but root_dir must be set by independent lsp server
 vim.lsp.config('*', {
 	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {
-		    '.git'
-		}) or vim.fn.getcwd()
+		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
 		-- root directory must be transferred to callback function to recognize
 		cb(root)
 	end,
@@ -99,7 +97,7 @@ vim.lsp.config('lua_ls', {
 				}
 			},
 		},
-		single_file_support = true,
+		single_file_support = false,
 	},
 })
 
@@ -218,7 +216,7 @@ vim.lsp.config('ruff', {
 			},
 		},
 	},
-	single_file_support = true,
+	single_file_support = false,
 })
 
 
@@ -240,11 +238,11 @@ vim.lsp.config('basedpyright', {
 	filetypes = {'python'},
 	root_dir = root_dir_basedpyright,
 	on_attach = function (client, _)
-		client.server_capabilities.completionProvider = false        -- use pyrefly for fast response
-		client.server_capabilities.definitionProvider = false        -- use pyrefly for fast response
+		client.server_capabilities.completionProvider        = false -- use pyrefly for fast response
+		client.server_capabilities.definitionProvider        = false -- use pyrefly for fast response
 		client.server_capabilities.documentHighlightProvider = false -- use pyrefly for fast response
-		client.server_capabilities.renameProvider = false            -- use pyrefly as I think it is stable
-		client.server_capabilities.semanticTokensProvider = false    -- use pyrefly it is more rich
+		client.server_capabilities.renameProvider            = false -- use pyrefly as I think it is stable
+		client.server_capabilities.semanticTokensProvider    = false -- use pyrefly it is more rich
 	end,
 	settings = { -- see https://docs.basedpyright.com/latest/configuration/language-server-settings/
 		basedpyright = {
@@ -257,7 +255,6 @@ vim.lsp.config('basedpyright', {
 			}
 		},
 	},
-	-- single_file_support = true,
 })
 
 -- #############################################################
@@ -278,12 +275,12 @@ vim.lsp.config('pyrefly', {
 	filetypes = {'python'},
 	root_dir = root_dir_pyrefly,
 	on_attach = function (client, _)
-		client.server_capabilities.codeActionProvider = false     -- basedpyright has more kinds
+		client.server_capabilities.codeActionProvider     = false -- basedpyright has more kinds
 		client.server_capabilities.documentSymbolProvider = false -- basedpyright has more kinds
-		client.server_capabilities.hoverProvider = false          -- basedpyright has more kinds
-		client.server_capabilities.inlayHintProvider = false      -- basedpyright has more kinds
-		client.server_capabilities.referenceProvider = false      -- basedpyright has more kinds
-		client.server_capabilities.signatureHelpProvider = false  -- basedpyright has more kinds
+		client.server_capabilities.hoverProvider          = false -- basedpyright has more kinds
+		client.server_capabilities.inlayHintProvider      = false -- basedpyright has more kinds
+		client.server_capabilities.referenceProvider      = false -- basedpyright has more kinds
+		client.server_capabilities.signatureHelpProvider  = false -- basedpyright has more kinds
 	end,
 	settings = {
 	},

@@ -79,7 +79,7 @@ vim.g.loaded_ruby_provider = 0 -- disable ruby provider warning
 
 
 -- change
-opt.autochdir = true	-- change pwd where current buffer is located
+opt.autochdir = false	-- change pwd where current buffer is located
 --opt.autoread = true		-- auto reload when file has been changed outside of vim
 
 
