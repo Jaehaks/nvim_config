@@ -6,6 +6,10 @@ return {
 	opts = {
 		prefix = '    [⌧⌦]',
 		highlight = 'NightflyPurple',
+		disable_ft = {
+			'markdown',
+			'python',
+		}
 	}
 }
 --	'briangwaltney/paren-hint.nvim',	-->>> it needs to move cursor on bracket, not cursor line
