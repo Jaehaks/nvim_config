@@ -3,6 +3,7 @@ vim.g.maplocalleader = ' ' -- for vimtex
 return {
 {
 	'Jaehaks/texflow.nvim',
+	build = ':UpdateRemotePlugins',
 	dependencies = {
 		'j-hui/fidget.nvim',
 	},
@@ -18,16 +19,6 @@ return {
 				'@tex',                     -- current file
 			},
 		},
-		viewer = {
-			engine = 'sioyek',
-			args = {
-				'--reuse-window',
-				'--forward-search-file @tex',
-				'--forward-search-line @line',
-				'@pdf',
-			},
-			focus = false,
-		},
 	},
 	config = function (_, opts)
 		local texflow = require('texflow')
@@ -38,9 +29,9 @@ return {
 			group = TexFlowMaps,
 			pattern = {'tex', 'latex', 'plaintex'},
 			callback = function ()
-				vim.keymap.set('n', '<leader>ll', function () texflow.compile(_, {openAfter = true}) end, { buffer = true, desc = '[TexFlow] compile tex file', silent = true })
-				vim.keymap.set('n', '<leader>lf', function () texflow.compile(_) end, { buffer = true, desc = '[TexFlow] compile tex file', silent = true })
-				vim.keymap.set('n', '<leader>lv', function () texflow.view() end, { buffer = true, desc = '[TexFlow] view pdf file', silent = true })
+				vim.keymap.set('n', '<leader>ll', function () texflow.compile(_, {openAfter = true}) end, { buffer = true, desc = '[TexFlow] compile tex file and open pdf', silent = true })
+				vim.keymap.set('n', '<leader>lf', function () texflow.compile(_) end					, { buffer = true, desc = '[TexFlow] compile tex file', silent = true })
+				vim.keymap.set('n', '<leader>lv', function () texflow.view() end						, { buffer = true, desc = '[TexFlow] view pdf file', silent = true })
 			end
 		})
 
