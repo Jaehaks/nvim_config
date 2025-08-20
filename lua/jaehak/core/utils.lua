@@ -156,6 +156,7 @@ end
 M.SlashChange = SlashChange
 
 
+-- get root pattern of current file to check where is root directory
 ---@param bufnr integer buffer number
 local GetRootPattern = function (bufnr)
 	local filepath = vim.api.nvim_buf_get_name(bufnr)
@@ -172,6 +173,64 @@ local GetRootPattern = function (bufnr)
 	return root_pattern
 end
 M.GetRootPattern = GetRootPattern
+
+
+-- ####################################################
+-- * System : Check process id from process name
+-- ####################################################
+
+-- get recent process id (windows only)
+---@param processname string format is 'pyrefly.exe'. Extension must be needed
+local function GetProcessId(processname)
+	if not processname then
+		return nil
+	end
+
+	-- get process list using cmd prompt (wmic is faster than pwsh)
+	local command = {
+		"wmic", "process", "where", "name=" .. '"' .. processname .. '"',
+		"get", "CreationDate,ProcessId", "/format:csv"
+	}
+	local result = vim.system(command):wait()  -- stdout, stderr, ret
+	if result.code ~= 0 then
+		vim.print("wmic command failed:", result.stderr)
+		return nil
+	end
+
+	-- split fields
+	local processes = {}
+	for line in result.stdout:gmatch("[^\r\n]+") do
+		if not (line:match("^Node") or line:match("^$")) then -- ignore header / empty line
+			-- CSV: Node,CreationDate,ProcessId
+			local fields = vim.split(line, ',')
+			if fields then
+				table.insert(processes, {creation = fields[2], pid = fields[3]})
+			end
+		end
+	end
+
+	-- sort by creation time to check what is recent one
+	table.sort(processes, function(a, b)
+		return a.creation > b.creation
+	end)
+
+	return processes[1].pid
+end
+M.GetProcessId = GetProcessId
+
+-- taskkill from pid (windows only)
+local function TaskKill(pid)
+	if not pid then
+		return nil
+	end
+
+	local command = { "taskkill", "/PID", tostring(pid), '/F' }
+	local result = vim.system(command):wait()  -- stdout, stderr, ret
+	if result.code ~= 0 then
+		return nil
+	end
+end
+M.Taskkill = TaskKill
 
 -- ####################################################
 -- * Markdown : Follow image link with wezterm

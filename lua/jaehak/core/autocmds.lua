@@ -21,21 +21,6 @@ vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter'}, {    -- inquire file rel
 ------------ TaskKill redundant Process --------------
 
 -- TODO: sometimes harper-ls.exe doesn't terminate properly. so force to exit this
--- get recent process id
-local function GetProcessId(name)
-	-- skip=1 : erase first line of output
-	-- tokens=3 : catch 3rd item which is sliced with delimiter ',' from output
-	-- processid,creationdate : show creationdate and sort by recently
-	local cmd = [[for /f "usebackq skip=1 tokens=3 delims=," %a in (`wmic process where name^="]]
-				.. name
-				.. [[" get processid^,creationdate /format:csv ^| sort -r`) do @echo %a]]
-	local outputs = vim.fn.system(cmd)
-	local ids = {}
-	for id in outputs:gmatch('(%d+)') do
-		table.insert(ids, id)
-	end
-	return ids
-end
 
 local delete_process_list = {}
 -- get process id of specific lsp to add delete list when VimLeave
@@ -78,10 +63,6 @@ local delete_process_list = {}
 -- 	end
 -- })
 
-vim.api.nvim_create_user_command("GetProcessId", function (opts)
-	local tbl = GetProcessId('matlab.exe')
-	vim.print(tbl)
-end, {nargs = 1})
 
 
 -- clear some procedure after VimLeave

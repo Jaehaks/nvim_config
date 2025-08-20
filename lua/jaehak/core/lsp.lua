@@ -4,6 +4,9 @@
 local sep = vim.g.has_win32 and ';' or ':'
 vim.env.PATH = require('jaehak.core.paths').nvim.mason .. sep .. vim.env.PATH -- call lsp without mason
 vim.env.RUFF_CACHE_DIR = require('jaehak.core.paths').lsp.ruff.cache_path --  set ruff cache directory
+local pid = {
+	pyrefly = {}
+}
 
 -- #############################################################
 -- ####### set diagnostics as numhl to distinguish with gitsign
@@ -281,6 +284,17 @@ vim.lsp.config('pyrefly', {
 		client.server_capabilities.inlayHintProvider      = false -- basedpyright has more kinds
 		client.server_capabilities.referenceProvider      = false -- basedpyright has more kinds
 		client.server_capabilities.signatureHelpProvider  = false -- basedpyright has more kinds
+
+		if vim.g.has_win32 then
+			table.insert(pid.pyrefly, require('jaehak.core.utils').GetProcessId('pyrefly.exe'))
+		end
+	end,
+	on_exit = function ()
+		if vim.g.has_win32 then
+			for id in ipairs(pid.pyrefly) do
+				require('jaehak.core.utils').Taskkill(id)
+			end
+		end
 	end,
 	settings = {
 	},
