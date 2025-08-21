@@ -147,6 +147,7 @@ return {
 					module = 'blink-cmp-dat-word',
 					opts = {
 						paths = {
+							-- inspired from https://github.com/first20hours/google-10000-english
 							vim.fn.stdpath('config') .. '/queries/dictionary/google-10000-english-usa.txt',
 						},
 						min_keyword_length = 2,

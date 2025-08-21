@@ -1,19 +1,28 @@
 local utils = require('jaehak.core.utils')
 return {
 {
-	-- more works better
-	'iamcco/markdown-preview.nvim',
+	-- BUG: it doesn't work with `app = 'webview`, you must use browser
+	-- markdown live preview. it needs deno
+    "toppair/peek.nvim",
+    build = "deno task --quiet build:fast",
 	keys = {
-		{'<leader>mp'}
+		{'<leader>mp', function ()
+			if require('peek').is_open() then
+				require('peek').close()
+			else
+				require('peek').open()
+			end
+		end, desc = '[markdown] open browser preview'},
 	},
-	build = function() vim.fn["mkdp#util#install"]() end,
-	config = function ()
-		vim.g.mkdp_auto_start = 0 -- open preview automatically
-		vim.g.mkdp_theme = 'dark'
-		vim.keymap.set('n', '<leader>mp', '<Cmd>:MarkdownPreviewToggle<CR>', {desc = 'toggle markdown preview'})
-	end
+	opts = {
+		auto_load = false, -- open live preview whenever you open .md file
+		app = 'brave',
+		filetype = {'markdown'},
+	},
 },
 -- 'datsfilipe/md-previewer' : how to use this?
+-- 'iamcco/markdown-preview.nvim' : it doesn't work anymore
+-- 'brianhuster/live-preview.nvim' : it invokes some error while preview in web browser
 {
 	"OXY2DEV/markview.nvim",
 	enabled = true,
