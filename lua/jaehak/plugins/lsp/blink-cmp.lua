@@ -9,6 +9,7 @@ return {
 		'L3MON4D3/LuaSnip',
 		'saghen/blink.compat',
 		'Kaiser-Yang/blink-cmp-git', -- needs `gh` or `curl`
+		'xieyonn/blink-cmp-dat-word',
 	},
 	opts =  {
 		keymap = { -- Applied only completion menu
@@ -68,18 +69,18 @@ return {
 		},
 		snippets = {preset = 'luasnip'}, -- use luasnip for `snippets` engine
 		sources = {
-			default = {'snippets', 'lsp', 'buffer', 'spell', 'path', 'cmdline'},
+			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path', 'cmdline'},
 			per_filetype = {
-				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'path'},
-				matlab = {'snippets', 'lsp', 'buffer', 'spell', 'path'},
-				markdown = {'snippets', 'buffer', 'path', 'git', 'emoji', 'spell'}, -- obsidian added
-				gitcommit = {'git', 'buffer', 'spell'}
+				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'datword', 'path'},
+				matlab = {'snippets', 'lsp', 'buffer', 'spell', 'datword', 'path'},
+				markdown = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'}, -- obsidian added
+				gitcommit = {'git', 'buffer', 'datword', 'spell'}
 			},
 			providers = {
 				lsp = {
 					-- BUG: default setting `fallbacks={'buffer'}` has some bug (don't show buffer list by lsp)
 					fallbacks = {},
-					max_items = 5,
+					-- max_items = 5,
 				},
 				buffer = {
 					-- BUG: when I set max_items, some lsp's list are now shown
@@ -140,6 +141,16 @@ return {
 						-- ':' to search for commits
 						-- '@' to search for users
 					},
+				},
+				datword = {
+					name= 'DatWord',
+					module = 'blink-cmp-dat-word',
+					opts = {
+						paths = {
+							vim.fn.stdpath('config') .. '/queries/dictionary/google-10000-english-usa.txt',
+						},
+						min_keyword_length = 2,
+					}
 				}
 			},
 		},
