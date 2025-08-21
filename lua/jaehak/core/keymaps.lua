@@ -115,6 +115,9 @@ vim.keymap.set({'n'}, '<Tab>', 'za', opts) -- toggle fold using tab
 -- run script
 vim.keymap.set({'n'}, '<F5>', require('jaehak.core.utils').run, opts)
 
+-- toggle indent style
+vim.keymap.set({'n', 'v'}, 'gi', ':ToggleGithubIndent<CR>', opts)
+
 
 -- linux setting -----------------------------------------------------------------------------
 if not vim.g.has_win32 then
