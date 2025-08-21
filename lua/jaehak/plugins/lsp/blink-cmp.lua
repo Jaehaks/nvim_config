@@ -150,7 +150,9 @@ return {
 							vim.fn.stdpath('config') .. '/queries/dictionary/google-10000-english-usa.txt',
 						},
 						min_keyword_length = 2,
-					}
+					},
+					max_items = 5,
+					score_offset = -10,
 				}
 			},
 		},
