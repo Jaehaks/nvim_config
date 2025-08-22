@@ -1,14 +1,16 @@
 local ls     = require("luasnip")
+local ex_fmt = require('luasnip.extras.fmt')
 -- some shorthands...
-local s = ls.snippet
-local t = ls.text_node
-local i = ls.insert_node
-local c = ls.choice_node
-local f = ls.function_node
+local s   = ls.snippet
+local t   = ls.text_node
+local i   = ls.insert_node
+local c   = ls.choice_node
+local f   = ls.function_node
+local fmt = ex_fmt.fmt
 
 local snippets, autosnippets = {}, {}
 
--- 1) make code block
+-- make code block
 local code_block = s({
 	trig = '```',
 	name = 'code block',
@@ -21,7 +23,7 @@ local code_block = s({
 })
 table.insert(autosnippets, code_block)
 
--- 2) make callout
+-- make callout
 local callout_list = {
 	t('NOTE'),
 	t('ABSTRACT'),
@@ -65,6 +67,30 @@ local callout = s({
 })
 table.insert(autosnippets, callout)
 
+-- make folding in github
+local template_details = [[
+<details>
+	<summary> {} </summary>
+
+<br>
+
+{}
+
+</details>
+{}
+]]
+
+local details = s({
+	trig = 'details{}',
+	name = 'folding',
+	desc = 'folding section in markdown for github',
+	}, fmt(template_details, {
+		i(1, 'SummaryTitle'),
+		i(2, 'Contents ..'),
+		i(0, ''),
+	})
+)
+table.insert(snippets, details)
 
 
 
