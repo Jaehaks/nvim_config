@@ -1,4 +1,3 @@
-utils = require('jaehak.core.utils')
 return {
 	'saghen/blink.cmp',
 	event = 'InsertEnter',
@@ -71,8 +70,8 @@ return {
 		sources = {
 			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path', 'cmdline'},
 			per_filetype = {
-				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'spell', 'datword', 'path'},
-				matlab = {'snippets', 'lsp', 'buffer', 'spell', 'datword', 'path'},
+				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
+				matlab = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 				markdown = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'}, -- obsidian added
 				gitcommit = {'git', 'buffer', 'datword', 'spell'}
 			},
@@ -151,6 +150,7 @@ return {
 							vim.fn.stdpath('config') .. '/queries/dictionary/google-10000-english-usa.txt',
 						},
 						min_keyword_length = 2,
+						spellsuggest = true,
 					},
 					max_items = 5,
 					score_offset = -5,
