@@ -153,7 +153,7 @@ return {
 						min_keyword_length = 2,
 					},
 					max_items = 5,
-					score_offset = -10,
+					score_offset = -5,
 				}
 			},
 		},
