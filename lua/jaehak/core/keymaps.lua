@@ -104,6 +104,7 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 		end
 	end
 })
+vim.keymap.set('n', 'Q', '<Cmd>bd<CR>', {noremap = true})
 
 -- set file managing
 vim.keymap.set('n', '<C-g>', '<Cmd>echom expand("%:p")<CR>', opts)
