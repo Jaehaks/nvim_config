@@ -16,17 +16,10 @@ end, {nargs = 1})
 
 
 ---------- Lsp -----------
-vim.api.nvim_create_user_command("LspInfo", function (opts)
+vim.api.nvim_create_user_command("LspInfo", function (_)
 	vim.cmd('checkhealth vim.lsp')
 end, {desc = 'LspInfo'})
 
-
-local tab_default = {
-	tabstop     = vim.api.nvim_get_option_value('tabstop', {}),
-	softtabstop = vim.api.nvim_get_option_value('softtabstop', {}),
-	shiftwidth  = vim.api.nvim_get_option_value('shiftwidth', {}),
-	expandtab   = vim.api.nvim_get_option_value('expandtab', {}),
-}
 
 ---------- Editing ------------
 -- toggle tab mode (vim.o.shiftwidth, noexpandtab) <-> (shiftwidth = 2, expandtab) for github writing
@@ -38,7 +31,7 @@ local function ToggleIndent(opts, mode)
 		end_line = vim.api.nvim_buf_line_count(0)
 	end
 	local bufnr = vim.api.nvim_get_current_buf()
-	local shiftwidth = vim.o.shiftwidth
+	local shiftwidth = vim.api.nvim_get_option_value('shiftwidth', {})
 
 	for lnum = start_line, end_line do
 		local line = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, lnum, false)[1]
