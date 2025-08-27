@@ -101,7 +101,7 @@ return {
 				},
 				spell = {
 					name = 'Spell',
-					score_offset = -15,
+					score_offset = -20,
 					module = 'blink-cmp-spell',
 					opts = {
 						-- EXAMPLE: Only enable source in `@spell` captures, and disable it
@@ -153,7 +153,7 @@ return {
 						spellsuggest = true,
 					},
 					max_items = 5,
-					score_offset = -5,
+					score_offset = -15,
 				}
 			},
 		},
