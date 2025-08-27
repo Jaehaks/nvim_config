@@ -31,8 +31,12 @@ local tab_default = {
 ---------- Editing ------------
 -- toggle tab mode (vim.o.shiftwidth, noexpandtab) <-> (shiftwidth = 2, expandtab) for github writing
 local function ToggleIndent(opts, mode)
-	local start_line = opts.line1 or 1 -- range start
-	local end_line = opts.line2 or vim.api.nvim_buf_line_count(0) -- range end
+	local start_line = opts.line1 -- range start
+	local end_line = opts.line2 -- range end
+	if opts.range == 0 then -- if not visual mode, adjust tab for documents region
+		start_line = 1
+		end_line = vim.api.nvim_buf_line_count(0)
+	end
 	local bufnr = vim.api.nvim_get_current_buf()
 	local shiftwidth = vim.o.shiftwidth
 
