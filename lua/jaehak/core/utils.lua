@@ -18,11 +18,11 @@ local GetIdxVisual = function ()
 
 	-- check end col regardless of non-ASCII char
 	local lines = vim.api.nvim_buf_get_lines(0, end_row - 1, end_row, false)
-	local end_bytecol = vim.str_utfindex(lines[1], end_col)
+	local end_bytecol = vim.str_utfindex(lines[1], 'utf-8', end_col)
 	if end_bytecol then
-		end_col = vim.str_byteindex(lines[1], end_bytecol)
+		end_col = vim.str_byteindex(lines[1], 'utf-8', end_bytecol)
 	else
-		vim.api.nvim_err_writeln('Error(AddStrong) : end_bytecol is nil')
+		vim.notify('Error(AddStrong) : end_bytecol is nil', vim.log.levels.ERROR)
 	end
 
 	return start_row, start_col, end_row, end_col
@@ -511,9 +511,9 @@ local AddStrong = function (args)
 		end_col = end_col + #marks
 	end
 
-	local end_bytecol = vim.str_utfindex(lines[1], end_col)
+	local end_bytecol = vim.str_utfindex(lines[1], 'utf-8', end_col)
 	if end_bytecol then
-		end_col = vim.str_byteindex(lines[1], end_bytecol) + 1 -- move cursor to next of word
+		end_col = vim.str_byteindex(lines[1], 'utf-8', end_bytecol) + 1 -- move cursor to next of word
 	else
 		vim.notify('Error(AddStrong) : end_bytecol is nil', vim.log.levels.ERROR)
 		return
