@@ -16,6 +16,7 @@ return {
 				'-outdir=@texname',			-- output folder after build
 				'-interaction=nonstopmode', -- continuous mode compilation
 				'-synctex=1',               -- enable synctex and make synctex.gz for forward/inverse search
+				'-file-line-error',         -- enable synctex and make synctex.gz for forward/inverse search
 				'@tex',                     -- current file
 			},
 			openAfter = true,
