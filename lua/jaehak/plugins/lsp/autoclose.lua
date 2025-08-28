@@ -13,7 +13,20 @@ return {
 	-- 							 but it cannot supports autoclose in cmdline
 {
 	'windwp/nvim-autopairs',
-	event = 'InsertEnter',
+	-- event = 'InsertEnter',
+	keys = {
+		{'(', mode = {'i'}},
+		{'[', mode = {'i'}},
+		{'{', mode = {'i'}},
+		{'<', mode = {'i'}},
+		{')', mode = {'i'}},
+		{']', mode = {'i'}},
+		{'}', mode = {'i'}},
+		{'>', mode = {'i'}},
+		{'"', mode = {'i'}},
+		{"'", mode = {'i'}},
+		{"`", mode = {'i'}},
+	},
 	opts = {
 		disable_filetype = {
 		    "TelescopePrompt",
@@ -51,22 +64,7 @@ return {
 
 		-- additional rules
 		npairs.add_rules({
-			-- ===== add auto indent when <CR> ====================
-			Rule('<','>'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('[',']','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('(',')','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
-			Rule('{','}','lua'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
-
-			Rule('<','>','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('[',']','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
-			Rule('(',')','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('{','}','matlab'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O' end),
-
-			-- python must removed `vim.opt_local.indentexpr` by after/indent/python.vim to remove additional indent
-			Rule('<','>','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><C-c>O<Tab>' end),
-			Rule('[',']','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><BS><BS><C-c>O<BS>' end),
-			Rule('(',')','python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><BS><BS><C-c>O<BS>' end),
-			Rule("{","}",'python'):with_cr(cond.done()):replace_map_cr(function() return '<C-g>u<CR><BS><BS><C-c>O<BS>' end),
+			Rule('<','>'):with_cr(cond.done()),
 
 			-- ====== endwise setup without treesitter =================
 			-- lua
@@ -95,6 +93,11 @@ return {
 			endwise('do$', 'done', 'sh', 'until_statement'),    -- until  <right condition> do
 			endwise('in$', 'esac', 'sh', 'case_statement'),    -- until  <right condition> do
 		})
+
+		-- overwrite <CR> in brackets to implement unified operation (avoid <CR> of autopairs)
+		vim.keymap.set('i', '<CR>', function() -- smart enter for brackets
+			return require('jaehak.core.smart_cr').smart_enter()
+		end, { noremap = true, silent = true, desc = 'Smart enter in brackets' })
 	end
 },
 {
