@@ -1,6 +1,5 @@
 -- common definition for user
 vim.g.has_win32 = vim.fn.has('win32') == 1 and true or false
-vim.api.nvim_create_augroup("UserSettings", { clear = true })
 
 if vim.g.vscode then		-- vscode config is separated
 	require('jaehak.core.keymaps')

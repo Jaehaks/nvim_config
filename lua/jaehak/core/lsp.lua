@@ -8,6 +8,40 @@ local pid = {
 	pyrefly = {}
 }
 
+-- check lsp are installed
+local ensured_mason_installed = {
+	['basedpyright']           = 'basedpyright-langserver',
+	['latexindent']            = 'latexindent',
+	['lua-language-server']    = 'lua-language-server',
+	['matlab-language-server'] = 'matlab-language-server',
+	['pyrefly']                = 'pyrefly',
+	['ruff']                   = 'ruff',
+	['stylua']                 = 'stylua',
+	['texlab']                 = 'texlab',
+	['vim-language-server']    = 'vim-language-server',
+	['clangd']                 = 'clangd',
+	['json-lsp']               = 'vscode-json-language-server',
+}
+
+vim.api.nvim_create_autocmd('User', {
+	pattern = 'VeryLazy',
+	once = true,
+	callback = function ()
+		local mason_enabled = false
+		for alias, server in pairs(ensured_mason_installed) do
+			-- check executable and install
+			if vim.fn.executable(server) == 0 then
+				if not mason_enabled then
+					vim.cmd('Mason')
+					mason_enabled = true
+				end
+				vim.cmd(string.format('MasonInstall %s', alias))
+			end
+		end
+	end
+})
+
+
 -- #############################################################
 -- ####### set diagnostics as numhl to distinguish with gitsign
 -- #############################################################
@@ -379,6 +413,16 @@ vim.lsp.config('texlab', {
 })
 
 
+-- #############################################################
+-- ####### json-lsp config
+-- #############################################################
+vim.lsp.config('json_lsp', {
+	cmd = {'vscode-json-language-server', '--stdio'},
+	filetypes = {'json', 'jsonc'},
+	init_options = {
+		provideFormatter = true,
+	},
+})
 
 
 -- #############################################################
@@ -392,6 +436,7 @@ vim.lsp.enable({
 	'pyrefly',
 	'basedpyright',
 	'texlab',
+	'json_lsp',
 })
 
 
