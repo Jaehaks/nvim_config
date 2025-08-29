@@ -2,6 +2,7 @@
 vim.g.mapleader = ' '
 
 local opts = {noremap = true} -- if silent = true, ':' doesn't show immediately
+vim.api.nvim_create_augroup("UserSettings_KEYMAP", { clear = true })
 
 -- change cursor move key in normal mode
 vim.keymap.set({'n','v'}, 'j', 'k', opts)
@@ -77,7 +78,7 @@ vim.keymap.set('n', '<C-i>', 'a<CR><esc><Up>$', {silent = true, noremap = true})
 
 -- use q instead of :q when close some filetype
 vim.api.nvim_create_autocmd({'Filetype'}, {
-	group = 'UserSettings',
+	group = 'UserSettings_KEYMAP',
 	pattern = {
 		'help',
 		'qf',
@@ -124,7 +125,7 @@ vim.keymap.set({'n', 'v'}, 'gi', ':ToggleGithubIndent<CR>', opts)
 if not vim.g.has_win32 then
 	-- change keymap when open man using neovim
 	vim.api.nvim_create_autocmd({'Filetype'}, {
-		group = 'UserSettings',
+		group = 'UserSettings_KEYMAP',
 		pattern = 'man',
 		callback = function ()
 			local man_opts = {noremap = true, silent = true, buffer = true}

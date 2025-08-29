@@ -1,4 +1,5 @@
 local opt = vim.opt 		-- for conciseness
+vim.api.nvim_create_augroup("UserSettings_OPTION", { clear = true })
 
 -- first
 opt.tabstop        = 4        -- set inserted space in TAB
@@ -43,14 +44,14 @@ end
 -- if cursorline false at BufRead, the cursorline is off in case of moving to other buffer in current window
 -- becase when :bn, BufRead invoked but WinEnter didn't not invoke
 vim.api.nvim_create_autocmd({'WinLeave'}, {
-	group = 'UserSettings',
+	group = 'UserSettings_OPTION',
 	pattern = '*',
 	callback = function()
 		vim.opt_local.winhighlight = "CursorLine:CursorLineInActive"
 	end
 })
 vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
-	group = 'UserSettings',
+	group = 'UserSettings_OPTION',
 	pattern = '*',
 	callback = function()
 		vim.opt_local.winhighlight = "CursorLine:CursorLine"
@@ -120,7 +121,7 @@ opt.pumheight = 10               -- maximum item number when show completion
 
 -- set local options for markdown because markdown's ftplugin must set expandtab
 vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim focused
-	group = 'UserSettings',
+	group = 'UserSettings_OPTION',
 	pattern = 'markdown',
 	callback = function ()
 		vim.opt_local.expandtab = false

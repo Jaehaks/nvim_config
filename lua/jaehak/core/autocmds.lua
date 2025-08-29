@@ -1,6 +1,7 @@
+vim.api.nvim_create_augroup("UserSettings_AUTOCMD", { clear = true })
 ------------ reload when neovim is focused --------------
 vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nvim focused
-	group = 'UserSettings',
+	group = 'UserSettings_AUTOCMD',
 	pattern = '*',
 	command = 'silent! checktime'	-- check the buffer is changed out of neovim
 })
@@ -8,7 +9,7 @@ vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nv
 
 ------------ Change pwd to project folder --------------
 vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter'}, {    -- inquire file reload when nvim focused
-	group = 'UserSettings',
+	group = 'UserSettings_AUTOCMD',
 	pattern = '*',
 	callback = function (ev)
 		local root_pattern = require('jaehak.core.utils').GetRootPattern(ev.buf)
@@ -25,7 +26,7 @@ vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter'}, {    -- inquire file rel
 local delete_process_list = {}
 -- get process id of specific lsp to add delete list when VimLeave
 -- vim.api.nvim_create_autocmd({"LspAttach"}, {
--- 	group = 'UserSettings',
+-- 	group = 'UserSettings_AUTOCMD',
 -- 	callback = function (args)
 -- 		local client_id = args.data.client_id
 -- 		local client = vim.lsp.get_client_by_id(client_id)
@@ -68,7 +69,7 @@ local delete_process_list = {}
 -- clear some procedure after VimLeave
 if vim.g.has_win32 then
 vim.api.nvim_create_autocmd({"VimEnter"}, {
-	group = 'UserSettings',
+	group = 'UserSettings_AUTOCMD',
 	callback = function ()
 		-- delete shada.tmp files which are not deleted after shada is saved
 		-- vim.fn.system('del /Q /F /S "' .. require('jaehak.core.paths').data_dir .. '\\shada\\*tmp*"')
@@ -99,7 +100,7 @@ end
 
 -- Check redundant process and terminate at startup
 -- vim.api.nvim_create_autocmd({"BufReadPre", "BufNewFile"}, {
--- 	group = 'UserSettings',
+-- 	group = 'UserSettings_AUTOCMD',
 -- 	callback = function ()
 -- 		local nvim_process = GetProcessId('nvim.exe')
 -- 		if #nvim_process <= 3 then
@@ -134,7 +135,7 @@ end
 ------------ Auto Trim white space at the end of line --------------
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = '*',
-	group = 'UserSettings',
+	group = 'UserSettings_AUTOCMD',
 	callback = function ()
 		require('conform').format({
 			lsp_fallback = false,
@@ -154,7 +155,7 @@ end
 vim.opt.updatetime = 500
 vim.api.nvim_create_autocmd('CursorHold', {
 	pattern = '*',
-	group = 'UserSettings',
+	group = 'UserSettings_AUTOCMD',
 	callback = function (event)
 
 		if vim.bo.buftype ~= '' or
@@ -183,7 +184,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
 ------------ highlight when yank --------------
 vim.api.nvim_create_autocmd("TextYankPost", {
 	pattern = '*',
-	group = 'UserSettings',
+	group = 'UserSettings_AUTOCMD',
 	callback = function ()
 		vim.highlight.on_yank()
 	end
