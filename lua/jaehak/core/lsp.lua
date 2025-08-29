@@ -27,6 +27,12 @@ vim.api.nvim_create_autocmd('User', {
 	pattern = 'VeryLazy',
 	once = true,
 	callback = function ()
+		local ok, _ = pcall(require, 'mason')
+		if not ok then
+			vim.notify('mason is uninstalled', vim.log.levels.WARN)
+			return
+		end
+
 		local mason_enabled = false
 		for alias, server in pairs(ensured_mason_installed) do
 			-- check executable and install
