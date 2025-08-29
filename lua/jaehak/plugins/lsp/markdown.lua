@@ -245,7 +245,8 @@ return {
 -- 						   It is a big reason of why I migrate to other plugin
 {
 	-- editing fenced code block using treesitter
-	'AckslD/nvim-FeMaco.lua',
+	'Jaehaks/nvim-FeMaco.lua',
+	branch = 'development',
 	keys = {
 		{'<leader>mc', function () require('femaco.edit').edit_code_block() end, noremap = true, desc = 'Edit code block'},
 	},
