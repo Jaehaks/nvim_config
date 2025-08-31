@@ -154,6 +154,17 @@ return {
 					},
 					max_items = 5,
 					score_offset = -15,
+				},
+				cmdline = {
+					-- BUG: auto_insert / menu / ghost_text doesn't work
+					keymap = {preset = 'inherit'}, -- use default mapping
+					completion = {
+						list = {
+							selection = {
+								preselect = false,
+							}
+						}
+					},
 				}
 			},
 		},
