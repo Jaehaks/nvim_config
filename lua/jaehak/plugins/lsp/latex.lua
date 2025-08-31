@@ -30,19 +30,10 @@ return {
 			group = TexFlowMaps,
 			pattern = {'tex', 'latex', 'plaintex'},
 			callback = function ()
-				vim.keymap.set('n', '<leader>ll', function () texflow.compile({
-					latex = {
-						onSave = true,
-					}
-				})
+				vim.keymap.set('n', '<leader>ll', function () texflow.compile({ latex = { onSave = true, } })
 				end, { buffer = true, desc = '[TexFlow] compile tex file and open pdf', silent = true })
 
-				vim.keymap.set('n', '<leader>lf', function () texflow.compile({
-					latex = {
-						openAfter = false,
-						onSave = false,
-					}
-				})
+				vim.keymap.set('n', '<leader>lf', function () texflow.compile({ latex = { openAfter = false, onSave = false, } })
 				end, { buffer = true, desc = '[TexFlow] compile tex file and open pdf', silent = true })
 
 				vim.keymap.set('n', '<leader>lv', function () texflow.view() end
