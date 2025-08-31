@@ -1,5 +1,3 @@
-local utils = require('jaehak.core.utils')
-
 -- RRethy/nvim-treesitter-endwise : it doesn't need anymore because nvim-autopairs does same one
 -- goldos24/rainbow-variables-nvim : it seems doesn't supports many languages yet.
 return {
@@ -12,7 +10,7 @@ return {
 	},
 	branch = 'main',
 	build = ':TSUpdate',
-	config = function (opts)
+	config = function ()
 		local ts = require('nvim-treesitter')
 
 		-- change install paths
@@ -35,8 +33,26 @@ return {
 		ts.install(parsers)
 
 		-- set treesitter highlights by filetype
+		local ft = {
+			'lua',
+			'c',
+			'matlab',
+			'python',
+			'vim',
+			'markdown',
+			'html',
+			'json',
+			'toml',
+			'diff',
+			'config',
+			'powershell',
+			'bash',
+			'zsh',
+			'tex',
+			'latex',
+		}
 		vim.api.nvim_create_autocmd('FileType', {
-			pattern = parsers,
+			pattern = ft,
 			callback = function ()
 				vim.treesitter.start()
 			end

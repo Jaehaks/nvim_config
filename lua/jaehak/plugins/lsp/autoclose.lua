@@ -121,9 +121,11 @@ return {
 			priority = {
 				[''] = 110,
 				lua = 210,
+				latex = 210,
 			},
 			query = {
 				[''] = 'rainbow-delimiters',
+				latex = 'rainbow-blocks', -- remove rainbow-blocks's error code to proper work
 				-- matlab query for delimiters is added. Confirmed it works
 				-- copy directory "nvim/queries/rainbow-delimiters.nvim/matlab"  to "nvim-data/lazy/rainbow-delimiters.nvim/queries"
 			},
@@ -146,18 +148,23 @@ return {
 		rainbow_delimiters_setup.setup(opts)
 
 		-- if there is not matlab query directory, make it
-		local source_dir = require('jaehak.core.paths').nvim.rainbow_queries .. '\\matlab\\'
-		local dest_dir = require('jaehak.core.paths').data_dir .. '\\lazy\\rainbow-delimiters.nvim\\queries\\matlab\\'
-		if not vim.g.has_win32 then
-			string.gsub(source_dir, '\\', '/')
-			string.gsub(dest_dir, '\\', '/')
-		end
-		vim.uv.fs_scandir(dest_dir , function (err, userdata)
-			if err then
-				vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'
-				vim.uv.fs_copyfile(source_dir .. 'rainbow-delimiters.scm', dest_dir .. 'rainbow-delimiters.scm')
+		local function add_scm(ts_name)
+			local source_dir = require('jaehak.core.paths').nvim.rainbow_queries .. '\\' .. ts_name .. '\\'
+			local dest_dir = require('jaehak.core.paths').data_dir .. '\\lazy\\rainbow-delimiters.nvim\\queries\\' .. ts_name .. '\\'
+			if not vim.g.has_win32 then
+				string.gsub(source_dir, '\\', '/')
+				string.gsub(dest_dir, '\\', '/')
 			end
-		end)
+			vim.uv.fs_scandir(dest_dir , function (err, _)
+				if err then
+					vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'
+					vim.uv.fs_copyfile(source_dir .. 'rainbow-delimiters.scm', dest_dir .. 'rainbow-delimiters.scm')
+				end
+			end)
+		end
+
+		add_scm('matlab')
+		-- In  case of filetype tex, it use `latex` treesitter,
 	end
 },
 {
