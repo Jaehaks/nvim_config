@@ -70,7 +70,8 @@ vim.diagnostic.config({
 	float = {
 		format = function (diag)
 			return string.format('%s (%s)', diag.message, diag.source)
-		end
+		end,
+		border = 'rounded',
 	},
 	underline     = false, -- disable underline representation
 	severity_sort = true,  -- enable sort by severity when it collide in one line
