@@ -17,7 +17,6 @@ return {
 			['<S-Tab>'] = { 'select_prev', 'fallback_to_mappings' },
 			['<C-n>']   = { 'snippet_forward', 'fallback' }, -- for choice mode
 			['<C-S-n>'] = { 'snippet_backward', 'fallback' }, -- for choice mode
-			-- FIXME: select_choice() cannot insert the result
 			['<C-p>'] = {
 				function(cmp)
 					if require('luasnip').expand_or_locally_jumpable() then
@@ -155,19 +154,28 @@ return {
 					max_items = 5,
 					score_offset = -15,
 				},
-				cmdline = {
-					-- BUG: auto_insert / menu / ghost_text doesn't work
-					keymap = {preset = 'inherit'}, -- use default mapping
-					completion = {
-						list = {
-							selection = {
-								preselect = false,
-							}
-						}
-					},
-				}
 			},
 		},
+		cmdline = {
+			keymap = {
+				['<Tab>']   = { 'show_and_insert', 'select_next' },
+				['<S-Tab>'] = { 'show_and_insert', 'select_prev' },
+				['<C-e>']   = false,
+				['<C-n>']   = { 'select_next', 'fallback' }, -- for choice mode
+				['<C-p>']   = { 'select_prev', 'fallback' }, -- for choice mode
+				['<C-q>']   = { 'cancel' },
+			}, -- use default mapping
+			completion = {
+				list = {
+					selection = {
+						preselect = false,
+					}
+				},
+				ghost_text = {
+					enabled = false,
+				}
+			},
+		}
 	},
 	config = function(_, opts)
 		require('blink.cmp').setup(opts)
