@@ -32,20 +32,6 @@ return {
 	-- 							 And It has some bug that some parentheses cannot be applied what I set
 	-- 							 rule although I set with the same method with other brackets.
 
-
-
-I come back to mini.pairs to insert auto-pairs.
-It supports autopairs in cmdline but it doesn't support indented
-parentheses of pairs after new neovim version if you use blink-cmp. the
-fallback() of blink.cmp prevent to proper operation of <CR> in brackets
-because it implement this feature using replacing keycodes.
-
-If you use both `nvim-autopairs` and `mini.pairs` simultaneously,
-Mappings of <CR> are conflicted and don't work one of them.
-
-I feel the need of smart <CR> library to customize What I want, And
-reliable behavior is very important.
-That's what I made `smart_cr.nvim`
 {
 	'Jaehaks/smart_cr.nvim',
 	opts = {
@@ -55,7 +41,7 @@ That's what I made `smart_cr.nvim`
 		require('smart_cr').setup(opts)
 
 		vim.keymap.set('i', '<CR>', function() -- smart enter for brackets
-			local bracket = require('jaehak.core.smart_cr').bracket_enter()
+			local bracket = require('smart_cr').bracket.bracket_cr()
 
 			if not bracket then
 	 			-- original enter
