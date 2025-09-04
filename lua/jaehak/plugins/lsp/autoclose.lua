@@ -7,10 +7,45 @@ return {
 	-- 							  It supports auto indent when I enter <CR> inside {}, but this way use keycodes
 	-- 							  not function. it returns the characters like '\r'
 	-- 							  It returns original <CR> behavior when I execute fallback() for <CR> in blink.cmp
+	--
+	-- 							  I come back to mini.pairs to insert auto-pairs.
+	-- 							  It supports autopairs in cmdline but it doesn't support indented
+	-- 							  parentheses of pairs after new neovim version if you use blink-cmp. the
+	-- 							  fallback() of blink.cmp prevent to proper operation of <CR> in brackets
+	-- 							  because it implement this feature using replacing keycodes.
+	--
+	-- 							  If you use both `nvim-autopairs` and `mini.pairs` simultaneously,
+	-- 							  Mappings of <CR> are conflicted and don't work one of them.
 	-- 'windwp/nvim-autopairs' : it is lightweight if I don't use `check_ts`
 	-- 							 it supports auto indent when I enter <CR> even though fallback() is executed
 	-- 							 it supports adding endwise rule also without treesitter-endwise
 	-- 							 but it cannot supports autoclose in cmdline
+	--
+	-- 					 		 nvim-autopairs supports endwise and auto pair.
+	-- 					 		 But it doesn't support autopairs in cmdline and cannot separate between indented
+	-- 					 		 parentheses of pairs and endwise function.
+	-- 					 		 It can change the indented parentheses by changing rule with O<TAB>,
+	-- 					 		 It doesn't show to consistent behavior according to languages.
+	-- 					 		 Because indentexpr is different by languages, shiftwidth is changed by 2
+	-- 					 		 times of vim.bo.shiftwidth and it makes double indentation. It makes me
+	-- 					  		 confused.
+	-- 							 And It has some bug that some parentheses cannot be applied what I set
+	-- 							 rule although I set with the same method with other brackets.
+
+
+
+I come back to mini.pairs to insert auto-pairs.
+It supports autopairs in cmdline but it doesn't support indented
+parentheses of pairs after new neovim version if you use blink-cmp. the
+fallback() of blink.cmp prevent to proper operation of <CR> in brackets
+because it implement this feature using replacing keycodes.
+
+If you use both `nvim-autopairs` and `mini.pairs` simultaneously,
+Mappings of <CR> are conflicted and don't work one of them.
+
+I feel the need of smart <CR> library to customize What I want, And
+reliable behavior is very important.
+That's what I made `smart_cr.nvim`
 {
 	'Jaehaks/smart_cr.nvim',
 	opts = {
