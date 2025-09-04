@@ -12,21 +12,27 @@ return {
 	-- 							 it supports adding endwise rule also without treesitter-endwise
 	-- 							 but it cannot supports autoclose in cmdline
 {
-	'windwp/nvim-autopairs',
-	-- event = 'InsertEnter',
-	keys = {
-		{'(', mode = {'i'}},
-		{'[', mode = {'i'}},
-		{'{', mode = {'i'}},
-		{'<', mode = {'i'}},
-		{')', mode = {'i'}},
-		{']', mode = {'i'}},
-		{'}', mode = {'i'}},
-		{'>', mode = {'i'}},
-		{'"', mode = {'i'}},
-		{"'", mode = {'i'}},
-		{"`", mode = {'i'}},
+	'Jaehaks/smart_cr.nvim',
+	opts = {
+
 	},
+	config = function (_, opts)
+		require('smart_cr').setup(opts)
+
+		vim.keymap.set('i', '<CR>', function() -- smart enter for brackets
+			local bracket = require('jaehak.core.smart_cr').bracket_enter()
+
+			if not bracket then
+	 			-- original enter
+				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), "n", false)
+			end
+		end, { noremap = true, silent = true, desc = 'Smart enter in brackets' })
+	end
+},
+{
+	'windwp/nvim-autopairs',
+	enabled = false,
+	event = 'InsertEnter',
 	opts = {
 		disable_filetype = {
 		    "TelescopePrompt",
@@ -36,8 +42,8 @@ return {
 		},
 		ignored_next_char = [=[[%w%%%'%[%"%.%`%$]]=],
 		check_ts = false, -- don't use treesitter
-		map_cr   = true,  -- make {|} to indented brackets
-		map_bs   = true,
+		map_cr   = false,  -- make {|} to indented brackets
+		map_bs   = false,
 		map_c_h  = false,
 		map_c_w  = false,
 		fast_wrap = { -- add close parentheses like flash.nvim
@@ -62,9 +68,16 @@ return {
 		npairs.remove_rule('```') -- ``` makes one more ``` by default.
 		npairs.get_rules("`")[1]:with_pair(cond.not_before_regex("[%w%`]")) -- ignore autopair after ``, it makes ```
 
+		npairs.remove_rule('`') -- ``` makes one more ``` by default.
+		npairs.remove_rule('\'') -- ``` makes one more ``` by default.
+		npairs.remove_rule('"') -- ``` makes one more ``` by default.
+		npairs.remove_rule('<') -- ``` makes one more ``` by default.
+		npairs.remove_rule('(') -- ``` makes one more ``` by default.
+		npairs.remove_rule('{') -- ``` makes one more ``` by default.
+		npairs.remove_rule('[') -- ``` makes one more ``` by default.
+
 		-- additional rules
 		npairs.add_rules({
-			Rule('<','>'):with_cr(cond.done()),
 
 			-- ====== endwise setup without treesitter =================
 			-- lua
@@ -73,7 +86,7 @@ return {
 			endwise('do$'  , 'end', 'lua', 'while_statement'), -- while <right condition> do
 			endwise('do$'  , 'end', 'lua', 'do_statement'),    -- do <right condition> do
 			endwise('repeat$'  , 'until', 'lua', 'do_statement'),    -- do <right condition> do
-			endwise('function.*%(.*%)$', 'end', 'lua', {'function_definition', 'local_function', 'function'}), -- function
+			endwise('function.*%(.*%)$', 'end', 'lua', {'function_call', 'function_definition', 'local_function', 'function'}), -- function
 
 			-- matlab
 			endwise('if%s.+$'      , 'end', 'matlab', 'ERROR'), -- it doesn't work in comment node
@@ -87,18 +100,52 @@ return {
 			endwise('function%s.+$', 'end', 'matlab', 'ERROR'),
 
 			-- sh, zsh
-			endwise('then$', 'fi', 'sh', 'if_statement'),    -- if  <right condition> then
-			endwise('do$', 'done', 'sh', 'for_statement'),    -- for  <right condition> do
-			endwise('do$', 'done', 'sh', 'while_statement'),    -- while  <right condition> do
-			endwise('do$', 'done', 'sh', 'until_statement'),    -- until  <right condition> do
-			endwise('in$', 'esac', 'sh', 'case_statement'),    -- until  <right condition> do
+			endwise('then$', 'fi', 'sh', {'ERROR', 'if_statement'}),    -- if  <right condition> then
+			endwise('do$', 'done', 'sh', {'ERROR', 'for_statement'}),    -- for  <right condition> do
+			endwise('do$', 'done', 'sh', {'ERROR', 'while_statement'}),    -- while  <right condition> do
+			endwise('do$', 'done', 'sh', {'ERROR', 'until_statement'}),    -- until  <right condition> do
+			endwise('in$', 'esac', 'sh', {'ERROR', 'case_statement'}),    -- until  <right condition> do
 		})
 
 		-- overwrite <CR> in brackets to implement unified operation (avoid <CR> of autopairs)
-		vim.keymap.set('i', '<CR>', function() -- smart enter for brackets
-			return require('jaehak.core.smart_cr').smart_enter()
-		end, { noremap = true, silent = true, desc = 'Smart enter in brackets' })
 	end
+},
+{
+	-- more simple and smart / but it cannot support filetype
+	'echasnovski/mini.pairs',
+	version = false,
+	keys = {
+		{'(', mode = {'i'}},
+		{'[', mode = {'i'}},
+		{'{', mode = {'i'}},
+		{'<', mode = {'i'}},
+		{')', mode = {'i'}},
+		{']', mode = {'i'}},
+		{'}', mode = {'i'}},
+		{'>', mode = {'i'}},
+		{'"', mode = {'i'}},
+		{"'", mode = {'i'}},
+		{"`", mode = {'i'}},
+	},
+	opts = {
+		modes = { insert = true, command = true, terminal = true },
+
+		mappings = {
+			['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\].', register = { cr = false }  },
+			['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\].', register = { cr = false }  },
+			['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\].', register = { cr = false }  },
+			['<'] = { action = 'open', pair = '<>', neigh_pattern = '[^\\].', register = { cr = false }  },
+
+			[')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].', register = { cr = false }   },
+			[']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].', register = { cr = false }   },
+			['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].', register = { cr = false }   },
+			['>'] = { action = 'close', pair = '<>', neigh_pattern = '[^\\].', register = { cr = false }   },
+
+			['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\].', register = { cr = false } },
+			["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\%]\'].', register = { cr = false } },
+			['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%`].', register = { cr = false } },
+		},
+	}
 },
 {
 	-- auto highlight to brackets
