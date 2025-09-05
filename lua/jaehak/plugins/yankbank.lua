@@ -5,7 +5,6 @@ return {
 		{'<leader>y', ':YankBank<CR>', noremap = true, desc = 'YankBank list'},
 		{'y', mode={'n', 'v'}},
 		{'yy', mode={'n', 'v'}},
-		-- {'Y', mode={'n', 'v'}},
 	},
 	opts = {
 		max_entries = 9, -- max history
@@ -19,8 +18,3 @@ return {
 }
 
 
-	},
-	opts = {
-		max_entries = 9, -- max history
-		sep = "          ",
-		keymaps = {
