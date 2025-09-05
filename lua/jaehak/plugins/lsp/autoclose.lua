@@ -38,13 +38,14 @@ return {
 
 	},
 	config = function (_, opts)
+
 		require('smart_cr').setup(opts)
 
 		vim.keymap.set('i', '<CR>', function() -- smart enter for brackets
 			local bracket = require('smart_cr').bracket.bracket_cr()
+			local endwise = require('smart_cr').endwise.endwise_cr()
 
-			if not bracket then
-	 			-- original enter
+			if not bracket and not endwise then
 				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), "n", false)
 			end
 		end, { noremap = true, silent = true, desc = 'Smart enter in brackets' })
