@@ -9,7 +9,9 @@ else
 	require("jaehak.core.keymaps")
 	require("jaehak.core.options")
 	require("jaehak.core.filetypes")
-	require("jaehak.core.ime")
+	if vim.g.has_win32 then
+		require("jaehak.core.ime")
+	end
 	require("jaehak.core.autocmds")
 	require("jaehak.core.utils")
 	require("jaehak.core.usercmds")
