@@ -38,7 +38,6 @@ return {
 
 	},
 	config = function (_, opts)
-
 		require('smart_cr').setup(opts)
 
 		vim.keymap.set('i', '<CR>', function() -- smart enter for brackets
@@ -50,6 +49,7 @@ return {
 			end
 		end, { noremap = true, silent = true, desc = 'Smart enter in brackets' })
 	end
+
 },
 {
 	'windwp/nvim-autopairs',
@@ -167,7 +167,9 @@ return {
 			["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^%a\\%]\'].', register = { cr = false } },
 			['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%`].', register = { cr = false } },
 		},
-	}
+	},
+	-- config = function ()
+
 },
 {
 	-- auto highlight to brackets
