@@ -79,6 +79,7 @@ return {
 					-- BUG: default setting `fallbacks={'buffer'}` has some bug (don't show buffer list by lsp)
 					fallbacks = {},
 					-- max_items = 5,
+					score_offset = 50,
 				},
 				buffer = {
 					-- BUG: when I set max_items, some lsp's list are now shown
