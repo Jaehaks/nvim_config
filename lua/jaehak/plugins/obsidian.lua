@@ -5,6 +5,7 @@ return {
 		-- 'epwalsh/obsidian.nvim',
 		-- 'Jaehaks/obsidian.nvim',
 		'obsidian-nvim/obsidian.nvim',
+	 	enabled = false,
 		lazy = true,
 		ft = 'markdown',
 		opts = {

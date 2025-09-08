@@ -8,7 +8,7 @@ local pid = {
 	pyrefly = {}
 }
 
--- check lsp are installed
+-- check lsp are installed ([alias to install] = 'real server name')
 local ensured_mason_installed = {
 	['basedpyright']           = 'basedpyright-langserver',
 	['latexindent']            = 'latexindent',
@@ -21,6 +21,7 @@ local ensured_mason_installed = {
 	['vim-language-server']    = 'vim-language-server',
 	['clangd']                 = 'clangd',
 	['json-lsp']               = 'vscode-json-language-server',
+	['marksman']         	   = 'marksman',
 }
 
 vim.api.nvim_create_autocmd('User', {
@@ -433,6 +434,42 @@ vim.lsp.config('json_lsp', {
 
 
 -- #############################################################
+-- ####### marksman config
+-- #############################################################
+-- markdown-oxide : it works weird. some strings are removed when completion for link is inserted
+-- 					it doesn't support go to definition
+local root_dir_marksman = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'.marksman.toml',
+		'.git'
+	}) or vim.fn.getcwd()
+	cb(root)
+end
+vim.lsp.config('marksman', {
+	on_attach = function ()
+		-- TODO: 1) make header / file list to add link in projects
+		-- TODO: 2) implement obsidian's image (ClipboardPaste)
+		local utils = require('jaehak.core.utils')
+		vim.keymap.set({'n'}, 'gf', utils.FollowLink, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
+		vim.keymap.set({'n'}, '<leader>mh', Snacks.picker.lsp_symbols, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
+		vim.keymap.set({'n', 'v'}, 'P', utils.ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
+		vim.keymap.set('n', '<leader>ml', utils.Show_Linklist, {buffer = true, desc = 'show linklist'})
+		-- gd : use lspsaga's peek_definition()
+		-- ga : code action to make toc
+		-- K : use lspsaga's hover
+		-- 		-- vim.keymap.set('n', '<leader>mw', '<Cmd>Obsidian Workspace<CR>',       {noremap = true, desc = '(Obsidian)switch another workspace'})
+		-- 		-- vim.keymap.set('n', '<leader>ms', '<Cmd>Obsidian quick_switch<CR>',    {noremap = true, desc = '(Obsidian)Switch another file'})
+		-- 		-- vim.keymap.set('n', '<leader>mn', '<Cmd>Obsidian new<CR>',             {noremap = true, desc = '(Obsidian)Make new obsidian note'})
+		-- 		-- vim.keymap.set('n', '<leader>mo', '<Cmd>Obsidian open<CR>',            {noremap = true, desc = '(Obsidian)Open a note in obsidian app'})
+		-- 		-- vim.keymap.set('n', '<C-c>',      '<Cmd>Obsidian toggle_checkbox<CR>', {noremap = true, desc = '(Obsidian)Toggle checkbox'})
+		--
+	end,
+	cmd = {'marksman', 'server'},
+	filetypes = {'markdown'},
+	root_dir = root_dir_marksman,
+})
+
+-- #############################################################
 -- ####### lsp enable
 -- #############################################################
 vim.lsp.enable({
@@ -444,6 +481,7 @@ vim.lsp.enable({
 	'basedpyright',
 	'texlab',
 	'json_lsp',
+	'marksman',
 })
 
 
