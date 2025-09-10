@@ -451,7 +451,7 @@ vim.lsp.config('marksman', {
 		-- TODO: 2) implement obsidian's image (ClipboardPaste)
 		local utils = require('jaehak.core.utils')
 		vim.keymap.set({'n'}, 'gf', utils.FollowLink, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
-		vim.keymap.set({'n'}, '<leader>mh', Snacks.picker.lsp_symbols, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
+		vim.keymap.set({'n'}, '<leader>mh', require('snacks').picker.lsp_symbols, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
 		vim.keymap.set({'n', 'v'}, 'P', utils.ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
 		vim.keymap.set('n', '<leader>ml', utils.Show_Linklist, {buffer = true, desc = 'show linklist'})
 		vim.keymap.set({'n', 'i'}, '<M-e>', function()
