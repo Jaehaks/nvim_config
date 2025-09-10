@@ -286,6 +286,13 @@ return {
 			delete_column       = '<A-C-d>',    -- Delete the column under cursor.
 		}
 	},
+},
+{
+	'Jaehaks/md-utility.nvim',
+	ft = {'markdown'},
+	opts = {
+
+	}
 }
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)

@@ -71,7 +71,7 @@ return {
 			per_filetype = {
 				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 				matlab = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
-				markdown = {'lsp', 'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'}, -- obsidian added
+				markdown = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'}, -- obsidian added
 				gitcommit = {'git', 'buffer', 'datword', 'spell'}
 			},
 			providers = {
