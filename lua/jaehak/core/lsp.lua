@@ -87,7 +87,7 @@ vim.diagnostic.config({
 -- but root_dir must be set by independent lsp server
 vim.lsp.config('*', {
 	root_dir = function (bufnr, cb)
-		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.getcwd()
+		local root = vim.fs.root(bufnr, {'.git'}) or vim.fn.expand('%:p:h')
 		-- root directory must be transferred to callback function to recognize
 		cb(root)
 	end,
@@ -105,7 +105,7 @@ local root_dir_lua = function (bufnr, cb)
 		'luarc.json',
 		'.luarc.json',
 		'.git'
-	}) or vim.fn.getcwd()
+	}) or vim.fn.expand('%:p:h')
 	cb(root)
 end
 vim.lsp.config('lua_ls', {
@@ -229,7 +229,7 @@ local root_dir_ruff = function (bufnr, cb)
 		'ruff.toml',
 		'.ruff.toml',
 		'.git'
-	}) or vim.fn.getcwd()
+	}) or vim.fn.expand('%:p:h')
 	cb(root)
 end
 vim.lsp.config('ruff', {
@@ -275,7 +275,7 @@ local root_dir_basedpyright = function (bufnr, cb)
 		'pyproject.toml',
 		'pyrightconfig.json',
 		'.git'
-	}) or vim.fn.getcwd()
+	}) or vim.fn.expand('%:p:h')
 	cb(root)
 end
 vim.lsp.config('basedpyright', {
@@ -312,7 +312,7 @@ local root_dir_pyrefly = function (bufnr, cb)
 		'pyproject.toml',
 		'pyrefly.roml',
 		'.git'
-	}) or vim.fn.getcwd()
+	}) or vim.fn.expand('%:p:h')
 	cb(root)
 end
 vim.lsp.config('pyrefly', {
@@ -442,7 +442,7 @@ local root_dir_marksman = function (bufnr, cb)
 	local root = vim.fs.root(bufnr, {
 		'.marksman.toml',
 		'.git'
-	}) or vim.fn.getcwd()
+	}) or vim.fn.expand('%:p:h')
 	cb(root)
 end
 vim.lsp.config('marksman', {
