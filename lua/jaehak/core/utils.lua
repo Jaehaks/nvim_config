@@ -168,21 +168,20 @@ M.SlashChange = SlashChange
 
 -- get root pattern of current file to check where is root directory
 ---@param bufnr integer buffer number
-local GetRootPattern = function (bufnr)
-	local filepath = vim.api.nvim_buf_get_name(bufnr)
-	local ext = vim.fn.fnamemodify(filepath, ':e')
-	local root_pattern = {}
-	if vim.tbl_contains({'lua'}, ext) then
-		root_pattern = {'luarc.json', '.luarc.json', '.git'}
-	elseif vim.tbl_contains({'py'}, ext) then
-		root_pattern = {'pyproject.toml', 'ruff.toml', '.ruff.toml', 'pyrightconfig.json', 'pyrefly.roml', '.git'}
+---@return string? root directory
+local GetRoot = function (bufnr)
+	---@return vim.lsp.Client[]
+	local clients = vim.lsp.get_clients({bufnr = bufnr}) -- check lsp is attached
+	local root
+	if not vim.tbl_isempty(clients) then
+		root = clients[1].config.root_dir
 	else
-		root_pattern = {'.git'}
+		root = vim.fs.root(bufnr, {'.git'}) or vim.fn.expand('%:p:h')
 	end
 
-	return root_pattern
+	return root
 end
-M.GetRootPattern = GetRootPattern
+M.GetRoot = GetRoot
 
 
 -- ####################################################
