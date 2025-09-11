@@ -7,12 +7,28 @@ vim.api.nvim_create_autocmd({'FocusGained'}, {    -- inquire file reload when nv
 })
 
 
+local lcd_ignore_filetype = {
+	'oil',
+	'dashboard',
+	'snacks_picker_input',
+	'help',
+	'checkhealth',
+	'qf',
+	'Outline',
+	'grug-far',
+	'mason',
+	'neominimap',
+	'NeogitStatus',
+	'NeogitPopup',
+	'gitcommit',
+}
 ------------ Change pwd to project folder --------------
 vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter', 'LspAttach'}, {    -- inquire file reload when nvim focused
 	group = 'UserSettings_AUTOCMD',
 	pattern = '*',
 	callback = function (ev)
-		local ok = vim.api.nvim_get_option_value('buftype', {buf = ev.buf}) == ''
+		local ft = vim.api.nvim_get_option_value('filetype', {buf = ev.buf})
+		local ok = not vim.tbl_contains(lcd_ignore_filetype, ft)
 		if ok then -- do it only writable buffer
 			local root = require('jaehak.core.utils').GetRoot(ev.buf)
 			vim.cmd('lcd ' .. root)
