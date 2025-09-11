@@ -12,8 +12,11 @@ vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter', 'LspAttach'}, {    -- inq
 	group = 'UserSettings_AUTOCMD',
 	pattern = '*',
 	callback = function (ev)
-		local root = require('jaehak.core.utils').GetRoot(ev.buf)
-		vim.cmd('lcd ' .. root)
+		local ok = vim.api.nvim_get_option_value('buftype', {buf = ev.buf}) == ''
+		if ok then -- do it only writable buffer
+			local root = require('jaehak.core.utils').GetRoot(ev.buf)
+			vim.cmd('lcd ' .. root)
+		end
 	end
 })
 
