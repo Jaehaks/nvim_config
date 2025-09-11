@@ -940,6 +940,8 @@ local function run(file)
 		else
 			cmd = 'lua'
 		end
+	elseif vim.tbl_contains({'ps1'}, extension) then
+		cmd = 'pwsh'
 	end
 
 	if cmd then
