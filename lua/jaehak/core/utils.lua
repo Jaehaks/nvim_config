@@ -7,12 +7,16 @@ local M = {}
 
 -- change separator on directory depends on OS
 ---@param path string relative path
----@param sep_to string path separator after change
----@param sep_from string path separator before change
-M.sep_unify = function(path, sep_to, sep_from)
+---@param sep_to string? path separator after change
+---@param sep_from string? path separator before change
+---@param endslash boolean? add slash end of path or not
+---@return string
+M.sep_unify = function(path, sep_to, sep_from, endslash)
 	sep_to = sep_to or (vim.g.has_win32 and '\\' or '/')
 	sep_from = sep_from or ((sep_to == '/') and '\\' or '/')
-	return path:gsub(sep_from, sep_to)
+	local endchar = endslash and sep_to or ''
+	local result = path:gsub('[/\\]+$', ''):gsub(sep_from, sep_to) .. endchar
+	return result
 end
 
 -- get index of visualized word
