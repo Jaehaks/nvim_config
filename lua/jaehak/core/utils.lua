@@ -1026,7 +1026,7 @@ local function get_oldfiles()
 				file     = file,
 				pos      = {1,1},
 				filename = filename, -- manual
-				dirname  = dirname, -- manual
+				diralias = dirname, -- manual
 				score    = len_oldfiles - i, -- remain order of vim.v.oldfiles
 			})
 		end
@@ -1053,18 +1053,36 @@ M.oldfile_picker = function ()
 		items = get_oldfiles(),
 		format = function (item, _)
 			local ret = {}
-			local icon, icon_hl = devicons.get_icon(item.filename)
+			local icon, icon_hl = devicons.get_icon(item.filename, nil, {default = true})
 			local a = snacks.picker.util.align -- for setting strict width
 
 			ret[#ret +1] = {a(icon,2), icon_hl}
 			ret[#ret +1] = {item.filename}
 			ret[#ret +1] = {' '}
-			ret[#ret +1] = {item.dirname, 'SnacksPickerDir'}
+			ret[#ret +1] = {item.diralias, 'SnacksPickerDir'}
 			return ret
 		end,
 		preview = 'file',
 		transform = function (item,_ )
+			-- set order of list
 			item.score_add = item.score
+
+			-- truncate directory if they are too long
+			local len_text = #item.text + 2 -- with icon
+			local max_len = vim.o.columns * 0.9
+			if len_text > max_len then
+				local diralias = item.diralias
+				local displayed = ':' .. item.filename .. ' ' .. diralias
+				while #displayed > max_len do
+					local slash_pos = diralias:find('/')
+					if not slash_pos then
+						break
+					end
+					diralias = diralias:sub(slash_pos + 1)
+					displayed = '   ' .. item.filename .. ' :' .. diralias
+				end
+				item.diralias = ':' .. diralias
+			end
 			return item
 		end,
 		confirm = function (picker, item)
@@ -1073,6 +1091,12 @@ M.oldfile_picker = function ()
 				vim.cmd('edit ' .. item.file )
 			end
 		end,
+		layout = {
+			preset = 'vertical',
+			layout = {
+				width = 0.9,
+			}
+		}
 	})
 end
 
