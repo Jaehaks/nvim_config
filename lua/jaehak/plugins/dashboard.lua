@@ -29,7 +29,7 @@ return {
 					icon = '',
 					desc = 'Recent Files', desc_hl = 'String',
 					key = 'r', key_hl = 'DashboardShortCut',
-					action = function () Snacks.picker.recent() end,
+					action = function () require('jaehak.core.utils').oldfile_picker() end,
 				},
 				{
 					icon = '',

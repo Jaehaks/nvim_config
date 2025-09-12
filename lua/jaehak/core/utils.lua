@@ -979,4 +979,101 @@ M.toggle_scrollbind = function ()
 	end
 end
 
+
+-- ####################################################
+-- * oldfiles
+-- ####################################################
+
+-- ignore patterns
+local oldfile_ignored = {
+	'^oil://',
+	'doc/',
+}
+
+---@param path string filepath from oldfiles
+---@return boolean true if ignored
+local function is_oldfile_ignored(path)
+	for _, pattern in ipairs(oldfile_ignored) do
+		if string.match(path, pattern) then
+			return true
+		end
+	end
+	return false
+end
+
+---@class oldfiles.item
+---@field text string
+---@field file string
+---@field pos table<number, number>
+---@field filename string
+---@field dirname string
+
+-- get oldfiles items for snacks picker
+---@return oldfiles.item
+local function get_oldfiles()
+	local oldfiles = vim.v.oldfiles
+	local len_oldfiles = #oldfiles
+
+	local items = {}
+	for i, file in ipairs(oldfiles) do
+		local filename = vim.fn.fnamemodify(file, ':t')
+		local dirname = vim.fn.fnamemodify(file, ':~:.:h')
+		dirname = M.sep_unify(dirname, '/', nil, true) -- unify slash
+
+		if not is_oldfile_ignored(file) then
+			table.insert(items, {
+				text = file,
+				file = file,
+				pos = {1,1},
+				filename = filename, -- manual
+				dirname = dirname, -- manual
+				score = len_oldfiles - i,
+			})
+		end
+	end
+	return items
+end
+
+-- oldfile picker
+M.oldfile_picker = function ()
+	-- check snacks is loaded
+	local snacks_ok, snacks = pcall(require, 'snacks')
+	if not snacks_ok then
+		vim.notify('snacks.nvim is not installed', vim.log.levels.ERROR)
+		return
+	end
+
+	local devicons_ok, devicons = pcall(require, 'nvim-web-devicons')
+	if not devicons_ok then
+		vim.notify('nvim-web-devicons is not installed', vim.log.levels.ERROR)
+		return
+	end
+
+	snacks.picker.pick({
+		items = get_oldfiles(),
+		format = function (item, _)
+			local ret = {}
+			local icon, icon_hl = devicons.get_icon(item.filename)
+			local a = snacks.picker.util.align -- for setting strict width
+
+			ret[#ret +1] = {a(icon,2), icon_hl}
+			ret[#ret +1] = {item.dirname, 'SnacksPickerDir'}
+			ret[#ret +1] = {item.filename}
+			return ret
+		end,
+		preview = 'file',
+		transform = function (item,_ )
+			item.score_add = item.score
+			return item
+		end,
+		confirm = function (picker, item)
+			picker:close()
+			if item then
+				vim.cmd('edit ' .. item.file )
+			end
+		end,
+	})
+end
+
+
 return M

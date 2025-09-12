@@ -157,8 +157,8 @@ return {
 		{ '<leader>fm', function () Snacks.picker.jumps()
 		end, desc = 'Show marks', mode = {'n'}},
 
-		{ '<leader>fo', function () Snacks.picker.recent({
-		}) end, desc = 'Show oldfiles', mode = {'n'}},
+		{ '<leader>fo', function () require('jaehak.core.utils').oldfile_picker()
+		end, desc = 'Show oldfiles', mode = {'n'}},
 
 		{ '<leader>fu', function () Snacks.picker.undo({
 		}) end, desc = 'Show undo list', mode = {'n'}},
