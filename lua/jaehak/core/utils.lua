@@ -1022,7 +1022,7 @@ local function get_oldfiles()
 
 		if not is_oldfile_ignored(file) then
 			table.insert(items, {
-				text = file,
+				text = filename .. ' ' .. dirname,
 				file = file,
 				pos = {1,1},
 				filename = filename, -- manual
@@ -1057,8 +1057,9 @@ M.oldfile_picker = function ()
 			local a = snacks.picker.util.align -- for setting strict width
 
 			ret[#ret +1] = {a(icon,2), icon_hl}
-			ret[#ret +1] = {item.dirname, 'SnacksPickerDir'}
 			ret[#ret +1] = {item.filename}
+			ret[#ret +1] = {' '}
+			ret[#ret +1] = {item.dirname, 'SnacksPickerDir'}
 			return ret
 		end,
 		preview = 'file',
