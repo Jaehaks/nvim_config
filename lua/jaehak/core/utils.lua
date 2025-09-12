@@ -1018,7 +1018,7 @@ local function get_oldfiles()
 	local items = {}
 	for i, file in ipairs(oldfiles) do
 		local filename = vim.fn.fnamemodify(file, ':t')
-		local dirname = vim.fn.fnamemodify(file, ':~:.:h')
+		local dirname = vim.fn.fnamemodify(file, ':~:h')
 		dirname = M.sep_unify(dirname, '/', nil, true) -- unify slash
 
 		if not is_oldfile_ignored(file) then
