@@ -1022,12 +1022,12 @@ local function get_oldfiles()
 
 		if not is_oldfile_ignored(file) then
 			table.insert(items, {
-				text = filename .. ' ' .. dirname,
-				file = file,
-				pos = {1,1},
+				text     = filename .. ' ' .. dirname,
+				file     = file,
+				pos      = {1,1},
 				filename = filename, -- manual
-				dirname = dirname, -- manual
-				score = len_oldfiles - i,
+				dirname  = dirname, -- manual
+				score    = len_oldfiles - i, -- remain order of vim.v.oldfiles
 			})
 		end
 	end
