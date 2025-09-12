@@ -988,6 +988,7 @@ end
 local oldfile_ignored = {
 	'^oil://',
 	'doc/',
+	'health://',
 }
 
 ---@param path string filepath from oldfiles
