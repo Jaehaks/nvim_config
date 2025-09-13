@@ -291,7 +291,19 @@ return {
 	'Jaehaks/md-utility.nvim',
 	ft = {'markdown'},
 	opts = {
-
+		file_picker = {
+			ignore = {
+				'.git/',
+				'node_modules/',
+				'.obsidian/',
+				'.marksman.toml',
+			}
+		},
+		paste = {
+			image_path = function (ctx)
+				return ctx.cur_dir .. vim.fn.expand('%:t:r')
+			end
+		}
 	}
 }
 }

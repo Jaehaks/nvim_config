@@ -452,11 +452,14 @@ vim.lsp.config('marksman', {
 		local utils = require('jaehak.core.utils')
 		vim.keymap.set({'n'}, 'gf', utils.FollowLink, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
 		vim.keymap.set({'n'}, '<leader>mh', require('snacks').picker.lsp_symbols, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
-		vim.keymap.set({'n', 'v'}, 'P', utils.ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
+		-- vim.keymap.set({'n', 'v'}, 'P', utils.ClipboardPaste, {buffer = 0, noremap = true, desc = 'Enhanced ClipboardPaste'})
 		vim.keymap.set('n', '<leader>ml', utils.Show_Linklist, {buffer = true, desc = 'show linklist'})
 		vim.keymap.set({'n', 'i'}, '<M-e>', function()
 			require('md-utility').file_picker('markdown')
 		end, {buffer = true, desc = 'show linklist'})
+		vim.keymap.set({'n', 'v'}, 'P', function()
+			require('md-utility').clipboard_paste('markdown')
+		end, {buffer = true, noremap = true, desc = 'Clipbaord paste'})
 		-- gd : use lspsaga's peek_definition()
 		-- ga : code action to make toc
 		-- K : use lspsaga's hover
