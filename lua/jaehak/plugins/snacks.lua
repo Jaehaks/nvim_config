@@ -57,9 +57,9 @@ return {
 		words        = {enabled = false},
 	},
 	keys = {
-		{ '<leader>fb', function () Snacks.picker.buffers({
-			sort_lastused = false, -- sort by last used
-		}) end, desc = 'Show buffer list', mode = {'n'}},
+		-- { '<leader>fb', function () Snacks.picker.buffers({
+		-- 	sort_lastused = false, -- sort by last used
+		-- }) end, desc = 'Show buffer list', mode = {'n'}},
 
 		{ '<leader>fc', function () Snacks.picker.command_history({
 		}) end, desc = 'Show command history', mode = {'n'}},
