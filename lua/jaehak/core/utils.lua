@@ -994,6 +994,11 @@ local oldfile_ignored = {
 ---@param path string filepath from oldfiles
 ---@return boolean true if ignored
 local function is_oldfile_ignored(path)
+	-- check this file is readable
+	if vim.fn.filereadable(path) == 0 then
+		return true
+	end
+	-- check ignore pattern
 	for _, pattern in ipairs(oldfile_ignored) do
 		if string.match(path, pattern) then
 			return true
@@ -1017,6 +1022,7 @@ local function get_oldfiles()
 
 	local items = {}
 	for i, file in ipairs(oldfiles) do
+		file = M.sep_unify(file, '/')
 		local filename = vim.fn.fnamemodify(file, ':t')
 		local dirname = vim.fn.fnamemodify(file, ':~:h')
 		dirname = M.sep_unify(dirname, '/', nil, true) -- unify slash
