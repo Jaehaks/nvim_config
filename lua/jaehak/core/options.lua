@@ -161,7 +161,7 @@ opt.sessionoptions = "buffers,curdir,folds,tabpages,winsize" -- get rid of 'blan
 -- f : marks
 -- h : disable effect of hlsearch result
 -- s10 : contents over 10kB are skipped
-opt.shada = "'100,s10,h,:10"
+opt.shada = "'300,s10,h,:10"
 
 ------------- case sensitive ----------------
 opt.ignorecase = true -- ignore case when searching
