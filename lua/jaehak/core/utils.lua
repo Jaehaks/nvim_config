@@ -187,6 +187,30 @@ local GetRoot = function (bufnr)
 end
 M.GetRoot = GetRoot
 
+-- check buffer id
+---@param bufnr number buffer id
+---@return string? filename of bufnr
+local function is_valid(bufnr)
+	local filepath = vim.api.nvim_buf_get_name(bufnr)
+	local buflisted = vim.fn.buflisted(bufnr) == 1
+	if buflisted and (filepath ~= '') then
+		return filepath
+	end
+	return nil
+end
+
+-- return listed buffer list
+---@return number[]
+local function get_valid_buflist()
+	local valid_buflist = {}
+	local buflist = vim.api.nvim_list_bufs()
+	for _, bufid in ipairs(buflist) do
+		if is_valid(bufid) then
+			table.insert(valid_buflist, bufid)
+		end
+	end
+	return valid_buflist
+end
 
 -- ####################################################
 -- * System : Check process id from process name
@@ -990,6 +1014,7 @@ local oldfile_ignored = {
 	'doc/',
 	'health://',
 }
+local listed_buffer_hash = {}
 
 ---@param path string filepath from oldfiles
 ---@return boolean true if ignored
@@ -1003,6 +1028,10 @@ local function is_oldfile_ignored(path)
 		if string.match(path, pattern) then
 			return true
 		end
+	end
+	-- check this buffer is listed
+	if listed_buffer_hash[path] then
+		return true
 	end
 	return false
 end
@@ -1019,6 +1048,15 @@ end
 local function get_oldfiles()
 	local oldfiles = vim.v.oldfiles
 	local len_oldfiles = #oldfiles
+
+	-- add hash to buffer
+	listed_buffer_hash = {}
+	local valid_buflist = get_valid_buflist()
+	for _, bufnr in ipairs(valid_buflist) do
+		local filepath = vim.api.nvim_buf_get_name(bufnr)
+		filepath = M.sep_unify(filepath, '/')
+		listed_buffer_hash[filepath] = true
+	end
 
 	local items = {}
 	for i, file in ipairs(oldfiles) do
