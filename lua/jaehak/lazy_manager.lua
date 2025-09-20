@@ -32,6 +32,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.lsp.comment'        , enabled = true},
 		{import = 'jaehak.plugins.lsp.formatter'      , enabled = true},
 		{import = 'jaehak.plugins.lsp.vim-easy-align' , enabled = true},
+		{import = 'jaehak.plugins.lsp.lazydev' 	      , enabled = true},
 		{import = 'jaehak.plugins.colorcode'          , enabled = true},
 		{import = 'jaehak.plugins.diffview'           , enabled = true},
 		{import = 'jaehak.plugins.fidget'             , enabled = true},
@@ -48,6 +49,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.spelunk'            , enabled = false}, -- false
 		{import = 'jaehak.plugins.split'              , enabled = true},
 		{import = 'jaehak.plugins.staline'            , enabled = true},
+		{import = 'jaehak.plugins.session'            , enabled = true},
 		{import = 'jaehak.plugins.substitute'         , enabled = true},
 		{import = 'jaehak.plugins.todo-comments'      , enabled = true},
 		{import = 'jaehak.plugins.translate'          , enabled = true},
@@ -70,7 +72,6 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.lsp.trouble'        , enabled = true},
 		{import = 'jaehak.plugins.lsp.fastaction'     , enabled = true},
 		{import = 'jaehak.plugins.lsp.uv'             , enabled = true},
-		{import = 'jaehak.plugins.lsp.import'             , enabled = true},
 		-- {import = 'jaehak.plugins'},
 		-- {import = 'jaehak.plugins.lsp'}
 	}, {
