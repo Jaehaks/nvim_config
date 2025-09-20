@@ -12,6 +12,10 @@ local M = {}
 ---@param endslash boolean? add slash end of path or not
 ---@return string
 M.sep_unify = function(path, sep_to, sep_from, endslash)
+	local drive = path:match('^([a-zA-Z]):[\\/]')
+	if drive then
+		path = drive:upper() .. path:sub(2)
+	end
 	sep_to = sep_to or (vim.g.has_win32 and '\\' or '/')
 	sep_from = sep_from or ((sep_to == '/') and '\\' or '/')
 	local endchar = endslash and sep_to or ''
@@ -1015,6 +1019,7 @@ local oldfile_ignored = {
 	'health://',
 }
 local listed_buffer_hash = {}
+local duplicated_buffer_hash = {}
 
 ---@param path string filepath from oldfiles
 ---@return boolean true if ignored
@@ -1030,7 +1035,8 @@ local function is_oldfile_ignored(path)
 		end
 	end
 	-- check this buffer is listed
-	if listed_buffer_hash[path] then
+	-- check this buffer is duplicated (sometimes oldfiles output duplicated list)
+	if listed_buffer_hash[path] or duplicated_buffer_hash[path] then
 		return true
 	end
 	return false
@@ -1051,6 +1057,7 @@ local function get_oldfiles()
 
 	-- add hash to buffer
 	listed_buffer_hash = {}
+	duplicated_buffer_hash = {}
 	local valid_buflist = get_valid_buflist()
 	for _, bufnr in ipairs(valid_buflist) do
 		local filepath = vim.api.nvim_buf_get_name(bufnr)
@@ -1074,6 +1081,7 @@ local function get_oldfiles()
 				diralias = dirname, -- manual
 				score    = len_oldfiles - i, -- remain order of vim.v.oldfiles
 			})
+			duplicated_buffer_hash[file] = true
 		end
 	end
 	return items
