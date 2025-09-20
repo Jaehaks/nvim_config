@@ -5,7 +5,7 @@ return {
 	event = 'BufReadPre',
 	init = function ()
 		vim.opt.laststatus = 2
-		vim.opt.showtabline = 2
+		vim.opt.showtabline = 0
 		vim.opt.termguicolors = true
 	end,
 	opts = function ()
@@ -79,6 +79,7 @@ return {
 {
 	-- bufferline
 	'willothy/nvim-cokeline',
+	enabled = false,
 	event = 'BufReadPre',
 	keys = {
 		{'<leader>bp', function () require('cokeline.mappings').pick('focus') end		, desc = '[Cokeline] pick a buffer'},
