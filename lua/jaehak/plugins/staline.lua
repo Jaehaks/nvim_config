@@ -13,7 +13,7 @@ return {
 		return {
 			defaults = {
 				line_column = '[%l/%L]:%c', -- line/total : column
-				mod_symbol = '',
+				mod_symbol = '[+]',
 				lsp_client_symbol = '',
 				true_colors = true, -- show lsp true color
 			},
@@ -43,12 +43,25 @@ return {
 				left = {'- ', '-mode', 'left_sep_double',
 				{'StalineFileSize','file_size'},
 				{'StalineBranch','branch'} },
-				mid = {{'Staline', 'file_name'},
-				'lsp'},
-				right = {function() return  vim.bo[0].fileencoding .. ' ' end , '',
-				'cool_symbol', ' ',
-				function() return util.get_file_icon(vim.fn.expand('%:t'), vim.fn.expand('%:e')) .. ' ' .. vim.bo[0].filetype end,
-				'right_sep_double', '-line_column'}
+				mid = {
+					-- function() return vim.o.modified and '[+]' or '' end,
+					{'StalineYellow', 'f_modified'},
+					' ',
+					{'Staline', 'f_icon'},
+					' ',
+					{'Staline', 'f_name'},
+					' ',
+					'lsp'
+				},
+				right = {
+					function() return vim.bo[0].fileencoding .. ' ' end ,
+					'',
+					'cool_symbol',
+					' ',
+					function() return util.get_file_icon(vim.fn.expand('%:t'), vim.fn.expand('%:e')) .. ' ' .. vim.bo[0].filetype end,
+					'right_sep_double',
+					'-line_column'
+				}
 			},
 			special_table = nil,
 		}
@@ -73,6 +86,7 @@ return {
 
 		vim.api.nvim_set_hl(0, "StalineBranch"  	 , { fg = '#FF00FF'})
 		vim.api.nvim_set_hl(0, "StalineFileSize"  	 , { fg = '#FFD800'})
+		vim.api.nvim_set_hl(0, "StalineYellow"  	 , { fg = '#FFFF00'})
 
 	end
 },
