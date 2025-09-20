@@ -5,17 +5,23 @@ return {
 	-- 'j-morano/buffer_manager.nvim',
 	-- branch = 'main',
 	'Jaehaks/bufman.nvim',
-	enabled = true,
-	opts = {
+	keys = {
+		{ '<leader>fb', function () require('bufman').toggle_shortcut() end , {noremap = true, desc = 'open buffer window'} },
+		{ '<M-m>', function() require('bufman').bnext() end, {noremap = true, desc = 'go to next buffer'} },
+		{ '<M-n>', function() require('bufman').bprev() end, {noremap = true, desc = 'go to previous buffer'} },
 
 	},
-	config = function (_, opts)
-		local bm = require('bufman')
-		bm.setup(opts)
-		vim.keymap.set('n', '<leader>fb', bm.toggle_shortcut, {noremap = true, desc = 'open buffer window'})
-		vim.keymap.set('n', '<M-m>', bm.bnext, {noremap = true, desc = 'go to next buffer'})
-		vim.keymap.set('n', '<M-n>', bm.bprev, {noremap = true, desc = 'go to previous buffer'})
-	end
+	enabled = true,
+	opts = {
+		formatter = {'shortcut', 'indicator', 'icon', 'filename', 'mindir'},
+		keys = {
+			toggle_edit = 'e',
+			reorder_upper = 'J',
+			reorder_lower = 'K',
+			update_and_close = 'q',
+			close = '<Esc>',
+		},
+	},
 },
 }
 -- EL-MASTOR/bufferlist.nvim : It has delay whenever I open listed buffer, Why? I have no idea
