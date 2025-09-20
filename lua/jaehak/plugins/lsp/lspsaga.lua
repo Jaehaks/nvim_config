@@ -59,32 +59,6 @@ return {
 	},
 },
 {
-	-- show signature help when enter functions
-	'ray-x/lsp_signature.nvim',
-	enabled = false, -- it will be replaced with blink.cmp's feature
-	event = 'InsertEnter',
-	keys = {
-		{'<C-s>', function() require('lsp_signature').toggle_float_win() end, silent = true, noremap = true, desc = 'LSP - toggle signature help' }
-	},
-	opts = {
-		doc_lines = 100,           -- line length to fetch document
-		max_height = 12,           -- line length to show floating window
-		hint_enable     = false,   -- hint_inline option does not work
-		toggle_key      = '<C-s>', -- turn off signature help temporary in insert mode
-		move_cursor_key = '<C-w>', -- go to signature help window in insert mode (in normal mode, use <C-w>w)
-
-		bind = true,
-		floating_window_off_x = -100,
-		floating_window_off_y = 100,
-	},
-	config = function (_, opts)
-		local lsp_sig = require('lsp_signature')
-		lsp_sig.setup(opts )
-		lsp_sig.on_attach(opts) -- it is deprecated, but it need to lsp_signature automatically, i don't know why
-
-	end
-},
-{
 	-- show code outline
 	'hedyhli/outline.nvim',
 	keys = {
