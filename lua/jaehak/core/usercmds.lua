@@ -21,6 +21,43 @@ vim.api.nvim_create_user_command("LspInfo", function (_)
 end, {desc = 'LspInfo'})
 
 
+-- check lsp are installed ([alias to install] = 'real server name')
+local ensured_mason_installed = {
+	['basedpyright']           = 'basedpyright-langserver',
+	['latexindent']            = 'latexindent',
+	['lua-language-server']    = 'lua-language-server',
+	['matlab-language-server'] = 'matlab-language-server',
+	['pyrefly']                = 'pyrefly',
+	['ruff']                   = 'ruff',
+	['stylua']                 = 'stylua',
+	['texlab']                 = 'texlab',
+	['vim-language-server']    = 'vim-language-server',
+	['clangd']                 = 'clangd',
+	['json-lsp']               = 'vscode-json-language-server',
+	['marksman']         	   = 'marksman',
+}
+
+vim.api.nvim_create_user_command("MasonCheck", function (_)
+	local ok, _ = pcall(require, 'mason')
+	if not ok then
+		vim.notify('mason is uninstalled', vim.log.levels.WARN)
+		return
+	end
+
+	local mason_enabled = false
+	for alias, server in pairs(ensured_mason_installed) do
+		-- check executable and install
+		if vim.fn.executable(server) == 0 then
+			if not mason_enabled then
+				vim.cmd('Mason')
+				mason_enabled = true
+			end
+			vim.cmd(string.format('MasonInstall %s', alias))
+		end
+	end
+	vim.print('All Mason server are installed')
+end, {desc = 'Check lsp/linter server using Mason'})
+
 ---------- Editing ------------
 -- toggle tab mode (vim.o.shiftwidth, noexpandtab) <-> (shiftwidth = 2, expandtab) for github writing
 local function ToggleIndent(opts, mode)

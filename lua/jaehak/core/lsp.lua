@@ -8,45 +8,45 @@ local pid = {
 	pyrefly = {}
 }
 
--- check lsp are installed ([alias to install] = 'real server name')
-local ensured_mason_installed = {
-	['basedpyright']           = 'basedpyright-langserver',
-	['latexindent']            = 'latexindent',
-	['lua-language-server']    = 'lua-language-server',
-	['matlab-language-server'] = 'matlab-language-server',
-	['pyrefly']                = 'pyrefly',
-	['ruff']                   = 'ruff',
-	['stylua']                 = 'stylua',
-	['texlab']                 = 'texlab',
-	['vim-language-server']    = 'vim-language-server',
-	['clangd']                 = 'clangd',
-	['json-lsp']               = 'vscode-json-language-server',
-	['marksman']         	   = 'marksman',
-}
-
-vim.api.nvim_create_autocmd('User', {
-	pattern = 'VeryLazy',
-	once = true,
-	callback = function ()
-		local ok, _ = pcall(require, 'mason')
-		if not ok then
-			vim.notify('mason is uninstalled', vim.log.levels.WARN)
-			return
-		end
-
-		local mason_enabled = false
-		for alias, server in pairs(ensured_mason_installed) do
-			-- check executable and install
-			if vim.fn.executable(server) == 0 then
-				if not mason_enabled then
-					vim.cmd('Mason')
-					mason_enabled = true
-				end
-				vim.cmd(string.format('MasonInstall %s', alias))
-			end
-		end
-	end
-})
+-- -- check lsp are installed ([alias to install] = 'real server name')
+-- local ensured_mason_installed = {
+-- 	['basedpyright']           = 'basedpyright-langserver',
+-- 	['latexindent']            = 'latexindent',
+-- 	['lua-language-server']    = 'lua-language-server',
+-- 	['matlab-language-server'] = 'matlab-language-server',
+-- 	['pyrefly']                = 'pyrefly',
+-- 	['ruff']                   = 'ruff',
+-- 	['stylua']                 = 'stylua',
+-- 	['texlab']                 = 'texlab',
+-- 	['vim-language-server']    = 'vim-language-server',
+-- 	['clangd']                 = 'clangd',
+-- 	['json-lsp']               = 'vscode-json-language-server',
+-- 	['marksman']         	   = 'marksman',
+-- }
+--
+-- vim.api.nvim_create_autocmd('User', {
+-- 	pattern = 'VeryLazy',
+-- 	once = true,
+-- 	callback = function ()
+-- 		local ok, _ = pcall(require, 'mason')
+-- 		if not ok then
+-- 			vim.notify('mason is uninstalled', vim.log.levels.WARN)
+-- 			return
+-- 		end
+--
+-- 		local mason_enabled = false
+-- 		for alias, server in pairs(ensured_mason_installed) do
+-- 			-- check executable and install
+-- 			if vim.fn.executable(server) == 0 then
+-- 				if not mason_enabled then
+-- 					vim.cmd('Mason')
+-- 					mason_enabled = true
+-- 				end
+-- 				vim.cmd(string.format('MasonInstall %s', alias))
+-- 			end
+-- 		end
+-- 	end
+-- })
 
 
 -- #############################################################
