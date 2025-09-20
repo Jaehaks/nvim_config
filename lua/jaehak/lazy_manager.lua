@@ -49,7 +49,6 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.split'              , enabled = true},
 		{import = 'jaehak.plugins.staline'            , enabled = true},
 		{import = 'jaehak.plugins.substitute'         , enabled = true},
-		{import = 'jaehak.plugins.telescope'          , enabled = false}, -- false
 		{import = 'jaehak.plugins.todo-comments'      , enabled = true},
 		{import = 'jaehak.plugins.translate'          , enabled = true},
 		{import = 'jaehak.plugins.local-highlight'    , enabled = true},
