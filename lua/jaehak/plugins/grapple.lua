@@ -1,23 +1,5 @@
 return {
 {
-	-- list up important files (add list to nvim-data/grapple)
-	-- Caution!! : file path must not have white space. But it can accept with non-English directory
-	'cbochs/grapple.nvim',
-	keys = {
-		{'<leader>pa', function() require('grapple').toggle() end, desc = 'add/delete this file to grapple list'},
-		{'<leader>pf', function() require('grapple').toggle_tags() end, desc = 'open grapple file list'},
-	},
-	ft = {'dashboard'},
-	opts = {
-		scope = 'global',
-		prune = nil, -- unset prune timer?
-		style = 'basename',
-		-- telescope extension : it does not support 'basename' style. (grapple use grapple's telescope setting)
-	},
-	-- grapple.toggle_tags() : show files list that are added
-	-- grapple.toggle_loaded() : show directories which include buffer that has tag and is "loaded"
-},
-{
 	'Jaehaks/last-session.nvim',
 	lazy = false,
 	keys = {

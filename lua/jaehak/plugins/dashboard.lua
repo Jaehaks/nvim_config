@@ -61,12 +61,12 @@ return {
 					key = 'n', key_hl = 'DashboardShortCut',
 					action = function () require('oil').open_float(require('jaehak.core.paths').obsidian.personal) end,
 				},
-				{
-					icon = '',
-					desc = 'Bookmark Files', desc_hl = 'String',
-					key = 'p', key_hl = 'DashboardShortCut',
-					action = function () require('grapple').toggle_tags() end,
-				},
+				-- {
+				-- 	icon = '',
+				-- 	desc = 'Bookmark Files', desc_hl = 'String',
+				-- 	key = 'p', key_hl = 'DashboardShortCut',
+				-- 	action = function () require('grapple').toggle_tags() end,
+				-- },
 				{
 					icon = '',
 					desc = 'Last Sessions', desc_hl = 'String',
