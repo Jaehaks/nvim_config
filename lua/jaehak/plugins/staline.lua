@@ -2,6 +2,9 @@ return {
 {
 	'tamton-aquib/staline.nvim',
 	-- lazy = false,
+	dependencies = {
+		'Jaehaks/bufman.nvim',
+	},
 	event = 'BufReadPre',
 	init = function ()
 		vim.opt.laststatus = 2
@@ -10,6 +13,7 @@ return {
 	end,
 	opts = function ()
 		local util = require("staline.utils")
+		local bufman = require('bufman')
 		return {
 			defaults = {
 				line_column = '[%l/%L]:%c', -- line/total : column
@@ -55,10 +59,10 @@ return {
 				},
 				right = {
 					function() return vim.bo[0].fileencoding .. ' ' end ,
-					'',
-					'cool_symbol',
 					' ',
-					function() return util.get_file_icon(vim.fn.expand('%:t'), vim.fn.expand('%:e')) .. ' ' .. vim.bo[0].filetype end,
+					function() return vim.api.nvim_get_current_buf() .. ':' .. bufman.get_bufcount() end,
+					'  ',
+					function() return vim.bo[0].filetype end,
 					'right_sep_double',
 					'-line_column'
 				}
