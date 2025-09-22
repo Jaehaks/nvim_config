@@ -25,8 +25,6 @@ return {
 -- 'brianhuster/live-preview.nvim' : it invokes some error while preview in web browser
 {
 	"OXY2DEV/markview.nvim",
-	enabled = true,
-	event = {'InsertEnter'},
 	ft = {'markdown'},
 	opts = function()
 		-- set highlights
@@ -43,6 +41,10 @@ return {
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',   {default = true, fg = '#FE86D8'}) -- default block quote color
 		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
 		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown', {link = 'markdownH1'}) -- heading highlights in insert mode
+
+		-- overwrite markdown query over nvim-treesitter's using markview.nvim
+		local markdown_query_install_dir = vim.fs.normalize(vim.fn.stdpath('data') .. '/lazy/markview.nvim')
+		vim.opt.runtimepath:prepend(markdown_query_install_dir)
 
 		return{
 			preview = {

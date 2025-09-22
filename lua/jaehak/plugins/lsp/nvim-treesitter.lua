@@ -3,7 +3,6 @@
 return {
 {
 	'nvim-treesitter/nvim-treesitter',
-	event = {'BufReadPost'},
 	ft = require('jaehak.core.paths').Filetypes.ForIlluminate,
 	dependencies = {
 		'HiPhish/rainbow-delimiters.nvim',
