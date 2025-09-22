@@ -25,6 +25,9 @@ return {
 -- 'brianhuster/live-preview.nvim' : it invokes some error while preview in web browser
 {
 	"OXY2DEV/markview.nvim",
+	dependencies = {
+		'nvim-treesitter/nvim-treesitter',
+	},
 	ft = {'markdown'},
 	opts = function()
 		-- set highlights
