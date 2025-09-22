@@ -6,11 +6,10 @@ return {
 	-- branch = 'main',
 	'Jaehaks/bufman.nvim',
 	keys = {
-		{ '<leader>fb', function () require('bufman').toggle_shortcut() end , {noremap = true, desc = 'open buffer window'} },
+		{ '<leader>fb', function () require('bufman').toggle_manager() end , {noremap = true, desc = 'open buffer window'} },
 		{ '<M-m>', function() require('bufman').bnext() end, {noremap = true, desc = 'go to next buffer'} },
 		{ '<M-n>', function() require('bufman').bprev() end, {noremap = true, desc = 'go to previous buffer'} },
 	},
-	enabled = true,
 	opts = {
 		formatter = {'shortcut', 'bufnr', 'indicator', 'icon', 'filename', 'mindir'},
 		keys = {
@@ -22,7 +21,6 @@ return {
 		},
 		sort = {
 			method = 'stack',
-			reverse = true,
 		}
 	},
 },
