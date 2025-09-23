@@ -15,12 +15,6 @@ return {
 		-- change install paths
 		ts.setup({})
 
-		-- add markview markdown query path to use this instead of one of nvim-treesitter.
-		-- to resolve hidden fenced code block marker issue.
-		-- See my answer in https://github.com/OXY2DEV/markview.nvim/issues/332
-		local markview_dir = vim.fn.fnamemodify(plugin.dir, ':h') .. '/markview.nvim'
-		vim.opt.runtimepath:prepend(markview_dir)
-
 		-- install parsers asynchronously
 		local parsers = {
 			'lua', 'luadoc', 'luap', 'luau',
