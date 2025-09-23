@@ -25,11 +25,95 @@ return {
 -- 'brianhuster/live-preview.nvim' : it invokes some error while preview in web browser
 {
 	"OXY2DEV/markview.nvim",
-	dependencies = {
-		'nvim-treesitter/nvim-treesitter',
-	},
 	ft = {'markdown'},
-	opts = function()
+	opts = {
+		preview = {
+			hybrid_modes         = {'n'}, -- disable conceal specific region under cursor
+			linewise_hybrid_mode = true,  -- apply hybrid mode with line-wise not block-wise
+		},
+		html = {
+			container_elements = {
+				["^u$"] = { -- underline
+					on_node = { hl_group = "@markup.underline" },
+				},
+			}
+		},
+		markdown = {
+			headings = {
+				heading_1 ={
+					style = "label", sign = "", sign_hl = "", align = "center",
+					padding_left = "╾────────────────╴ ", padding_right = " ╶────────────────╼",
+					icon = "󰼏 ", hl = "MarkviewHeading1Sign",
+				},
+				heading_2 = { style = "icon", sign = "", sign_hl = "", icon = "󰎨 ", hl = "MarkviewHeading2",},
+				heading_3 = { style = "icon", sign = "", sign_hl = "", icon = "󰼑 ", hl = "MarkviewHeading3",},
+				heading_4 = { style = "icon", sign = "", sign_hl = "", icon = "󰎲 ", hl = "MarkviewHeading4",},
+				heading_5 = { style = "icon", sign = "", sign_hl = "", icon = "󰼓 ", hl = "MarkviewHeading5",},
+				heading_6 = { style = "icon", sign = "", sign_hl = "", icon = "󰎴 ", hl = "MarkviewHeading6",},
+			},
+			code_blocks = {
+				style = 'block', -- only highlight behind code region, not all
+				label_direction = 'left',
+				pad_amount = 0,  -- turn off left indentation
+				sign = false,    -- turn off icon in signcolumn
+			},
+			horizontal_rules = { -- horizontal line pattern '---'
+				parts = {
+					{
+						type = "repeating",
+						repeat_amount = function ()
+							return vim.o.columns; -- repeat to whole column
+						end,
+						text = "━",
+						hl = "MarkviewGradient9"
+					}
+				}
+			},
+			list_items = {
+				marker_minus       = { add_padding = false, text = '' }, -- When using '-'
+				marker_plus        = { add_padding = false, },            -- When using '+'
+				marker_star        = { add_padding = false, },            -- When using '*'
+				marker_dot         = { add_padding = false, },            -- When using '.'
+				marker_parenthesis = { add_padding = false, },            -- When using '1), 2)'
+			},
+			block_quotes = {
+				["ANSWER"] = {
+					preview = " Answer",
+					hl = "MarkviewBlockQuoteAnswer",
+					title = true,
+					icon = "",
+					border = "▋"
+				},
+			}
+		},
+		markdown_inline = {
+			highlights = { -- pattern "==word=="
+				padding_left = "",
+				padding_right = "",
+				default = { hl = "MarkviewHighlights" }
+			},
+			checkboxes = {
+				checked   = { text = "", hl = "MarkviewCheckboxChecked", scope_hl = false },
+				unchecked = { text = "", hl = "MarkviewCheckboxUnchecked", scope_hl = false},
+				["-"]     = { text = "󱋭", hl = "MarkviewCheckboxCancelled", scope_hl =  "MarkviewCheckboxCancelled"},
+			},
+			emoji_shorthands = { enable = false, },
+			images = {
+				["%.png$"] = { icon = "󰥶 "},
+				["%.jpg$"] = { icon = "󰥶 "},
+				["%.gif$"] = { icon = " "},
+			},
+			internal_links = {}, -- pattern "[[#title]]", internal link in current file
+			uri_autolinks  = {}, -- pattern "<https://example.com>", direct link without link name
+		},
+		latex = { enable = false, }, -- $ $ for inline rendering / $$ $$ for block rendering
+		typst = { enable = false, },
+		yaml  = { enable = false, }
+	},
+	config = function (plugin, opts)
+		-- disable callout completion of markview for blink.cmp
+		vim.g.markview_blink_loaded = true
+
 		-- set highlights
 		vim.api.nvim_set_hl(0, "@markup.italic",             {fg = '#3DC5DA', italic = true})
 		vim.api.nvim_set_hl(0, "@markup.strong",             {fg = '#E39AA6', bold = true})
@@ -45,97 +129,7 @@ return {
 		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
 		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown', {link = 'markdownH1'}) -- heading highlights in insert mode
 
-		-- overwrite markdown query over nvim-treesitter's using markview.nvim
-		local markdown_query_install_dir = vim.fs.normalize(vim.fn.stdpath('data') .. '/lazy/markview.nvim')
-		vim.opt.runtimepath:prepend(markdown_query_install_dir)
-
-		return{
-			preview = {
-				hybrid_modes         = {'n'}, -- disable conceal specific region under cursor
-				linewise_hybrid_mode = true,  -- apply hybrid mode with line-wise not block-wise
-			},
-			html = {
-				container_elements = {
-					["^u$"] = { -- underline
-						on_node = { hl_group = "@markup.underline" },
-					},
-				}
-			},
-			markdown = {
-				headings = {
-					heading_1 ={
-						style = "label", sign = "", sign_hl = "", align = "center",
-						padding_left = "╾────────────────╴ ", padding_right = " ╶────────────────╼",
-						icon = "󰼏 ", hl = "MarkviewHeading1Sign",
-					},
-					heading_2 = { style = "icon", sign = "", sign_hl = "", icon = "󰎨 ", hl = "MarkviewHeading2",},
-					heading_3 = { style = "icon", sign = "", sign_hl = "", icon = "󰼑 ", hl = "MarkviewHeading3",},
-					heading_4 = { style = "icon", sign = "", sign_hl = "", icon = "󰎲 ", hl = "MarkviewHeading4",},
-					heading_5 = { style = "icon", sign = "", sign_hl = "", icon = "󰼓 ", hl = "MarkviewHeading5",},
-					heading_6 = { style = "icon", sign = "", sign_hl = "", icon = "󰎴 ", hl = "MarkviewHeading6",},
-				},
-				code_blocks = {
-					style = 'block', -- only highlight behind code region, not all
-					label_direction = 'left',
-					pad_amount = 0,  -- turn off left indentation
-					sign = false,    -- turn off icon in signcolumn
-				},
-				horizontal_rules = { -- horizontal line pattern '---'
-					parts = {
-						{
-							type = "repeating",
-							repeat_amount = function ()
-								return vim.o.columns; -- repeat to whole column
-							end,
-							text = "━",
-							hl = "MarkviewGradient9"
-						}
-					}
-				},
-				list_items = {
-					marker_minus       = { add_padding = false, text = '' }, -- When using '-'
-					marker_plus        = { add_padding = false, },            -- When using '+'
-					marker_star        = { add_padding = false, },            -- When using '*'
-					marker_dot         = { add_padding = false, },            -- When using '.'
-					marker_parenthesis = { add_padding = false, },            -- When using '1), 2)'
-				},
-				block_quotes = {
-					["ANSWER"] = {
-						preview = " Answer",
-						hl = "MarkviewBlockQuoteAnswer",
-						title = true,
-						icon = "",
-						border = "▋"
-					},
-				}
-			},
-			markdown_inline = {
-				highlights = { -- pattern "==word=="
-					padding_left = "",
-					padding_right = "",
-					default = { hl = "MarkviewHighlights" }
-				},
-				checkboxes = {
-					checked   = { text = "", hl = "MarkviewCheckboxChecked", scope_hl = false },
-					unchecked = { text = "", hl = "MarkviewCheckboxUnchecked", scope_hl = false},
-					["-"]     = { text = "󱋭", hl = "MarkviewCheckboxCancelled", scope_hl =  "MarkviewCheckboxCancelled"},
-				},
-				emoji_shorthands = { enable = false, },
-				images = {
-					["%.png$"] = { icon = "󰥶 "},
-					["%.jpg$"] = { icon = "󰥶 "},
-					["%.gif$"] = { icon = " "},
-				},
-				internal_links = {}, -- pattern "[[#title]]", internal link in current file
-				uri_autolinks  = {}, -- pattern "<https://example.com>", direct link without link name
-			},
-			latex = { enable = false, }, -- $ $ for inline rendering / $$ $$ for block rendering
-			typst = { enable = false, },
-			yaml  = { enable = false, }
-		}
-	end,
-	config = function (_, opts)
-		vim.g.markview_blink_loaded = true -- disable callout completion of markview for blink.cmp
+		-- setup
 		require('markview').setup(opts)
 	end
 },
