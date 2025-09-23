@@ -1141,7 +1141,9 @@ M.oldfile_picker = function ()
 		confirm = function (picker, item)
 			picker:close()
 			if item then
-				vim.cmd('edit ' .. item.file )
+				local bufnr = vim.fn.bufadd(item.file)
+				vim.bo[bufnr].buflisted = true
+				vim.cmd.buffer(bufnr)
 			end
 		end,
 		layout = {
