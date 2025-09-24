@@ -5,7 +5,10 @@ local picker_config = {
 	},
 	ui_select = true,
 	layout = {
-		preset = 'vertical'
+		preset = 'vertical',
+		layout = {
+			width = 0.9,
+		}
 	},
 	win = {
 		input = { -- keys in normal mode
@@ -71,12 +74,6 @@ return {
 			sort = {
 				fields = {'severity', 'file', 'lnum'} -- sort and show high severity at first
 			},
-			layout = {
-				preset = 'vertical',
-				layout = {
-					width = 0.9,
-				}
-			}
 		}) end, desc = 'Show diagnostics of current buffer', mode = {'n'}},
 
 		{ '<leader>fD', function () Snacks.picker.diagnostics({
@@ -84,13 +81,15 @@ return {
 			filter = {
 				cwd = vim.fs.root(0, {'.git'}) or true -- show all opened buffer diagnostics in project
 			},
-			layout = {
-				preset = 'vertical',
-				layout = {
-					width = 0.9,
-				}
-			}
 		}) end, desc = 'Show diagnostics all of cwd', mode = {'n'}},
+
+		{ '<leader>fr', function () Snacks.picker.lsp_references({
+			auto_confirm = false, -- don't go automatically if the item is unique
+			include_current = true, -- include current file to find
+		}) end, desc = 'Show references in pwd', mode = {'n'}},
+
+		{ '<leader>fs', function () Snacks.picker.lsp_symbols({
+		}) end, desc = 'Show lsp symbols(outline)', mode = {'n'}},
 
 		{ '<leader>ff', function ()
 			if Snacks.git.get_root() then -- if cwd is git directory
