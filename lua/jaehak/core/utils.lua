@@ -111,16 +111,6 @@ local IsAbsolutePath = function (url)
 end
 
 
---- Decode unicode from non-english word in url except white space
---- @param url string web URL form with encoding character from non-english word
---- @return string decoded_url The decoded URL from UTF-8 to korean
---- @return integer? hex The number of replacements made (optional).
-local url_decode = function(url)
-    return url:gsub("%%(%x%x)", function(hex)
-		return hex:upper() == '20' and '%20' or string.char(tonumber(hex, 16))
-    end)
-end
-
 --- Get image_flag / text / link from "![text](link)"
 --- @param url string link pattern
 --- @return table? Components of link url
@@ -329,51 +319,6 @@ M.FollowLink = FollowLink
 
 
 
-
--- ####################################################
--- * Markdown : ClipboardPaste
--- ####################################################
-
--- paste with different form from system clipboard
-local ClipboardPaste = function ()
-
-	-- check clipboard content
-	-- '+' register has non empty contents when the system clipboard saves some character not image
-	local clipboard_content = vim.fn.getreg('+')
-	clipboard_content = url_decode(clipboard_content)
-
-	-- Paste depends on format
-	local markdown_link
-	if IsUrl(clipboard_content) then -- if the link has web URL form, paste with link form
-
-		-- if visual mode, get the visualized word and make it as link name
-		local link_name = ''
-		local mode = vim.fn.mode()
-		if mode == 'v' or mode == 'V' then -- if current mode is visual mode ('v') or line mode ('V')
-
-			local start_row, start_col, end_row, end_col = GetIdxVisual()
-			local txt       = vim.api.nvim_buf_get_text(0, start_row-1, start_col-1, end_row-1, end_col, {})
-			link_name       = table.concat(txt, '\n')
-			markdown_link   = string.format('[%s](%s)',  link_name, clipboard_content)
-			vim.api.nvim_buf_set_text(0, start_row-1, start_col-1, end_row-1, end_col, {markdown_link})
-			vim.api.nvim_input('<Esc>') -- go out to normal mode
-
-		else -- if normal mode, make link with empty link name
-			markdown_link = string.format('[](%s)', clipboard_content)
-			vim.api.nvim_put({markdown_link}, 'c', true, true)
-
-		end
-
-	elseif clipboard_content ~= '' then -- if the contents characters, paste from '+' register
-		local termcodes = vim.api.nvim_replace_termcodes('"+p', true, false, true)
-		vim.api.nvim_feedkeys(termcodes,'n', true)
-
-	else -- if it is image, paste Image with obsidian function
-		vim.api.nvim_command('Obsidian paste_img')
-	end
-end
-
-M.ClipboardPaste = ClipboardPaste
 
 
 
@@ -809,51 +754,6 @@ local Show_Linklist = function ()
 	})
 end
 M.Show_Linklist = Show_Linklist
-
-
--- ####################################################
--- * Markdown : callout snippet
--- ####################################################
-
-local CalloutSnippet = function ()
-	local callouts = {
-		'NOTE',
-		'ABSTRACT',
-		'SUMMARY',
-		'CHECK',
-		'IMPORTANT',
-		'EXAMPLE',
-		'QUESTION',
-		'ANSWER',
-		'FAQ',
-		'HELP',
-		'QUOTE',
-		'CITE',
-		'TIP',
-		'HINT',
-		'INFO',
-		'TODO',
-		'CAUTION',
-		'WARNING',
-		'DANGER',
-		'MISSING',
-	}
-
-	vim.ui.select(callouts, {
-		prompt = 'Select callouts:',
-		format_item = function (item)
-			return item
-		end
-	}, function (choice)
-		if choice then
-			local line1 = "> [!" .. choice .. "]"
-			local line2 = "> "
-			vim.api.nvim_put({line1, line2}, 'c', true, true)
-			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('a', true, false, true), 'n', false)
-		end
-	end)
-end
-M.CalloutSnippet = CalloutSnippet
 
 
 -- ####################################################
