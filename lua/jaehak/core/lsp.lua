@@ -7,10 +7,6 @@ vim.env.RUFF_CACHE_DIR = require('jaehak.core.paths').lsp.ruff.cache_path --  se
 local pid = {
 	pyrefly = {}
 }
--- add markview markdown query path to use this instead of one of nvim-treesitter.
--- to resolve hidden fenced code block marker issue.
--- See my answer in https://github.com/OXY2DEV/markview.nvim/issues/332
-vim.opt.runtimepath:prepend(vim.fn.stdpath('data') .. '/lazy/markview.nvim')
 
 -- #############################################################
 -- ####### set diagnostics as numhl to distinguish with gitsign

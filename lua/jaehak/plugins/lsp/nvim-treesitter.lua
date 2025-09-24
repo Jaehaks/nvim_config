@@ -60,7 +60,12 @@ return {
 		-- 							   2) add `; extends` marks at the top of the .scm file
 
 
-
+		-- add markview markdown query path to use this instead of one of nvim-treesitter.
+		-- to resolve hidden fenced code block marker issue.
+		-- See my answer in https://github.com/OXY2DEV/markview.nvim/issues/332
+		local rtp = vim.split(vim.o.rtp, ',', {trimempty = true})
+		table.insert(rtp, 2, require('jaehak.core.paths').nvim.treesitter_queries )
+		vim.o.rtp = table.concat(rtp, ',')
 	end
 
 },
