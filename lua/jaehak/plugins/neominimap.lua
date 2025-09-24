@@ -12,7 +12,7 @@ return {
 		vim.g.neominimap = {
 			current_line_position = 'center',
 			auto_enable = false,
-			log_path = vim.fn.stdpath('data') .. '\\neominimap.log',
+			log_path = vim.fn.stdpath('data') .. '/neominimap.log',
 			exclude_filetypes = {
 				'help',
 				'dashboard',
@@ -55,7 +55,7 @@ return {
 				icon = '󰱽 ',
 			},
 			treesitter = {
-				enabled = true,
+				enabled = false,
 			},
 			mark = {
 				enabled = true,
