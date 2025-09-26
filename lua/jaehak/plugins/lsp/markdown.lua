@@ -1,4 +1,3 @@
-local utils = require('jaehak.core.utils')
 return {
 {
 	-- BUG: it doesn't work with `app = 'webview`, you must use browser
@@ -181,7 +180,7 @@ return {
 	-- it doesn't work in filetype 'NeogitCommitMessage'
 	-- 'gaoDean/autolist.nvim',
 	'mcauley-penney/autolist.nvim',
-	enabled = true,
+	enabled = false,
 	ft = {'markdown', 'text'},
 	opts = function ()
 		local list_patterns = { -- patterns which is used for autolist
@@ -192,6 +191,7 @@ return {
 		}
 
 		-- keymap set for markdown
+		local utils = require('jaehak.core.utils')
 		local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
 		vim.api.nvim_create_autocmd('FileType',{
 			group = User_markdown,
@@ -291,7 +291,7 @@ return {
 },
 {
 	'Jaehaks/md-utility.nvim',
-	ft = {'markdown'},
+	ft = {'markdown', 'text'},
 	opts = {
 		file_picker = {
 			ignore = {
@@ -306,7 +306,82 @@ return {
 				return ctx.cur_dir .. vim.fn.expand('%:t:r')
 			end
 		}
-	}
+	},
+	config = function (_, opts)
+		local md = require('md-utility')
+		local utils = require('jaehak.core.utils')
+
+		md.setup(opts)
+
+		local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
+		vim.api.nvim_create_autocmd('FileType',{
+			group = User_markdown,
+			pattern = {'markdown', 'text'},
+			callback = function ()
+				vim.keymap.set({'n'}, 'gf', utils.FollowLink, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
+				vim.keymap.set('n', '<leader>ml', utils.Show_Linklist, {buffer = true, desc = 'show linklist'})
+				vim.keymap.set({'n', 'i'}, '<M-e>', function() require('md-utility').file_picker('markdown') end, {buffer = true, desc = 'show linklist'})
+				vim.keymap.set({'n', 'v'}, 'P', function() require('md-utility').clipboard_paste('markdown') end, {buffer = true, noremap = true, desc = 'Clipbaord paste'})
+
+				-- autolist <CR>
+				vim.keymap.set({'i'}, '<CR>', 	function()
+					local autolist_cr = require('md-utility').autolist_cr(true)
+					vim.print(autolist_cr)
+					if not autolist_cr then
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), "n", false)
+					end
+				end,  {buffer = true, noremap = true, desc = '<CR> with autolist mark'})
+
+				-- without autolist <M-CR>
+				vim.keymap.set({'i'}, '<M-CR>', function()
+					local autolist_cr = require('md-utility').autolist_cr(false)
+					if not autolist_cr then
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), "n", false)
+					end
+				end, {buffer = true, noremap = true, desc = '<CR> without autolist mark but add indent'})
+
+				-- autolist o
+				vim.keymap.set({'n'}, 'o', 	function()
+					local autolist_o = require('md-utility').autolist_o(true)
+					if not autolist_o then
+						vim.api.nvim_feedkeys('o', "n", false)
+					end
+				end,  {buffer = true, noremap = true, desc = '"o" with autolist mark'})
+
+				-- autolist tab
+				vim.keymap.set({'i'}, '<TAB>', 	function()
+					local autolist_tab = require('md-utility').autolist_tab(false)
+					if not autolist_tab then
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<TAB>", true, false, true), "n", false)
+					end
+				end,  {buffer = true, noremap = true, desc = '<TAB> with autolist mark'})
+
+				-- reverse autolist tab
+				vim.keymap.set({'i'}, '<S-TAB>', function()
+					local autolist_tab = require('md-utility').autolist_tab(true)
+					if not autolist_tab then
+						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<S-TAB>", true, false, true), "n", false)
+					end
+				end,  {buffer = true, noremap = true, desc = '<S-TAB> with autolist mark'})
+
+				vim.keymap.set({'n'}, '<leader>mr', function()
+					require('md-utility').autolist_recalculate()
+				end,  {buffer = true, noremap = true, desc = 'recalculate list numbering'})
+
+				vim.keymap.set('v', '<leader>mb', function () utils.AddStrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
+				vim.keymap.set('v', '<leader>mh', function () utils.AddStrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
+				vim.keymap.set('v', '<leader>ms', function () utils.AddStrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
+				vim.keymap.set('v', '<leader>mu', function () utils.AddStrong('<u>') end, {buffer = true, desc = 'Enclose with <u>(underline)'})
+				vim.keymap.set('v', '<leader>mm', function () utils.AddStrong('<mark>') end, {buffer = true, desc = 'Enclose with <mark>(mark highlight)'})
+				vim.keymap.set('v', '<leader>m=', function () utils.AddStrong('<sup>') end, {buffer = true, desc = 'Enclose with <sup>(sup highlight)'})
+				vim.keymap.set('v', '<leader>m-', function () utils.AddStrong('<sub>') end, {buffer = true, desc = 'Enclose with <sub>(sub highlight)'})
+
+				-- Don't remap to <C-m>, it synchronize with <CR>
+			end
+		})
+
+
+	end
 }
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
