@@ -325,45 +325,30 @@ return {
 
 				-- autolist <CR>
 				vim.keymap.set({'i'}, '<CR>', 	function()
-					local autolist_cr = require('md-utility').autolist_cr(true)
-					vim.print(autolist_cr)
-					if not autolist_cr then
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), "n", false)
-					end
+					require('md-utility').autolist_cr(true)
 				end,  {buffer = true, noremap = true, desc = '<CR> with autolist mark'})
 
 				-- without autolist <M-CR>
 				vim.keymap.set({'i'}, '<M-CR>', function()
-					local autolist_cr = require('md-utility').autolist_cr(false)
-					if not autolist_cr then
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), "n", false)
-					end
+					require('md-utility').autolist_cr(false)
 				end, {buffer = true, noremap = true, desc = '<CR> without autolist mark but add indent'})
 
 				-- autolist o
 				vim.keymap.set({'n'}, 'o', 	function()
-					local autolist_o = require('md-utility').autolist_o(true)
-					if not autolist_o then
-						vim.api.nvim_feedkeys('o', "n", false)
-					end
+					require('md-utility').autolist_o(true)
 				end,  {buffer = true, noremap = true, desc = '"o" with autolist mark'})
 
 				-- autolist tab
 				vim.keymap.set({'i'}, '<TAB>', 	function()
-					local autolist_tab = require('md-utility').autolist_tab(false)
-					if not autolist_tab then
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<TAB>", true, false, true), "n", false)
-					end
+					require('md-utility').autolist_tab(false)
 				end,  {buffer = true, noremap = true, desc = '<TAB> with autolist mark'})
 
 				-- reverse autolist tab
 				vim.keymap.set({'i'}, '<S-TAB>', function()
-					local autolist_tab = require('md-utility').autolist_tab(true)
-					if not autolist_tab then
-						vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<S-TAB>", true, false, true), "n", false)
-					end
+					require('md-utility').autolist_tab(true)
 				end,  {buffer = true, noremap = true, desc = '<S-TAB> with autolist mark'})
 
+				-- recalculate list markers
 				vim.keymap.set({'n'}, '<leader>mr', function()
 					require('md-utility').autolist_recalculate()
 				end,  {buffer = true, noremap = true, desc = 'recalculate list numbering'})
