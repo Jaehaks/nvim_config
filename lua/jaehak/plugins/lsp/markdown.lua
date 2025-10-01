@@ -112,7 +112,7 @@ return {
 		typst = { enable = false, },
 		yaml  = { enable = false, }
 	},
-	config = function (plugin, opts)
+	config = function (_, opts)
 		-- disable callout completion of markview for blink.cmp
 		vim.g.markview_blink_loaded = true
 
@@ -133,6 +133,9 @@ return {
 
 		-- setup
 		require('markview').setup(opts)
+		-- after b895174 commit, recommends `lazy = false` to load this plugin. because it improve startup time under 5ms.
+		-- If you use lazy loading, use `markview.highlights`.setup() to load this.
+		require('markview.highlights').setup()
 	end
 },
 {
