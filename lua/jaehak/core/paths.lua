@@ -62,6 +62,25 @@ M.obsidian = {
 }
 
 M.Filetypes = {
+	ForTreesitter = {
+		'lua',
+		'c',
+		'matlab',
+		'python',
+		'vim',
+		'markdown',
+		'html',
+		'json',
+		'toml',
+		'diff',
+		'config',
+		'powershell',
+		'bash',
+		'zsh',
+		'sh',
+		'tex',
+		'latex',
+	},
 	ForIlluminate = { 'lua', 'matlab', 'json', 'python', 'text', 'markdown' },
 	ForCode = { 'lua', 'matlab', 'json', 'python' },
 }
