@@ -353,6 +353,11 @@ return {
 					require('md-utility').autolist_recalculate()
 				end,  {buffer = true, noremap = true, desc = 'recalculate list numbering'})
 
+				-- recalculate list markers
+				vim.keymap.set({'n', 'i'}, '<C-c>', function()
+					require('md-utility').autolist_checkbox()
+				end,  {buffer = true, noremap = true, desc = 'surround checkbox'})
+
 				vim.keymap.set('v', '<leader>mb', function () utils.AddStrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
 				vim.keymap.set('v', '<leader>mh', function () utils.AddStrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
 				vim.keymap.set('v', '<leader>ms', function () utils.AddStrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
