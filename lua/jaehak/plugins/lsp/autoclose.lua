@@ -145,24 +145,13 @@ return {
 		-- rainbow_delimiters.config
 		rainbow_delimiters_setup.setup(opts)
 
-		-- if there is not matlab query directory, make it
-		local function add_scm(ts_name)
-			local source_dir = require('jaehak.core.paths').nvim.rainbow_queries .. '\\' .. ts_name .. '\\'
-			local dest_dir = require('jaehak.core.paths').data_dir .. '\\lazy\\rainbow-delimiters.nvim\\queries\\' .. ts_name .. '\\'
-			if not vim.g.has_win32 then
-				string.gsub(source_dir, '\\', '/')
-				string.gsub(dest_dir, '\\', '/')
-			end
-			vim.uv.fs_scandir(dest_dir , function (err, _)
-				if err then
-					vim.uv.fs_mkdir(dest_dir, 777) -- make directory 'matlab'
-					vim.uv.fs_copyfile(source_dir .. 'rainbow-delimiters.scm', dest_dir .. 'rainbow-delimiters.scm')
-				end
-			end)
-		end
+		-- In  case of filetype tex, it use 'latex' treesitter,
 
-		add_scm('matlab')
-		-- In  case of filetype tex, it use `latex` treesitter,
+		-- /////////// custom query /////////////
+		-- If you want to add new custom rainbow queries, add 'nvim/after/queries/<filetype>/<any_query_name>.scm'
+		-- and add <filetype> = '<any_query_name>' to `query` field of rainbow-delimiters.
+		-- If you use 'rainbow-delimiters' as <any_query_name>, it is included in [''] = 'rainbow-delimiters'
+		-- It doesn't overwrite original query of the filetype by nvim-treesitter. it seems adding.
 	end
 },
 {
