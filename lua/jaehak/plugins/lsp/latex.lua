@@ -49,28 +49,6 @@ return {
 	end
 
 },
-{
-	'luochen1990/rainbow', -- for vimtex
-	enabled = false,
-	ft = {'tex', 'plaintex'},
-	config = function ()
-		vim.g.rainbow_active = 0
-	end
-},
-{
-	'junegunn/rainbow_parentheses.vim',  -- for vimtex
-	enabled = false,
-	ft = {'tex', 'plaintex'},
-	config = function ()
-		vim.g['rainbow#max_level'] = 16
-		vim.g['rainbow#pairs'] = {
-			{'(',')'},
-			{'[',']'},
-			{'{','}'},
-		}
-		vim.cmd([[:RainbowParentheses!<CR>]])
-	end
-},
 }
 -- texlab : use install latex lsp. it does not lspsaga support
 -- 			it must use default vim.lsp behavior
