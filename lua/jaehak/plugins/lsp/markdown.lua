@@ -33,21 +33,6 @@ return {
 		-- and if you want to show hidden title of fenced_code_block, use `require('markview').actions.set_query(args.buf)`
 		-- After de79a76 commit, `vim.g.markview_lazy_loaded` is supports to lazy load to do all these things
 		vim.g.markview_lazy_loaded = true
-
-		-- set highlights
-		vim.api.nvim_set_hl(0, "@markup.italic",             {fg = '#3DC5DA', italic = true})
-		vim.api.nvim_set_hl(0, "@markup.strong",             {fg = '#E39AA6', bold = true})
-		vim.api.nvim_set_hl(0, "@markup.strikethrough",      {fg = '#999999', strikethrough = true})
-		vim.api.nvim_set_hl(0, "@markup.underline",          {underline = true})
-		vim.api.nvim_set_hl(0, "MarkviewHighlights",         {fg = '#f2ed5e', bg = '#1a190c'} ) -- "== text =="
-		vim.api.nvim_set_hl(0, "MarkviewListItemMinus",      {fg = '#F68C6B'} )
-		vim.api.nvim_set_hl(0, "MarkviewListItemPlus",       {fg = '#b1c61c'} )
-		vim.api.nvim_set_hl(0, "MarkviewListItemStar",       {fg = '#00d1dd'} )
-		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled',  {fg = '#999999'})
-		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault',  {link = 'Normal'}) -- default block quote color
-		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',   {default = true, fg = '#FE86D8'}) -- default block quote color
-		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
-		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown', {link = 'markdownH1'}) -- heading highlights in insert mode
 	end,
 	opts = {
 		experimental = {
@@ -69,13 +54,13 @@ return {
 				heading_1 ={
 					style = "label", sign = "", sign_hl = "", align = "center",
 					padding_left = "╾────────────────╴ ", padding_right = " ╶────────────────╼",
-					icon = "󰼏 ", hl = "MarkviewHeading1Sign",
+					icon = "[%d] ", hl = "markdownH1",
 				},
-				heading_2 = { style = "icon", sign = "", sign_hl = "", icon = "󰎨 ", hl = "MarkviewHeading2",},
-				heading_3 = { style = "icon", sign = "", sign_hl = "", icon = "󰼑 ", hl = "MarkviewHeading3",},
-				heading_4 = { style = "icon", sign = "", sign_hl = "", icon = "󰎲 ", hl = "MarkviewHeading4",},
-				heading_5 = { style = "icon", sign = "", sign_hl = "", icon = "󰼓 ", hl = "MarkviewHeading5",},
-				heading_6 = { style = "icon", sign = "", sign_hl = "", icon = "󰎴 ", hl = "MarkviewHeading6",},
+				heading_2 = { style = "icon", sign = "", sign_hl = "", icon = "[%d.%d] ", hl = "MarkviewHeading2",},
+				heading_3 = { style = "icon", sign = "", sign_hl = "", icon = "[%d.%d.%d] ", hl = "MarkviewHeading3",},
+				heading_4 = { style = "icon", sign = "", sign_hl = "", icon = "[%d.%d.%d.%d] ", hl = "MarkviewHeading4",},
+				heading_5 = { style = "icon", sign = "", sign_hl = "", icon = "[%d.%d.%d.%d.%d] ", hl = "MarkviewHeading5",},
+				heading_6 = { style = "icon", sign = "", sign_hl = "", icon = "[%d.%d.%d.%d.%d.%d] ", hl = "MarkviewHeading6",},
 			},
 			code_blocks = {
 				style = 'block', -- only highlight behind code region, not all
@@ -136,6 +121,30 @@ return {
 		typst = { enable = false, },
 		yaml  = { enable = false, }
 	},
+	config = function (_, opts)
+		-- set highlights
+		-- It needs to call in `config` field to overwrite. not `init` field.
+		vim.api.nvim_set_hl(0, "@markup.italic",             {fg = '#3DC5DA', italic = true})
+		vim.api.nvim_set_hl(0, "@markup.strong",             {fg = '#E39AA6', bold = true})
+		vim.api.nvim_set_hl(0, "@markup.strikethrough",      {fg = '#999999', strikethrough = true})
+		vim.api.nvim_set_hl(0, "@markup.underline",          {underline = true})
+		vim.api.nvim_set_hl(0, "MarkviewHighlights",         {fg = '#f2ed5e', bg = '#1a190c'} ) -- "== text =="
+		vim.api.nvim_set_hl(0, "MarkviewListItemMinus",      {fg = '#F68C6B'} )
+		vim.api.nvim_set_hl(0, "MarkviewListItemPlus",       {fg = '#b1c61c'} )
+		vim.api.nvim_set_hl(0, "MarkviewListItemStar",       {fg = '#00d1dd'} )
+		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled',  {fg = '#999999'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault',  {link = 'Normal'}) -- default block quote color
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',   {default = true, fg = '#FE86D8'}) -- default block quote color
+		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
+		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown', {link = 'markdownH1'}) -- heading highlights in insert mode
+		vim.api.nvim_set_hl(0, 'MarkviewHeading2',       	 {fg = '#FFCC00', bg = '#332A00'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading3',       	 {fg = '#FF69B4', bg = '#2F1A25'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading4',       	 {fg = '#00BFFF', bg = '#002533'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading5',       	 {fg = '#9932CC', bg = '#1E0A28'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading6',       	 {fg = '#C0C0C0', bg = '#242424'})
+
+		require('markview').setup(opts)
+	end
 },
 {
 	'crispgm/telescope-heading.nvim',
