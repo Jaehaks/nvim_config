@@ -119,11 +119,10 @@ return {
 			priority = {
 				[''] = 110,
 				lua = 210,
-				latex = 210,
 			},
 			query = {
 				[''] = 'rainbow-delimiters',
-				latex = 'rainbow-blocks', -- remove rainbow-blocks's error code to proper work
+				latex = 'rainbow-delimiters-my', -- remove rainbow-blocks's error code to proper work
 				-- matlab query for delimiters is added. Confirmed it works
 				-- copy directory "nvim/queries/rainbow-delimiters.nvim/matlab"  to "nvim-data/lazy/rainbow-delimiters.nvim/queries"
 			},
