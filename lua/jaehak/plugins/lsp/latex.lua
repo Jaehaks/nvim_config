@@ -22,6 +22,12 @@ return {
 		},
 	},
 	config = function (_, opts)
+		-- check other way to change highlight not using @function
+		-- @function affects other language files.
+		-- or you need to change latex query capture
+		vim.api.nvim_set_hl(0, "@markup.math", {fg = '#ffffb3'})
+		-- vim.api.nvim_set_hl(0, "@function", {fg = '#C792EA'})
+
 		local texflow = require('texflow')
 		texflow.setup(opts)
 
