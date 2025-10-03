@@ -25,6 +25,30 @@ return {
 {
 	"OXY2DEV/markview.nvim",
 	ft = {'markdown'},
+	init = function ()
+		-- disable callout completion of markview for blink.cmp
+		vim.g.markview_blink_loaded = true
+		-- after b895174 commit, recommends `lazy = false` to load this plugin. because it improve startup time under 5ms.
+		-- If you use lazy loading, use `markview.highlights.setup()` to load this.
+		-- and if you want to show hidden title of fenced_code_block, use `require('markview').actions.set_query(args.buf)`
+		-- After de79a76 commit, `vim.g.markview_lazy_loaded` is supports to lazy load to do all these things
+		vim.g.markview_lazy_loaded = true
+
+		-- set highlights
+		vim.api.nvim_set_hl(0, "@markup.italic",             {fg = '#3DC5DA', italic = true})
+		vim.api.nvim_set_hl(0, "@markup.strong",             {fg = '#E39AA6', bold = true})
+		vim.api.nvim_set_hl(0, "@markup.strikethrough",      {fg = '#999999', strikethrough = true})
+		vim.api.nvim_set_hl(0, "@markup.underline",          {underline = true})
+		vim.api.nvim_set_hl(0, "MarkviewHighlights",         {fg = '#f2ed5e', bg = '#1a190c'} ) -- "== text =="
+		vim.api.nvim_set_hl(0, "MarkviewListItemMinus",      {fg = '#F68C6B'} )
+		vim.api.nvim_set_hl(0, "MarkviewListItemPlus",       {fg = '#b1c61c'} )
+		vim.api.nvim_set_hl(0, "MarkviewListItemStar",       {fg = '#00d1dd'} )
+		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled',  {fg = '#999999'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault',  {link = 'Normal'}) -- default block quote color
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',   {default = true, fg = '#FE86D8'}) -- default block quote color
+		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
+		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown', {link = 'markdownH1'}) -- heading highlights in insert mode
+	end,
 	opts = {
 		experimental = {
 			check_rtp_message = false
@@ -112,31 +136,6 @@ return {
 		typst = { enable = false, },
 		yaml  = { enable = false, }
 	},
-	config = function (_, opts)
-		-- disable callout completion of markview for blink.cmp
-		vim.g.markview_blink_loaded = true
-
-		-- set highlights
-		vim.api.nvim_set_hl(0, "@markup.italic",             {fg = '#3DC5DA', italic = true})
-		vim.api.nvim_set_hl(0, "@markup.strong",             {fg = '#E39AA6', bold = true})
-		vim.api.nvim_set_hl(0, "@markup.strikethrough",      {fg = '#999999', strikethrough = true})
-		vim.api.nvim_set_hl(0, "@markup.underline",          {underline = true})
-		vim.api.nvim_set_hl(0, "MarkviewHighlights",         {fg = '#f2ed5e', bg = '#1a190c'} ) -- "== text =="
-		vim.api.nvim_set_hl(0, "MarkviewListItemMinus",      {fg = '#F68C6B'} )
-		vim.api.nvim_set_hl(0, "MarkviewListItemPlus",       {fg = '#b1c61c'} )
-		vim.api.nvim_set_hl(0, "MarkviewListItemStar",       {fg = '#00d1dd'} )
-		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled',  {fg = '#999999'})
-		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault',  {link = 'Normal'}) -- default block quote color
-		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',   {default = true, fg = '#FE86D8'}) -- default block quote color
-		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
-		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown', {link = 'markdownH1'}) -- heading highlights in insert mode
-
-		-- setup
-		require('markview').setup(opts)
-		-- after b895174 commit, recommends `lazy = false` to load this plugin. because it improve startup time under 5ms.
-		-- If you use lazy loading, use `markview.highlights`.setup() to load this.
-		require('markview.highlights').setup()
-	end
 },
 {
 	'crispgm/telescope-heading.nvim',
