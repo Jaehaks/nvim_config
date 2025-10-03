@@ -136,12 +136,17 @@ return {
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault',  {link = 'Normal'}) -- default block quote color
 		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',   {default = true, fg = '#FE86D8'}) -- default block quote color
 		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading2',       	 {fg = '#FFCC00', bg = '#332a00'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading3',       	 {fg = '#FF69B4', bg = '#1f0a15'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading4',       	 {fg = '#00BFFF', bg = '#00151e'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading5',       	 {fg = '#9932CC', bg = '#0e0018'})
+		vim.api.nvim_set_hl(0, 'MarkviewHeading6',       	 {fg = '#b386ff', bg = '#0a001a'})
 		vim.api.nvim_set_hl(0, '@markup.heading.1.markdown', {link = 'markdownH1'}) -- heading highlights in insert mode
-		vim.api.nvim_set_hl(0, 'MarkviewHeading2',       	 {fg = '#FFCC00', bg = '#332A00'})
-		vim.api.nvim_set_hl(0, 'MarkviewHeading3',       	 {fg = '#FF69B4', bg = '#2F1A25'})
-		vim.api.nvim_set_hl(0, 'MarkviewHeading4',       	 {fg = '#00BFFF', bg = '#002533'})
-		vim.api.nvim_set_hl(0, 'MarkviewHeading5',       	 {fg = '#9932CC', bg = '#1E0A28'})
-		vim.api.nvim_set_hl(0, 'MarkviewHeading6',       	 {fg = '#C0C0C0', bg = '#242424'})
+		vim.api.nvim_set_hl(0, '@markup.heading.2.markdown', {link = 'MarkviewHeading2'})
+		vim.api.nvim_set_hl(0, '@markup.heading.3.markdown', {link = 'MarkviewHeading3'})
+		vim.api.nvim_set_hl(0, '@markup.heading.4.markdown', {link = 'MarkviewHeading4'})
+		vim.api.nvim_set_hl(0, '@markup.heading.5.markdown', {link = 'MarkviewHeading5'})
+		vim.api.nvim_set_hl(0, '@markup.heading.6.markdown', {link = 'MarkviewHeading6'})
 
 		require('markview').setup(opts)
 	end
