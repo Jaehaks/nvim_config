@@ -9,6 +9,7 @@ return {
 		'saghen/blink.compat',
 		'Kaiser-Yang/blink-cmp-git', -- needs `gh` or `curl`
 		'xieyonn/blink-cmp-dat-word',
+		'erooke/blink-cmp-latex',
 	},
 	opts =  {
 		keymap = { -- Applied only completion menu
@@ -70,20 +71,23 @@ return {
 			min_keyword_length = 2,
 			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path', 'cmdline'},
 			per_filetype = {
-				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
-				matlab = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
-				markdown = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'}, -- obsidian added
-				gitcommit = {'git', 'buffer', 'datword', 'spell'}
+				lua       = {'lazydev', 'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
+				matlab    = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
+				gitcommit = {'git', 'buffer', 'datword', 'spell'},
+				markdown  = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'},
+				latex     = {'snippets', 'lsp', 'latex', 'buffer', 'datword', 'spell', 'path'},
+				tex       = {'snippets', 'lsp', 'latex', 'buffer', 'datword', 'spell', 'path'},
+				plaintex  = {'snippets', 'lsp', 'latex', 'buffer', 'datword', 'spell', 'path'},
 			},
 			providers = {
 				snippets = {
-					score_offset = 100,
+					-- score_offset = 100,
 				},
 				lsp = {
 					-- BUG: default setting `fallbacks={'buffer'}` has some bug (don't show buffer list by lsp)
 					fallbacks = {},
 					-- max_items = 5,
-					score_offset = 50,
+					-- score_offset = 50,
 				},
 				buffer = {
 					-- BUG: when I set max_items, some lsp's list are now shown
@@ -105,7 +109,7 @@ return {
 				},
 				spell = {
 					name = 'Spell',
-					score_offset = -20,
+					-- score_offset = -20,
 					module = 'blink-cmp-spell',
 					opts = {
 						-- EXAMPLE: Only enable source in `@spell` captures, and disable it
@@ -146,7 +150,7 @@ return {
 					},
 				},
 				datword = {
-					name= 'DatWord',
+					name = 'DatWord',
 					module = 'blink-cmp-dat-word',
 					opts = {
 						paths = {
@@ -159,6 +163,13 @@ return {
 					max_items = 5,
 					score_offset = -15,
 				},
+				latex = {
+					name = 'Latex',
+					module = 'blink-cmp-latex',
+					opts = {
+						insert_command = true, -- insert raw text instead of uni-code character
+					}
+				}
 			},
 		},
 		cmdline = {
