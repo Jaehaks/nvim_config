@@ -22,11 +22,23 @@ return {
 		},
 	},
 	config = function (_, opts)
+		-- appended .latex will be set highlight to latex file only
 		-- check other way to change highlight not using @function
 		-- @function affects other language files.
 		-- or you need to change latex query capture
-		vim.api.nvim_set_hl(0, "@markup.math", {fg = '#ffffb3'})
-		-- vim.api.nvim_set_hl(0, "@function", {fg = '#C792EA'})
+		vim.api.nvim_set_hl(0, "@markup.math.latex", {fg = '#ffffb3'})
+		vim.api.nvim_set_hl(0, "@module.latex", {fg = '#da70d6'})
+		vim.api.nvim_set_hl(0, "@markup.heading.latex", {fg = '#e68f30'}) -- \begin{frame}{<color is applied here>}
+		vim.api.nvim_set_hl(0, "@markup.heading.1.latex", {fg = '#ffd700'}) -- title/author text
+		vim.api.nvim_set_hl(0, "@markup.heading.2.latex", {fg = '#ff6984'}) -- chapter/part text
+		vim.api.nvim_set_hl(0, "@markup.heading.3.latex", {fg = '#00ced1'}) -- section text
+		vim.api.nvim_set_hl(0, "@markup.heading.4.latex", {fg = '#90ee90'}) -- subsection text
+		vim.api.nvim_set_hl(0, "@markup.heading.5.latex", {fg = '#ffe4c4'}) -- paragraph text
+		vim.api.nvim_set_hl(0, "@markup.heading.6.latex", {fg = '#e0ffff'}) -- subparagraph text
+		vim.api.nvim_set_hl(0, "@function.macro.latex", {fg = '#888888'}) -- \label, \counter which is not show in output
+		vim.api.nvim_set_hl(0, "@function.latex", {fg = '#79ccff'}) -- any \command name \mathbf \alpha etc....
+		vim.api.nvim_set_hl(0, "@punctuation.delimiter.latex", {fg = '#888888'}) -- any \command name \mathbf \alpha etc....
+		vim.api.nvim_set_hl(0, "@math.label.latex", {fg = '#c1c116'}) -- \begin{<color here>} for math_environment
 
 		local texflow = require('texflow')
 		texflow.setup(opts)

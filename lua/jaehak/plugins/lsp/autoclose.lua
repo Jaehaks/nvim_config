@@ -119,6 +119,7 @@ return {
 			priority = {
 				[''] = 110,
 				lua = 210,
+				latex = 210,
 			},
 			query = {
 				[''] = 'rainbow-delimiters',
