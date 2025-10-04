@@ -67,6 +67,7 @@ return {
 		},
 		snippets = {preset = 'luasnip'}, -- use luasnip for `snippets` engine
 		sources = {
+			min_keyword_length = 2,
 			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path', 'cmdline'},
 			per_filetype = {
 				lua = {'lazydev', 'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
