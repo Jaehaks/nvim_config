@@ -59,7 +59,6 @@ return {
 			end
 		})
 	end
-
 },
 }
 -- texlab : use install latex lsp. it does not lspsaga support
@@ -85,3 +84,4 @@ return {
 -- 						   It occurs error.
 -- dirichy/latex_concealer.nvim : It is not perfect. error occurs.
 -- mathjiajia/nvim-latex-conceal : not works
+-- bamonroe/rnoweb-nvim : not works
