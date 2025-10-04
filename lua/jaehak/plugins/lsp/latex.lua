@@ -81,3 +81,7 @@ return {
 -- 		   	  - I think treesitter has more functionality
 -- pxwg/math-conceal : math conceal plugin for latex/md.
 -- 					   It cannot support Windows
+-- ryleelyman/latex.nvim : It needs nvim-treesitter old version , not using vim.treesitter for parsing.
+-- 						   It occurs error.
+-- dirichy/latex_concealer.nvim : It is not perfect. error occurs.
+-- mathjiajia/nvim-latex-conceal : not works
