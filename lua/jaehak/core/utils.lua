@@ -23,29 +23,6 @@ M.sep_unify = function(path, sep_to, sep_from, endslash)
 	return result
 end
 
--- get index of visualized word
----@return integer,integer,integer,integer
-local GetIdxVisual = function ()
-	-- caution: getpos("'>") or getpos("'<") is updated after end of visual mode
-	-- so use getpos('v') or getpos('.')
-
-	local start_pos = vim.fn.getpos('v') -- get position of start of visual box
-	local end_pos   = vim.fn.getpos('.') -- get position of end of visual box
-	local start_row, start_col = start_pos[2], start_pos[3]
-	local end_row, end_col     = end_pos[2], end_pos[3]
-
-	-- check end col regardless of non-ASCII char
-	local lines = vim.api.nvim_buf_get_lines(0, end_row - 1, end_row, false)
-	local end_bytecol = vim.str_utfindex(lines[1], 'utf-8', end_col)
-	if end_bytecol then
-		end_col = vim.str_byteindex(lines[1], 'utf-8', end_bytecol)
-	else
-		vim.notify('Error(AddStrong) : end_bytecol is nil', vim.log.levels.ERROR)
-	end
-
-	return start_row, start_col, end_row, end_col
-end
-
 
 -- check content is URL form like "https://*" or "www.*"
 ---@param content string web URL form
@@ -462,59 +439,6 @@ local GotoCursor = function()
 end
 
 M.GotoCursor = GotoCursor
-
-
-
--- ####################################################
--- * Markdown : Add Strong mark
--- ####################################################
-
-
--- Add strong mark (**) both side of visualized region
----@param args string marks to add before and after visualized word (default is **)
-local AddStrong = function (args)
-	-- get index of visualized word
-	local start_row, start_col, end_row, end_col = GetIdxVisual()
-	vim.print({end_row, end_col})
-
-	if type(args) ~= 'string' then
-		vim.notify('Error(AddStrong) : use string for args', vim.log.levels.ERROR)
-		return
-	end
-
-	local marks = args or '**' -- set marks to add
-	local marks_e = marks
-	local tag = marks:match('^<([^>]+)>$')
-	if tag then
-		marks_e = '</' .. tag .. '>'
-	end
-
-	-- Add asterisks at the start of the selection
-	vim.api.nvim_buf_set_text(0, start_row - 1, start_col - 1, start_row - 1, start_col - 1, {marks})
-
-	-- check end col regardless of non-ASCII char
-	local lines = vim.api.nvim_buf_get_lines(0, end_row - 1, end_row, false)
-	if start_row == end_row then -- if 'marks' is added in same line, it is included in end_col calculation
-		end_col = end_col + #marks
-	end
-
-	local end_bytecol = vim.str_utfindex(lines[1], 'utf-8', end_col)
-	if end_bytecol then
-		end_col = vim.str_byteindex(lines[1], 'utf-8', end_bytecol) + 1 -- move cursor to next of word
-	else
-		vim.notify('Error(AddStrong) : end_bytecol is nil', vim.log.levels.ERROR)
-		return
-	end
-
-	-- Add asterisks at the end of the selection
-	vim.api.nvim_buf_set_text(0, end_row - 1, end_col - 1 , end_row - 1, end_col - 1, {marks_e})
-
-	-- go to normal mode
-	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
-end
-
-M.AddStrong = AddStrong
-
 
 
 -- ####################################################

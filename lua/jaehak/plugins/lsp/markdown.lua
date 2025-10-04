@@ -334,53 +334,54 @@ return {
 			group = User_markdown,
 			pattern = {'markdown', 'text'},
 			callback = function ()
+
 				vim.keymap.set({'n'}, 'gf', utils.FollowLink, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
 				vim.keymap.set('n', '<leader>ml', utils.Show_Linklist, {buffer = true, desc = 'show linklist'})
-				vim.keymap.set({'n', 'i'}, '<M-e>', function() require('md-utility').file_picker('markdown') end, {buffer = true, desc = 'show linklist'})
-				vim.keymap.set({'n', 'v'}, 'P', function() require('md-utility').clipboard_paste('markdown') end, {buffer = true, noremap = true, desc = 'Clipbaord paste'})
+				vim.keymap.set({'n', 'i'}, '<M-e>', function() md.file_picker('markdown') end, {buffer = true, desc = 'show linklist'})
+				vim.keymap.set({'n', 'v'}, 'P', function() md.clipboard_paste('markdown') end, {buffer = true, noremap = true, desc = 'Clipbaord paste'})
 
 				-- autolist <CR>
 				vim.keymap.set({'i'}, '<CR>', 	function()
-					require('md-utility').autolist_cr(true)
+					md.autolist_cr(true)
 				end,  {buffer = true, noremap = true, desc = '<CR> with autolist mark'})
 
 				-- without autolist <M-CR>
 				vim.keymap.set({'i'}, '<M-CR>', function()
-					require('md-utility').autolist_cr(false)
+					md.autolist_cr(false)
 				end, {buffer = true, noremap = true, desc = '<CR> without autolist mark but add indent'})
 
 				-- autolist o
 				vim.keymap.set({'n'}, 'o', 	function()
-					require('md-utility').autolist_o(true)
+					md.autolist_o(true)
 				end,  {buffer = true, noremap = true, desc = '"o" with autolist mark'})
 
 				-- autolist tab
 				vim.keymap.set({'i'}, '<TAB>', 	function()
-					require('md-utility').autolist_tab(false)
+					md.autolist_tab(false)
 				end,  {buffer = true, noremap = true, desc = '<TAB> with autolist mark'})
 
 				-- reverse autolist tab
 				vim.keymap.set({'i'}, '<S-TAB>', function()
-					require('md-utility').autolist_tab(true)
+					md.autolist_tab(true)
 				end,  {buffer = true, noremap = true, desc = '<S-TAB> with autolist mark'})
 
 				-- recalculate list markers
 				vim.keymap.set({'n'}, '<leader>mr', function()
-					require('md-utility').autolist_recalculate()
+					md.autolist_recalculate()
 				end,  {buffer = true, noremap = true, desc = 'recalculate list numbering'})
 
 				-- recalculate list markers
 				vim.keymap.set({'n', 'i'}, '<C-c>', function()
-					require('md-utility').autolist_checkbox()
+					md.autolist_checkbox()
 				end,  {buffer = true, noremap = true, desc = 'surround checkbox'})
 
-				vim.keymap.set('v', '<leader>mb', function () utils.AddStrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
-				vim.keymap.set('v', '<leader>mh', function () utils.AddStrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
-				vim.keymap.set('v', '<leader>ms', function () utils.AddStrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
-				vim.keymap.set('v', '<leader>mu', function () utils.AddStrong('<u>') end, {buffer = true, desc = 'Enclose with <u>(underline)'})
-				vim.keymap.set('v', '<leader>mm', function () utils.AddStrong('<mark>') end, {buffer = true, desc = 'Enclose with <mark>(mark highlight)'})
-				vim.keymap.set('v', '<leader>m=', function () utils.AddStrong('<sup>') end, {buffer = true, desc = 'Enclose with <sup>(sup highlight)'})
-				vim.keymap.set('v', '<leader>m-', function () utils.AddStrong('<sub>') end, {buffer = true, desc = 'Enclose with <sub>(sub highlight)'})
+				vim.keymap.set('v', '<leader>mb', function () md.addstrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
+				vim.keymap.set('v', '<leader>mh', function () md.addstrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
+				vim.keymap.set('v', '<leader>ms', function () md.addstrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
+				vim.keymap.set('v', '<leader>mu', function () md.addstrong('<u>') end, {buffer = true, desc = 'Enclose with <u>(underline)'})
+				vim.keymap.set('v', '<leader>mm', function () md.addstrong('<mark>') end, {buffer = true, desc = 'Enclose with <mark>(mark highlight)'})
+				vim.keymap.set('v', '<leader>m=', function () md.addstrong('<sup>') end, {buffer = true, desc = 'Enclose with <sup>(sup highlight)'})
+				vim.keymap.set('v', '<leader>m-', function () md.addstrong('<sub>') end, {buffer = true, desc = 'Enclose with <sub>(sub highlight)'})
 
 				-- Don't remap to <C-m>, it synchronize with <CR>
 			end
