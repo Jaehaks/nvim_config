@@ -75,6 +75,9 @@ return {
 				gitcommit = {'git', 'buffer', 'datword', 'spell'}
 			},
 			providers = {
+				snippets = {
+					score_offset = 100,
+				},
 				lsp = {
 					-- BUG: default setting `fallbacks={'buffer'}` has some bug (don't show buffer list by lsp)
 					fallbacks = {},

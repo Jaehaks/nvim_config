@@ -46,7 +46,7 @@ local begin_end = s({
 		end,{1}),
 	})
 )
-table.insert(autosnippets, begin_end)
+table.insert(snippets, begin_end)
 
 
 -- [equation] 1) left - right
@@ -86,7 +86,7 @@ local left_right = s({
 		end,{1}),
 	})
 )
-table.insert(autosnippets, left_right)
+table.insert(snippets, left_right)
 
 
 -- [equation] 2) fractional number
@@ -189,7 +189,53 @@ local title = s({
 table.insert(snippets, title)
 
 
+-- [paren] 1) square_brackets
+temp_fmt = [[
+\[ {} \]
+]]
 
+local square_brackets = s({
+	trig = '\\[',
+	name = 'square_brackets',
+	desc = 'square_brackets',
+	},
+	fmt(temp_fmt, {
+		i(1),
+	})
+)
+table.insert(autosnippets, square_brackets)
+
+-- [paren] 2)brace
+temp_fmt = [[
+\{{ {} \}}
+]]
+
+local brace = s({
+	trig = '\\{',
+	name = 'brace',
+	desc = 'brace',
+	},
+	fmt(temp_fmt, {
+		i(1),
+	})
+)
+table.insert(autosnippets, brace)
+
+-- [paren] 3)round paren
+temp_fmt = [[
+\( {} \)
+]]
+
+local round_paren = s({
+	trig = '\\(',
+	name = 'round_paren',
+	desc = 'round_paren',
+	},
+	fmt(temp_fmt, {
+		i(1),
+	})
+)
+table.insert(autosnippets, round_paren)
 
 
 
