@@ -26,27 +26,27 @@ local conds_expand = require("luasnip.extras.conditions.expand")
 local snippets, autosnippets = {}, {}
 
 
--- [section] 1) begin-end
-local temp_fmt = [[
-\begin{{{}}}
-	{}
-\end{{{}}}
-]]
-
-local begin_end = s({
-	trig = '\\beg',
-	name = 'begin ~ end',
-	desc = 'begin ~ end',
-	},
-	fmt(temp_fmt, {
-		i(1, 'env'),
-		i(2),
-		f(function(args)
-			return args[1][1]
-		end,{1}),
-	})
-)
-table.insert(snippets, begin_end)
+-- -- [section] 1) begin-end
+-- local temp_fmt = [[
+-- \begin{{{}}}
+-- 	{}
+-- \end{{{}}}
+-- ]]
+--
+-- local begin_end = s({
+-- 	trig = '\\beg',
+-- 	name = 'begin ~ end',
+-- 	desc = 'begin ~ end',
+-- 	},
+-- 	fmt(temp_fmt, {
+-- 		i(1, 'env'),
+-- 		i(2),
+-- 		f(function(args)
+-- 			return args[1][1]
+-- 		end,{1}),
+-- 	})
+-- )
+-- table.insert(snippets, begin_end)
 
 
 -- [equation] 1) left - right
