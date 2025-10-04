@@ -79,3 +79,5 @@ return {
 -- 		   	  - junegunn/rainbow_parentheses.vim : it works in plaintext. but it doesn't in equation
 -- 		   	  - luochen1990/rainbow : it doesn't works.
 -- 		   	  - I think treesitter has more functionality
+-- pxwg/math-conceal : math conceal plugin for latex/md.
+-- 					   It cannot support Windows
