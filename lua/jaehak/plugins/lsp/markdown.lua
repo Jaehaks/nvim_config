@@ -88,13 +88,34 @@ return {
 				marker_parenthesis = { add_padding = false, },            -- When using '1), 2)'
 			},
 			block_quotes = {
-				["ANSWER"] = {
-					preview = " Answer",
-					hl = "MarkviewBlockQuoteAnswer",
-					title = true,
-					icon = "",
-					border = "▋"
-				},
+				["ANSWER"]    = { hl = "MarkviewBlockQuoteAnswer",    preview = " Answer",    title = true, icon = "", border = "▋" },
+				["ABSTRACT"]  = { hl = "MarkviewBlockQuoteAbstract",  preview = "󱉫 Abstract",  title = true, icon = "󱉫", },
+				["SUMMARY"]   = { hl = "MarkviewBlockQuoteSummary",   preview = "󱉫 Summary",   title = true, icon = "󱉫", },
+				["TLDR"]      = { hl = "MarkviewBlockQuoteTldr",      preview = "󱉫 Tldr",      title = true, icon = "󱉫", },
+				["TODO"]      = { hl = "MarkviewBlockQuoteTodo",      preview = " Todo",      title = true, icon = "", },
+				["INFO"]      = { hl = "MarkviewBlockQuoteInfo",      preview = " Info",      title = true, icon = "", },
+				["NOTE"]      = { hl = "MarkviewBlockQuoteNote",      preview = "󰋽 Note",      title = true, icon = "󰋽", },
+				["SUCCESS"]   = { hl = "MarkviewBlockQuoteNote",      preview = "󰗠 Success",   title = true, icon = "󰗠", },
+				["CHECK"]     = { hl = "MarkviewCheckboxChecked",     preview = "󰗠 Check",     title = true, icon = "󰗠", },
+				["DONE"]      = { hl = "MarkviewCheckboxChecked",     preview = "󰗠 Done",      title = true, icon = "󰗠", },
+				["HINT"]      = { hl = "MarkviewBlockQuoteHint",      preview = " Hint",      title = true, icon = "", },
+				["TIP"]       = { hl = "MarkviewBlockQuoteTip",       preview = " Tip",       title = true, icon = "", },
+				["QUESTION"]  = { hl = "MarkviewBlockQuoteQuestion",  preview = "󰋗 Question",  title = true, icon = "󰋗", },
+				["HELP"]      = { hl = "MarkviewBlockQuoteHelp",      preview = "󰋗 Help",      title = true, icon = "󰋗", },
+				["FAQ"]       = { hl = "MarkviewBlockQuoteFAQ",       preview = "󰋗 Faq",       title = true, icon = "󰋗", },
+				["ATTENTION"] = { hl = "MarkviewBlockQuoteAttention", preview = " Attention", title = true, icon = "", },
+				["WARNING"]   = { hl = "MarkviewBlockQuoteWarning",   preview = " Warning",   title = true, icon = "", },
+				["FAILURE"]   = { hl = "MarkviewBlockQuoteFail",      preview = "󰅙 Failure",   title = true, icon = "󰅙", },
+				["FAIL"]      = { hl = "MarkviewBlockQuoteFail",      preview = "󰅙 Fail",      title = true, icon = "󰅙", },
+				["MISSING"]   = { hl = "MarkviewBlockQuoteMissing",   preview = "󰅙 Missing",   title = true, icon = "󰅙", },
+				["DANGER"]    = { hl = "MarkviewBlockQuoteDanger",    preview = " Danger",    title = true, icon = "", },
+				["ERROR"]     = { hl = "MarkviewBlockQuoteError",     preview = " Error",     title = true, icon = "", },
+				["BUG"]       = { hl = "MarkviewBlockQuoteBug",       preview = " Bug",       title = true, icon = "", },
+				["CAUTION"]   = { hl = "MarkviewBlockQuoteCaution",   preview = "󰳦 Caution",   title = true, icon = "󰳦", },
+				["EXAMPLE"]   = { hl = "MarkviewBlockQuoteExample",   preview = "󱖫 Example",   title = true, icon = "󱖫", },
+				["QUOTE"]     = { hl = "MarkviewBlockQuoteQuote",     preview = " Quote",     title = true, icon = "", },
+				["CITE"]      = { hl = "MarkviewBlockQuoteCite",      preview = " Cite",      title = true, icon = "", },
+				["IMPORTANT"] = { hl = "MarkviewBlockQuoteImportant", preview = " Important", title = true, icon = "", },
 			}
 		},
 		markdown_inline = {
@@ -133,8 +154,6 @@ return {
 		vim.api.nvim_set_hl(0, "MarkviewListItemPlus",       {fg = '#b1c61c'} )
 		vim.api.nvim_set_hl(0, "MarkviewListItemStar",       {fg = '#00d1dd'} )
 		vim.api.nvim_set_hl(0, 'MarkviewCheckboxCancelled',  {fg = '#999999'})
-		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault',  {link = 'Normal'}) -- default block quote color
-		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',   {default = true, fg = '#FE86D8'}) -- default block quote color
 		vim.api.nvim_set_hl(0, 'MarkviewPalette1Sign',       {link = 'markdownH1'})
 		vim.api.nvim_set_hl(0, 'MarkviewHeading2',       	 {fg = '#FFCC00', bg = '#332a00'})
 		vim.api.nvim_set_hl(0, 'MarkviewHeading3',       	 {fg = '#FF69B4', bg = '#1f0a15'})
@@ -147,6 +166,41 @@ return {
 		vim.api.nvim_set_hl(0, '@markup.heading.4.markdown', {link = 'MarkviewHeading4'})
 		vim.api.nvim_set_hl(0, '@markup.heading.5.markdown', {link = 'MarkviewHeading5'})
 		vim.api.nvim_set_hl(0, '@markup.heading.6.markdown', {link = 'MarkviewHeading6'})
+
+		-- colorscheme of callouts.
+		-- markview's color are changed often. consistence is needed.
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDefault',   {link = 'Normal'}) -- default block quote color
+
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAnswer',    {fg = '#FE86D8'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAbstract',  {fg = '#ff49b4'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteSummary',   {fg = '#FFc0cb'})
+
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteNote',      {fg = '#00ced1'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteInfo',      {fg = '#56B6C2'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteTodo',      {fg = '#61afef'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteTldr',      {fg = '#4a8588'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteHint',      {fg = '#1e90ff'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteTip',       {fg = '#7fffd4'})
+
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteAttention', {fg = '#50fa7b'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteQuestion',  {fg = '#82c91e'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteHelp',      {fg = '#3cb371'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteFAQ',       {fg = '#abdadc'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteCite',      {fg = '#bbe986'})
+
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteCheck',     {fg = '#ffd700'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteWarning',   {fg = '#ffff00'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteCaution',   {fg = '#f9f5a6'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteImportant', {fg = '#ff9900'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteExample',   {fg = '#cc5500'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteQuote',     {fg = '#daa520'})
+
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteFail',      {fg = '#A52A2A'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteMissing',   {fg = '#FF6984'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteDanger',    {fg = '#FF0000'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteError',     {fg = '#CC3333'})
+		vim.api.nvim_set_hl(0, 'MarkviewBlockQuoteBug',       {fg = '#800000'})
+
 
 		require('markview').setup(opts)
 	end
@@ -325,8 +379,6 @@ return {
 	},
 	config = function (_, opts)
 		local md = require('md-utility')
-		local utils = require('jaehak.core.utils')
-
 		md.setup(opts)
 
 		local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
@@ -335,8 +387,8 @@ return {
 			pattern = {'markdown', 'text'},
 			callback = function ()
 
-				vim.keymap.set({'n'}, 'gf', utils.FollowLink, {buffer = 0, noremap = true, desc = 'follow link(image,url,file)'})
-				vim.keymap.set('n', '<leader>ml', utils.Show_Linklist, {buffer = true, desc = 'show linklist'})
+				vim.keymap.set({'n'}, 'gf', md.follow_link, {buffer = true, noremap = true, desc = 'follow link(image,url,file)'})
+				vim.keymap.set('n', '<leader>ml', md.link_picker, {buffer = true, desc = 'show linklist'})
 				vim.keymap.set({'n', 'i'}, '<M-e>', function() md.file_picker('markdown') end, {buffer = true, desc = 'show linklist'})
 				vim.keymap.set({'n', 'v'}, 'P', function() md.clipboard_paste('markdown') end, {buffer = true, noremap = true, desc = 'Clipbaord paste'})
 

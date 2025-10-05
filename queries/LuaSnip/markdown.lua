@@ -27,7 +27,10 @@ table.insert(autosnippets, code_block)
 local callout_list = {
 	t('NOTE'),
 	t('ABSTRACT'),
+	t('ATTENTION'),
 	t('SUMMARY'),
+	t('SUCCESS'),
+	t('DONE'),
 	t('CHECK'),
 	t('IMPORTANT'),
 	t('EXAMPLE'),
@@ -39,11 +42,16 @@ local callout_list = {
 	t('CITE'),
 	t('TIP'),
 	t('HINT'),
+	t('TLDR'),
 	t('INFO'),
 	t('TODO'),
 	t('CAUTION'),
+	t('FAIL'),
+	t('MISSING'),
 	t('WARNING'),
 	t('DANGER'),
+	t('ERROR'),
+	t('BUG'),
 	t('MISSING'),
 }
 local callout_title = function (args)
