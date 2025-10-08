@@ -205,18 +205,6 @@ return {
 		require('markview').setup(opts)
 	end
 },
-{
-	'crispgm/telescope-heading.nvim',
-	enabled = false,
-	dependencies = {
-		'nvim-telescope/telescope.nvim',
-	},
-	ft = {'markdown'},
-	config = function ()
-		require('telescope').load_extension('heading')
-		vim.keymap.set('n', '<leader>mh', '<Cmd>Telescope heading<CR>' , {desc = 'show header of markdown'})
-	end
-},
 -- without any lsp, default filetype detector support syntax highlighting
 -- treesitter-markdown make using conceal possible. but it is not perfect
 	-- without headlines.nvim, It confused to discern code block and link => I turned of conceal of markdown
@@ -244,77 +232,13 @@ return {
 --					        screen. it remains highlight when I move cursor to right
 --					 cons:
 --					     1. anti-conceal speed of linewise hybrid mode is slow
-{
-	-- add bullet automatically
-	-- BUG: if indent executed by TAB, the numbering does not change automatically, you should use :AutolistRecalculate
-	-- it doesn't work in filetype 'NeogitCommitMessage'
-	-- 'gaoDean/autolist.nvim',
-	'mcauley-penney/autolist.nvim',
-	enabled = false,
-	ft = {'markdown', 'text'},
-	opts = function ()
-		local list_patterns = { -- patterns which is used for autolist
-			unordered = "[-+*>]", -- use -,+,*,> for unordered list
-			digit = "%d+[.)]", -- 1. or 1)
-			ascii = "%a[.)]", -- a. or a)
-			roman = "%u*[.)]", -- I. or I)
-		}
-
-		-- keymap set for markdown
-		local utils = require('jaehak.core.utils')
-		local User_markdown = vim.api.nvim_create_augroup('User_markdown', {clear = true})
-		vim.api.nvim_create_autocmd('FileType',{
-			group = User_markdown,
-			pattern = {'markdown', 'text'},
-			callback = function ()
-				local opts = {noremap = true, buffer = 0}
-				vim.keymap.set('i', '<TAB>'     , '<Cmd>AutolistTab<CR>'             , opts)
-				vim.keymap.set('i', '<S-TAB>'   , '<Cmd>AutolistShiftTab<CR>'        , opts)
-				vim.keymap.set('i', '<CR>'      , '<CR><Cmd>AutolistNewBullet<CR>'   , opts)
-				vim.keymap.set('n', 'o'         , 'o<Cmd>AutolistNewBullet<CR>'      , opts)
-				vim.keymap.set('n', 'O'         , 'O<Cmd>AutolistNewBulletBefore<CR>', opts)
-				-- vim.keymap.set('n', '<C-m>'		, '<Cmd>AutolistCycleNext<CR>'       , opts)
-				vim.keymap.set('n', '<leader>mr', '<Cmd>AutolistRecalculate<CR>'     , opts)
-				-- vim.keymap.set('n', 'dd'        , 'dd<Cmd>AutolistRecalculate<CR>'   , opts)
-				-- vim.keymap.set('v', 'd'         , 'd<Cmd>AutolistRecalculate<CR>'    , opts)
-				vim.keymap.set('v', '<leader>mb', function () utils.AddStrong('**') end, {buffer = true, desc = 'Enclose with **(bold)'})
-				vim.keymap.set('v', '<leader>mh', function () utils.AddStrong('==') end, {buffer = true, desc = 'Enclose with ==(highlight)'})
-				vim.keymap.set('v', '<leader>ms', function () utils.AddStrong('~~') end, {buffer = true, desc = 'Enclose with ~~(strikethrough)'})
-				vim.keymap.set('v', '<leader>mu', function () utils.AddStrong('<u>') end, {buffer = true, desc = 'Enclose with <u>(underline)'})
-				vim.keymap.set('v', '<leader>mm', function () utils.AddStrong('<mark>') end, {buffer = true, desc = 'Enclose with <mark>(mark highlight)'})
-				vim.keymap.set('v', '<leader>m=', function () utils.AddStrong('<sup>') end, {buffer = true, desc = 'Enclose with <sup>(sup highlight)'})
-				vim.keymap.set('v', '<leader>m-', function () utils.AddStrong('<sub>') end, {buffer = true, desc = 'Enclose with <sub>(sub highlight)'})
-
-				-- Don't remap to <C-m>, it synchronize with <CR>
-			end
-		})
-
-		return {
-			lists = {
-				markdown = {
-					list_patterns.unordered,
-					list_patterns.digit,
-					list_patterns.ascii,
-					list_patterns.roman,
-				},
-				text = {
-					list_patterns.unordered,
-					list_patterns.digit,
-					list_patterns.ascii,
-					list_patterns.roman,
-				}
-			}
-		}
-
-	end,
-},
-
 -- roodolv/markdown-toggle : autolist.nvim has more feature, but it has some bug about indent
 -- 							I think after using mcauley-penny/autolist.nvim, this problem is gone
 -- bullets-vim/bullets.nvim : it does not work in neovim
 -- gaoDean/autolist.nvim : sometimes, it makes indent problem when I put indent in front of word at the beginning line
 -- 						   when I enter TAB, indent is inserted after first character of the word.
 -- 						   It is a big reason of why I migrate to other plugin
+-- 						   It is replaced by Jaehaks/md-utility.nvim
 {
 	-- editing fenced code block using treesitter
 	'Jaehaks/nvim-FeMaco.lua',
@@ -325,14 +249,6 @@ return {
 	opts = {
 
 	},
-},
-{
-	'allaman/emoji.nvim',
-	enabled = false,
-	ft = 'markdown',
-	opts = {
-		enable_cmp_integration = true, -- cmp integration requires 14MB RAM
-	}
 },
 {
 	'SCJangra/table-nvim',
@@ -389,7 +305,7 @@ return {
 
 				vim.keymap.set({'n'}, 'gf', md.follow_link, {buffer = true, noremap = true, desc = 'follow link(image,url,file)'})
 				vim.keymap.set('n', '<leader>ml', md.link_picker, {buffer = true, desc = 'show linklist'})
-				vim.keymap.set({'n', 'i'}, '<M-e>', function() md.file_picker('markdown') end, {buffer = true, desc = 'show linklist'})
+				vim.keymap.set({'n', 'i'}, '<M-e>', function() md.file_picker('wiki') end, {buffer = true, desc = 'show linklist'})
 				vim.keymap.set({'n', 'v'}, 'P', function() md.clipboard_paste('markdown') end, {buffer = true, noremap = true, desc = 'Clipbaord paste'})
 
 				-- autolist <CR>
