@@ -354,8 +354,6 @@ return {
 				-- Don't remap to <C-m>, it synchronize with <CR>
 			end
 		})
-
-
 	end
 }
 }
