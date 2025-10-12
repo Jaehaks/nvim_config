@@ -38,6 +38,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.fidget'             , enabled = true},
 		{import = 'jaehak.plugins.flash'              , enabled = true},
 		{import = 'jaehak.plugins.gitsigns'           , enabled = true},
+		{import = 'jaehak.plugins.blame'              , enabled = true},
 		{import = 'jaehak.plugins.grug-far'           , enabled = true},
 		{import = 'jaehak.plugins.hlchunk'            , enabled = true},
 		{import = 'jaehak.plugins.marks'              , enabled = true},
