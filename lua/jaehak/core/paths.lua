@@ -65,6 +65,7 @@ M.Filetypes = {
 	ForTreesitter = {
 		'lua',
 		'c',
+		'cpp',
 		'matlab',
 		'python',
 		'vim',

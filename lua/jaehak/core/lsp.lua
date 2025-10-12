@@ -425,6 +425,57 @@ vim.lsp.config('marksman', {
 	root_dir = root_dir_marksman,
 })
 
+
+-- #############################################################
+-- ####### clangd config
+-- #############################################################
+local root_dir_clangd = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'.clangd',
+		'.clang-tidy',
+		'.clang-format',
+		'.compile_commands.json',
+		'.compile_flags.txt',
+		'.configure.ac',
+		'.git'
+	}) or vim.fn.expand('%:p:h')
+	cb(root)
+end
+---@class ClangdInitializeResult: lsp.InitializeResult
+---@field offsetEncoding? string
+
+---@type vim.lsp.Config
+vim.lsp.config('clangd', {
+	cmd = {'clangd'},
+	filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' },
+	root_dir = root_dir_clangd,
+	capabilities = {
+		textDocument = {
+			completion = {
+				editsNearCursor = true,
+			},
+		},
+		offsetEncoding = { 'utf-8', 'utf-16' },
+	},
+	---@param init_result ClangdInitializeResult
+	on_init = function(client, init_result)
+		if init_result.offsetEncoding then
+			client.offset_encoding = init_result.offsetEncoding
+		end
+	end,
+	-- on_attach = function(client, bufnr)
+	-- 	-- check : https://github.com/neovim/nvim-lspconfig/blob/623bcf08d5f9ff4ee3ce2686fa1f1947a045b1a5/lsp/clangd.lua#L65
+	--
+	-- 	vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdSwitchSourceHeader', function()
+	-- 		switch_source_header(bufnr, client)
+	-- 	end, { desc = 'Switch between source/header' })
+	--
+	-- 	vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdShowSymbolInfo', function()
+	-- 		symbol_info(bufnr, client)
+	-- 	end, { desc = 'Show symbol info' })
+	-- end,
+})
+
 -- #############################################################
 -- ####### lsp enable
 -- #############################################################
@@ -438,6 +489,7 @@ vim.lsp.enable({
 	'texlab',
 	'json_lsp',
 	'marksman',
+	'clangd',
 })
 
 
