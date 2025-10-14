@@ -318,8 +318,19 @@ vim.lsp.config('pyrefly', {
 -- %f, %l must be independent item in table. I want to write -outdir depends on filename, it cannot use
 -- OnSave feature is good, but I want to turn on/off like vimtex
 -- sioyek main branch cannot recognize toggle_synctex at startup
+local root_dir_texlab = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'.latexmkrc',
+		'latexmkrc',
+		'.texlabroot',
+		'texlabroot',
+		'.git'
+	}) or vim.fn.expand('%:p:h')
+	cb(root)
+end
 vim.lsp.config('texlab', {
 	cmd = {'texlab'},
+	root_dir = root_dir_texlab,
 	filetypes = {'tex', 'plaintex', 'bib'},
 	settings = { -- see https://github.com/latex-lsp/texlab/wiki/Configuration
 		texlab = {

@@ -28,7 +28,6 @@ local ensured_mason_installed = {
 	['pyrefly']                = 'pyrefly',
 	['latexindent']            = 'latexindent',
 	['texlab']                 = 'texlab',
-	['bibtex-tidy']            = 'bibtex-tidy',
 	['lua-language-server']    = 'lua-language-server',
 	['stylua']                 = 'stylua',
 	['matlab-language-server'] = 'matlab-language-server',
