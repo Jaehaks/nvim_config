@@ -17,7 +17,7 @@ local code_block = s({
 	desc = 'make code block',
 	}, {
 	t({'```'}), i(1,'filetype'),
-	t({'','\t'}), i(2, '-- code'),
+	t({'',''}), i(2, '-- code'),
 	t({'','```'}),
 	t({'',''}), i(0,'')
 })
