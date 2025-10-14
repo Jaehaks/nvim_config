@@ -24,10 +24,10 @@ return {
 		formatters = {
 			stylua = {
 			},
-			ruff_format = {
+			ruff = {
 				command = 'ruff',
 				args = {
-					'format',
+					'check',
 					'--config=' .. require('jaehak.core.paths').lsp.ruff.config_path,
 					'--force-exclude',
 					'--stdin-filename',
@@ -35,13 +35,30 @@ return {
 					'-'
 				},
 				stdin = true,
+			},
+			bibtex = {
+				command = 'bibtex-tidy',
+				args = {
+					'--curly',                          -- enclose all text values to preserve latex string
+					'--enclosing-braces=title,journal', -- double curly to title, journal to preserve all text
+					'--numeric',                        -- if value is numeric, use number
+					'--tab',                            -- indent is tab.
+					'--align=14',                       -- the longest field length is 12, all values are aligned
+					'--blank-lines',                    -- add blank line between items
+					'--duplicates=key',                 -- check and warn if key is duplicated
+					'--escape',                         -- Escape special characters so that they can be recognized reliably
+					'--sort=title',                     -- sort bib contents by title
+					'--sort-fields',                    -- sort field inside of each items,
+					'--generate-keys'					-- auto-generate keys by <author><year><title> + <num>
+				}
 			}
 		},
 		-- set formatter to filetype
 		formatters_by_ft = {
 			lua = { "stylua"},
 			tex = { "latexindent" },
-			python = { "ruff_format" },
+			bib = { "bibtex" },
+			python = { "ruff" },
 			-- ["*"] = { "codespell" },       -- on all filetypes
 			["_"] = { "trim_whitespace" }, -- on filetypes that  don't have other formatter, it needs awk.
 		},
