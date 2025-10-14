@@ -319,32 +319,6 @@ vim.lsp.config('pyrefly', {
 -- OnSave feature is good, but I want to turn on/off like vimtex
 -- sioyek main branch cannot recognize toggle_synctex at startup
 vim.lsp.config('texlab', {
-	on_attach = function (client, bufnr)
-		-- local opts = {silent = true, buffer = bufnr}
-		-- local params = {
-		-- 	textDocument = {
-		-- 		uri = vim.uri_from_bufnr(bufnr) -- get absolute path with 'file://' prefix
-		-- 	},
-		-- 	position = {
-		-- 		line = vim.fn.line('.') - 1,
-		-- 		character = vim.fn.col('.') - 1,
-		-- 	}
-		-- }
-		-- local handler = function (err, result, ctx)
-		-- 	if err then
-		-- 		vim.notify('Error: ' .. tostring(err), vim.log.levels.ERROR)
-		-- 	end
-		-- end
-		--
-		-- -- keymap for forwardsearch
-		-- vim.keymap.set('n', '<leader>lv', function ()
-		-- 	client:request('textDocument/forwardSearch', params, handler, bufnr)
-		-- end, opts)
-		-- -- keymap for build
-		-- vim.keymap.set('n', '<leader>lf', function ()
-		-- 	client:request('textDocument/build', params, handler, bufnr)
-		-- end, opts)
-	end,
 	cmd = {'texlab'},
 	filetypes = {'tex', 'plaintex', 'bib'},
 	settings = { -- see https://github.com/latex-lsp/texlab/wiki/Configuration
