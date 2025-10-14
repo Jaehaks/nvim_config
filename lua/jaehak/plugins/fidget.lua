@@ -14,6 +14,11 @@ return {
 				end,
 			},
 		},
+		notification = {
+			window = {
+				max_width = 0, -- disable width limit of message
+			}
+		},
 		logger = {
 			level = vim.log.levels.OFF, -- disable logging
 		}
