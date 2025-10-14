@@ -81,6 +81,7 @@ M.Filetypes = {
 		'sh',
 		'tex',
 		'latex',
+		'bib',
 	},
 	ForIlluminate = { 'lua', 'matlab', 'json', 'python', 'text', 'markdown' },
 	ForCode = { 'lua', 'matlab', 'json', 'python' },

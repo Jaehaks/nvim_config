@@ -26,7 +26,7 @@ return {
 			'markdown', 'markdown_inline',
 			'html', 'json', 'toml',
 			'diff', 'regex', 'ssh_config', 'powershell', 'bash',
-			'latex' -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
+			'latex', 'bibtex', -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
 		}
 		ts.install(parsers)
 
