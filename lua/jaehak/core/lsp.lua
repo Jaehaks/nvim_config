@@ -343,19 +343,6 @@ vim.lsp.config('texlab', {
 				onSave = false,                 -- build on save (it works when :w but not autocmd save)
 				forwardSearchAfter = false,     -- perform forward search after build
 			},
-			forwardSearch = {
-				executable = 'sioyek',
-				args = {
-					"--reuse-window",
-					"--inverse-search",
-					"texlab inverse-search -i \"%%1\" -l %%2",
-					"--forward-search-file",
-					"%f",
-					"--forward-search-line",
-					"%l",
-					"%p",
-				},
-			},
 			latexFormatter = 'latexindent',
 			latexindent = {
 				modifyLineBreaks = false,
