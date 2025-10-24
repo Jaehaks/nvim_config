@@ -669,7 +669,7 @@ local function get_oldfiles()
 				pos      = {1,1},
 				filename = filename, -- manual
 				diralias = dirname, -- manual
-				score    = len_oldfiles - i, -- remain order of vim.v.oldfiles
+				score    = len_oldfiles - i*0.001, -- remain order of vim.v.oldfiles
 			})
 			duplicated_buffer_hash[file] = true
 		end
