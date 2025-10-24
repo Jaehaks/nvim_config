@@ -463,7 +463,7 @@ vim.lsp.enable({
 	'ruff',
 	'pyrefly',
 	'basedpyright',
-	-- 'texlab',
+	'texlab',
 	'json_lsp',
 	'marksman',
 	'clangd',
