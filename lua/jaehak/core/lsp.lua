@@ -12,13 +12,18 @@ local pid = {
 -- ####### set diagnostics as numhl to distinguish with gitsign
 -- #############################################################
 -- global lsp diagnostic configuration at neovim v0.11
+-- The highlights group must be defined at startup. if not, diagnostics in signcolumn cannot be shown first try.
+vim.api.nvim_set_hl(0, "DiagnosticERRORReverse", { bg = "#FC5142", fg = "#000000" })
+vim.api.nvim_set_hl(0, "DiagnosticWARNReverse",  { bg = "#E3D18A", fg = "#000000" })
+vim.api.nvim_set_hl(0, "DiagnosticINFOReverse",  { bg = "#87BCFF", fg = "#000000" })
+vim.api.nvim_set_hl(0, "DiagnosticHINTReverse",  { bg = "#7FD8CA", fg = "#000000" })
 vim.diagnostic.config({
 	signs = {
 		text = {
-			[vim.diagnostic.severity.ERROR] = '',
-			[vim.diagnostic.severity.WARN]  = '',
-			[vim.diagnostic.severity.INFO]  = '',
-			[vim.diagnostic.severity.HINT]  = '',
+			[vim.diagnostic.severity.ERROR] = ' ',
+			[vim.diagnostic.severity.WARN]  = ' ',
+			[vim.diagnostic.severity.INFO]  = ' ',
+			[vim.diagnostic.severity.HINT]  = ' ',
 		},
 		numhl = {
 			[vim.diagnostic.severity.ERROR] = 'DiagnosticERRORReverse',
@@ -458,7 +463,7 @@ vim.lsp.enable({
 	'ruff',
 	'pyrefly',
 	'basedpyright',
-	'texlab',
+	-- 'texlab',
 	'json_lsp',
 	'marksman',
 	'clangd',
