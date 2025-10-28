@@ -46,7 +46,6 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.neominimap'         , enabled = true},
 		{import = 'jaehak.plugins.nvim-context-vt'    , enabled = true},
 		{import = 'jaehak.plugins.nvim-hlslens'       , enabled = true},
-		{import = 'jaehak.plugins.obsidian'           , enabled = true},
 		{import = 'jaehak.plugins.spelunk'            , enabled = false}, -- false
 		{import = 'jaehak.plugins.split'              , enabled = true},
 		{import = 'jaehak.plugins.staline'            , enabled = true},
