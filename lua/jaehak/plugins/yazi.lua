@@ -70,6 +70,11 @@ return {
 			win_options = {
 				signcolumn = 'yes:2',
 			},
+			float = {
+				border = 'rounded',
+				-- preview_split: Split direction: "auto", "left", "right", "above", "below".
+				preview_split = "auto",
+			},
 		})
 
 		require('oil-git-status').setup({}) -- oil-git-status setup must be called after 'oil' loading
