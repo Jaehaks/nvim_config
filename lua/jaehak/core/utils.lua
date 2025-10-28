@@ -552,22 +552,31 @@ local function run(file)
 
 	-- check runner by filetype
 	local extension = vim.fn.fnamemodify(file, ':t:e')
-	local cmd = nil
+	local cwd = vim.fn.fnamemodify(file, ':h')
+	local engine, args = nil, nil
 	if vim.tbl_contains({'py'}, extension) then
-		cmd = 'python'
+		engine = 'python'
+		args = { vim.fn.fnameescape(file) }
 	elseif vim.tbl_contains({'lua'}, extension) then
 		if vim.fs.root(0, 'nvim') then
 			vim.cmd('luafile %')
 			return
 		else
-			cmd = 'lua'
+			engine = 'lua'
+			args = { vim.fn.fnameescape(file) }
 		end
 	elseif vim.tbl_contains({'ps1'}, extension) then
-		cmd = 'pwsh'
+		engine = 'pwsh'
+		args = { vim.fn.fnameescape(file) }
+	elseif vim.tbl_contains({'bat', 'cmd'}, extension) then
+		engine = 'cmd'
+		args = { '/c', vim.fn.fnameescape(file) }
 	end
+	local cmd = vim.iter({engine, args}):flatten():totable()
 
 	if cmd then
-		vim.fn.jobstart({ cmd, vim.fn.fnameescape(file) },{
+		vim.fn.jobstart(cmd,{
+			cwd = cwd,
 			stdout_buffered = true,
 			stderr_buffered = true,
 			on_stdout = function (_, data, _)
