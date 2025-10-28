@@ -13,11 +13,10 @@ return {
 			engine = 'latexmk',
 			args = {
 				'-pdf',                     -- make pdf for output
-				'-outdir=@texname',			-- output folder after build
 				'-interaction=nonstopmode', -- continuous mode compilation
 				'-synctex=1',               -- enable synctex and make synctex.gz for forward/inverse search
 				'-silent', 					-- be more quiet progress message
-				'@tex',                     -- current file
+				'@maintex',                 -- current file
 			},
 			openAfter = true,
 		},
@@ -49,14 +48,18 @@ return {
 			group = TexFlowMaps,
 			pattern = {'tex', 'latex', 'plaintex'},
 			callback = function ()
-				vim.keymap.set('n', '<leader>ll', function () texflow.compile({ latex = { onSave = true, } })
+				vim.keymap.set('n', '<leader>ll', function () texflow.compile({ latex = { onSave = 'inherit' } })
 				end, { buffer = true, desc = '[TexFlow] compile tex file and open pdf', silent = true })
 
-				vim.keymap.set('n', '<leader>lf', function () texflow.compile({ latex = { openAfter = false, onSave = false, } })
+				vim.keymap.set('n', '<leader>lf', function () texflow.compile({ latex = { openAfter = false, onSave = nil, } })
 				end, { buffer = true, desc = '[TexFlow] compile tex file and open pdf', silent = true })
 
 				vim.keymap.set('n', '<leader>lv', function () texflow.view() end
 				, { buffer = true, desc = '[TexFlow] view pdf file', silent = true })
+
+				vim.keymap.set('n', '<leader>lc', function () texflow.cleanup_auxfiles() end
+				, { buffer = true, desc = '[TexFlow] cleanup aux files', silent = true })
+
 			end
 		})
 	end
