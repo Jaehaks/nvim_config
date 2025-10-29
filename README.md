@@ -2,7 +2,7 @@
 
 - Default setup :
     - Windows 10
-    -
+	-
 
 ## Installation requirement
 
@@ -180,7 +180,7 @@ These steps will operate automatically later, every update of github repository 
 
 ```json
 {
-    "language": ["matlab"],
+	"language": ["matlab"],
     "path": "./snippets/matlab/matlab.json"
 },
 ```
