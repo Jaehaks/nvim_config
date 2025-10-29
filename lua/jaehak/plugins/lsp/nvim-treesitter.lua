@@ -24,7 +24,7 @@ return {
 			'python',
 			'vim', 'vimdoc',
 			'markdown', 'markdown_inline',
-			'html', 'json', 'toml',
+			'html', 'json', 'toml', 'yaml',
 			'diff', 'regex', 'ssh_config', 'powershell', 'bash',
 			'latex', 'bibtex', -- for latex, tree-sitter-cli must be installed first, (scoop install main/tree-sitter)
 		}
