@@ -83,6 +83,9 @@ return {
 			},
 		}) end, desc = 'Show diagnostics all of cwd', mode = {'n'}},
 
+		{ '<leader>fq', function () Snacks.picker.qflist({
+		}) end, desc = 'Show quickfix list', mode = {'n'}},
+
 		{ '<leader>fr', function () Snacks.picker.lsp_references({
 			auto_confirm = false, -- don't go automatically if the item is unique
 			include_current = true, -- include current file to find
