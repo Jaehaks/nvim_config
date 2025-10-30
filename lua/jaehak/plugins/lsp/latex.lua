@@ -13,6 +13,8 @@ return {
 			engine = 'latexmk',
 			args = {
 				'-pdf',                     -- make pdf for output
+				'-pdflatex=lualatex',
+				'-pdflatex=lualatex',
 				'-interaction=nonstopmode', -- continuous mode compilation
 				'-synctex=1',               -- enable synctex and make synctex.gz for forward/inverse search
 				'-silent', 					-- be more quiet progress message
