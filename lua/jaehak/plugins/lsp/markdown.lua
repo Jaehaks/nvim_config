@@ -275,6 +275,8 @@ return {
 		}
 	},
 },
+-- nuhakala/nvim-simple-tables : not work table align
+-- 'timantipov/md-table-tidy.nvim' : it doesn't support main branch of treesitter
 {
 	'Jaehaks/md-utility.nvim',
 	ft = {'markdown', 'text'},
@@ -305,7 +307,7 @@ return {
 
 				vim.keymap.set({'n'}, 'gf', md.follow_link, {buffer = true, noremap = true, desc = 'follow link(image,url,file)'})
 				vim.keymap.set('n', '<leader>ml', md.link_picker, {buffer = true, desc = 'show linklist'})
-				vim.keymap.set({'n', 'i'}, '<M-e>', function() md.file_picker('wiki') end, {buffer = true, desc = 'show linklist'})
+				vim.keymap.set({'n', 'i', 'v'}, '<M-e>', function() md.file_picker('wiki') end, {buffer = true, desc = 'show linklist'})
 				vim.keymap.set({'n', 'v'}, 'P', function() md.clipboard_paste('markdown') end, {buffer = true, noremap = true, desc = 'Clipbaord paste'})
 
 				-- autolist <CR>
