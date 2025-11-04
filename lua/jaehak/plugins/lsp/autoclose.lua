@@ -75,6 +75,7 @@ return {
 		{'"', mode = {'i', 'c'}},
 		{"'", mode = {'i', 'c'}},
 		{"`", mode = {'i', 'c'}},
+		{"$", mode = {'i', 'c'}},
 	},
 	opts = {
 		modes = { insert = true, command = true, terminal = true },
@@ -95,8 +96,36 @@ return {
 			['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\%`].', register = { cr = false } },
 		},
 	},
-	-- config = function ()
+	config = function (_, opts)
+		local minipairs = require('mini.pairs')
+		minipairs.setup(opts)
 
+		--------------------------------------------------
+		-- Create symmetrical `$$` pair for these filetype
+		--------------------------------------------------
+		-- mini.pair doesn't support filetype option
+		local ft_list = {'markdown', 'tex', 'plaintex', 'latex'}
+		---@param bufnr number
+		local function tex_mapping(bufnr)
+			minipairs.map_buf(bufnr, 'i', '$', { action = 'closeopen', pair = '$$'})
+		end
+
+		-- Create autocmd for filetype (but the event doesn't work buffer opened before plugin is loaded)
+		vim.api.nvim_create_autocmd('FileType', {
+			pattern = ft_list,
+			callback = tex_mapping,
+		})
+
+		-- Apply mapping to existing buffer
+		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+			if vim.api.nvim_buf_is_loaded(bufnr) then
+				local ft = vim.api.nvim_get_option_value("filetype", {buf = bufnr})
+				if vim.tbl_contains(ft_list, ft) then
+					tex_mapping(bufnr)
+				end
+			end
+		end
+	end
 },
 {
 	-- auto highlight to brackets

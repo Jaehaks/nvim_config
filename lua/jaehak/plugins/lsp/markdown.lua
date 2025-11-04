@@ -138,7 +138,7 @@ return {
 			internal_links = {}, -- pattern "[[#title]]", internal link in current file
 			uri_autolinks  = {}, -- pattern "<https://example.com>", direct link without link name
 		},
-		latex = { enable = false, }, -- $ $ for inline rendering / $$ $$ for block rendering in markdown file (not .tex)
+		latex = { enable = true, }, -- $ $ for inline rendering / $$ $$ for block rendering in markdown file (not .tex)
 		typst = { enable = false, },
 		yaml  = { enable = false, }
 	},
