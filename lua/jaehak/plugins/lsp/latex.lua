@@ -13,7 +13,6 @@ return {
 			engine = 'latexmk',
 			args = {
 				'-pdf',                     -- make pdf for output
-				'-pdflatex=lualatex',
 				'-interaction=nonstopmode', -- continuous mode compilation
 				'-synctex=1',               -- enable synctex and make synctex.gz for forward/inverse search
 				'-silent', 					-- be more quiet progress message
@@ -61,6 +60,8 @@ return {
 				vim.keymap.set('n', '<leader>lc', function () texflow.cleanup_auxfiles() end
 				, { buffer = true, desc = '[TexFlow] cleanup aux files', silent = true })
 
+				vim.keymap.set('n', '<leader>lk', ':lua require("texflow").compile({ latex = { openAfter = false, onSave = "inherit"}})'
+				, { buffer = true, desc = '[TexFlow] compile tex file and open pdf', silent = true })
 			end
 		})
 	end
