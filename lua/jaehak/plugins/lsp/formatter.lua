@@ -52,11 +52,21 @@ return {
 					'--generate-keys'					-- auto-generate keys by <author><year><title> + <num>
 				}
 			},
+			tex_fmt = {
+				command = 'tex-fmt',
+				args = {
+					'--nowrap',    -- no wrap if the line is longer
+					'--tabsize=1', -- it indicates how many tabs if '--usetabs' set
+					'--usetabs',   -- use tab instead of space
+					'--stdin',     -- formatting current single file as argument
+				},
+			}
 		},
 		-- set formatter to filetype
 		formatters_by_ft = {
 			lua = { "stylua"},
-			tex = { "latexindent" },
+			tex = { 'tex_fmt' },
+			latex = { 'tex_fmt' },
 			bib = { "bibtex" },
 			python = { "ruff" },
 			matlab = { lsp_format = 'first' },
