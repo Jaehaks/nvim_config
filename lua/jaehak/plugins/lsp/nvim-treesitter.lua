@@ -47,7 +47,6 @@ return {
 {
 	-- rendering help using vimdoc treesitter
 	"OXY2DEV/helpview.nvim",
-	ft = 'help',
-	-- lazy = false, -- Recommended
+	lazy = false, -- Recommended
 },
 }
