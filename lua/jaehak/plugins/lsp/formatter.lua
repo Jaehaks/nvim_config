@@ -51,7 +51,7 @@ return {
 					'--sort-fields',                    -- sort field inside of each items,
 					'--generate-keys'					-- auto-generate keys by <author><year><title> + <num>
 				}
-			}
+			},
 		},
 		-- set formatter to filetype
 		formatters_by_ft = {
@@ -59,6 +59,7 @@ return {
 			tex = { "latexindent" },
 			bib = { "bibtex" },
 			python = { "ruff" },
+			matlab = { lsp_format = 'first' },
 			-- ["*"] = { "codespell" },       -- on all filetypes
 			["_"] = { "trim_whitespace" }, -- on filetypes that  don't have other formatter, it needs awk.
 		},
