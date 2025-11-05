@@ -340,18 +340,14 @@ vim.lsp.config('texlab', {
 	settings = { -- see https://github.com/latex-lsp/texlab/wiki/Configuration
 		texlab = {
 			build = {
-				executable = 'latexmk',
-				args = {
-					'-interaction=nonstopmode', -- continuous mode compilation
-					'%f',                       -- current file
-				},
+				-- executable = 'latexmk',
+				-- args = {
+				-- 	'-interaction=nonstopmode', -- continuous mode compilation
+				-- 	'%f',                       -- current file
+				-- },
 				onSave = false,                 -- build on save (it works when :w but not autocmd save)
 				forwardSearchAfter = false,     -- perform forward search after build
 			},
-			latexFormatter = 'latexindent',
-			latexindent = {
-				modifyLineBreaks = false,
-			}
 		},
 	},
 })
