@@ -76,6 +76,7 @@ return {
 		{"'", mode = {'i', 'c'}},
 		{"`", mode = {'i', 'c'}},
 		{"$", mode = {'i', 'c'}},
+		{"_", mode = {'i', 'c'}},
 	},
 	opts = {
 		modes = { insert = true, command = true, terminal = true },
@@ -107,6 +108,11 @@ return {
 		local ft_list = {'markdown', 'tex', 'plaintex', 'latex'}
 		local function tex_mapping(args)
 			minipairs.map_buf(args.buf, 'i', '$', { action = 'closeopen', pair = '$$'})
+
+			if vim.bo[args.buf].filetype == 'markdown' then
+				minipairs.map_buf(args.buf, 'i', '_', { action = 'closeopen', neigh_pattern = '[^%a\\%]\'].', pair = '__'})
+				minipairs.map_buf(args.buf, 'i', '*', { action = 'closeopen', neigh_pattern = '[^%a\\%]\'].', pair = '**'})
+			end
 		end
 
 		-- Create autocmd for filetype (but the event doesn't work buffer opened before plugin is loaded)
