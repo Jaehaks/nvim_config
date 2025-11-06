@@ -330,7 +330,6 @@ local root_dir_texlab = function (bufnr, cb)
 		'.texlabroot',
 		'texlabroot',
 		'Tectonic.toml',
-		'.git'
 	}) or vim.fn.expand('%:p:h')
 	cb(root)
 end
@@ -361,7 +360,7 @@ vim.lsp.config('texlab', {
 				forwardSearchAfter = false,     -- perform forward search after build
 			},
 			chktex = { -- show warning about style linting result
-				onOpenAndSave = true,
+				onOpenAndSave = false,
 				onEdit = false,
 			}
 		},
