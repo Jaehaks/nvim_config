@@ -9,9 +9,8 @@ select = ['E', 'W', 'F', 'I001']
 
 # ignore : feature overlapped with pyright
 # F821 : undefined function
-ignore = ['F821']
 # E501 : Line too long (121 > 120)
-ignore = ['E501']
+ignore = ['F821', 'E501']
 
 [format]
 quote-style = "single"
