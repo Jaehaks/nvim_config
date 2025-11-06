@@ -329,10 +329,27 @@ local root_dir_texlab = function (bufnr, cb)
 		'latexmkrc',
 		'.texlabroot',
 		'texlabroot',
+		'Tectonic.toml',
 		'.git'
 	}) or vim.fn.expand('%:p:h')
 	cb(root)
 end
+
+local function filter_diagnostics(diagnostics, unwanted_source)
+    local filtered = {}
+    for _, diag in ipairs(diagnostics) do
+        if diag.source ~= unwanted_source then
+            table.insert(filtered, diag)
+        end
+    end
+    return filtered
+end
+local function publishDiagnostics_texlab(err, result, ctx)
+	local unwanted_source = 'latex'
+	result.diagnostics = filter_diagnostics(result.diagnostics, unwanted_source)
+	return vim.lsp.handlers['textDocument/publishDiagnostics'](err, result, ctx)
+end
+
 vim.lsp.config('texlab', {
 	cmd = {'texlab'},
 	root_dir = root_dir_texlab,
@@ -340,15 +357,33 @@ vim.lsp.config('texlab', {
 	settings = { -- see https://github.com/latex-lsp/texlab/wiki/Configuration
 		texlab = {
 			build = {
-				-- executable = 'latexmk',
-				-- args = {
-				-- 	'-interaction=nonstopmode', -- continuous mode compilation
-				-- 	'%f',                       -- current file
-				-- },
 				onSave = false,                 -- build on save (it works when :w but not autocmd save)
 				forwardSearchAfter = false,     -- perform forward search after build
 			},
+			chktex = { -- show warning about style linting result
+				onOpenAndSave = true,
+				onEdit = false,
+			}
 		},
+	},
+	handlers = {
+		-- disable 'latex' source diagnostics
+		['textDocument/publishDiagnostics'] = publishDiagnostics_texlab,
+
+		-- texlab supports build / viewer
+		-- but viewer doesn't executes inverse search properly
+		-- build can only compile current file using %f, not main file.
+		-- If you want to compile main file, remove argument %f and use config file like .latexmk or Tectonic.toml
+		-- so It needs to use texflow.nvim to more flexible operation.
+
+		-- texlab supports two diagnostics source (texlab / latex)
+		-- `texlab` source shows results independent of the compile engine.
+		-- `latex` source read log file and show the result of parsing.
+		-- It has  not enough feature. because It doesn't find proper line of package warning.
+		-- and It cannot show properly when there are multiple files.
+		-- and It doesn't reset even though there are no warning in log file.
+		-- I cannot understand when the `latex` source parsing and updating.
+		-- It is the second reason why I use texflow.nvim
 	},
 })
 
