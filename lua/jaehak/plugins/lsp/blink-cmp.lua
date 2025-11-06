@@ -1,3 +1,32 @@
+-- check https://github.com/latex-lsp/texlab/wiki/LSP-Internals#enum-mapping
+local CompletionItemKind_texlab = {
+    'String',
+    'Float',
+    'Command',
+    'Label',
+    'Field',
+    'Theorem',
+    'Package/Class',
+    'Misc',
+    'Section',
+    'Library',
+    'Thesis',
+    'Command_args',
+    'Environment',
+    'Keyword',
+    'Snippet',
+    'Color',
+    'File',
+    'Reference',
+    'Folder',
+    'EnumMember',
+    'Equation',
+    'Book',
+    'Article',
+    'Part',
+    'Collection',
+}
+
 return {
 	'saghen/blink.cmp',
 	event = 'InsertEnter',
@@ -51,6 +80,7 @@ return {
 					columns = {
 						{'kind_icon'},
 						{'label', 'label_description', gap = 1},
+						{'kind'}, 		 -- show categories of item
 						{'source_name'}, -- show source_name in menu
 					},
 				}
@@ -88,6 +118,17 @@ return {
 					fallbacks = {},
 					-- max_items = 5,
 					-- score_offset = 50,
+					-- ---@param ctx blink.cmp.Context
+					---@param items blink.cmp.CompletionItem[]
+					transform_items = function (_, items)
+						for _, item in ipairs(items) do
+							-- change kind_name for tex only
+							if item.client_name == 'texlab' then
+								item.kind_name = CompletionItemKind_texlab[item.kind]
+							end
+						end
+						return items
+					end
 				},
 				buffer = {
 					-- BUG: when I set max_items, some lsp's list are now shown
