@@ -27,7 +27,7 @@ return {
 			ruff = {
 				command = 'ruff',
 				args = {
-					'check',
+					'format',
 					'--config=' .. require('jaehak.core.paths').lsp.ruff.config_path,
 					'--force-exclude',
 					'--stdin-filename',
