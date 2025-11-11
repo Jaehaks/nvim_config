@@ -7,7 +7,7 @@ local config = {
 	open_paren                    = vim.bo.shiftwidth,
 	nested_paren                  = vim.bo.shiftwidth,
 	continue                      = vim.bo.shiftwidth,
-	searchpair_timeout            = 500, -- [ms]
+	searchpair_timeout            = 150, -- [ms]
 	disable_parentheses_indenting = false,
 }
 
