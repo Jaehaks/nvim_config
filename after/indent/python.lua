@@ -320,6 +320,12 @@ _G.python_indent_user = function(lnum, extra_func)
 		return plindent
 	end
 
+	-- INFO: If current line is empty line, follow non-blank previous line indent
+	if line:find('^%s*$') then
+		debugprint('line-327: ' .. tostring(prev_indent))
+		return prev_indent
+	end
+
 	debugprint('line-308: ' .. tostring(-1))
 	return -1
 end
