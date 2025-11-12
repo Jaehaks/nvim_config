@@ -73,16 +73,18 @@ end
 ---@return string
 local function get_validstr(lnum)
 	local line = vim.fn.getline(lnum)
+	local comment_col = #line + 1
 	local min, max = 1, #line
-	while min < max do
+	while min <= max do
 		local col = math.floor((min + max) / 2)
 		if node_matches(lnum, col, {'comment', 'todo'}) then
-			max = col
+			comment_col = col
+			max = col - 1
 		else
 			min = col + 1
 		end
 	end
-	return line:sub(1, min - 1)
+	return line:sub(1, comment_col - 1)
 end
 
 -- Main indent function
