@@ -1,0 +1,113 @@
+% lualatex 기준
+
+% Latex Guide
+% 1) eqnarray 미사용
+%	- 등호 좌우간격이 너무 넓어서 보기 안좋음
+%	- 수식이 수식 번호까지 겹치게 되는 문제
+%	- 여러줄 수식을 조판하기 위한 환경인데, 이득이 없고 `align`을 대신 사용, align*는 수식 번호 없음
+%	- 여러줄 수식에 수식 번호 하나 붙이려면 `align`이나 `equation` block 안에  `aligned` 이용
+
+
+% =====================================================================
+% Document Start / layout
+% =====================================================================
+% documentclass : prefix 로 ext사용시(extreport) 13pt 이상 폰트 크기 사용 가능
+%				  chapter / section 등은 book, report class 를 이용해야 한다
+% fleqn : 작성되는 수식들을 왼쪽으로 정렬, 없으면 가운데 정렬
+% font size : 일반적으로 12pt가 한계
+\documentclass[12pt]{report}
+
+
+
+% - geometry : 여백 조정 (기본 여백이 너무 많음)
+% top / bottom 은 chapter / section 등이 표시되기 위한 header / footer 공간은 남겨야한다
+% \chapter{} block 은 원래 위쪽에 마진이 많다. chapter 표시는 페이지 맨 위에 header 에 표시
+% landscape : 가로방향 페이지
+\usepackage[left=1cm, right=1cm, top=2cm, bottom=2cm, landscape]{geometry}
+
+
+% - setspace : 줄간 간격 조정
+% (singlespacing 으로 라인간 한칸 유지) : 이게 없으면 내용에 따라 latex가 알아서 자동 줄간격 조정할 수 있다
+\usepackage{setspace}
+\singlespacing
+
+% - indentfirst : 자동 첫 줄 들여쓰기
+% 				\setlength{\parindent}{0.2in} : 들여쓰기 간격 설정
+%				\setlength{\parskip}{6pt} : 문단 간 간격 조정
+\usepackage{indentfirst}
+
+
+
+% =====================================================================
+% Encoding 및 언어 지원
+% =====================================================================
+% \usepackage[utf8]{inputenc} % inputenc : latex 문서 text encoding utf8로 설정 (lualtex에서는 무시됨) pdflatex용
+\usepackage[T1]{fontenc} % [T1] 은 lualtex에서 무시됨, pdflatex용
+\usepackage{kotex} % [T1] 은 lualtex에서 무시됨, pdflatex용
+
+% =====================================================================
+% 참조
+% =====================================================================
+\usepackage{url}
+\usepackage[sectionbib]{chapterbib}
+% \usepackage{subfiles} % sub file구조로 사용 가능
+% \usepackage{cite}
+% \usepackage[backend=biber, style=ieee]{biblatex}
+% \addbibresource{chapters/ch1-bib.bib}
+% \addbibresource{chapters/chapter2.bib}
+
+% =====================================================================
+% 수학 기호
+% =====================================================================
+\usepackage{amsmath} % matrix / align / dfrac block등을 사용 가능 , (이게 없으면 array block 으로만 만들어야 한다)
+% \usepackage{amssymb} % blackboard/ relational / logical 등 추가적인 수학기호 사용 가능
+% \usepackage{amsfonts} % fraktur/ calligraphic 등 여러 수학기호 폰트
+% \usepackage{bm} % bold math symbols
+% \usepackage{physics} % 물리수식, 연산자 사용
+
+
+
+% =====================================================================
+% 추가 유틸
+% =====================================================================
+% \usepackage{graphicx}
+% \usepackage{booktabs}
+% \usepackage{hyperref} % \autoref, \nameref 사용 가능, hyperlink 자동 생성
+% \hypersetup{
+% 	colorlinks=true,
+% 	linkcolor=black,
+% 	citecolor=blue,
+% 	urlcolor=cyan,
+% }
+% \usepackage{cleveref} % \cref, \Cref이용, hyperref다음에 로드
+
+% =====================================================================
+% 제목 정보 (\maketitle 페이지에 들어가는 정보)
+% =====================================================================
+% {book} class의 경우, 양면 기준이기 때문에, 짝수/홀수 페이지에 있어야 하는 내용 기준이 엄격함
+% 이게 싪다면 {report} class로 하면 된다
+\title{title of documents}
+\author{KimJaehak}
+\date{\today}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% document start
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle % add title page
+\tableofcontents % add TOC page
+
+\newpage
+\include{chapters/ch1_equations.tex}
+
+\newpage
+\include{chapters/chapter2.tex}
+
+\newpage
+\include{chapters/chapter3.tex}
+
+
+
+\end{document}
