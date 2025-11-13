@@ -42,3 +42,14 @@ luac.out
 # chatgpt
 chatgpt.lua
 # lazy-lock.json
+
+# latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.pdf
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
