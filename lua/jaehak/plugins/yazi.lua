@@ -46,7 +46,7 @@ return {
 	lazy = true,
 	ft = {'dashboard'},
 	keys = {
-		{'<leader>ee', function () require('oil').open_float() end,                        desc = 'Open Oil Explorer (cwd)'},
+		{'<leader>ee', function () require('oil').open_float() end,                        						  desc = 'Open Oil Explorer (cwd)'},
 		{'<leader>ec', function () require('oil').open_float(require('jaehak.core.paths').nvim.config) end,       desc = 'Open Oil Explorer (config)'},
 		{'<leader>ed', function () require('oil').open_float(require('jaehak.core.paths').nvim.data) end,         desc = 'Open Oil Explorer (data)'},
 		{'<leader>en', function () require('oil').open_float(require('jaehak.core.paths').obsidian.personal) end, desc = 'Open Oil Explorer (personal)'},
@@ -87,7 +87,8 @@ return {
 -- 'refractalize/oil-git-status.nvim' : autocmd error is invoked whenever i write some file in oil.
 -- 									    it dosn't show git sign. I think it has some bug in windows
 -- "mikavilpas/yazi.nvim", : After yazi update, it has so many bugs to open explorer. I cannot use it anymore...
-
+-- "A7Lavinraj/fyler.nvim", : It can use tree/node mode. and supports git status out of box.
+-- 							  but the response is little slower than oil. and don't show filesize
 
 
 
