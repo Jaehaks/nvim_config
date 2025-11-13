@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 return {
 {
 	-- dashboard is faster a little?
