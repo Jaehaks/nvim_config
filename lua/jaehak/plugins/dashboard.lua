@@ -61,17 +61,10 @@ return {
 					key = 'n', key_hl = 'DashboardShortCut',
 					action = function () require('oil').open_float(require('jaehak.core.paths').obsidian.personal) end,
 				},
-				-- {
-				-- 	icon = '',
-				-- 	desc = 'Bookmark Files', desc_hl = 'String',
-				-- 	key = 'p', key_hl = 'DashboardShortCut',
-				-- 	action = function () require('grapple').toggle_tags() end,
-				-- },
 				{
 					icon = '',
 					desc = 'Last Sessions', desc_hl = 'String',
 					key = 's', key_hl = 'DashboardShortCut',
-					-- action = function () require('sessions').load(require('jaehak.core.paths').session.saved, {autosave = false}) end,
 					action = function () require('last-session').load_session() end,
 				},
 			},
