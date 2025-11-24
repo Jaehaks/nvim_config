@@ -232,7 +232,7 @@ local function TaskKill(pid)
 		return nil
 	end
 
-	local command = { "taskkill", "/PID", tostring(pid), '/F' }
+	local command = { "taskkill", '/f', "/pid", tostring(pid)}
 	local result = vim.system(command):wait()  -- stdout, stderr, ret
 	if result.code ~= 0 then
 		return nil

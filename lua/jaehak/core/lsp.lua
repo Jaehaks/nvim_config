@@ -353,13 +353,29 @@ vim.lsp.config('pyrefly', {
 	end,
 	on_exit = function ()
 		if vim.g.has_win32 then
-			for id in ipairs(pid.pyrefly) do
-				require('jaehak.core.utils').Taskkill(id)
+			for _, id in ipairs(pid.pyrefly) do
+				vim.schedule(function ()
+					require('jaehak.core.utils').Taskkill(id)
+				end)
 			end
 		end
 	end,
 	settings = {
 	},
+})
+
+vim.api.nvim_create_augroup("PyreflyKill", { clear = true })
+vim.api.nvim_create_autocmd('VimLeavePre', {
+	group = 'PyreflyKill',
+	callback = function()
+		if vim.g.has_win32 then
+			for _, id in ipairs(pid.pyrefly) do
+				vim.schedule(function ()
+					require('jaehak.core.utils').Taskkill(id)
+				end)
+			end
+		end
+	end
 })
 
 
