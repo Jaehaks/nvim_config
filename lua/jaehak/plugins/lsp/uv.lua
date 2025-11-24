@@ -1,10 +1,9 @@
 return {
-	'benomahony/uv.nvim',
-	enabled = false,
+	'Jaehaks/uv.nvim',
 	ft = {'python'},
 	opts = {
 		auto_activate_venv = true,
-		notify_activate_venv = true,
+		notify_activate_venv = false,
 
 		-- Auto commands for directory changes
 		auto_commands = true,
