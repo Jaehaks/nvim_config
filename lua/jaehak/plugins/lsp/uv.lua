@@ -1,5 +1,6 @@
 return {
 	'benomahony/uv.nvim',
+	enabled = false,
 	ft = {'python'},
 	opts = {
 		auto_activate_venv = true,
