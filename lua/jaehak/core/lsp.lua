@@ -47,6 +47,61 @@ vim.diagnostic.config({
 -- #############################################################
 -- ####### common lsp configuration
 -- #############################################################
+
+-- this function is from blink.cmp
+local function get_lsp_capabilities(override, include_nvim_defaults)
+	return vim.tbl_deep_extend('force', include_nvim_defaults and vim.lsp.protocol.make_client_capabilities() or {}, {
+		general = {
+			-- Unify position encodings for lsp
+			-- positionEncodings : encoding list that clients notice it to lsp server
+			-- utf-16 is default value for most lsp. utf-8/32 not used.
+			-- luals, pyright, rust supports utf-8 but these are also supports utf16
+			positionEncodings = {'utf-16'}
+		},
+		textDocument = {
+			completion = {
+				completionItem = {
+					snippetSupport = true,
+					commitCharactersSupport = false, -- todo:
+					documentationFormat = { 'markdown', 'plaintext' },
+					deprecatedSupport = true,
+					preselectSupport = false, -- todo:
+					tagSupport = { valueSet = { 1 } }, -- deprecated
+					insertReplaceSupport = true, -- todo:
+					resolveSupport = {
+						properties = {
+							'documentation',
+							'detail',
+							'additionalTextEdits',
+							'command',
+							'data',
+							-- todo: support more properties? should test if it improves latency
+						},
+					},
+					insertTextModeSupport = {
+						-- todo: support adjustIndentation
+						valueSet = { 1 }, -- asIs
+					},
+					labelDetailsSupport = true,
+				},
+				completionList = {
+					itemDefaults = {
+						'commitCharacters',
+						'editRange',
+						'insertTextFormat',
+						'insertTextMode',
+						'data',
+					},
+				},
+
+				contextSupport = true,
+				insertTextMode = 1, -- asIs
+			},
+		},
+	}, override or {})
+end
+local capabilities = get_lsp_capabilities()
+
 -- vim.lsp.config is extension of vim.lsp.ClientConfig
 -- but root_dir must be set by independent lsp server
 vim.lsp.config('*', {
@@ -55,6 +110,7 @@ vim.lsp.config('*', {
 		-- root directory must be transferred to callback function to recognize
 		cb(root)
 	end,
+	capabilities = capabilities
 })
 
 
