@@ -24,15 +24,24 @@ local lcd_ignore_filetype = {
 	'gitcommit',
 }
 ------------ Change pwd to project folder --------------
+local prev_root = ''
 vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter', 'LspAttach'}, {    -- inquire file reload when nvim focused
 	group = 'UserSettings_AUTOCMD',
 	pattern = '*',
 	callback = function (ev)
 		local ft = vim.api.nvim_get_option_value('filetype', {buf = ev.buf})
-		local ok = not vim.tbl_contains(lcd_ignore_filetype, ft)
-		if ok then -- do it only writable buffer
-			local root = Utils.GetRoot(ev.buf)
-			vim.cmd('lcd ' .. root)
+		local ok = not vim.tbl_contains(lcd_ignore_filetype, ft) -- do it only writable buffer
+		if ok then
+			local cur_root = Utils.sep_unify(Utils.GetRoot(ev.buf))
+			if cur_root == prev_root then -- if pwd is same with cache root, ignore lcd
+				return
+			end
+
+			local success, _ = pcall(function () vim.cmd('lcd ' .. cur_root) end)
+			if success then
+				prev_root = cur_root
+				vim.api.nvim_exec_autocmds('Dirchanged', { pattern = 'window', }) -- force execute Dirchanged event
+			end
 		end
 	end
 })

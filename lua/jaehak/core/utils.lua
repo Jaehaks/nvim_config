@@ -143,11 +143,11 @@ M.SlashChange = SlashChange
 
 -- get root pattern of current file to check where is root directory
 ---@param bufnr integer buffer number
----@return string? root directory
+---@return string root directory
 local GetRoot = function (bufnr)
 	---@return vim.lsp.Client[]
 	local clients = vim.lsp.get_clients({bufnr = bufnr}) -- check lsp is attached
-	local root
+	local root = ''
 	if not vim.tbl_isempty(clients) then
 		root = clients[1].config.root_dir
 	else
