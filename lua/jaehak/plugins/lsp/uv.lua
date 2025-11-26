@@ -2,11 +2,9 @@ return {
 	'Jaehaks/uv.nvim',
 	ft = {'python'},
 	opts = {
-		auto_activate_venv = true,
-		notify_activate_venv = false,
-
-		-- Auto commands for directory changes
-		auto_commands = true,
+		auto_commands = true, 			-- activate venv whenever cwd is changed. User must set project root as pwd
+		auto_activate_venv = true,		-- activate venv if it is in current project root (once)
+		notify_activate_venv = false,	-- notify when .venv is detected
 
 		-- Integration with snacks picker
 		picker_integration = true,
@@ -26,9 +24,10 @@ return {
 				sync_all = true,  -- Sync all packages, extras and groups (<leader>xC)
 			},
 
-			-- Execution options
+			-- Execution options when :UVRun~ command
 			execution = {
-				run_command = "uv run python", -- Python run command template
+				run_command = "uv run ipython -i", -- open python interactive shell After run
+												   -- base 'python' doesn't support completion. use ipython
 				notify_output = true, -- Show output in notifications
 				notification_timeout = 10000, -- Notification timeout in ms
 			},
