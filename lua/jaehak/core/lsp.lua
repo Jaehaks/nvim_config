@@ -317,6 +317,9 @@ vim.lsp.config('basedpyright', {
 				autoSearchPaths = true, -- auto serach command paths like 'src'
 				diagnosticMode = 'openFilesOnly',
 				useLibraryCodeForTypes = true,
+				diagnosticSeverityOverrides = {
+					reportUnknownMemberType = 'none', -- ignore warning : cannot infer member type of object like matplot
+				}
 			}
 		},
 	},
