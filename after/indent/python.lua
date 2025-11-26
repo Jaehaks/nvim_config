@@ -340,7 +340,7 @@ end, {
 })
 
 -- Assign the indent function to a global variable (g) so that it can be accessed from indentexpr.
-vim.opt_local.indentexpr = 'v:lua.python_indent_user(v:lnum)'
--- vim.opt_local.indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
+-- vim.opt_local.indentexpr = 'v:lua.python_indent_user(v:lnum)'
+vim.opt_local.indentexpr = 'v:lua.require("nvim-treesitter").indentexpr()'
 
 
