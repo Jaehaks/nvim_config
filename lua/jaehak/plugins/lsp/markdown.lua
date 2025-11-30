@@ -250,33 +250,144 @@ return {
 
 	},
 },
-{
-	'SCJangra/table-nvim',
-	keys = {
-		{'<leader>mt', function() require('table-nvim.edit').insert_table() end, 'n'},
-		{'<leader>mT', function() require('table-nvim.edit').insert_table_alt() end, 'n'},
-	},
-	opts = {
-		padd_column_separators = true,          -- Insert a space around column separators.
-		mappings = {                            -- next and prev work in Normal and Insert mode. All other mappings work in Normal mode.
-			next                = '<A-S-l>',    -- Go to next cell.
-			prev                = '<A-S-h>',    -- Go to previous cell.
-			insert_row_up       = '<A-j>',      -- Insert a row above the current row.
-			insert_row_down     = '<A-k>',      -- Insert a row below the current row.
-			move_row_up         = '<A-C-j>',    -- Move the current row up.
-			move_row_down       = '<A-C-k>',    -- Move the current row down.
-			insert_column_left  = '<A-h>',      -- Insert a column to the left of current column.
-			insert_column_right = '<A-l>',      -- Insert a column to the right of current column.
-			move_column_left    = '<A-C-h>',    -- Move the current column to the left.
-			move_column_right   = '<A-C-l>',    -- Move the current column to the right.
-			insert_table        = '<leader>mt', -- Insert a new table.
-			insert_table_alt    = '<leader>mT', -- Insert a new table that is not surrounded by pipes.
-			delete_column       = '<A-C-d>',    -- Delete the column under cursor.
-		}
-	},
-},
 -- nuhakala/nvim-simple-tables : not work table align
--- 'timantipov/md-table-tidy.nvim' : it doesn't support main branch of treesitter
+-- timantipov/md-table-tidy.nvim : it doesn't support main branch of treesitter
+-- SCJangra/table-nvim : It has some bug that the key map doesn't loaded before we open keymap browser. I don't know why
+-- 						 It has large startup time.
+{
+	'yousefhadder/markdown-plus.nvim',
+	ft = 'markdown',
+	opts = {
+		features = {
+			list_management = false, -- use md-utility
+			text_formatting = false, -- use md-utility
+			headers_toc     = false, -- use marksman
+			links           = false, -- use md-utility
+			images          = false, -- use md-utility
+			quotes          = false, -- use luasnip
+			callouts        = false, -- use luasnip
+			code_block      = false, -- use luasnip
+			table           = true,  -- default: true (table creation & editing)
+			footnotes       = true,  -- default: true (footnote insertion/navigation/listing)
+		},
+		keymaps = {
+			enabled = false, -- disable global keymaps
+		},
+		table = {
+			auto_format = false,
+			default_alignment = 'left',
+			confirm_destructive = false, -- don't ask confirm message
+			keymaps = { -- use user defined key
+				enabled = false,
+				insert_mode_navigation = false, -- Alt + hjkl
+			}
+		},
+		footnotes = {
+			section_header = "Footnotes",  -- default: "Footnotes"  header for footnotes section
+			confirm_delete = false,         -- default: true  confirm before deleting footnotes
+		},
+	},
+	config = function(_, opts)
+		local table_nav = require('markdown-plus.table.navigation')
+		local parser = require("markdown-plus.table.parser")
+		local formatter = require("markdown-plus.table.format")
+		require('markdown-plus').setup(opts)
+
+
+		-- Fallback processing function
+		---@param nav_func function
+		---@param fallback_key string
+		local function make_nav_mapping(nav_func, fallback_key)
+			return function()
+				local success = nav_func()
+				if not success then
+					-- Not in table or at boundary, use default behavior
+					local key = vim.api.nvim_replace_termcodes(fallback_key, true, false, true)
+					vim.api.nvim_feedkeys(key, "n", false)
+				end
+			end
+		end
+
+		-- key mapping wrapper for table
+		local function make_table_map(lhs, rhs_suffix, desc)
+			vim.keymap.set("n", lhs, "<Plug>(markdown-plus-table-" .. rhs_suffix .. ")",
+			{buffer = true, silent = true, desc = '[Table] ' .. desc})
+		end
+		-- key mapping wrapper for footnote
+		local function make_footnote_map(lhs, rhs_suffix, desc)
+			vim.keymap.set("n", lhs, "<Plug>(MarkdownPlusFootnote" .. rhs_suffix .. ")",
+			{buffer = true, silent = true, desc = '[Footnote] ' .. desc})
+		end
+
+		-- key map setting
+		local User_MarkPlus = vim.api.nvim_create_augroup('User_MarkPlus', {clear = true})
+		vim.api.nvim_create_autocmd('FileType',{
+			group = User_MarkPlus,
+			pattern = {'markdown'},
+			callback = function (args)
+				-- ///////////// navigation ////////////////////
+				-- set table cell cursor movement key
+				vim.keymap.set('i', '<A-h>', make_nav_mapping(table_nav.move_left, '<Left>'),
+				{buffer = true, silent = true, desc = '[Table] Go to <Left> cell in insert mode'})
+				vim.keymap.set('i', '<A-l>', make_nav_mapping(table_nav.move_right, '<Right>'),
+				{buffer = true, silent = true, desc = '[Table] Go to <Right> cell in insert mode'})
+				vim.keymap.set('i', '<A-j>', make_nav_mapping(table_nav.move_up, '<Up>'),
+				{buffer = true, silent = true, desc = '[Table] Go to <Up> cell in insert mode'})
+				vim.keymap.set('i', '<A-k>', make_nav_mapping(table_nav.move_down, '<Down>'),
+				{buffer = true, silent = true, desc = '[Table] Go to <Down> cell in insert mode'})
+
+				-- ///////////// table ////////////////////
+				-- creation / formatting
+				make_table_map('<leader>mt',  'create',                'Create new table')
+				-- make_table_map('<leader>tf',  'format',                'Format table') -- replaced with autocmd
+
+				-- row operation can be replaced with 'yy', 'p'
+				-- column operation
+				make_table_map('<A-C-l>',     'insert-column-right',   'Insert column right')
+				make_table_map('<A-C-h>',     'insert-column-left',    'Insert column left')
+				make_table_map('<leader>tdc', 'delete-column',         'Delete column')
+				make_table_map('<leader>tyc', 'duplicate-column',      'Duplicate column')
+				make_table_map('<leader>tmh', 'move-column-left',      'Move column left')
+				make_table_map('<leader>tml', 'move-column-right',     'Move column right')
+
+				-- cell operation
+				make_table_map('<leader>ta',  'toggle-cell-alignment', 'Toggle cell alignment(left/center/right)')
+				make_table_map('<leader>tc',  'clear-cell',            'Clear cell contents')
+
+				-- advanced
+				make_table_map('<leader>tt',  'transpose',             'Transpose table')
+				make_table_map('<leader>tsa', 'sort-ascending',        'Sort table by column (ascending)')
+				make_table_map('<leader>tsd', 'sort-descending',       'Sort table by column (descending)')
+				make_table_map('<leader>tvc', 'to-csv',                'Convert table to csv')
+				make_table_map('<leader>tvt', 'from-csv',              'Convert csv to table')
+
+				-- auto table formatting
+				vim.api.nvim_create_autocmd('InsertLeave', {
+					group = User_MarkPlus,
+					buffer = args.buf,
+					callback = function()
+						local table_info = parser.get_table_at_cursor()
+						if table_info then
+							formatter.format_table(table_info)
+						end
+					end
+				})
+
+				-- ///////////// footnote ////////////////////
+				make_footnote_map('<leader>mfi', 'Insert',         'Insert')
+				make_footnote_map('<leader>mfe', 'Edit',           'Edit')
+				make_footnote_map('<leader>mfd', 'Delete',         'Delete')
+				make_footnote_map('<leader>mfg', 'GotoDefinition', 'Go to Definition')
+				make_footnote_map('<leader>mfr', 'GotoReference',  'Go to Reference')
+				make_footnote_map('<leader>mfn', 'Prev',           'Go to Prev')
+				make_footnote_map('<leader>mfp', 'Next',           'Go to Next')
+				make_footnote_map('<leader>mfl', 'List',           'Show list')
+			end
+		})
+
+
+	end
+},
 {
 	'Jaehaks/md-utility.nvim',
 	ft = {'markdown', 'text'},
@@ -357,7 +468,7 @@ return {
 			end
 		})
 	end
-}
+},
 }
 -- dburian/cmp-markdown-link : for current directory file link,  cmp-path is more useful (it allow fuzzy search)
 -- HakonHarnes/img-clip.nvim : it replaced with obisidian.nvim's paste function.
