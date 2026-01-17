@@ -39,7 +39,9 @@ return {
 					callback = function ()
 						if not ls.in_snippet() and ls.jumpable(1) and ls.jumpable(-1) then
 							ls.unlink_current()
-							vim.api.nvim_del_autocmd(vim.g.id_LuasnipCheck)
+							if vim.g.id_LuasnipCheck then
+								vim.api.nvim_del_autocmd(vim.g.id_LuasnipCheck)
+							end
 							vim.g.id_LuasnipCheck = nil
 						end
 					end
