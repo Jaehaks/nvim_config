@@ -73,12 +73,20 @@ return {
 
 		-- keymap
 		vim.keymap.set('n', 'n', function ()
+			if vim.fn.getreg('/') == '' then
+				vim.notify('No searched words', vim.log.levels.WARN)
+				return
+			end
 			vim.cmd('normal! ' .. vim.v.count1 .. 'n')
 			hlslens.start()
 			check_search_highlight()
 		end, kopts)
 
 		vim.keymap.set('n', 'N', function ()
+			if vim.fn.getreg('/') == '' then
+				vim.notify('No searched words', vim.log.levels.WARN)
+				return
+			end
 			vim.cmd('normal! ' .. vim.v.count1 .. 'N')
 			hlslens.start()
 			check_search_highlight()
