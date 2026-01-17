@@ -111,7 +111,7 @@ return {
 			},
 			providers = {
 				snippets = {
-					-- score_offset = 100,
+					score_offset = 150,
 				},
 				lsp = {
 					-- BUG: default setting `fallbacks={'buffer'}` has some bug (don't show buffer list by lsp)
