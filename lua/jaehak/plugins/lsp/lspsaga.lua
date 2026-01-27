@@ -4,6 +4,9 @@ return {
 	'nvimdev/lspsaga.nvim',
 	event = 'LspAttach',
 	opts = {
+		symbol_in_winbar = {
+			enable = false,
+		},
 		-- ////// code action : select behavior when diagnostics show //////////
 		-- lspsaga show code action with
 		code_action = { -- builtin lsp use line diagnostics / lspsaga use cursor diagnostics
@@ -104,6 +107,40 @@ return {
 		},
 	}
 },
+{
+	'Bekaboo/dropbar.nvim',
+	enabled = true,
+	event = 'LspAttach',
+	opts = {
+		bar = {
+			enable = function(buf, win, _)
+				buf = vim._resolve_bufnr(buf)         -- get current bufnr
+				if not vim.api.nvim_buf_is_valid(buf) -- if current buffer is not valid, false
+					or not vim.api.nvim_win_is_valid(win) then
+					return false
+				end
+
+				if vim.fn.win_gettype(win) ~= '' -- if current window is not normal editor
+					or vim.wo[win].winbar ~= ''  -- if winbar is open already
+					or vim.bo[buf].ft == 'help' then -- if help
+					return false
+				end
+
+				local stat = vim.uv.fs_stat(vim.api.nvim_buf_get_name(buf)) -- if size is too large
+				if stat and stat.size > 1024 * 1024 then
+					return false
+				end
+
+				return not vim.tbl_isempty(vim.lsp.get_clients({ -- open winbar when only lsp is attached
+							bufnr = buf,
+							method = 'textDocument/documentSymbol',
+						}))
+			end,
+			hover = false, -- highlight symbol under cursor, not work
+			truncate = true, -- truncate winbar if it is too long
+		}
+	},
+}
 }
 -- toggle term : must close using :q! not :q
 -- lspsaga toggle term can use after lsp attatch only. and i will change to floatterm
