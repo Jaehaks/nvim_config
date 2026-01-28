@@ -138,6 +138,25 @@ return {
 			end,
 			hover = false, -- highlight symbol under cursor, not work
 			truncate = true, -- truncate winbar if it is too long
+			sources = function (buf, _)
+				local sources = require('dropbar.sources')
+				local utils = require('dropbar.utils')
+				if vim.bo[buf].ft == 'markdown' then
+					return {
+						sources.markdown,
+					}
+				end
+				if vim.bo[buf].buftype == 'terminal' then
+					return {
+						sources.terminal,
+					}
+				end
+				return { -- don't show filepath in winbar and use only lsp sources
+					utils.source.fallback({
+						sources.lsp,
+					}),
+				}
+			end,
 		}
 	},
 }
