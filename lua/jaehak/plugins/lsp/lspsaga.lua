@@ -63,7 +63,7 @@ return {
 },
 {
 	-- show code outline
-	'hedyhli/outline.nvim',
+	'Jaehaks/outline.nvim',
 	keys = {
 		{'go', '<Cmd>Outline<CR>', desc = 'LSP - Toggle outline'}
 	},
@@ -108,7 +108,7 @@ return {
 	}
 },
 {
-	'Bekaboo/dropbar.nvim',
+	'Jaehaks/dropbar.nvim',
 	enabled = true,
 	event = 'LspAttach',
 	opts = {
