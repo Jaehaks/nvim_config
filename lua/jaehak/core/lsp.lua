@@ -319,6 +319,7 @@ vim.lsp.config('basedpyright', {
 				useLibraryCodeForTypes = true,
 				diagnosticSeverityOverrides = {
 					reportUnknownMemberType = 'none', -- ignore warning : cannot infer member type of object like matplot
+					reportUnusedCallResult = 'none', -- ignore warning : If we don't use result of function, it must add '_ = '  in front of statement
 				}
 			}
 		},
