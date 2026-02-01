@@ -243,11 +243,18 @@ vim.lsp.config('harper-ls', {
 -- ####### ruff : linter
 -- #############################################################
 -- main purpose is fast linting diagnostics
-local root_dir_ruff = function (bufnr, cb)
+local root_dir_python = function (bufnr, cb)
+	local bufname = vim.api.nvim_buf_get_name(bufnr)
+	if string.match(bufname, 'site%-packages') or
+		string.match(bufname, '[\\/][Ll]ib[\\/]') then
+		return
+	end
 	local root = vim.fs.root(bufnr, {
 		'pyproject.toml',
+		'pyrightconfig.json',
 		'ruff.toml',
 		'.ruff.toml',
+		'pyrefly.toml',
 		'.git'
 	}) or vim.fn.expand('%:p:h')
 	cb(root)
@@ -255,7 +262,7 @@ end
 vim.lsp.config('ruff', {
 	cmd = {'ruff', 'server'},
 	filetypes = {'python'},
-	root_dir = root_dir_ruff,
+	root_dir = root_dir_python,
 	on_attach = function (client, _)
 		-- lsp use ruff to formatter
 		client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
@@ -290,18 +297,10 @@ vim.lsp.config('ruff', {
 -- #############################################################
 -- main purpose is exact type checking diagnostics
 -- It has very slow lsp completion to use
-local root_dir_basedpyright = function (bufnr, cb)
-	local root = vim.fs.root(bufnr, {
-		'pyproject.toml',
-		'pyrightconfig.json',
-		'.git'
-	}) or vim.fn.expand('%:p:h')
-	cb(root)
-end
 vim.lsp.config('basedpyright', {
 	cmd = {'basedpyright-langserver', '--stdio'},
 	filetypes = {'python'},
-	root_dir = root_dir_basedpyright,
+	root_dir = root_dir_python,
 	on_attach = function (client, _)
 		client.server_capabilities.completionProvider        = false -- use pyrefly for fast response
 		client.server_capabilities.definitionProvider        = false -- use pyrefly for fast response
@@ -320,6 +319,13 @@ vim.lsp.config('basedpyright', {
 				diagnosticSeverityOverrides = {
 					reportUnknownMemberType = 'none', -- ignore warning : cannot infer member type of object like matplot
 					reportUnusedCallResult = 'none', -- ignore warning : If we don't use result of function, it must add '_ = '  in front of statement
+				},
+				exclude = {
+					'**/.venv',
+					'**/venv',
+					'**/__pycache__',
+					'**/dist',
+					'**/build'
 				}
 			}
 		},
@@ -331,18 +337,10 @@ vim.lsp.config('basedpyright', {
 -- #############################################################
 -- main purpose is fast completion/semanticTokens
 -- the alternative of it is ty, but it is experimental yet
-local root_dir_pyrefly = function (bufnr, cb)
-	local root = vim.fs.root(bufnr, {
-		'pyproject.toml',
-		'pyrefly.roml',
-		'.git'
-	}) or vim.fn.expand('%:p:h')
-	cb(root)
-end
 vim.lsp.config('pyrefly', {
 	cmd = {'pyrefly', 'lsp'},
 	filetypes = {'python'},
-	root_dir = root_dir_pyrefly,
+	root_dir = root_dir_python,
 	on_attach = function (client, _)
 		client.server_capabilities.codeActionProvider     = false -- basedpyright has more kinds
 		client.server_capabilities.documentSymbolProvider = false -- basedpyright has more kinds
