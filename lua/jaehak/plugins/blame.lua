@@ -1,4 +1,6 @@
 return {
+{
+	-- show git blames for each lines
 	"FabijanZulj/blame.nvim",
 	keys = {
 		{'<leader>hm', '<Cmd>BlameToggle window<CR>', desc = 'Git Blame'}
@@ -19,4 +21,23 @@ return {
 			}
 		})
 	end
+},
+{
+	-- show git history for visual selected lines
+    "lionyxml/gitlineage.nvim",
+    dependencies = {
+        "sindrets/diffview.nvim", -- optional, for open_diff feature
+    },
+	opts = {
+		split = "vertical",       -- "vertical", "horizontal", or "auto"
+		keymap = "<leader>hg",
+		keys = {
+			close = "q",
+			next_commit = "]c",
+			prev_commit = "[c",
+			yank_commit = "yc",
+			open_diff = "<CR>",
+		},
+	}
+}
 }
