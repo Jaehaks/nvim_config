@@ -28,9 +28,12 @@ return {
     dependencies = {
         "sindrets/diffview.nvim", -- optional, for open_diff feature
     },
+	keys = {
+		{'<leader>hg', function () require('gitlineage').show_history() end,   mode = 'v', desc = 'Show git history for seleced lines'},
+	},
 	opts = {
 		split = "vertical",       -- "vertical", "horizontal", or "auto"
-		keymap = "<leader>hg",
+		keymap = nil,
 		keys = {
 			close = "q",
 			next_commit = "]c",
