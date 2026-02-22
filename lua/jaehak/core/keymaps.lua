@@ -88,6 +88,7 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 		'CodeAction',
 		'checkhealth',
 		'oil',
+		'dap-view',
 	},
 	callback = function(event)
 		local filetype = vim.bo[event.buf].filetype -- get current filetype
