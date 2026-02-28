@@ -169,9 +169,20 @@ vim.lsp.config('lua_ls', {
 -- #############################################################
 -- ####### matlab-ls config
 -- #############################################################
+local root_dir_matlab = function (bufnr, cb)
+	local bufname = vim.api.nvim_buf_get_name(bufnr)
+	if string.match(bufname, 'toolbox[\\/]matlab') then -- avoid attaching to installed matlab library
+		return
+	end
+	local root = vim.fs.root(bufnr, {
+		'.git'
+	}) or vim.fn.expand('%:p:h')
+	cb(root)
+end
 vim.lsp.config('matlab-ls', {
 	cmd = {'matlab-language-server', '--stdio'},
 	filetypes = {'matlab'},
+	root_dir = root_dir_matlab,
 	settings = {
 		matlab = {
 			indexWorkspace = true,
@@ -180,6 +191,9 @@ vim.lsp.config('matlab-ls', {
 			telemetry = false, -- don't report about any problem
 		},
 	},
+	-- cmd_env = {
+	-- 	NODE_OPTIONS = "--unhandled-rejections=warn",
+	-- },
 	single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
 })
 
