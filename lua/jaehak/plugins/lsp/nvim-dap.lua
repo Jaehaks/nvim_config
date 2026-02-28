@@ -52,7 +52,22 @@ return {
 {
 	'igorlfs/nvim-dap-view',
 	ft = dap_ft,
-	opts = {}
+	opts = {
+		winbar = {
+			default_section = 'repl',
+		},
+	}
+	-- keymaps-------
+	-- breakpoints
+	-- 		<CR> : jump to breakpoints
+	-- 		d : delete breakpoint
+	-- watches
+	-- 		<CR> : expand/collapse
+	-- 		a : append an expression
+	-- 		i : insert an expression
+	-- 		d : delete an expression
+	-- 		e : edit an expression
+	-- 		s : set value
 }
 }
 
