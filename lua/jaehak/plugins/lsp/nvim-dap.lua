@@ -24,6 +24,7 @@ return {
 		vim.keymap.set('n', '<F12>', dap.step_out, {desc = '[nvim-dap] Debug Step Out'})
 		vim.keymap.set('n', '<leader>dp', dap.pause, {desc = '[nvim-dap] Debug Pause'})
 		vim.keymap.set('n', '<leader>dt', dap.terminate, {desc = '[nvim-dap] Terminate Session'})
+		vim.keymap.set('n', '<leader>du', dap.clear_breakpoints, {desc = '[nvim-dap] Clear all Breakpoints'})
 		vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, {desc = '[nvim-dap] Set Breakpoint '})
 		vim.keymap.set('n', '<leader>dB', function ()
 			local condition = vim.fn.input('condition : ') -- insert condition without 'if' word.
