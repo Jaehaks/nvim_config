@@ -1,6 +1,8 @@
+local dap_ft = {'python', 'matlab'}
 return {
 {
 	'Jaehaks/nvim-dap',
+	ft = dap_ft,
 	config = function ()
 		local dap = require('dap')
 		-- dap.set_log_level('TRACE')
@@ -10,7 +12,7 @@ return {
 			command = os.getenv('HOME') .. '\\.config\\nvim-data\\mason\\bin\\debugpy-adapter.cmd'
 		}
 
-		vim.keymap.set('n', '<F5>', function ()
+		vim.keymap.set('n', '<leader>dc', function ()
 			local session = dap.session()
 			if session and not session.stopped_thread_id then
 				dap.close() -- if debug run is completed but session is remaining
@@ -20,6 +22,8 @@ return {
 		vim.keymap.set('n', '<F10>', dap.step_over, {desc = '[nvim-dap] Debug Step Over'})
 		vim.keymap.set('n', '<F11>', dap.step_into, {desc = '[nvim-dap] Debug Step Into'})
 		vim.keymap.set('n', '<F12>', dap.step_out, {desc = '[nvim-dap] Debug Step Out'})
+		vim.keymap.set('n', '<leader>dp', dap.pause, {desc = '[nvim-dap] Debug Pause'})
+		vim.keymap.set('n', '<leader>ds', dap.terminate, {desc = '[nvim-dap] Terminate Session'})
 		vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, {desc = '[nvim-dap] Set Breakpoint '})
 		vim.keymap.set('n', '<leader>dB', function ()
 			local condition = vim.fn.input('condition : ') -- insert condition without 'if' word.
@@ -31,15 +35,23 @@ return {
 },
 {
 	'Jaehaks/nvim-dap-matlab',
+	ft = {'matlab'},
 	dependencies = {
 		'Jaehaks/nvim-dap',
 	},
 	opts = {
+		repl = {
+			keymaps = {
+				previous_command_history = '<C-j>',
+				next_command_history = '<C-k>',
+			}
+		}
 
 	},
 },
 {
 	'igorlfs/nvim-dap-view',
+	ft = dap_ft,
 	opts = {}
 }
 }
