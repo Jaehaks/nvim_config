@@ -23,7 +23,7 @@ return {
 		vim.keymap.set('n', '<F11>', dap.step_into, {desc = '[nvim-dap] Debug Step Into'})
 		vim.keymap.set('n', '<F12>', dap.step_out, {desc = '[nvim-dap] Debug Step Out'})
 		vim.keymap.set('n', '<leader>dp', dap.pause, {desc = '[nvim-dap] Debug Pause'})
-		vim.keymap.set('n', '<leader>ds', dap.terminate, {desc = '[nvim-dap] Terminate Session'})
+		vim.keymap.set('n', '<leader>dt', dap.terminate, {desc = '[nvim-dap] Terminate Session'})
 		vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint, {desc = '[nvim-dap] Set Breakpoint '})
 		vim.keymap.set('n', '<leader>dB', function ()
 			local condition = vim.fn.input('condition : ') -- insert condition without 'if' word.
@@ -51,11 +51,15 @@ return {
 },
 {
 	'igorlfs/nvim-dap-view',
+	keys = {
+		{'<leader>dv', function () require('dap-view').toggle() end, {desc = '[dap-view] Toggle dap view', mode = 'n'}}
+	},
 	ft = dap_ft,
 	opts = {
 		winbar = {
 			default_section = 'repl',
 		},
+		auto_toggle = 'keep_terminal', -- open automatically, remain after normally termination but close after error while debug.
 	}
 	-- keymaps-------
 	-- breakpoints
