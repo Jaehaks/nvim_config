@@ -14,6 +14,8 @@ return {
 				'oil',
 				'snacks_picker_input',
 				'checkhealth',
+				'dap-view',
+				'dap-repl',
 			},
 			ignored_dir = {
 				'doc\\'
