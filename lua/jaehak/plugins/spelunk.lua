@@ -20,8 +20,8 @@ return {
 			bookmark_down        = '<C-j>',   -- Move the current bookmark down in the stack
 			bookmark_up          = '<C-k>',   -- Move the current bookmark up in the stack
 			goto_bookmark        = '<CR>',    -- Jump to the selected bookmark
-			goto_bookmark_hsplit = 'x',       -- Jump to the selected bookmark in a new vertical split
-			goto_bookmark_vsplit = 'v',       -- Jump to the selected bookmark in a new horizontal split
+			goto_bookmark_hsplit = 'x',       -- Jump to the selected bookmark in a new horizontal split
+			goto_bookmark_vsplit = 'v',       -- Jump to the selected bookmark in a new vertical split
 			delete_bookmark      = 'd',       -- Delete the selected bookmark
 			next_stack           = '<Tab>',   -- Navigate to the next stack
 			previous_stack       = '<S-Tab>', -- Navigate to the previous stack
