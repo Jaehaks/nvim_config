@@ -26,28 +26,28 @@ return {
 			-- Navigation
 			map('n', ']h', function()
 				if vim.wo.diff then return ']h' end
-				vim.schedule(function() gs.next_hunk() end)
+				vim.schedule(function() gs.nav_hunk('next') end)
 				return '<Ignore>'
 			end, {expr=true, desc = 'find next hunk'})
 
 			map('n', '[h', function()
 				if vim.wo.diff then return '[h' end
-				vim.schedule(function() gs.prev_hunk() end)
+				vim.schedule(function() gs.nav_hunk('prev') end)
 				return '<Ignore>'
 			end, {expr=true, desc = 'find prev hunk'})
 
 			-- Actions
 			map('n', '<leader>hp', gs.preview_hunk, {desc = 'preview hunk in current line'})
-			map('n', '<leader>hn', gs.next_hunk, {desc = 'go to next hunk in current line'})
 			map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc = 'commit message in current line'})
 			map('n', '<leader>hl', gs.setloclist, {desc = 'show gitsign list'})
-			map('n', '<leader>hd', gs.toggle_deleted, {desc = 'show all deleted hunks'})
+			map('n', '<leader>hd', gs.preview_hunk_inline, {desc = 'show all deleted hunks'})
 			map('n', '<leader>hh', gs.toggle_linehl, {desc = 'highlight hunks in addition to signs'})
 
 			map('n', '<leader>hs', gs.stage_buffer, {desc = 'stage all hunks in current buffer'}) --  git add this buffer
 			map('n', '<leader>hS', gs.reset_buffer_index, {desc = 'reset staged all hunks in current buffer'}) --  git add this buffer
+
+			-- use it because gs.stage_hunk doesn't support visual mode
 			map({'n', 'v'}, '<leader>ha', ':Gitsigns stage_hunk<CR>', {desc = 'stage current contiguous hunks'}) --  git add this hunk
-			map({'n', 'v'}, '<leader>hA', ':Gitsigns undo_stage_hunk<CR>', {desc = 'undo staged current contiguous hunks'}) --  git add this hunk
 
 			-- reset_hunk() : reset unstaged hunk, it deletes the modified hunk
 
