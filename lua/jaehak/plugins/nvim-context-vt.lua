@@ -1,4 +1,3 @@
-local paths = require('jaehak.core.paths')
 return {
 	-- cannot recognize like "local foo = function()", but well work  and customize
 	'andersevenrud/nvim_context_vt',
