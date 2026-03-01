@@ -35,9 +35,6 @@ return {
 		vim.g.markview_lazy_loaded = true
 	end,
 	opts = {
-		experimental = {
-			check_rtp_message = false
-		},
 		preview = {
 			hybrid_modes         = {'n'}, -- disable conceal specific region under cursor
 			linewise_hybrid_mode = true,  -- apply hybrid mode with line-wise not block-wise
