@@ -31,4 +31,4 @@ return {
 -- 'uga-rosa/translate.nvim' : pantran.nvim is faster a bit little than translate. but it supports visual mode
 -- 'niuiic/translate.nvim' : Not windows support (need translate-shell)
 -- 'coffebar/crowtranslate.nvim' : Not windows support
--- 한글과 영어를 교차해서 번역할 수 있는 플러그인을 추가했다
+-- Added a plugin that can translate between Korean and English.
