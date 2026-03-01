@@ -15,30 +15,26 @@ return {
 
 		local kopts = {noremap = true, silent = true}
 		local neominimap = require('neominimap.api')
-		local neovar = require('neominimap.variables')
 		-- local min_line = 200 -- turn on minimap in file which has more lines than this value
 		local min_line = 2 -- turn on minimap in file which has more lines than this value
 
 		-- function : turn on / off in search mode
 		local check_search_highlight = function ()
 			local total_line = vim.api.nvim_buf_line_count(0)
-			if vim.v.hlsearch == 1 and not neovar.g.enabled and total_line > min_line then
+			if vim.v.hlsearch == 1 and not neominimap.enabled() and total_line > min_line then
 
 				local winid_list = vim.api.nvim_list_wins()
 				local winid_cur = vim.api.nvim_get_current_win()
-				local winid_other = winid_list
-				for i, v in ipairs(winid_list) do -- get other win id
-					if v == winid_cur then
-						table.remove(winid_other, i)
-					end
-				end
+				local winid_other = vim.tbl_filter(function(id)
+					return id ~= winid_cur
+				end, winid_list)
 
 				vim.opt_local.sidescrolloff = 36
 				neominimap.enable()
 				neominimap.win.disable(winid_other) -- turn off neominimap except current window
 				neominimap.win.enable({winid_cur}) -- turn on neominimap in current window
 
-			elseif vim.v.hlsearch == 0 and neovar.g.enabled then
+			elseif vim.v.hlsearch == 0 and neominimap.enabled() then
 				vim.opt_local.sidescrolloff = 0
 				neominimap.disable()
 			end
@@ -63,7 +59,7 @@ return {
 			group = aug_Neominimap,
 			callback = function ()
 				if not vim.g.neominimap_manual then -- if not manual mode,
-					if vim.v.hlsearch == 0 and neovar.g.enabled then
+					if vim.v.hlsearch == 0 and neominimap.enabled() then
 						vim.opt_local.sidescrolloff = 0
 						neominimap.disable()
 					end
@@ -93,25 +89,29 @@ return {
 		end, kopts)
 
 		vim.keymap.set('n', '*', function ()
-			vim.cmd('normal! *N')
+			local ok = pcall(function() vim.cmd('normal! *N') end)
+			if not ok then return end
 			hlslens.start()
 			check_search_highlight()
 		end, kopts)
 
 		vim.keymap.set('n', '#', function ()
-			vim.cmd('normal! #')
+			local ok = pcall(function() vim.cmd('normal! #') end)
+			if not ok then return end
 			hlslens.start()
 			check_search_highlight()
 		end, kopts)
 
 		vim.keymap.set('n', 'g*', function ()
-			vim.cmd('normal! g*')
+			local ok = pcall(function() vim.cmd('normal! g*') end)
+			if not ok then return end
 			hlslens.start()
 			check_search_highlight()
 		end, kopts)
 
 		vim.keymap.set('n', 'g#', function ()
-			vim.cmd('normal! g#')
+			local ok = pcall(function() vim.cmd('normal! g#') end)
+			if not ok then return end
 			hlslens.start()
 			check_search_highlight()
 		end, kopts)
