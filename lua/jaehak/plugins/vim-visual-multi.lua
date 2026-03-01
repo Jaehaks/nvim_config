@@ -47,12 +47,12 @@ return {
 		{'<C-j>', function () require("multicursor-nvim").addCursor('j') end, desc = '[Multicursor] Add above char', mode = {'n', 'v'}},
 		{'<C-n>', function () require("multicursor-nvim").matchAddCursor(1) end, desc = '[Multicursor] Add next cword', mode = {'n', 'v'}},
 		{'<C-S-n>', function () require("multicursor-nvim").matchAllAddCursors() end, desc = '[Multicursor] Add all cword', mode = {'n', 'v'}},
-		{'<C-b>', function ()
+		{'<C-b>', function () -- it will be used with <leader>l (lock cursor) to resolve lock state
 			local mc = require('multicursor-nvim')
 			if mc.cursorsEnabled() then
 				mc.disableCursors()
 			else
-				mc.addCursor()
+				mc.toggleCursor() -- toggle the location
 			end
 		end, desc = '[Multicursor] Add Current Pos | Deactivate', mode = {'n', 'v'}},
 	},
