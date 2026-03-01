@@ -99,9 +99,9 @@ return {
 		snippets = {preset = 'luasnip'}, -- use luasnip for `snippets` engine
 		sources = {
 			min_keyword_length = 2,
-			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path', 'cmdline'},
+			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 			per_filetype = {
-				lua       = {'lazydev', 'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
+				lua       = {'lazydev', 'lsp', 'buffer', 'snippets', 'datword', 'spell', 'path'},
 				matlab    = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 				gitcommit = {'git', 'buffer', 'datword', 'spell'},
 				markdown  = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'},
@@ -217,7 +217,7 @@ return {
 			keymap = {
 				['<Tab>']   = { 'show_and_insert', 'select_next' },
 				['<S-Tab>'] = { 'show_and_insert', 'select_prev' },
-				['<C-e>']   = false,
+				['<C-e>']   = {},
 				['<C-n>']   = { 'select_next', 'fallback' }, -- for choice mode
 				['<C-p>']   = { 'select_prev', 'fallback' }, -- for choice mode
 				['<C-q>']   = { 'cancel' },
