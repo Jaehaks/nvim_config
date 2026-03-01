@@ -37,7 +37,7 @@ return {
 				vim.g.id_LuasnipCheck = vim.api.nvim_create_autocmd("CursorMoved", {
 					pattern = '*',
 					callback = function ()
-						if not ls.in_snippet() and ls.jumpable(1) and ls.jumpable(-1) then
+						if not ls.in_snippet() then
 							ls.unlink_current()
 							if vim.g.id_LuasnipCheck then
 								vim.api.nvim_del_autocmd(vim.g.id_LuasnipCheck)
