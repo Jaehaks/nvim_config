@@ -35,6 +35,9 @@ return {
 },
 {
 	-- graphical color picker
+	-- INFO: This plugin downloads and install oklch-color-picker package automatically
+	-- INFO: But Sometimes it has error while decompress using tar and gzip because scoop package has different behavior
+	-- INFO: You need to install exe file manually from https://github.com/eero-lehtinen/oklch-color-picker/releases
 	'eero-lehtinen/oklch-color-picker.nvim',
 	keys = {
 		{'<leader>cp', function() require('oklch-color-picker').pick_under_cursor() end, desc = 'Color pick under cursor' },
