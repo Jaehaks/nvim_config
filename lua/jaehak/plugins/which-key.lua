@@ -3,7 +3,7 @@ return {
 	event = 'VeryLazy',
 	init = function()
 		vim.opt.timeout = true
-		vim.opt.timeoutlen = 500
+		vim.opt.timeoutlen = 500 -- INFO: this line is useless, because which key delay is independent from v3
 		vim.opt.ttimeoutlen = 0 -- for terminal key timeout
 	end,
 	opts = {
