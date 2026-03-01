@@ -4,9 +4,11 @@ return {
 	keys = {
 		-- open grug-far about current file, current word, it supports visual block
 		{'<leader>sf', function ()
-			require('grug-far').open({
+			local grug = require('grug-far')
+			local is_visual = vim.fn.mode():find('[vV]')
+			grug.open({
 				prefills = {
-					search = vim.fn.expand('<cword>'),
+					search = is_visual and grug.get_current_visual_selection() or vim.fn.expand('<cword>'),
 					paths = vim.fn.expand('%')
 				},
 			})
@@ -14,10 +16,12 @@ return {
 
 		-- open grug-far about project file
 		{'<leader>sF', function ()
-			require('grug-far').open({
+			local grug = require('grug-far')
+			local is_visual = vim.fn.mode():find('[vV]')
+			grug.open({
 				prefills = {
-					search = vim.fn.expand('<cword>'),
-				}
+					search = is_visual and grug.get_current_visual_selection() or vim.fn.expand('<cword>'),
+				},
 			})
 		end,  desc = "Find and replace on all project files", mode = {'n', 'x'} },
 	},
@@ -32,21 +36,33 @@ return {
 			preferredLocation = 'above' -- focused window direction of open/gotolcation
 		},
 		keymaps = {
-			replace           = { n = '<localleader>r' }, -- replace all
-			qflist            = { n = '<localleader>q' }, -- (not useful)
-			syncLocations     = { n = '<localleader>s' }, -- replace all
-			syncLine          = { n = '<localleader>l' }, -- replace one line
-			close             = { n = 'q' },
-			historyOpen       = { n = '<localleader>h' }, -- show replace history, it can be applied
-			historyAdd        = { n = '<localleader>a' },
-			refresh           = { n = '<localleader>f' }, -- (not useful)
-			openLocation      = { n = '<localleader>o' }, -- move cursor to replace item, remaining focus grug-far
-			gotoLocation      = { n = '<enter>' },        -- move cursor to replace item, focus to buffer
-			pickHistoryEntry  = { n = '<enter>' },        -- apply history entry to replace window
-			abort             = { n = '<localleader>c' }, -- (not useful)
-			help              = { n = 'g?' },
-			toggleShowCommand = { n = '<localleader>t' }, -- (not useful) show rg command
-			swapEngine        = { n = '<localleader>e' }, -- (not useful) swap engine
+			replace                    = { n = '<localleader>r' }, -- replace all
+			qflist                     = { n = '<localleader>q' }, -- (not useful)
+			syncLocations              = { n = '<localleader>s' }, -- replace all
+			syncLine                   = { n = '<localleader>l' }, -- replace one line
+			close                      = { n = 'q' },
+			historyOpen                = { n = '<localleader>h' }, -- show replace history, it can be applied
+			historyAdd                 = { n = '<localleader>a' },
+			refresh                    = { n = '<localleader>f' }, -- (not useful)
+			openLocation               = { n = '<localleader>o' }, -- move cursor to replace item, remaining focus grug-far
+			gotoLocation               = { n = '<enter>' },        -- move cursor to replace item, focus to buffer
+			pickHistoryEntry           = { n = '<enter>' },        -- apply history entry to replace window
+			abort                      = { n = '<localleader>c' }, -- (not useful)
+			help                       = { n = 'g?' },
+			toggleShowCommand          = { n = '<localleader>t' }, -- (not useful) show rg command
+			swapEngine                 = { n = '<localleader>e' }, -- (not useful) swap engine
+
+			openNextLocation           = { n = '<down>' },
+			openPrevLocation           = { n = '<up>' },
+			previewLocation            = { n = '<localleader>i' },
+			swapReplacementInterpreter = { n = '<localleader>x' },
+			applyNext                  = { n = '<localleader>k' },
+			applyPrev                  = { n = '<localleader>j' },
+			syncNext                   = { n = '<localleader>n' },
+			syncPrev                   = { n = '<localleader>p' },
+			syncFile                   = { n = '<localleader>v' },
+			nextInput                  = { n = '<tab>' },
+			prevInput                  = { n = '<s-tab>' },
 		},
 	}
 }
