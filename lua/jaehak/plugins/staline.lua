@@ -12,7 +12,6 @@ return {
 		vim.opt.termguicolors = true
 	end,
 	opts = function ()
-		local util = require("staline.utils")
 		local bufman = require('bufman')
 		return {
 			defaults = {
@@ -67,7 +66,7 @@ return {
 					'-line_column'
 				}
 			},
-			special_table = nil,
+			special_table = {},
 		}
 	end,
 	config = function (_, opts)
