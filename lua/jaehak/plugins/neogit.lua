@@ -2,7 +2,7 @@ return {
 {
 	"NeogitOrg/neogit",
 	keys = { -- negit loading time is too long
-		{'<leader>go', '<Cmd>Neogit<CR>', desc = 'open neogit default', 'n'}
+		{'<leader>go', '<Cmd>Neogit<CR>', desc = 'open neogit default', mode = 'n'}
 	},
 	dependencies = {
 		"sindrets/diffview.nvim",        -- optional - Diff integration
