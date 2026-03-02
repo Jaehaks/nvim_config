@@ -36,6 +36,9 @@ return {
 				return '<Ignore>'
 			end, {expr=true, desc = 'find prev hunk'})
 
+			map('n', '<leader>hn', function() gs.nav_hunk('next') end, {desc = '[gitsign] find next hunk'})
+			map('n', '<leader>hN', function() gs.nav_hunk('prev') end, {desc = '[gitsign] find prev hunk'})
+
 			-- Actions
 			map('n', '<leader>hp', gs.preview_hunk, {desc = 'preview hunk in current line'})
 			map('n', '<leader>hb', function() gs.blame_line{full=true} end, {desc = 'commit message in current line'})
