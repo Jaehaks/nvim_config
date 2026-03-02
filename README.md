@@ -154,6 +154,19 @@
         - install nodejs & npm : `nvm install v20.14.0` (`npm v10.7.0` will be installed automatically)
         - install neovim from npm : `npm install -g neovim` ( confirm global installed packages with `npm -g ls` )
 
+### For Windows
+
+1. provider
+    1) python3 provider :
+        - install `uv` for global : `scoop install uv`
+		- install python and set as default : `uv python install --default` & `uv python update-shell`
+		- create `venv` : `uv venv ~\.config\.Nvim_venv`
+		- install `pynvim` : `uv pip install pynvim` (without venv activation)
+		- set python3 provider : `vim.g.python3_host_prog = <path>\.Nvim_venv`
+    2) nodejs provider :
+        - install `nvm` : [node.js](https://nodejs.org/ko/download)
+		- install `neovim` : `npm install -g neovim`
+
 ## queries
 
 ### *1. Rainbow Delimiters for matlab*

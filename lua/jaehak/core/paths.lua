@@ -15,6 +15,7 @@ M.nvim = {
 	wordlist_korean    = config_dir .. '\\queries\\dictionary\\wordslist_korean.txt',
 	rainbow_queries    = config_dir .. '\\queries\\rainbow-delimiters.nvim',
 	mason              = data_dir .. '\\mason\\bin',
+	debugpy_python     = data_dir .. '\\mason\\packages\\debugpy\\venv\\Scripts\\python.exe',
 	lsp                = config_dir .. '\\lsp',
 	undo               = data_dir .. '\\undo',
 }

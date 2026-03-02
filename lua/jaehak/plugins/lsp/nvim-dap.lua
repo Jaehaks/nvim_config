@@ -7,11 +7,6 @@ return {
 		local dap = require('dap')
 		-- dap.set_log_level('TRACE')
 
-		dap.adapters.debugpy = {
-			type = 'executable',
-			command = os.getenv('HOME') .. '\\.config\\nvim-data\\mason\\bin\\debugpy-adapter.cmd'
-		}
-
 		vim.keymap.set('n', '<leader>dc', function ()
 			local session = dap.session()
 			if session and not session.stopped_thread_id then
@@ -51,16 +46,29 @@ return {
 	},
 },
 {
+	'mfussenegger/nvim-dap-python',
+	ft = {'python'},
+	dependencies = {
+		'Jaehaks/nvim-dap'
+	},
+	config = function ()
+		-- setup() must accepts python path which is in venv of debugpy
+		local debugpy_path = require('jaehak.core.paths').nvim.debugpy_python
+		require('dap-python').setup(debugpy_path)
+	end
+},
+{
 	'igorlfs/nvim-dap-view',
 	keys = {
-		{'<leader>dv', function () require('dap-view').toggle() end, {desc = '[dap-view] Toggle dap view', mode = 'n'}}
+		{'<leader>dv', function () require('dap-view').toggle() end, desc = '[dap-view] Toggle dap view', mode = 'n'}
 	},
 	ft = dap_ft,
 	opts = {
 		winbar = {
+			sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "repl", 'console' },
 			default_section = 'repl',
 		},
-		auto_toggle = 'keep_terminal', -- open automatically, remain after normally termination but close after error while debug.
+		auto_toggle = true, -- open automatically, remain after normally termination but close after error while debug.
 	}
 	-- keymaps-------
 	-- breakpoints

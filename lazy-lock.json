@@ -43,6 +43,7 @@
   "nvim-colorizer.lua": { "branch": "fix/141-quotes_and_doublequotes", "commit": "a7144d9842d94d0505f0b24d0a8231eb7b823f12" },
   "nvim-dap": { "branch": "master", "commit": "3a64ef6b3b139053d1e8a4ceb96eb9684149e401" },
   "nvim-dap-matlab": { "branch": "main", "commit": "2f7fbdfa51dc4562030c519ddcfb819800d9822d" },
+  "nvim-dap-python": { "branch": "master", "commit": "1808458eba2b18f178f990e01376941a42c7f93b" },
   "nvim-dap-view": { "branch": "main", "commit": "6be6d3c3583c2f2e3d04baf1ccb5cfe4d077f30a" },
   "nvim-hlslens": { "branch": "main", "commit": "be2d7b2be01860b5445a007ff2bc72b29896db6b" },
   "nvim-scrollbar": { "branch": "main", "commit": "f8e87b96cd6362ef8579be456afee3b38fd7e2a8" },
