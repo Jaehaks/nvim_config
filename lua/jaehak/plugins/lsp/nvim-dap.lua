@@ -7,13 +7,14 @@ return {
 		local dap = require('dap')
 		-- dap.set_log_level('TRACE')
 
-		vim.keymap.set('n', '<leader>dc', function ()
+		vim.keymap.set('n', '<leader>dr', function ()
 			local session = dap.session()
 			if session and not session.stopped_thread_id then
 				dap.close() -- if debug run is completed but session is remaining
 			end
 			dap.continue()
 		end, {desc = '[nvim-dap] Debug Run/continue'})
+		vim.keymap.set('n', '<leader>dc', dap.run_to_cursor, {desc = '[nvim-dap] Debug Run to Cursor'})
 		vim.keymap.set('n', '<F10>', dap.step_over, {desc = '[nvim-dap] Debug Step Over'})
 		vim.keymap.set('n', '<F11>', dap.step_into, {desc = '[nvim-dap] Debug Step Into'})
 		vim.keymap.set('n', '<F12>', dap.step_out, {desc = '[nvim-dap] Debug Step Out'})
@@ -55,6 +56,8 @@ return {
 		-- setup() must accepts python path which is in venv of debugpy
 		local debugpy_path = require('jaehak.core.paths').nvim.debugpy_python
 		require('dap-python').setup(debugpy_path)
+		-- require('dap-python').setup('uv')
+
 	end
 },
 {
@@ -69,7 +72,19 @@ return {
 			default_section = 'repl',
 		},
 		auto_toggle = true, -- open automatically, remain after normally termination but close after error while debug.
-	}
+	},
+	config = function (_, opts)
+		local dap_view = require('dap-view')
+		local dap = require('dap')
+
+		dap_view.setup(opts)
+		vim.keymap.set('n', '<leader>da', function ()
+			local session = dap.session()
+			if session and not session.stopped_thread_id then
+				dap_view.add_expr()
+			end
+		end, {desc = '[nvim-dap] Debug Add variable to Watch'})
+	end
 	-- keymaps-------
 	-- breakpoints
 	-- 		<CR> : jump to breakpoints
