@@ -21,10 +21,15 @@
 	- `%USERPROFILE%\Vim\vim90`
 	- `%USERPROFILE%\user_installed\node-v24.2.0-win-x64` (for nvim-treesitter's main branch)
 3. `CC` : `gcc` (for nvim-treesitter's main branch)
-4. `XDG_CONFIG_HOME` : `%USERPROFILE%\.config`
-5. `XDG_DATA_HOME` : `%USERPROFILE%\.config`
-6. `XDG__HOME` : `%USERPROFILE%\.config`
-7. `XDG_RUNTIME_DIR` : `C:\WINDOWS\TEMP\nvim.user`
+4. `XDG_CONFIG_HOME` : `%USERPROFILE%\.config` (nvim config)
+5. `XDG_DATA_HOME` : `%USERPROFILE%\.config` (nvim-data)
+6. `XDG_CACHE_HOME` : `%USERPROFILE%\.config\nvim-data\cache` (for sqlite3.dll of snacks.nvim and luac for fast loading)
+6. `XDG_STATE_HOME` : `%USERPROFILE%\.config` (for shada file)
+8. `NVIM_LOG_FILE` : `%USERPROFILE%\.config\nvim-data` (It will make log file in this directory)
+
+> [!NOTE] Note: XDG_RUNTIME_HOME
+> It doesn't need to set manually. it is temp folder as default.
+> short life files that are needed when nvim is executing are stored
 
 #### using `scoop`
 
