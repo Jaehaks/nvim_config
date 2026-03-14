@@ -91,6 +91,7 @@ vim.api.nvim_create_autocmd({'Filetype'}, {
 		'dap-view',
 		'dap-repl',
 		'dap-view-term',
+		'man',
 	},
 	callback = function(event)
 		local filetype = vim.bo[event.buf].filetype -- get current filetype
