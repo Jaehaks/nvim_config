@@ -203,6 +203,17 @@ These steps will operate automatically later, every update of github repository 
 },
 ```
 
+### *2. fugit2.nvim*
+
+It needs `libgit2.dll`
+
+On Windows, you can use `choco` to install `libigt2`
+
+```powershell
+choco install libgit2
+copy c:\ProgramData\chocolatey\lib\libgit2\tools\libgit2.dll <config path>\.config\nvim\queries\fugit2\libgit2.dll
+```
+
 (In Proceeding)
 
 

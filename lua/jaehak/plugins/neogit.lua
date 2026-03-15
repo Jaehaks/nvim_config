@@ -45,33 +45,34 @@ return {
 	-- 			  to lazy.nvim's setting. because fugit2 can be builded by lua>5.1
 	'SuperBo/fugit2.nvim',
 	enabled = false,
+	build = false, -- It consider you have libgit2.dll already
+	cmd = {'Fugit2', 'Fugit2Diff', 'Fugit2Graph'},
+	keys = {
+		{ '<leader>gO', '<cmd>Fugit2<CR>' },
+	},
+	dependencies = {
+		'MunifTanjim/nui.nvim',
+		'nvim-tree/nvim-web-devicons',
+		'nvim-lua/plenary.nvim',
+		-- {
+		-- 	'chrisgrieser/nvim-tinygit', -- optional: for Github PR view
+		-- 	dependencies = { 'stevearc/dressing.nvim' }
+		-- },
+	},
 	opts = {
-		libgit2_path = vim.fn.expand('$ChocolateyInstall\\lib\\libgit2\\tools\\libgit2.dll'),
+		libgit2_path = require('jaehak.core.paths').nvim.fugit2 .. '\\libgit2.dll',
 		width = 100,
 		min_width = 50,
 		content_width = 60,
 		max_width = "80%",
 		height = "60%",
-		external_diffview = false,
+		external_diffview = true, -- use diffview.nvim
 		blame_priority = 1,
 		blame_info_height = 10,
 		blame_info_width = 60,
+		show_patch = false,
+		command_timeout = 15000,
 	},
-	dependencies = {
-		'MunifTanjim/nui.nvim',
-		{
-			'chrisgrieser/nvim-tinygit', -- optional: for Github PR view
-			dependencies = { 'stevearc/dressing.nvim' }
-		},
-	},
-	-- config = function (_, opts)
-	-- 	local fugit2 = require('fugit2')
-	-- 	fugit2.setup(opts)
-	-- end,
-	-- cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2Graph' },
-	-- keys = {
-	-- 	{'<leader>go', '<Cmd>Fugit2<CR>', desc = 'open fuigit2 default', 'n'}
-	-- },
 },
 -- SuperBo/fugit2.nvim : very fast and light. but it cannot change default keymaps. so I cannot commit
 }
