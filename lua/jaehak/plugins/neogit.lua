@@ -74,5 +74,14 @@ return {
 		command_timeout = 15000,
 	},
 },
+{
+	'Jaehaks/gitui.nvim',
+	keys = {
+		{'<leader>gO', function () require('gitui').open() end, desc = 'Open gitui'}
+	},
+	opts = {
+
+	},
+}
 -- SuperBo/fugit2.nvim : very fast and light. but it cannot change default keymaps. so I cannot commit
 }
