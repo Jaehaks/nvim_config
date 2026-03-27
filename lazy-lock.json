@@ -21,6 +21,7 @@
   "fugit2.nvim": { "branch": "main", "commit": "619b3dc130f50e0ecb0cb0026133b393ec202fae" },
   "gitlineage.nvim": { "branch": "main", "commit": "da795833925aae2e4d0cf75d2529d258bf4fb82c" },
   "gitsigns.nvim": { "branch": "main", "commit": "9f3c6dd7868bcc116e9c1c1929ce063b978fa519" },
+  "gitui.nvim": { "branch": "main", "commit": "70c234c519dedc7b7a2f56c6aca6fed2c9a0d9f7" },
   "grug-far.nvim": { "branch": "main", "commit": "9370422e5cdd55321c0b8c4880082c5fd4e52e99" },
   "guess-indent.nvim": { "branch": "main", "commit": "84a4987ff36798c2fc1169cbaff67960aed9776f" },
   "helpview.nvim": { "branch": "main", "commit": "518789535a0cb146224a428edf93a70f98b795db" },
