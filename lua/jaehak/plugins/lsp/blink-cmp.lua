@@ -101,7 +101,7 @@ return {
 			min_keyword_length = 2,
 			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 			per_filetype = {
-				lua       = {'lazydev', 'lsp', 'buffer', 'snippets', 'datword', 'spell', 'path'},
+				lua       = {'lazydev', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 				matlab    = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 				gitcommit = {'git', 'buffer', 'datword', 'spell'},
 				markdown  = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'},
