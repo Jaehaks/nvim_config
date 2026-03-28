@@ -58,7 +58,6 @@ return {
 		local highlights = {
 			DiffAdd    = { bg = "#2a4d4d"},
 			DiffDelete = { bg = "#5f243a"},
-			Directory  = { fg = "#00FF00"}, -- file color
 		}
 		for group, settings in pairs(highlights) do
 			vim.api.nvim_set_hl(0, group, settings)
