@@ -33,6 +33,24 @@ return {
 		opts.shell = shell_cmd
 
 		require('essential-term').setup(opts)
+
+		-- show cursorline in normal mode
+		local term_augroup = vim.api.nvim_create_augroup("TerminalCursorLine", { clear = true })
+		vim.api.nvim_create_autocmd("TermLeave", {
+			group = term_augroup,
+			pattern = "term://*",
+			callback = function()
+				vim.opt_local.cursorline = true
+			end,
+		})
+
+		vim.api.nvim_create_autocmd("TermEnter", {
+			group = term_augroup,
+			pattern = "term://*",
+			callback = function()
+				vim.opt_local.cursorline = false
+			end,
+		})
 	end
 }
 }
