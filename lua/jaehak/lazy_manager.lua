@@ -51,6 +51,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.staline'            , enabled = true},
 		{import = 'jaehak.plugins.session'            , enabled = true},
 		{import = 'jaehak.plugins.substitute'         , enabled = true},
+		{import = 'jaehak.plugins.terminal'           , enabled = true},
 		{import = 'jaehak.plugins.todo-comments'      , enabled = true},
 		{import = 'jaehak.plugins.translate'          , enabled = true},
 		{import = 'jaehak.plugins.local-highlight'    , enabled = true},

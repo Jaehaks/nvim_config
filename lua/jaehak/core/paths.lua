@@ -37,6 +37,10 @@ local check_matlab_dir = function ()
 	return ''
 end
 
+M.shell = {
+	aliase = home_dir .. '\\.config\\Dotfiles\\clink\\usercmds\\aliase.cmd',
+}
+
 M.lsp = {
 	ruff = {
 		config_path   = config_dir .. '\\queries\\ruff\\ruff.toml',
