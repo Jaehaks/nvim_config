@@ -77,6 +77,6 @@
   "vim-nightfly-colors": { "branch": "master", "commit": "3b48dc0c5921f899aeb1e6e61b77b9345888a2f7" },
   "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" },
   "yankbank-nvim": { "branch": "main", "commit": "1392d12536b5a2bc2deaf2668068f33a8795d5a4" },
-  "yazi.nvim": { "branch": "main", "commit": "924db6fa6201d26ab5fc979f92c9ddd77108a453" },
+  "yazi.nvim": { "branch": "main", "commit": "ea1b96a96b7eb8098c1ae264bf024e26e42464c3" },
   "zdiff.nvim": { "branch": "main", "commit": "3af2b8ad102e6905b5b38c60115a66696b2ffda4" }
 }
