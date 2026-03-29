@@ -47,14 +47,14 @@ vim.api.nvim_create_autocmd({'WinLeave'}, {
 	group = 'UserSettings_OPTION',
 	pattern = '*',
 	callback = function()
-		vim.opt_local.winhighlight = "CursorLine:CursorLineInActive"
+		require('jaehak.core.utils').update_win_option(0, 'winhighlight', {CursorLine = 'CursorLineInActive'})
 	end
 })
 vim.api.nvim_create_autocmd({'BufRead', 'WinEnter'}, {
 	group = 'UserSettings_OPTION',
 	pattern = '*',
 	callback = function()
-		vim.opt_local.winhighlight = "CursorLine:CursorLine"
+		require('jaehak.core.utils').update_win_option(0, 'winhighlight', {CursorLine = 'CursorLine'})
 	end
 })
 
