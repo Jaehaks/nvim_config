@@ -19,6 +19,7 @@ vim.api.nvim_set_hl(0, "DiagnosticINFOReverse",  { bg = "#87BCFF", fg = "#000000
 vim.api.nvim_set_hl(0, "DiagnosticHINTReverse",  { bg = "#7FD8CA", fg = "#000000" })
 vim.diagnostic.config({
 	signs = {
+		priority = 5,
 		text = {
 			[vim.diagnostic.severity.ERROR] = ' ',
 			[vim.diagnostic.severity.WARN]  = ' ',
