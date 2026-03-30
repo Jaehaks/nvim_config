@@ -1,6 +1,6 @@
 return {
 	-- show line number with only left side(1~5) number to convenient manipulate
-	'mluders/comfy-line-numbers.nvim',
+	'Jaehaks/comfy-line-numbers.nvim',
 	event = 'BufReadPost',
 	opts = {
 		up_key = 'j',
@@ -9,6 +9,11 @@ return {
 			'dashboard',
 			'help',
 			'gitcommit',
+			'diff',
+		},
+		hidden_buffer_types = {
+			'terminal',
+			'nofile',
 		}
 	}
 }
