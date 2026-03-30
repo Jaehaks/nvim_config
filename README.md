@@ -25,7 +25,8 @@
 5. `XDG_DATA_HOME` : `%USERPROFILE%\.config` (nvim-data)
 6. `XDG_CACHE_HOME` : `%USERPROFILE%\.config\nvim-data\cache` (for sqlite3.dll of snacks.nvim and luac for fast loading)
 6. `XDG_STATE_HOME` : `%USERPROFILE%\.config` (for shada file)
-8. `NVIM_LOG_FILE` : `%USERPROFILE%\.config\nvim-data` (It will make log file in this directory)
+8. `NVIM_LOG_FILE` : `%USERPROFILE%\.config\nvim-data\nvim.log` (It will make log file in this directory)
+	- It needs file path after `v0.12`
 
 > [!NOTE] Note: XDG_RUNTIME_HOME
 > It doesn't need to set manually. it is temp folder as default.
