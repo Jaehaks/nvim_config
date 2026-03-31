@@ -7,6 +7,11 @@ return {
 	opts = function ()
 		local actions = require('diffview.actions')
 		return {
+			view = {
+				default = {
+					layout = 'diff2_vertical',
+				}
+			},
 			keymaps = {
 				view = {
 					{'n', 'q', actions.close}
