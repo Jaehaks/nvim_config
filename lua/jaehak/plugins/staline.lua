@@ -7,7 +7,7 @@ return {
 	},
 	event = 'BufReadPre',
 	init = function ()
-		vim.opt.laststatus = 2
+		vim.opt.laststatus = 3
 		vim.opt.showtabline = 0
 		vim.opt.termguicolors = true
 	end,
