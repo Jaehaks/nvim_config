@@ -101,7 +101,21 @@ local function get_lsp_capabilities(override, include_nvim_defaults)
 		},
 	}, override or {})
 end
+
 local capabilities = get_lsp_capabilities()
+
+-- disable auto highlight from lsp capabilities for colorcode after nvim 0.12
+capabilities.textDocument.colorProvider = nil -- disable server color highlighter
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = vim.api.nvim_create_augroup("LspGlobalConfig", { clear = true }),
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then return end
+
+        client.server_capabilities.colorProvider = false -- disable serer color highlighter
+        vim.lsp.document_color.enable(false, { bufnr = args.buf }) -- disable nvim inherit color highlighter
+    end,
+})
 
 -- vim.lsp.config is extension of vim.lsp.ClientConfig
 -- but root_dir must be set by independent lsp server
