@@ -48,7 +48,6 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.nvim-hlslens'       , enabled = true},
 		{import = 'jaehak.plugins.spelunk'            , enabled = false}, -- false
 		{import = 'jaehak.plugins.split'              , enabled = true},
-		{import = 'jaehak.plugins.staline'            , enabled = true},
 		{import = 'jaehak.plugins.session'            , enabled = true},
 		{import = 'jaehak.plugins.substitute'         , enabled = true},
 		{import = 'jaehak.plugins.terminal'           , enabled = true},

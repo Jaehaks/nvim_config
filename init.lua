@@ -16,6 +16,7 @@ else
 	require("jaehak.core.utils")
 	require("jaehak.core.usercmds")
 	require("jaehak.lazy_manager")
+	require("jaehak.core.statusline")
 	require("jaehak.core.lsp")
 end
 
