@@ -199,6 +199,9 @@ vim.api.nvim_create_autocmd('CursorHold', {
 			return
 		end
 
+		-- because 'nested' field of create_autocmd() is false as default,
+		-- autocmds are not invoked in other autocmd callback function.
+		-- so you need to call events forcibly
 		vim.api.nvim_exec_autocmds('BufWritePre', {buffer = 0}) -- force execute BufWritePre event
 		local ok, _ = pcall(function () vim.cmd('write') end)
 		if not ok then -- when write is protected, do not write anymore in this buffer
