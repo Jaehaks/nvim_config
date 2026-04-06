@@ -3,7 +3,6 @@ local uv       = vim.uv
 local s_format = string.format
 local group    = api.nvim_create_augroup("StlUserDefined", { clear = true })
 local _devicons_ok, _devicons = pcall(require, 'nvim-web-devicons')
-local _bufman_ok, _bufman = pcall(require, 'bufman')
 
 
 -- ==========================================
@@ -250,7 +249,8 @@ local function caching_file_info(buf)
 
 	-- set buffer number
 	cache_buf.bufnr = '%#StlBufnr#' .. buf
-	if _bufman_ok then
+	local _bufman = package.loaded['bufman']
+	if _bufman then
 		cache_buf.bufnr = cache_buf.bufnr .. ':' .. _bufman.get_bufcount()
 	end
 
