@@ -103,15 +103,16 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 		-- vim.fn.system('del /Q /F /S "' .. require('jaehak.core.paths').data_dir .. '\\shada\\*tmp*"')
 		local shada_dir = require('jaehak.core.paths').data_dir .. '\\shada\\'
 		local iter, _ = vim.uv.fs_scandir(shada_dir)
+		if not iter then return end
 
 		while true do
-			local name, type = vim.uv.fs_scandir_next(iter)
+			local name, _ = vim.uv.fs_scandir_next(iter)
 			if not name then break end
 			if name:find("tmp.x") then
 				local full_path = shada_dir .. name
 				local ok, unlink_err = vim.uv.fs_unlink(full_path)
 				if not ok then
-					print('UserError : Fail to delete tmp file')
+					print('UserError : Fail to delete tmp file : ' .. unlink_err )
 				end
 			end
 		end
