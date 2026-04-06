@@ -444,11 +444,11 @@ api.nvim_create_autocmd("DiagnosticChanged", {
 })
 
 -- ==========================================
--- 💥 즉시 초기화
+-- 💥 initialize at startup
 -- ==========================================
 vim.o.laststatus = 2
 setup_highlights()
-cache.mode = s_format("%%#StlModeNormal# NORMAL %%#StlModeNormalSep#") -- 초기 모드 강제 세팅
+cache.mode = s_format("%%#StlModeNormal# NORMAL %%#StlModeNormalSep#")
 
 -- set cache for already opened buffers and update statusline
 for _, buf in ipairs(api.nvim_list_bufs()) do
