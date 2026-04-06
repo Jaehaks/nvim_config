@@ -156,10 +156,10 @@ local function update_statusline(winid)
 				   cache_buf.filename ..
 				   cache_buf.diagnostics
 	local right = cache_buf.fileencoding .. (cache_buf.fileencoding == "" and "" or cache.sep.right) ..
-					cache_buf.fileformat .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
-					cache_buf.filetype .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
-					cache_buf.bufnr .. ' ' ..
-					"%#StlPosSep#%#StlPos# [%l/%L]:%c "
+				  cache_buf.fileformat .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
+				  cache_buf.filetype .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
+				  cache_buf.bufnr .. ' ' ..
+				  "%#StlPosSep#%#StlPos# [%l/%L]:%c "
 
 	vim.wo[winid].statusline = left .. '%=' .. center .. '%=' .. right
 end
@@ -195,12 +195,25 @@ api.nvim_create_autocmd("WinEnter", {
 local function caching_git_info(buf)
 	if not api.nvim_buf_is_valid(buf) then return end
 
-	local cache_buf = get_buf_cache(buf)
 	local branch = vim.b[buf].gitsigns_head -- get gitsigns.nvim data
+	local cache_buf = get_buf_cache(buf)
 	cache_buf.git_branch = (branch and branch ~= "") and "%#StlGitBranch# " .. branch or ""
 end
 
---- autocmd to update git branch
+--- autocmd to update git status for all buffers
+api.nvim_create_autocmd({'FocusGained', 'BufEnter'}, {
+	group = group,
+	callback = function()
+		local gitsigns = package.loaded['gitsigns']
+		if not gitsigns then return end
+
+		vim.schedule(function ()
+			gitsigns.refresh()
+		end)
+	end,
+})
+
+--- It is called after refresh() for each buffers, update statusline
 api.nvim_create_autocmd("User", {
 	group = group,
 	pattern = "GitSignsUpdate",
