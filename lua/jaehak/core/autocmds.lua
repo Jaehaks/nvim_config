@@ -167,7 +167,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function ()
 		require('conform').format({
 			lsp_fallback = false,
-			async = true,
+			async = false,
 			formatters = {'trim_whitespace'}
 		})
 	end
