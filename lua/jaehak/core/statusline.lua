@@ -17,6 +17,7 @@ local _bufman_ok, _bufman = pcall(require, 'bufman')
 ---@field fileencoding string
 ---@field fileformat string
 ---@field filetype string
+---@field modified string
 ---@field bufnr string
 ---@field git_branch string
 ---@field diagnostics string
@@ -52,6 +53,7 @@ local function get_buf_cache(buf)
 		    fileencoding = "",
 		    fileformat = "",
 		    filetype = "",
+		    modified = "",
 		    bufnr = "",
 		    git_branch = "",
 		    diagnostics = "",
@@ -146,8 +148,13 @@ local function update_statusline(winid)
 	if not cache_buf then return end
 
 	-- set components to left/center/right
-	local left = mode_str .. cache_buf.filesize .. cache_buf.git_branch
-	local center = cache_buf.fileicon .. ' ' .. cache_buf.filename .. cache_buf.diagnostics
+	local left = mode_str ..
+				 cache_buf.filesize ..
+				 cache_buf.git_branch
+	local center = cache_buf.modified .. " " ..
+				   cache_buf.fileicon .. " " ..
+				   cache_buf.filename ..
+				   cache_buf.diagnostics
 	local right = cache_buf.fileencoding .. (cache_buf.fileencoding == "" and "" or cache.sep.right) ..
 					cache_buf.fileformat .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
 					cache_buf.filetype .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
@@ -275,12 +282,26 @@ local function caching_file_info(buf)
 	cache_buf.filename = '%#StlFileName#%t'
 end
 
+--- save modified information to cache
+---@param buf integer buffer id
+local function caching_modified(buf)
+  if not api.nvim_buf_is_valid(buf) then return end
+  local cache_buf = get_buf_cache(buf)
+  local bo = vim.bo[buf]
+
+  local mod = bo.modified and "%#StlModified#[+]" or ""
+  local ro = bo.readonly and "%#StlModified#[󰌾]" or ""
+
+  cache_buf.modified = mod .. ro
+end
+
 -- autocmd to update file info when open
 api.nvim_create_autocmd("BufEnter", {
 	group = group,
 	callback = function(args)
 		caching_file_info(args.buf);
 		caching_git_info(args.buf)
+		caching_modified(args.buf)
 		update_all_statusline() -- make other window to inactive
 	end,
 })
@@ -290,7 +311,20 @@ api.nvim_create_autocmd("BufWritePost", {
 	group = group,
 	callback = function(args)
 		caching_file_info(args.buf)
+		caching_modified(args.buf)
 		update_buf_statusline(args.buf)
+	end,
+})
+
+-- autocmd to update modified info
+api.nvim_create_autocmd({'TextChangedI', 'TextChanged'}, {
+	group = group,
+	callback = function(args)
+		local old_modi = cache.bufs[args.buf] and cache.bufs[args.buf].modified
+		caching_modified(args.buf) -- update modified
+		if old_modi ~= cache.bufs[args.buf].modified then
+			update_buf_statusline(args.buf)
+		end
 	end,
 })
 
