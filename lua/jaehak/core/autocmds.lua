@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter', 'LspAttach'}, {    -- inq
 				return
 			end
 
-			local success, _ = pcall(function () vim.cmd('lcd ' .. cur_root) end)
+			local success, _ = pcall(function () vim.cmd('lcd ' .. vim.fn.fnameescape(cur_root)) end)
 			if success then
 				prev_root = cur_root
 				vim.api.nvim_exec_autocmds('DirChanged', { pattern = 'window', }) -- force execute Dirchanged event
