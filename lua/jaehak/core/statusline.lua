@@ -248,10 +248,14 @@ local function caching_file_info(buf)
 	local ext      = vim.fn.fnamemodify(file, ":e")
 
 	-- set buffer number
-	cache_buf.bufnr = '%#StlBufnr#' .. buf
 	local _bufman = package.loaded['bufman']
 	if _bufman then
-		cache_buf.bufnr = cache_buf.bufnr .. ':' .. _bufman.get_bufcount()
+		cache_buf.bufnr = '%#StlBufnr#' .. buf .. ':' .. _bufman.get_bufcount()
+	else
+		local buf_count = vim.iter(vim.api.nvim_list_bufs()):filter(function (b)
+			return vim.fn.buflisted(b) == 1
+		end):totable()
+		cache_buf.bufnr = '%#StlBufnr#' .. buf .. '(' .. #buf_count .. ')'
 	end
 
 	-- if it is not normal buffer
