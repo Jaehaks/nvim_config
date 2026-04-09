@@ -33,6 +33,7 @@ local _devicons_ok, _devicons = pcall(require, 'nvim-web-devicons')
 ---@field mode string
 ---@field sep stl.sep
 ---@field bufs stl.cache_buf[]
+---@field dap string
 local cache = {
 	mode_inactive = "%#StlModeInactive# INACTIVE %#StlModeInactiveSep#",
 	mode = "",
@@ -41,7 +42,8 @@ local cache = {
 		left = "%#StlDefault#  ",
 		right = "%#StlDefault#  ",
 		right_pos = "%#StlDefault#",
-	}
+	},
+	dap = "",
 }
 
 --- get cache info about buf, if the buffer is new, create and initialize properties
@@ -131,6 +133,11 @@ local function setup_highlights()
 	api.nvim_set_hl(0, 'StlModified',     { bg = bg,        fg = '#FFFF00' }) -- modified sign
 	api.nvim_set_hl(0, 'StlPos',          { bg = '#89b4fa', fg = '#1e1e2e', bold = true })
 	api.nvim_set_hl(0, 'StlPosSep',       { bg = bg,        fg = '#89b4fa' })
+
+	api.nvim_set_hl(0, 'StlDapInit',      { bg = bg,        fg = '#82aaff' })
+	api.nvim_set_hl(0, 'StlDapStopped',   { bg = bg,        fg = '#ecca89' })
+	api.nvim_set_hl(0, 'StlDapRunning',   { bg = bg,        fg = '#a6e3a1' })
+	api.nvim_set_hl(0, 'StlDapExit',      { bg = bg,        fg = '#f38ba8' })
 end
 
 -- ==========================================
@@ -157,7 +164,8 @@ local function update_statusline(winid)
 	local center = cache_buf.modified .. " " ..
 				   cache_buf.fileicon .. " " ..
 				   cache_buf.filename ..
-				   cache_buf.diagnostics
+				   cache_buf.diagnostics ..
+				   cache.dap
 	local right = cache_buf.fileencoding .. (cache_buf.fileencoding == "" and "" or cache.sep.right) ..
 				  cache_buf.fileformat .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
 				  cache_buf.filetype .. (cache_buf.fileformat == "" and "" or cache.sep.right) ..
@@ -448,6 +456,46 @@ api.nvim_create_autocmd("DiagnosticChanged", {
 	callback = function(args)
 		caching_diagnostics(args.buf)
 		update_buf_statusline(args.buf)
+	end
+})
+
+-- ==========================================
+-- Set DAP
+-- ==========================================
+
+--- register dap status to status line
+local function register_dap_status()
+	local dap = package.loaded['dap']
+	if not dap then return end
+
+	--- set dap status to cache
+	---@param hl_group string? highlight group for dap status color
+	---@param status string? information of status
+	---@param icon string? icon for dap status
+	local function set_dap_status(hl_group, status, icon)
+		if status then
+			cache.dap = "%#" .. hl_group .. "# [" .. icon .. " " .. status .. "] "
+		else
+			cache.dap = ""
+		end
+		update_all_statusline()
+	end
+
+	-- Executes only when a DAP event occurs (maintains the Zero-Lua principle)
+	dap.listeners.after.event_initialized["my_statusline"] = function () set_dap_status('StlDapInit', 'Initialize', '') end
+	dap.listeners.after.event_continued["my_statusline"]   = function () set_dap_status('StlDapRunning', 'Running', '') end
+	dap.listeners.after.event_stopped["my_statusline"]     = function () set_dap_status('StlDapStopped', 'Stopped', '') end
+	dap.listeners.after.event_terminated["my_statusline"]  = function () set_dap_status(nil) end
+	dap.listeners.after.event_exited["my_statusline"]      = function () set_dap_status(nil) end
+end
+
+--- register dap statusline function after debugging is started first
+api.nvim_create_autocmd("User", {
+	pattern = 'DapProgressUpdate',
+	group = group,
+	once = true,
+	callback = function()
+		register_dap_status()
 	end
 })
 
