@@ -66,7 +66,6 @@
   "smart_cr.nvim": { "branch": "main", "commit": "fa39b95037d4c6b253d04f88ba926618f35f0dbf" },
   "snacks.nvim": { "branch": "main", "commit": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e" },
   "split.nvim": { "branch": "main", "commit": "12c4fb27a9c617e0291ef0ae1609662ae409c9f8" },
-  "staline.nvim": { "branch": "main", "commit": "d337bc9b343df3328921ef4c3f8ff604102d0201" },
   "substitute.nvim": { "branch": "main", "commit": "0d2077398552f069abccbd964a26dd7cd26882cd" },
   "texflow.nvim": { "branch": "main", "commit": "48465a8ed6c308fe5b67545c48b167b6d3215e54" },
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
