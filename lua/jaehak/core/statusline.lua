@@ -22,12 +22,16 @@ local _devicons_ok, _devicons = pcall(require, 'nvim-web-devicons')
 ---@field diagnostics string
 ---@field lsp string
 
+---@class stl.sep
+---@field left string
+---@field right string
+---@field right_pos string
+
 --- cache variable
 ---@class stl.cache
 ---@field mode_inactive string
 ---@field mode string
----@field sep_left string
----@field sep_right string
+---@field sep stl.sep
 ---@field bufs stl.cache_buf[]
 local cache = {
 	mode_inactive = "%#StlModeInactive# INACTIVE %#StlModeInactiveSep#",
