@@ -6,8 +6,8 @@ return {
 		{ "<C-r>", "<cmd>EssentialTermToggle<cr>", mode = { "n", "t" } },
 		{ "<C-t>",  "<cmd>EssentialTermNew<cr>",    mode = { "t" } },
 		{ "<C-x>",  "<cmd>EssentialTermClose<cr>",  mode = { "t" } },
-		{ "<C-h>",  "<cmd>EssentialTermPrev<cr>",   mode = { "t" } },
-		{ "<C-l>",  "<cmd>EssentialTermNext<cr>",   mode = { "t" } },
+		{ "<C-j>",  "<cmd>EssentialTermPrev<cr>",   mode = { "t" } },
+		{ "<C-k>",  "<cmd>EssentialTermNext<cr>",   mode = { "t" } },
 	},
 	opts = {
 		size            = 30,           -- percentage of editor lines/columns used by the terminal
