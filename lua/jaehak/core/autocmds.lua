@@ -224,6 +224,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 
 
+------------ don't show statuscolumn in terminal buffer --------------
+vim.api.nvim_create_autocmd("TermOpen", {
+	pattern = '*',
+	group = 'UserSettings_AUTOCMD',
+	callback = function ()
+		vim.api.nvim_set_option_value('statuscolumn', '', {win = 0})
+	end
+})
 
 
 
