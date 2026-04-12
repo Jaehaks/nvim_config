@@ -7,7 +7,7 @@ local function configure_dap_python(dap)
 	-- use debugpy which mason installed
 	dap.adapters.python = {
 		type = 'executable',
-		command = require('jaehak.core.paths').nvim.debugpy_python,
+		command = require('jaehak.core.paths').nvim.debugpy_python, -- pythonw must be used to hide debugpy terminal.
 		args = { '-m', 'debugpy.adapter' },
 		options = {
 			source_filetype = 'python', -- [optional] notice to ui that this debugging session is based on python
@@ -68,8 +68,11 @@ local function configure_dap_python(dap)
 		program = "${file}",
 		pythonPath = python_path,
 		env = python_env,
-		-- console = "integratedTerminal",
-		console = "internalConsole",
+		console = "integratedTerminal",
+		-- internalConsole shows new cmd prompt at debug session start. and it is for only output.
+		-- integratedTerminal don't show new cmd even we use python instead of pythonw.
+		-- and it can interact with user from input(). you can use Console window from nvim-dap-view
+		-- REPL / internalConsole is output only. it cannot be used for input.
 	}
 
 	dap.configurations.python = {
