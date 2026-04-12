@@ -1,3 +1,85 @@
+-- ================================
+-- dap setting for python
+-- ================================
+
+local function configure_dap_python(dap)
+	-- configure debug adapter
+	-- use debugpy which mason installed
+	dap.adapters.python = {
+		type = 'executable',
+		command = require('jaehak.core.paths').nvim.debugpy_python,
+		args = { '-m', 'debugpy.adapter' },
+		options = {
+			source_filetype = 'python', -- [optional] notice to ui that this debugging session is based on python
+		}
+	}
+
+	local utils = require('jaehak.core.utils')
+	-- /////////// configure launch //////////////
+	--- check the project uses uv
+	local is_uv = function (root)
+		return vim.fn.filereadable(utils.sep_unify(root .. '/uv.lock')) == 1 or
+				(vim.fn.filereadable(utils.sep_unify(root .. '/pyproject.toml')) == 1 and
+				vim.fn.filereadable(utils.sep_unify(root .. '/poetry.lock')) == 0)
+	end
+
+	--- set python path uv or general python
+	---@return string
+	local python_path = function ()
+		local root = utils.GetRoot(0)
+
+		-- if root doesn't have uv system, use general python
+		if not is_uv(root) then
+			return 'python'
+		end
+
+		-- if root has uv, executes 'uv sync' to synchronize with pyproject.toml synchronously
+		local obj = vim.system({'uv', 'sync'}, {text = true, cwd = root}):wait()
+		if obj.code == 0 then
+			vim.notify("uv sync successed", vim.log.levels.INFO)
+			local py = vim.g.has_win32 and "/.venv/Scripts/python" or "/.venv/bin/python"
+			local path = utils.sep_unify(root .. py)
+			return path
+		else
+			vim.notify('uv sync failed', vim.log.levels.ERROR)
+			return 'python'
+		end
+	end
+
+	--- set environment variables for uv
+	local python_env = function ()
+		local root = utils.GetRoot(0)
+		if is_uv(root) then
+			local venv_path = utils.sep_unify(root .. '/.venv')
+			local bin_path = utils.sep_unify(venv_path .. (vim.g.has_win32 and '/Scripts' or '/bin'))
+			return {
+				VIRTUAL_ENV = venv_path,
+				PATH = bin_path .. ';' .. vim.env.PATH,
+			}
+		end
+		return {}
+	end
+
+	-- [config] launch without args
+	local launch_without_args = {
+		type = 'python',
+		request = 'launch',
+		name = "Launch file",
+		program = "${file}",
+		pythonPath = python_path,
+		env = python_env,
+		-- console = "integratedTerminal",
+		console = "internalConsole",
+	}
+
+	dap.configurations.python = {
+		launch_without_args,
+	}
+end
+
+-- ================================
+-- dap configuration
+-- ================================
 local dap_ft = {'python', 'matlab'}
 return {
 {
@@ -6,7 +88,14 @@ return {
 	config = function ()
 		local dap = require('dap')
 		-- dap.set_log_level('TRACE')
+		-- ================================
+		-- set dap for python
+		-- ================================
+		configure_dap_python(dap)
 
+		-- ================================
+		-- keymap setting
+		-- ================================
 		vim.keymap.set('n', '<leader>dr', function ()
 			local session = dap.session()
 			if session and not session.stopped_thread_id then
@@ -45,20 +134,6 @@ return {
 		}
 
 	},
-},
-{
-	'mfussenegger/nvim-dap-python',
-	ft = {'python'},
-	dependencies = {
-		'Jaehaks/nvim-dap'
-	},
-	config = function ()
-		-- setup() must accepts python path which is in venv of debugpy
-		local debugpy_path = require('jaehak.core.paths').nvim.debugpy_python
-		require('dap-python').setup(debugpy_path)
-		-- require('dap-python').setup('uv')
-
-	end
 },
 {
 	'igorlfs/nvim-dap-view',
