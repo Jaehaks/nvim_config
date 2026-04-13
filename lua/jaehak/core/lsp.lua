@@ -111,9 +111,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
         if not client then return end
-
         client.server_capabilities.colorProvider = false -- disable serer color highlighter
-        vim.lsp.document_color.enable(false, { bufnr = args.buf }) -- disable nvim inherit color highlighter
     end,
 })
 
