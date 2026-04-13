@@ -96,6 +96,19 @@ return {
 		-- ================================
 		configure_dap_python(dap)
 
+		local dap_utils = require('dap.utils')
+		local origin_notify = dap_utils.notify
+		---@diagnostic disable-next-line: duplicate-set-field
+		dap_utils.notify = function (msg, log_level)
+			if log_level == vim.log.levels.WARN then
+				-- disable warning message when python debugger is terminated forcibly
+				if msg:match('exited with 1') and msg:match('debugpy') then
+					return
+				end
+			end
+			origin_notify(msg, log_level)
+		end
+
 		-- ================================
 		-- keymap setting
 		-- ================================
