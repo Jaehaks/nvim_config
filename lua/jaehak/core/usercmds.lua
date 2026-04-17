@@ -20,6 +20,15 @@ vim.api.nvim_create_user_command("LspInfo", function (_)
 	vim.cmd('checkhealth vim.lsp')
 end, {desc = 'LspInfo'})
 
+--- save all lsp client information to the file
+vim.api.nvim_create_user_command("LspClientsSave", function()
+  local clients = vim.lsp.get_clients()
+  local lines = vim.split(vim.inspect(clients), "\n")
+  local path = vim.fn.expand( require('jaehak.core.paths').home_dir .. '\\Desktop\\lspinfo.txt')
+  vim.fn.writefile(lines, path)
+  vim.notify("Saved to " .. path)
+end, {})
+
 
 -- check lsp are installed ([alias to install] = 'server command name') pairs
 local ensured_mason_installed = {
