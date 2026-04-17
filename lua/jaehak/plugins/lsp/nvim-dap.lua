@@ -1,5 +1,27 @@
 
 -- ================================
+-- Debug sign definition
+-- ================================
+
+-- define my own debug sign
+---@type table<string, vim.fn.sign_define.dict>
+local debug_signs = {
+	DapBreakpoint          = { text = '●', texthl = 'DiagnosticError',   linehl = '', numhl = '' },
+	DapBreakpointCondition = { text = '●', texthl = 'DiagnosticWarn',    linehl = '', numhl = '' },
+	DapBreakpointRejected  = { text = '', texthl = 'DiagnosticHint',    linehl = '', numhl = '' },
+	DapLogPoint            = { text = '', texthl = 'DiagnosticInfo',    linehl = '', numhl = '' },
+	DapStopped             = { text = '▶', texthl = 'DiagnosticOk',      linehl = 'DapStoppedLine', numhl = '' },
+}
+
+-- change debug signs
+---@param signs table<string, vim.fn.sign_define.dict>
+local set_debug_signs = function(signs)
+    for name, opts in pairs(signs) do
+        vim.fn.sign_define(name, opts)
+    end
+end
+
+-- ================================
 -- common functions
 -- ================================
 
@@ -45,6 +67,10 @@ end
 --- configure common dap setting
 local function configure_dap_common(dap)
 
+	-- set debug signs
+	vim.api.nvim_set_hl(0, 'DapStoppedLine', {bg = '#4a3f00'}) -- it must be called after colorschme
+	set_debug_signs(debug_signs)
+
 	-- set global state
 	dap.listeners.before.launch['common'] = function(session)
 		state.root = get_dap_root()
@@ -81,6 +107,7 @@ local function configure_dap_common(dap)
 		end,
 	})
 end
+
 
 -- ================================
 -- dap setting for python
