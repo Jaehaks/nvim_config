@@ -44,6 +44,7 @@ local ensured_mason_installed = {
 	['matlab-language-server'] = 'matlab-language-server',
 	['vim-language-server']    = 'vim-language-server',
 	['clangd']                 = 'clangd',
+	['neocmake']               = 'neocmakelsp',
 	['json-lsp']               = 'vscode-json-language-server',
 	['marksman']         	   = 'marksman',
 }

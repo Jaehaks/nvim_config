@@ -596,6 +596,28 @@ vim.lsp.config('clangd', {
 })
 
 -- #############################################################
+-- ####### neocmakelsp config
+-- #############################################################
+local root_dir_cmake = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'.neocmake.toml',
+		'build',
+		'cmake',
+		'.git',
+	}) or vim.fn.expand('%:p:h')
+	cb(root)
+end
+
+---@type vim.lsp.Config
+vim.lsp.config('neocmake', {
+	cmd = {'neocmakelsp', 'stdio'},
+	filetypes = { 'cmake' },
+	root_dir = root_dir_cmake,
+	capabilities = capabilities
+})
+
+
+-- #############################################################
 -- ####### lsp enable
 -- #############################################################
 vim.lsp.enable({
@@ -609,6 +631,7 @@ vim.lsp.enable({
 	'json_lsp',
 	'marksman',
 	'clangd',
+	'neocmake',
 })
 
 
