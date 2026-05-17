@@ -82,7 +82,18 @@ return {
 						{'label', 'label_description', gap = 1},
 						{'kind'}, 		 -- show categories of item
 						{'source_name'}, -- show source_name in menu
+						-- {'source_score'}, -- show core in menu
 					},
+                    components = {
+						-- calculate word score to debug why the item has high score
+                        source_score = {
+                            text = function(ctx)
+                                local score = ctx.item.score
+								return string.format("[%.1f]", score)
+                            end,
+                            highlight = 'BlinkCmpSource',
+                        },
+                    },
 				}
 			},
 			documentation = { -- show definition of completion list
@@ -95,6 +106,7 @@ return {
 		},
 		fuzzy = {
 			implementation = 'prefer_rust_with_warning',
+			max_typos = function () return 0 end,
 		},
 		snippets = {preset = 'luasnip'}, -- use luasnip for `snippets` engine
 		sources = {
@@ -102,6 +114,7 @@ return {
 			default = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 			per_filetype = {
 				lua       = {'lazydev', 'lsp', 'buffer', 'datword', 'spell', 'path'},
+				c         = {'lsp', 'buffer', 'datword', 'spell', 'path'},
 				matlab    = {'snippets', 'lsp', 'buffer', 'datword', 'spell', 'path'},
 				gitcommit = {'git', 'buffer', 'datword', 'spell'},
 				markdown  = {'snippets', 'buffer', 'path', 'git', 'emoji', 'datword', 'spell'},
@@ -117,7 +130,7 @@ return {
 					-- BUG: default setting `fallbacks={'buffer'}` has some bug (don't show buffer list by lsp)
 					fallbacks = {},
 					-- max_items = 5,
-					-- score_offset = 50,
+					score_offset = 2,
 					-- ---@param ctx blink.cmp.Context
 					---@param items blink.cmp.CompletionItem[]
 					transform_items = function (_, items)
@@ -150,7 +163,7 @@ return {
 				},
 				spell = {
 					name = 'Spell',
-					score_offset = -20,
+					score_offset = -13,
 					module = 'blink-cmp-spell',
 					opts = {
 						-- EXAMPLE: Only enable source in `@spell` captures, and disable it
@@ -202,7 +215,7 @@ return {
 						spellsuggest = true,
 					},
 					max_items = 5,
-					score_offset = -15,
+					score_offset = -13,
 				},
 				latex = {
 					name = 'Latex',
