@@ -24,25 +24,42 @@ local lcd_ignore_filetype = {
 	'gitcommit',
 }
 ------------ Change pwd to project folder --------------
-local prev_root = ''
 vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter', 'LspAttach'}, {    -- inquire file reload when nvim focused
 	group = 'UserSettings_AUTOCMD',
 	pattern = '*',
-	callback = function (ev)
-		local ft = vim.api.nvim_get_option_value('filetype', {buf = ev.buf})
-		local ok = not vim.tbl_contains(lcd_ignore_filetype, ft) -- do it only writable buffer
-		if ok then
-			local cur_root = Utils.sep_unify(Utils.GetRoot(ev.buf))
-			if cur_root == prev_root then -- if pwd is same with cache root, ignore lcd
+	callback = function ()
+		-- execute after focus is moved to opened buffer
+		-- When floating window is opened, it may not be completed to move focus to floating window.
+		-- so using vim.schedule()
+		vim.schedule(function ()
+			-- get bufnr after focus is finished. It would be different with event buffer.
+			local winid = vim.api.nvim_get_current_win()
+			local bufnr = vim.api.nvim_get_current_buf()
+			if not vim.api.nvim_buf_is_valid(bufnr) then return end -- cancel if the buffer is closed
+
+			-- check it is valid file (UI / popup / prompt are ignored)
+			local bt = vim.api.nvim_get_option_value('buftype', {buf = bufnr})
+			if bt ~= '' then return end
+
+			-- check ignored filetype
+			local ft = vim.api.nvim_get_option_value('filetype', {buf = bufnr})
+			local ok = not vim.tbl_contains(lcd_ignore_filetype, ft)
+			if not ok then return end
+
+			-- check root is same with pwd of current window
+			local cur_root = Utils.sep_unify(Utils.GetRoot(bufnr))
+			if cur_root == vim.fn.getcwd(winid) then
 				return
 			end
 
-			local success, _ = pcall(function () vim.cmd('lcd ' .. vim.fn.fnameescape(cur_root)) end)
-			if success then
-				prev_root = cur_root
-				vim.api.nvim_exec_autocmds('DirChanged', { pattern = 'window', }) -- force execute Dirchanged event
-			end
-		end
+			vim.api.nvim_win_call(winid, function ()
+				local success, _ = pcall(function () vim.cmd('lcd ' .. vim.fn.fnameescape(cur_root)) end)
+				if success then
+					-- prev_root = cur_root
+					vim.api.nvim_exec_autocmds('DirChanged', { pattern = 'window', }) -- force execute Dirchanged event
+				end
+			end)
+		end)
 	end
 })
 
