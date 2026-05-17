@@ -221,6 +221,16 @@ return {
 					},
 					max_items = 5,
 					score_offset = -13,
+					enabled = function()
+						-- if it is note file type or in comment node
+						if vim.bo.filetype == 'markdown' or
+							vim.bo.filetype == 'text' or
+							vim.bo.filetype == 'gitcommit' or
+							require('jaehak.core.utils').is_in_node('comment') then
+							return true
+						end
+						return false
+					end
 				},
 				latex = {
 					name = 'Latex',

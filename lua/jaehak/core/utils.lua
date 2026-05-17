@@ -200,6 +200,35 @@ local function get_valid_buflist()
 	return valid_buflist
 end
 
+--- check current cursor is in target node
+--- targets means pattern of target node, if 'comment' is used, it check state_comment / comment etc...
+---@param targets string|string[]
+---@return boolean
+local function is_in_node(targets)
+	---@type string[]
+	local t = type(targets) == 'table' and targets or { targets }
+
+	-- check current treesitter node using get_node
+	-- In insert mode, the 'pos' must be needed in get_node() to detect current cursor location
+	local cursor = vim.api.nvim_win_get_cursor(0) -- (1,0) indexed
+	local row = cursor[1] - 1
+	local col = cursor[2] - 1
+	local ok, node = pcall(vim.treesitter.get_node, { pos = { row, col } }) -- use 0 indexed
+	if not ok then return false end
+
+	while node do
+		local node_type = node:type()
+		for _, pattern in ipairs(t) do
+			if node_type:find(pattern, 1, true) then -- compare using plain text mode
+				return true
+			end
+		end
+		node = node:parent()
+	end
+	return false
+end
+M.is_in_node = is_in_node
+
 -- ####################################################
 -- * System : Check process id from process name
 -- ####################################################
