@@ -171,6 +171,11 @@ return {
 						preselect_current_word = false,
 						keep_all_entries = true,
 						enable_in_context = function()
+							local ft = vim.bo.filetype
+							if ft == 'gitcommit' or ft == 'text' then
+								return true
+							end
+
 							local curpos = vim.api.nvim_win_get_cursor(0)
 							local captures = vim.treesitter.get_captures_at_pos(
 								0,
