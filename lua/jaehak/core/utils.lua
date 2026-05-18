@@ -162,7 +162,7 @@ local GetRoot = function (bufnr)
 	---@return vim.lsp.Client[]
 	local clients = vim.lsp.get_clients({bufnr = bufnr}) -- check lsp is attached
 	local root
-	if not vim.tbl_isempty(clients) then
+	if vim.bo[bufnr].filetype ~= 'matlab' and not vim.tbl_isempty(clients) then
 		root = clients[1].config.root_dir
 	else
 		root = vim.fs.root(bufnr, {'.git'})

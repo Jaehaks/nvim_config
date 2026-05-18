@@ -182,20 +182,21 @@ vim.lsp.config('lua_ls', {
 -- #############################################################
 -- ####### matlab-ls config
 -- #############################################################
-local root_dir_matlab = function (bufnr, cb)
-	local bufname = vim.api.nvim_buf_get_name(bufnr)
-	if string.match(bufname, 'toolbox[\\/]matlab') then -- avoid attaching to installed matlab library
-		return
-	end
-	local root = vim.fs.root(bufnr, {
-		'.git'
-	}) or vim.fn.expand('%:p:h')
-	cb(root)
-end
+
+-- enable multiple workspace folder
+-- workspaceFolder will be executed by background even though the capability is not shown in server_capabilities
+local matlab_capabilities = get_lsp_capabilities()
+matlab_capabilities.workspace = matlab_capabilities.workspace or {}
+matlab_capabilities.workspace.workspaceFolders = true
+
+local root_dir_matlab = require('jaehak.core.paths').home_dir
 vim.lsp.config('matlab-ls', {
 	cmd = {'matlab-language-server', '--stdio'},
 	filetypes = {'matlab'},
 	root_dir = root_dir_matlab,
+	reuse_client = function (client, config) -- reuse lsp for matlab-ls
+		return client.name == config.name
+	end,
 	settings = {
 		matlab = {
 			indexWorkspace = true,
@@ -208,8 +209,70 @@ vim.lsp.config('matlab-ls', {
 	-- 	NODE_OPTIONS = "--unhandled-rejections=warn",
 	-- },
 	single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
+	capabilities = matlab_capabilities
 })
 
+local get_root_matlab = function (bufnr)
+	local root = vim.fs.root(bufnr, { '.git' })
+	if not root then
+		local filepath = vim.api.nvim_buf_get_name(bufnr)
+		if filepath ~= '' then
+			root = vim.fn.fnamemodify(filepath, ':p:h') -- get parent directory
+		else
+			root = root_dir_matlab -- fallback, but rared
+		end
+	end
+	return vim.fs.normalize(root)
+end
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.m",
+	callback = function(args)
+		-- library file doesn't be attached lsp
+		if string.find(args.file, 'toolbox[\\/]matlab') then
+			return
+		end
+
+		-- check matlab-ls is attached and get workspaces
+		local clients = vim.lsp.get_clients({ name = "matlab-ls" })
+		if #clients == 0 then return end
+		local client = clients[1]
+		local cur_workspace_folders = client.workspace_folders or {}
+
+		-- get workspace based on current file
+		local new_workspace = get_root_matlab(args.buf)
+		local new_workspace_uri = vim.uri_from_fname(new_workspace) -- make path to uri form
+
+		-- check workspace is changed
+		if not (cur_workspace_folders[1] and cur_workspace_folders[1].uri == new_workspace_uri) then
+			-- replace workspace with new one
+			local new_workspace_folders = {
+				name = new_workspace,
+				uri = new_workspace_uri,
+			}
+			client:notify("workspace/didChangeWorkspaceFolders", {
+				event = {
+					added = { new_workspace_folders },
+					removed = cur_workspace_folders
+				}
+			})
+			client.workspace_folders = { new_workspace_folders }
+
+			-- remove attached buffers which is not in current workspace
+			for bufnr, _ in pairs(client.attached_buffers) do
+				local bufpath = vim.fs.normalize(vim.api.nvim_buf_get_name(bufnr))
+				if bufpath ~= "" and not vim.startswith(bufpath, new_workspace) then
+					vim.lsp.buf_detach_client(bufnr, client.id)
+				end
+			end
+		end
+
+		-- attach buffer to lsp client (lsp cannot attach buffer automatically)
+		if not client.attached_buffers[args.buf] then
+			vim.lsp.buf_attach_client(args.buf, client.id)
+		end
+	end,
+})
 
 
 -- grammar-guard.nvim : deprecated
