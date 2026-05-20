@@ -679,6 +679,30 @@ vim.lsp.config('neocmake', {
 	capabilities = capabilities
 })
 
+-- #############################################################
+-- ####### makefile-lps config
+-- #############################################################
+-- 1) Install from `cargo install makefile-lsp`
+-- 2) The executable makefile-lsp.exe will be generated, copy this file to stdpath('data')/mason/packages/makefile-lsp/
+-- 3) make batch file in stdpath('data')/mason/bin/makefile-lsp.cmd
+
+local root_dir_makefile = function (bufnr, cb)
+	local root = vim.fs.root(bufnr, {
+		'makefile',
+		'Makefile',
+	}) or vim.fn.expand('%:p:h')
+	cb(root)
+end
+
+---@type vim.lsp.Config
+vim.lsp.config('makefile-lsp', {
+	cmd = {'makefile-lsp'},
+	filetypes = { 'make' },
+	root_dir = root_dir_makefile,
+	capabilities = capabilities,
+})
+
+
 
 -- #############################################################
 -- ####### lsp enable
@@ -695,6 +719,7 @@ vim.lsp.enable({
 	'marksman',
 	'clangd',
 	'neocmake',
+	'makefile-lsp',
 })
 
 

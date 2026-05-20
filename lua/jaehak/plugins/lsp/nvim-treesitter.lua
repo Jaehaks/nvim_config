@@ -19,7 +19,7 @@ return {
 		-- install parsers asynchronously
 		local parsers = {
 			'lua', 'luadoc', 'luap', 'luau',
-			'c', 'cpp', 'cmake',
+			'c', 'cpp', 'cmake', 'make',
 			'matlab',
 			'python',
 			'vim', 'vimdoc',
