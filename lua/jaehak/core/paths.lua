@@ -72,6 +72,9 @@ M.Filetypes = {
 		'lua',
 		'c',
 		'cpp',
+		'make',
+		'cmake',
+		'lnk', -- linkerscript for .ld / .cmd file in c
 		'matlab',
 		'python',
 		'vim',

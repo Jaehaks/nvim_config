@@ -19,7 +19,7 @@ return {
 		-- install parsers asynchronously
 		local parsers = {
 			'lua', 'luadoc', 'luap', 'luau',
-			'c', 'cpp', 'cmake', 'make',
+			'c', 'cpp', 'cmake', 'make', 'linkerscript',
 			'matlab',
 			'python',
 			'vim', 'vimdoc',
@@ -30,11 +30,21 @@ return {
 		}
 		ts.install(parsers)
 
+		-- connect between filetype and treesitter parser if their names are different.
+		-- you can get parser name from filetype using get_lang() function
+		vim.treesitter.language.register('linkerscript', 'lnk')
+
 		-- set treesitter highlights by filetype
 		vim.api.nvim_create_autocmd('FileType', {
 			pattern = TS_filetype,
-			callback = function ()
-				vim.treesitter.start()
+			callback = function (args)
+				local ft = vim.bo[args.buf].filetype
+				-- start ts_parser explicitly using parser name which is matching with filetype
+				local ts_parser = vim.treesitter.language.get_lang(ft) or ft
+				local ok = pcall(vim.treesitter.start, args.buf, ts_parser)
+				if not ok then -- fallback
+					vim.bo[args.buf].syntax = 'on'
+				end
 			end
 		})
 
