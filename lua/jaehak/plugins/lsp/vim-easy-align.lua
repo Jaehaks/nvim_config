@@ -38,3 +38,6 @@ return {
 	end
 },
 }
+
+-- if you want to align space,
+-- <C-\\> and <Enter> to show ':EasyAlign (_)'. then, input '* ' to all white space alignment
