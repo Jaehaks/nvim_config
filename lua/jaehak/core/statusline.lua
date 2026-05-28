@@ -429,6 +429,12 @@ api.nvim_create_autocmd("ModeChanged", {
 ---@param buf integer
 local function caching_diagnostics(buf)
 	if not api.nvim_buf_is_valid(buf) then return end
+	local cache_buf = get_buf_cache(buf)
+
+	if not vim.diagnostic.is_enabled({bufnr = buf}) then
+		cache_buf.diagnostics = ''
+		return
+	end
 
 	local counts = vim.diagnostic.count(buf)
 
@@ -446,7 +452,6 @@ local function caching_diagnostics(buf)
 			   (warn > 0 and '%#DiagnosticWarn#  ' .. tostring(warn) or "") ..
 			   (info > 0 and '%#DiagnosticInfo#  ' .. tostring(info) or "") ..
 			   (hint > 0 and '%#DiagnosticHint#  ' .. tostring(hint) or "")
-	local cache_buf = get_buf_cache(buf)
 	cache_buf.diagnostics = diag_str
 end
 
