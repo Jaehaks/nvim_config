@@ -205,9 +205,11 @@ vim.lsp.config('matlab-ls', {
 			telemetry = false, -- don't report about any problem
 		},
 	},
-	-- cmd_env = {
-	-- 	NODE_OPTIONS = "--unhandled-rejections=warn",
-	-- },
+	cmd_env = {
+		-- --unhandled-rejections=warn : prevent to shutdown of matlab-ls process when crashing. leave only warning log.
+		-- --max-old-space-size : increase default lsp heap memory size to 4GB(default 2GB). Prevent out of memory crash
+		NODE_OPTIONS = "--unhandled-rejections=warn",
+	},
 	single_file_support = false, -- if enabled, lsp(matlab.exe) attaches per file, too heavy
 	capabilities = matlab_capabilities
 })
