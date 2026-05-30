@@ -101,9 +101,6 @@ local function configure_dap_common(dap)
 					vim.notify('[dap] no LSP client: ' .. lsp_name, vim.log.levels.WARN)
 				end
 			end
-
-			vim.keymap.set('i', '<C-p>', '<Up>', { buffer = bufnr, remap = true, desc = '[dap] prev command history' })
-			vim.keymap.set('i', '<C-n>', '<Down>', { buffer = bufnr, remap = true, desc = '[dap] next command history' })
 		end,
 	})
 end
@@ -277,6 +274,16 @@ return {
 				dap.toggle_breakpoint(condition)
 			end
 		end, {desc = '[nvim-dap] Set conditional Breakpoint '})
+
+		vim.api.nvim_create_augroup('nvim-dap-repl-custom', {clear = true})
+		vim.api.nvim_create_autocmd('FileType', {
+			group = 'nvim-dap-repl-custom',
+			pattern = {'dap-repl', 'dap-view'},
+			callback = function (args)
+				vim.keymap.set('i', '<C-p>', '<Up>', { desc = '[matlab-dap] previous commnad history in repl', buf = args.buf, remap = true})
+				vim.keymap.set('i', '<C-n>', '<Down>', { desc = '[matlab-dap] next commnad history in repl', buf = args.buf, remap = true})
+			end
+		})
 	end
 },
 {
