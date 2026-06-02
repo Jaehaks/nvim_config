@@ -652,6 +652,48 @@ M.toggle_scrollbind = function ()
 	end
 end
 
+-- ####################################################
+-- * keymap : comment
+-- ####################################################
+
+--- add comment
+---@param eol boolean if true, add comment at end of line.
+M.comment_lines = function(eol)
+	-- check commentstring
+	if vim.bo.commentstring == '' then
+		vim.notify('vim.bo.commentstring is not set', vim.log.levels.ERROR)
+		return
+	end
+
+	-- mode check
+	local mode = vim.fn.mode()
+	local is_visual = mode:match('[vV\22]')
+	if eol and is_visual then
+		vim.notify('EOL comment is supported in normal mode only', vim.log.levels.ERROR)
+		vim.cmd('normal! \27') -- disable visual mode
+		return
+	end
+
+	-- get cursor pos to restore cursor
+	local cur_pos = vim.api.nvim_win_get_cursor(0)
+
+	-- get comment mark
+	local comment, str = vim.bo.commentstring:match('^(.*)%%s(.*)$')
+	comment, str = vim.trim(comment), vim.trim(str)
+
+	if eol then
+		-- set comment at eol
+		-- nvim_set_current_line() + startinsert way splits redo true with '--' and 'comment string'
+		-- so use feedkeys
+		local keys = "A " .. comment .. " "
+		local termcodes = vim.api.nvim_replace_termcodes(keys, true, false, true)
+		vim.api.nvim_feedkeys(termcodes, 'n', false)
+	else
+		vim.cmd('normal gc' .. (is_visual and '' or 'c')) -- use gc and gcc native comment operator
+		cur_pos[2] = math.min(cur_pos[2], #vim.api.nvim_get_current_line()) -- remain cursor location
+		pcall(vim.api.nvim_win_set_cursor, 0, cur_pos)
+	end
+end
 
 -- ####################################################
 -- * oldfiles

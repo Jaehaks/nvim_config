@@ -1,28 +1,5 @@
 return {
 {
-	'numToStr/Comment.nvim',
-	keys = {
-		{'gl', mode = {'n', 'v'}},
-		{'gb', mode = {'n', 'v'}},
-		{'gL'},
-	},
-	opts = {
-		toggler = {
-			line  = 'gl',
-			block = 'gb',
-		},
-		opleader = {
-			line  = 'gl',
-			block = 'gb',
-		},
-		extra = {
-			above = nil,
-			below = nil,
-			eol   = 'gL'
-		}
-	}
-},
-{
 	-- make text object
 	'chrisgrieser/nvim-various-textobjs',
 	commit = '674b7c9', -- use multiCommentedLines until update nvim v.10
@@ -44,3 +21,7 @@ return {
 -- 'danymat/neogen' : it is useful when I put description for functions even if cursor is in the function.
 -- 					  it takes the cursor to top of the funciton rapidly. but the template is can be maed by luasnip
 -- 					  I think it can be replaced by luasnip
+-- "numToStr/Comment.nvim" : It has some bugs after neovim 0.12.
+-- 							 It cannot recognize comment although commentstring is set.
+-- 							 This plugin has not been maintained for a long time.
+-- 							 neovim supports native comment feature now. So I will write my own.
