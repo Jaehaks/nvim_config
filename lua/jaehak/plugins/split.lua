@@ -1,10 +1,10 @@
 return {
 	"wurli/split.nvim",
 	keys = {
-        {'gsf', mode = {'n', 'v'}},
-		{'gsb', mode = {'n', 'v'}},
-		{'gsF', mode = {'n', 'v'}},
-		{'gsB', mode = {'n', 'v'}},
+        {'gsf', mode = {'n', 'v'}, desc = '[split.nvim] "gsfi},"(n) or "gsf,"(v) split to items with appending "," '},
+		{'gsb', mode = {'n', 'v'}, desc = '[split.nvim] "gsbi},"(n) or "gsb,"(v) split to items with prepending "," '},
+		{'gsF', mode = {'n', 'v'}, desc = '[split.nvim] It doesn\'t work'},
+		{'gsB', mode = {'n', 'v'}, desc = '[split.nvim] It doesn\'t work'},
 	},
 	opts = {
 		keymaps = {
@@ -18,9 +18,9 @@ return {
 			-- 				'after_pattern'  : ',' is located after word
 			-- samrt_ignore : as default, if there are both code and comment, the split is applied for code
 			["gsf"] = {
-                interactive = true,
-				operator_pending = true,
-				break_placement = 'after_pattern',
+			    interactive = true,
+			    operator_pending = true,
+			    break_placement = 'after_pattern',
 			},
 			["gsb"] = {
                 interactive = true,
