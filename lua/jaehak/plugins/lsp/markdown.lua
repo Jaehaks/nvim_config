@@ -460,7 +460,7 @@ return {
 				vim.keymap.set('v', '<leader>mm', function () md.addstrong('<mark>') end, {buffer = true, desc = 'Enclose with <mark>(mark highlight)'})
 				vim.keymap.set('v', '<leader>m=', function () md.addstrong('<sup>') end, {buffer = true, desc = 'Enclose with <sup>(sup highlight)'})
 				vim.keymap.set('v', '<leader>m-', function () md.addstrong('<sub>') end, {buffer = true, desc = 'Enclose with <sub>(sub highlight)'})
-
+				vim.keymap.set('n', '<leader>mi', function () md.preview_image() end, {buffer = true, desc = 'Show preview image of link under cursor'})
 				-- Don't remap to <C-m>, it synchronize with <CR>
 			end
 		})
