@@ -33,7 +33,15 @@ return {
 				left_margin   = 0,
 				right_margin  = 1,
 				stick_to_left = 1,
-			}
+			},
+			['/'] = {                -- add delimiters '//' or '/*' cor C, C++, Java, JS
+				pattern       = '//\\+\\|/\\*\\+',
+				left_margin   = 1,
+				right_margin  = 1,
+				stick_to_left = 0,
+				ignore_groups = {'!Comment'}
+			},
+			-- '#' for python works as default
 		}
 	end
 },
