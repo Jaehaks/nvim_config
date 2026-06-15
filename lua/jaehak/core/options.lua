@@ -132,11 +132,18 @@ vim.api.nvim_create_autocmd({'FileType'}, {    -- inquire file reload when nvim 
 
 ------------- diff -----------------------
 opt.diffopt = {
-    'internal',
-    'filler',
-    'closeoff',
-	'linematch:60', -- match 2 buffer diff hunk of 30 lines each,
-	'iwhite',       -- ignore white space change to more exact diff result
+    'internal',            -- use internal xdiff of neovim instead of external diff to increase speed.
+    'filler',              -- add empty line (---) to prevent mis-aligning between diff view from added/deleted line.
+    'closeoff',            -- disable diff mode (highlighting, folding of diff) when the window is remained only one.
+	'linematch:60',        -- match 2 buffer diff hunk of 30 lines each,
+                           -- if {n}-way diff, this 2D match will operate if all changed lines sum is under 60.
+                           -- It limits degradation from 2D match speed
+	-- 'iwhite',           -- ignore white space (not recommend to check indent changes in python)
+	'indent-heuristic',    -- To align with logical code blocks based on indentation when git diff
+                           -- it will make a little slower diff but not sensitive effect.
+                           -- WARN: you must add `git config --global diff.indentHeuristic true` to synchronize with git diff
+	'algorithm:histogram', -- use unique lines as anchors for faster, more logical diff chunking.
+                           -- WARN: you must add `git config --global diff.algorithm histogram` to synchronize with git diff
 }
 
 

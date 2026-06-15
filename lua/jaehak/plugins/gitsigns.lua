@@ -3,6 +3,7 @@ return {
 	'lewis6991/gitsigns.nvim',
 	event = 'BufReadPost',
 	opts = {
+		-- diff_opts{} will get vim.opt.diffopt. gitsign's diff will behave following them.
 		signs = {
 			add          = { text = '┃' },
 			change       = { text = '┃' },
