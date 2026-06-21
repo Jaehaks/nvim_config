@@ -81,7 +81,7 @@ vim.keymap.set('n', '<CR>', 'o<esc>', {silent = true, noremap = true})       -- 
 vim.keymap.set('n', '<C-i>', 'a<CR><esc><Up>$', {silent = true, noremap = true}) -- new line with split(i heard it works only gui)
 
 -- use q instead of :q when close some filetype
-vim.api.nvim_create_autocmd({'Filetype'}, {
+vim.api.nvim_create_autocmd('FileType', {
 	group = 'UserSettings_KEYMAP',
 	pattern = {
 		'help',
@@ -132,7 +132,7 @@ vim.keymap.set({'n', 'v'}, 'gi', ':ToggleGithubIndent<CR>', opts)
 -- linux setting -----------------------------------------------------------------------------
 if not vim.g.has_win32 then
 	-- change keymap when open man using neovim
-	vim.api.nvim_create_autocmd({'Filetype'}, {
+	vim.api.nvim_create_autocmd({'FileType'}, {
 		group = 'UserSettings_KEYMAP',
 		pattern = 'man',
 		callback = function ()
