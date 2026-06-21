@@ -2,6 +2,8 @@
 vim.filetype.add({
 	extension = {
 		scm = 'query', -- .scm is 'scheme' as default, 'query' is more colorful
+		clinktheme = 'dosini', -- for clink color setting
+		clinkprompt = 'lua', -- for clink prompt setting
 	},
 	filename = {
 		['.vindrc'] = 'vim',
