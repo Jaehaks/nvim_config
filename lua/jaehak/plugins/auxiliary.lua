@@ -14,4 +14,8 @@ return {
 		}
 	}
 },
+{
+	"MunifTanjim/nui.nvim", -- floating window manager
+	lazy = true,
+},
 }

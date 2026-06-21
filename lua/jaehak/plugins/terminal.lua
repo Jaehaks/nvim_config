@@ -1,7 +1,6 @@
 return {
 {
-	"wr9dg17/essential-term.nvim",
-	dependencies = { "MunifTanjim/nui.nvim" },
+	"wr9dg17/essential-term.nvim", -- need nui.nvim
 	keys = {
 		{ "<C-r>", "<cmd>EssentialTermToggle<cr>", mode = { "n", "t" } },
 		{ "<C-t>",  "<cmd>EssentialTermNew<cr>",    mode = { "t" } },
