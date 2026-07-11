@@ -258,12 +258,14 @@ return {
 		features = {
 			list_management = false, -- use md-utility
 			text_formatting = false, -- use md-utility
+			thematic_break  = false,
 			headers_toc     = false, -- use marksman
 			links           = false, -- use md-utility
 			images          = false, -- use md-utility
 			quotes          = false, -- use luasnip
 			callouts        = false, -- use luasnip
 			code_block      = false, -- use luasnip
+			html_block_awareness = false,
 			table           = true,  -- default: true (table creation & editing)
 			footnotes       = true,  -- default: true (footnote insertion/navigation/listing)
 		},
@@ -307,7 +309,7 @@ return {
 
 		-- key mapping wrapper for table
 		local function make_table_map(lhs, rhs_suffix, desc)
-			vim.keymap.set("n", lhs, "<Plug>(markdown-plus-table-" .. rhs_suffix .. ")",
+			vim.keymap.set('n', lhs, "<Plug>(MarkdownPlusTable" .. rhs_suffix .. ")",
 			{buffer = true, silent = true, desc = '[Table] ' .. desc})
 		end
 		-- key mapping wrapper for footnote
@@ -335,28 +337,28 @@ return {
 
 				-- ///////////// table ////////////////////
 				-- creation / formatting
-				make_table_map('<leader>mt',  'create',                'Create new table')
+				make_table_map('<leader>mt',  'Create',                'Create new table')
 				-- make_table_map('<leader>tf',  'format',                'Format table') -- replaced with autocmd
 
 				-- row operation can be replaced with 'yy', 'p'
 				-- column operation
-				make_table_map('<A-C-l>',     'insert-column-right',   'Insert column right')
-				make_table_map('<A-C-h>',     'insert-column-left',    'Insert column left')
-				make_table_map('<leader>tdc', 'delete-column',         'Delete column')
-				make_table_map('<leader>tyc', 'duplicate-column',      'Duplicate column')
-				make_table_map('<leader>tmh', 'move-column-left',      'Move column left')
-				make_table_map('<leader>tml', 'move-column-right',     'Move column right')
+				make_table_map('<A-C-l>',     'InsertColumnRight',   'Insert column right')
+				make_table_map('<A-C-h>',     'InsertColumnLeft',    'Insert column left')
+				make_table_map('<leader>tdc', 'DeleteColumn',         'Delete column')
+				make_table_map('<leader>tyc', 'DuplicateColumn',      'Duplicate column')
+				make_table_map('<leader>tmh', 'MoveColumnLeft',      'Move column left')
+				make_table_map('<leader>tml', 'MoveColumnRight',     'Move column right')
 
 				-- cell operation
-				make_table_map('<leader>ta',  'toggle-cell-alignment', 'Toggle cell alignment(left/center/right)')
-				make_table_map('<leader>tc',  'clear-cell',            'Clear cell contents')
+				make_table_map('<leader>ta',  'ToggleCellAlignment', 'Toggle cell alignment(left/center/right)')
+				make_table_map('<leader>tc',  'ClearCell',            'Clear cell contents')
 
 				-- advanced
-				make_table_map('<leader>tt',  'transpose',             'Transpose table')
-				make_table_map('<leader>tsa', 'sort-ascending',        'Sort table by column (ascending)')
-				make_table_map('<leader>tsd', 'sort-descending',       'Sort table by column (descending)')
-				make_table_map('<leader>tvc', 'to-csv',                'Convert table to csv')
-				make_table_map('<leader>tvt', 'from-csv',              'Convert csv to table')
+				make_table_map('<leader>tt',  'Transpose',             'Transpose table')
+				make_table_map('<leader>tsa', 'SortAscending',        'Sort table by column (ascending)')
+				make_table_map('<leader>tsd', 'SortDescending',       'Sort table by column (descending)')
+				make_table_map('<leader>tvc', 'ToCSV',                'Convert table to csv')
+				make_table_map('<leader>tvt', 'FromCSV',              'Convert csv to table')
 
 				-- auto table formatting
 				vim.api.nvim_create_autocmd('InsertLeave', {
