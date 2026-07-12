@@ -2,7 +2,6 @@ return {
 {
     "catgoose/nvim-colorizer.lua",
 	enabled = true,
-	branch = 'fix/141-quotes_and_doublequotes',
     keys = {
 		{'<leader>cc', '<Cmd>ColorizerToggle<CR>', mode = 'n', desc = 'Show color code toggle'}
 	},
