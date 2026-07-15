@@ -68,7 +68,8 @@ end, {})
 local ensured_mason_installed = {
 	['basedpyright']           = 'basedpyright-langserver',
 	['ruff']                   = 'ruff',
-	['pyrefly']                = 'pyrefly',
+	-- ['pyrefly']                = 'pyrefly',
+	['ty']                	   = 'ty',
 	['tex-fmt']         	   = 'tex-fmt',
 	-- ['latexindent']            = 'latexindent',
 	['texlab']                 = 'texlab',

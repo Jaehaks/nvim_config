@@ -347,6 +347,7 @@ local root_dir_python = function (bufnr, cb)
 		'ruff.toml',
 		'.ruff.toml',
 		'pyrefly.toml',
+		'ty.toml',
 		'.git'
 	}) or vim.fn.expand('%:p:h')
 	cb(root)
@@ -481,6 +482,35 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 			end
 		end
 	end
+})
+
+-- #############################################################
+-- ####### ty
+-- #############################################################
+-- pyrefly has error that "ENOENT: no such file or directory" after somedays
+vim.lsp.config('ty', {
+	cmd = {'ty', 'server'},
+	filetypes = {'python'},
+	root_dir = root_dir_python,
+	on_init = function (client, _)
+		client.server_capabilities.codeActionProvider      = false -- basedpyright has more kinds
+		client.server_capabilities.hoverProvider           = false -- basedpyright has more kinds
+		client.server_capabilities.inlayHintProvider       = false -- basedpyright has more kinds
+		client.server_capabilities.referencesProvider      = false -- basedpyright has more kinds
+		client.server_capabilities.signatureHelpProvider   = false -- basedpyright has more kinds
+		client.server_capabilities.workspaceSymbolProvider = false -- basedpyright has more kinds
+		client.server_capabilities.implementationProvider = false -- basedpyright has more kinds
+		client.server_capabilities.callHierarchyProvider  = false -- basedpyright has more kinds
+	end,
+	settings = {
+		ty = {
+			configuration = {
+				rules = {
+					['unresolved-reference'] = 'warn'
+				},
+			}
+		}
+	},
 })
 
 
@@ -714,7 +744,8 @@ vim.lsp.enable({
 	'matlab-ls',
 	-- 'harper-ls',
 	'ruff',
-	'pyrefly',
+	-- 'pyrefly',
+	'ty',
 	'basedpyright',
 	'texlab',
 	'json_lsp',
