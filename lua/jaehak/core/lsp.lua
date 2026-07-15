@@ -355,7 +355,7 @@ vim.lsp.config('ruff', {
 	cmd = {'ruff', 'server'},
 	filetypes = {'python'},
 	root_dir = root_dir_python,
-	on_attach = function (client, _)
+	on_init = function (client, _)
 		-- lsp use ruff to formatter
 		client.server_capabilities.documentFormattingProvider = false      -- enable vim.lsp.buf.format()
 		client.server_capabilities.documentRangeFormattingProvider = false -- formatting will be used by confirm.nvim
@@ -393,7 +393,7 @@ vim.lsp.config('basedpyright', {
 	cmd = {'basedpyright-langserver', '--stdio'},
 	filetypes = {'python'},
 	root_dir = root_dir_python,
-	on_attach = function (client, _)
+	on_init = function (client, _)
 		-- these will be executed whenever cursor moving / typing.
 		client.server_capabilities.completionProvider        = false -- use pyrefly for fast response
 		client.server_capabilities.documentHighlightProvider = false -- use pyrefly for fast response
@@ -442,7 +442,7 @@ vim.lsp.config('pyrefly', {
 	cmd = {'pyrefly', 'lsp'},
 	filetypes = {'python'},
 	root_dir = root_dir_python,
-	on_attach = function (client, _)
+	on_init = function (client, _)
 		client.server_capabilities.codeActionProvider      = false -- basedpyright has more kinds
 		client.server_capabilities.hoverProvider           = false -- basedpyright has more kinds
 		client.server_capabilities.inlayHintProvider       = false -- basedpyright has more kinds
@@ -589,7 +589,7 @@ local root_dir_marksman = function (bufnr, cb)
 	cb(root)
 end
 vim.lsp.config('marksman', {
-	on_attach = function ()
+	on_init = function ()
 		-- TODO: 1) make header / file list to add link in projects
 		-- TODO: 2) implement obsidian's image (ClipboardPaste)
 
@@ -647,7 +647,7 @@ vim.lsp.config('clangd', {
 			client.offset_encoding = init_result.offsetEncoding
 		end
 	end,
-	-- on_attach = function(client, bufnr)
+	-- on_init = function(client, bufnr)
 	-- 	-- check : https://github.com/neovim/nvim-lspconfig/blob/623bcf08d5f9ff4ee3ce2686fa1f1947a045b1a5/lsp/clangd.lua#L65
 	--
 	-- 	vim.api.nvim_buf_create_user_command(bufnr, 'LspClangdSwitchSourceHeader', function()
