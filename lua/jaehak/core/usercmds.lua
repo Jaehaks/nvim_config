@@ -20,6 +20,40 @@ vim.api.nvim_create_user_command("LspInfo", function (_)
 	vim.cmd('checkhealth vim.lsp')
 end, {desc = 'LspInfo'})
 
+vim.api.nvim_create_user_command("LspLog", function (_)
+	-- check log file
+	local log_path = vim.lsp.log.get_filename()
+	local stat = vim.uv.fs_stat(log_path)
+	if not stat then
+		vim.notify('There is no lsp log file', vim.log.levels.ERROR)
+		return
+	end
+
+	-- get buffer number if the file is opened already
+	local bufnr = vim.fn.bufadd(log_path)
+	local winnr = nil
+
+	-- if the log file is opened already in current window, focus it
+	for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		if vim.api.nvim_win_get_buf(win) == bufnr then
+			vim.api.nvim_set_current_win(win)
+			winnr = win
+			break
+		end
+	end
+
+	-- if the file is not opened, open new window
+	if not winnr then
+		vim.cmd('botright sbuffer ' .. bufnr)
+	end
+
+	vim.cmd('checktime ' .. bufnr) -- update log file
+	vim.cmd('normal! G') -- move cursor to end
+	vim.bo[bufnr].modifiable = false
+	vim.bo[bufnr].readonly = false
+	vim.keymap.set('n', 'q', '<cmd>close<CR>', { buf = bufnr, noremap = true, silent = true })
+end, {desc = 'open Lsp log'})
+
 --- save all lsp client information to the file
 vim.api.nvim_create_user_command("LspClientsSave", function()
   local clients = vim.lsp.get_clients()
