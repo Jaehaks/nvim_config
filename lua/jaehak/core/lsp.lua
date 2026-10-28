@@ -1,3 +1,5 @@
+local utils = require('jaehak.core.utils')
+
 -- #############################################################
 -- ####### environment variable for lsp
 -- #############################################################
@@ -454,14 +456,14 @@ vim.lsp.config('pyrefly', {
 		client.server_capabilities.callHierarchyProvider  = false -- basedpyright has more kinds
 
 		if vim.g.has_win32 then
-			table.insert(pid.pyrefly, require('jaehak.core.utils').GetProcessId('pyrefly.exe'))
+			table.insert(pid.pyrefly, utils.GetProcessId('pyrefly.exe'))
 		end
 	end,
 	on_exit = function ()
 		if vim.g.has_win32 then
 			for _, id in ipairs(pid.pyrefly) do
 				vim.schedule(function ()
-					require('jaehak.core.utils').Taskkill(id)
+					utils.Taskkill(id)
 				end)
 			end
 		end
@@ -477,7 +479,7 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 		if vim.g.has_win32 then
 			for _, id in ipairs(pid.pyrefly) do
 				vim.schedule(function ()
-					require('jaehak.core.utils').Taskkill(id)
+					utils.Taskkill(id)
 				end)
 			end
 		end
