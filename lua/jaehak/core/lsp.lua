@@ -718,6 +718,8 @@ vim.lsp.config('neocmake', {
 -- 2) The executable makefile-lsp.exe will be generated, copy this file to stdpath('data')/mason/packages/makefile-lsp/
 -- 3) make batch file in stdpath('data')/mason/bin/makefile-lsp.cmd
 
+-- FIXME: installing makefile-lsp manually to mason directory prevent to execute :Mason command
+-- FIXME: use other lsp or save other file and set the absolute path in lsp config
 local root_dir_makefile = function (bufnr, cb)
 	local root = vim.fs.root(bufnr, {
 		'makefile',
@@ -752,7 +754,7 @@ vim.lsp.enable({
 	'marksman',
 	'clangd',
 	'neocmake',
-	'makefile-lsp',
+	-- 'makefile-lsp',
 })
 
 
