@@ -41,6 +41,7 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.blame'              , enabled = true},
 		{import = 'jaehak.plugins.grug-far'           , enabled = true},
 		{import = 'jaehak.plugins.hlchunk'            , enabled = true},
+		{import = 'jaehak.plugins.llm-ai'             , enabled = true},
 		{import = 'jaehak.plugins.marks'              , enabled = true},
 		{import = 'jaehak.plugins.neogit'             , enabled = true},
 		{import = 'jaehak.plugins.neominimap'         , enabled = true},
