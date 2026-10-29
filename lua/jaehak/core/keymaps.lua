@@ -9,6 +9,7 @@ vim.keymap.set({'n','v'}, 'j', 'k', opts)
 vim.keymap.set({'n','v'}, 'k', 'j', opts)
 vim.keymap.set({'n'}, '<C-w>k', '<C-w>j', opts)
 vim.keymap.set({'n'}, '<C-w>j', '<C-w>k', opts)
+vim.keymap.set({'t'}, '<C-w>', '<C-\\><C-n><C-w>', opts) -- move window focus directly in terminal
 vim.keymap.set({'i'}, 'jk', '<Esc>', opts)      -- must be lowercase to esc
 vim.keymap.set({'n'}, '<C-o>', '<C-o>zz', opts) -- move center of screen after restore cursor location
 vim.keymap.set({'n'}, 'L', 'zL', opts)          -- move screen only to right half page
