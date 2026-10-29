@@ -24,7 +24,7 @@ local lcd_ignore_filetype = {
 	'gitcommit',
 }
 ------------ Change pwd to project folder --------------
-vim.api.nvim_create_autocmd({'BufRead', 'BufWinEnter', 'LspAttach'}, {    -- inquire file reload when nvim focused
+vim.api.nvim_create_autocmd({'BufRead', 'WinEnter', 'LspAttach'}, {    -- inquire file reload when nvim focused
 	group = 'UserSettings_AUTOCMD',
 	pattern = '*',
 	callback = function ()
