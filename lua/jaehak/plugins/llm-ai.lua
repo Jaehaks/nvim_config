@@ -6,8 +6,15 @@ return {
 		focus_after_send = false,
 		track_selection = false,
 		terminal = {
-			split_side = 'right',
+			split_side = 'right', -- for native provider
 			split_width_percentage = 0.40,
+			provider = 'snacks',
+			snacks_win_opts = { -- terminal option for snacks @snacks.win.Config
+				position = 'bottom',
+				height = 0.4,
+				width = 1.0,
+			}
+		},
 		},
 	},
 	cmd = {
