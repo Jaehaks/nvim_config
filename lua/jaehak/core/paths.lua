@@ -19,6 +19,7 @@ M.nvim = {
 	debugpy_python     = data_dir .. '\\mason\\packages\\debugpy\\venv\\Scripts\\pythonw.exe',
 	lsp                = config_dir .. '\\lsp',
 	undo               = data_dir .. '\\undo',
+	ext_editor         = config_dir .. '\\lua\\jaehak\\core\\ext_editor.lua',
 }
 
 local check_matlab_dir = function ()

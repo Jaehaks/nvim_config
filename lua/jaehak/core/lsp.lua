@@ -614,6 +614,7 @@ vim.lsp.config('json_lsp', {
 -- markdown-oxide : it works weird. some strings are removed when completion for link is inserted
 -- 					it doesn't support go to definition
 local root_dir_marksman = function (bufnr, cb)
+	if vim.b[bufnr].ext_editor then return end -- for temporary external editor from other tools
 	local root = vim.fs.root(bufnr, {
 		'.marksman.toml',
 		'.git'
