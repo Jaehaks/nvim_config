@@ -64,7 +64,7 @@ return {
 			end
 		end
 
-
+		--- send text to claude term
 		local function send_text(text, submit)
 			local term = find_claude_term()
 			if not term then
