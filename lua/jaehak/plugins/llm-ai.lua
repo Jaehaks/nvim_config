@@ -58,80 +58,6 @@ return {
 	config = function (_, opts)
 		require('claudecode').setup(opts)
 
-		--- find terminal bufnr of claude
-		---@return integer? terminal bufnr
-		local function find_claude_term()
-			for _, b in ipairs(vim.api.nvim_list_bufs()) do
-				if vim.bo[b].buftype == 'terminal'
-					and vim.api.nvim_buf_get_name(b):lower():match('claude') then
-					return b
-				end
-			end
-		end
-
-		--- send text to claude term
-		local function send_text(text, submit)
-			local term = find_claude_term()
-			if not term then
-				vim.notify('Claude terminal not found', vim.log.levels.ERROR)
-				return false
-			end
-			local chan = vim.bo[term].channel
-			vim.fn.chansend(chan, '\27[200~' .. text .. '\27[201~')
-			if submit then
-				vim.defer_fn(function() vim.fn.chansend(chan, '\r') end, 80)
-			end
-			return true
-		end
-
-		local function focus_term()
-			local term = find_claude_term()
-			local win = term and vim.fn.bufwinid(term) or -1
-			if win ~= -1 then
-				vim.api.nvim_set_current_win(win)
-				vim.cmd('startinsert')
-			end
-		end
-
-		local function open()
-			local buf = vim.api.nvim_create_buf(false, false)
-			vim.api.nvim_buf_set_name(buf, 'claude-prompt://' .. buf) -- If no name is found, :w fails with E32
-			vim.bo[buf].buftype = 'acwrite' -- Intercept :w with BufWriteCmd
-			vim.bo[buf].bufhidden = 'wipe'
-			vim.bo[buf].swapfile = false
-			vim.bo[buf].filetype = 'markdown'
-
-			vim.cmd('botright 12split')
-			vim.api.nvim_win_set_buf(0, buf)
-
-			vim.api.nvim_create_autocmd('BufWriteCmd', {
-				buffer = buf,
-				callback = function()
-					local text = vim.trim(table.concat(vim.api.nvim_buf_get_lines(buf, 0, -1, false), '\n'))
-					if text == '' then
-						vim.bo[buf].modified = false
-						return
-					end
-					if send_text(text, false) then
-						vim.api.nvim_buf_set_lines(buf, 0, -1, false, {}) -- Clear sent content
-						vim.bo[buf].modified = false
-					end
-					-- Since 'modified' is retained upon transmission failure, the 'q' in :wq is blocked by E37, preserving the content.
-				end,
-			})
-
-			-- Return to Claude Terminal when the window is closed and the buffer is wiped
-			vim.api.nvim_create_autocmd('BufWipeout', {
-				buffer = buf,
-				callback = function() vim.schedule(focus_term) end,
-			})
-
-			-- @ File completion (previous step code)
-			vim.bo[buf].completefunc = "v:lua.require'claude_scratch'.complete"
-			vim.keymap.set('i', '@', '@<C-x><C-u>', { buffer = buf })
-			vim.cmd('startinsert')
-		end
-
 		--- Send visual selection range to Claude as @File#LStart-End
 		local function claudevisualadd()
 			local s, e = vim.fn.line('v'), vim.fn.line('.')
@@ -143,7 +69,6 @@ return {
 
 		--- keymap
 		vim.keymap.set('x', '<leader>as', claudevisualadd, { desc = 'Send selection to Claude' })
-		vim.keymap.set({ 't' }, '<C-g>', function() open() end)
 	end
 
 	-- <C-o> in claude : 'scroll mode' in terminal
