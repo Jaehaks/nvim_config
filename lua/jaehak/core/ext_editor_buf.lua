@@ -96,6 +96,7 @@ function M.open(file, pchan, cfg)
 		vim.bo[bufnr].swapfile = cfg.bo.swapfile
 	end
 	vim.fn.bufload(bufnr)
+	M.bufnr = bufnr -- active external editor buffer (used to redirect @mention)
 	for k, v in pairs(cfg.bo) do -- set opts after adding buffer
 		if k ~= 'swapfile' then vim.bo[bufnr][k] = v end
 	end
@@ -126,6 +127,7 @@ function M.open(file, pchan, cfg)
 		buffer = bufnr,
 		once = true,
 		callback = function()
+			M.bufnr = nil
 			vim.schedule(function()
 				-- set global variable 'ext_editor_done = true' to child neovim process
 				if pchan then

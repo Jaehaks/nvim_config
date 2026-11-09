@@ -56,7 +56,37 @@ return {
 		{ "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
 	},
 	config = function (_, opts)
-		require('claudecode').setup(opts)
+
+		local cc = require('claudecode')
+		cc.setup(opts)
+
+		--- Redefine 'ClaudeCodeAdd' : While external editor is open, put @mention into its buffer instead of Claude
+		local send_at_mention = cc.send_at_mention -- backup original version
+		---@diagnostic disable-next-line: duplicate-set-field
+		cc.send_at_mention = function(file_path, s, e, context)
+			local eb = package.loaded['jaehak.core.ext_editor_buf'] -- get external editor's bufnr
+			local bufnr = eb and eb.bufnr
+
+			-- if external editor is not open, send the mention to claude code terminal
+			if not (bufnr and vim.api.nvim_buf_is_valid(bufnr)) then
+				return send_at_mention(file_path, s, e, context)
+			end
+
+			-- formatting file_path using claude code api
+			local ok, path, is_dir = pcall(cc._format_path_for_at_mention, file_path)
+			if not ok then return false, path end
+			local text = '@' .. path
+			if s and not is_dir then -- s, e are 0-indexed
+				text = text .. '#L' .. (s + 1) .. ((e and e ~= s) and ('-' .. (e + 1)) or '')
+			end
+
+			-- append to the end of the last line
+			local last = vim.api.nvim_buf_line_count(bufnr)
+			local line = vim.api.nvim_buf_get_lines(bufnr, last - 1, last, false)[1]
+			local sep = (line == '' or line:match('%s$')) and '' or ' '
+			vim.api.nvim_buf_set_text(bufnr, last - 1, #line, last - 1, #line, { sep .. text .. ' ' })
+			return true
+		end
 
 		--- Send visual selection range to Claude as @File#LStart-End
 		local function claudevisualadd()
