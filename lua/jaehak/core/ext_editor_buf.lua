@@ -18,15 +18,15 @@ local default_opts = {
 	},
 	win = {
 		--- floating mode
-		relative = 'editor',
-		width = 1,
-		height = 0.3,
-		border = 'none',
+		-- relative = 'editor',
+		-- width = 1,
+		-- height = 0.3,
+		-- border = 'none',
 
 		--- split mode
-		-- split = 'below',   -- split window at bottom
-		-- win = -1,          -- botright for split
-		-- height = 0.3,
+		split = 'below', -- split window at bottom
+		win = -1, -- botright for split
+		height = 0.3,
 	},
 	posthook = nil,
 }
@@ -41,16 +41,51 @@ local function size(v, total)
 	return math.floor(v <= 1 and total * v or v)
 end
 
+--- check whether a Claude Code terminal window is currently visible in the current tabpage
+--- If terminal provider is 'external' this function doesn't work
+---@return boolean
+local function is_claude_open()
+	local cc_term = package.loaded['claudecode.terminal'] -- check the package is already loaded
+	if not cc_term then return false end
+
+	-- check the claude code terminal is opened
+	local bufnr_term = cc_term.get_active_terminal_bufnr()
+	if bufnr_term and vim.fn.bufwinid(bufnr_term) ~= -1 then return true end
+	return false
+end
+
+--- count normal window counts. not floating window
+---@return integer count of normal window
+local function count_normal_win()
+	local n = 0
+	for _, w in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+		if vim.api.nvim_win_get_config(w).relative == '' then
+			n = n + 1
+		end
+	end
+	return n
+end
+
 --- open file to nvim parent process
 ---@param file string absolute file path
 ---@param pchan any channel info of parent neovim
----@param cfg ext_editor.bufopts
+---@param cfg? ext_editor.bufopts
 ---@return integer buffer id
 function M.open(file, pchan, cfg)
 	cfg = vim.tbl_deep_extend('force', M.config, cfg or {})
 
 	-- prev winnr of nvim terminal which called child nvim process
 	local prev_winnr = vim.api.nvim_get_current_win()
+
+	-- check if Claude Code terminal is currently open, and toggle it off before opening external editor
+	local is_split = cfg.win.split ~= nil or cfg.win.vertical ~= nil
+	local claude_hidden = false
+	if is_split and is_claude_open() then
+		if count_normal_win() > 1 then -- toggle claude off to show external editor
+			vim.cmd('ClaudeCode')
+			claude_hidden = true
+		end
+	end
 
 	-- add file to buffer list / set buf opts
 	local bufnr = vim.fn.bufadd(file)
@@ -78,6 +113,7 @@ function M.open(file, pchan, cfg)
 		wincfg.row = cfg.win.row or (bottom - height)
 		wincfg.col = cfg.win.col or math.floor((vim.o.columns - width) / 2)
 	end
+
 	-- open window and show file contents
 	local winnr = vim.api.nvim_open_win(bufnr, true, wincfg)
 	vim.cmd.stopinsert()
@@ -85,38 +121,23 @@ function M.open(file, pchan, cfg)
 		vim.wo[winnr][k] = v
 	end
 
-	-- local location = 1
-	-- local function time_checking()
-	-- 	local sec, usec = vim.uv.gettimeofday()
-	-- 	if sec ~= nil and usec ~= nil then
-	-- 		local ms = math.floor(usec / 1000)
-	-- 		local time_str = os.date("%H:%M:%S", sec) .. string.format(".%03d", ms)
-	-- 		vim.print('callback time(' .. location .. ') : ' .. time_str)
-	-- 		location = location+1
-	-- 	end
-	-- end
-
 	-- return to terminal buffer when buffer is removed
-	-- vim.api.nvim_create_autocmd('WinClosed', {
 	vim.api.nvim_create_autocmd('BufWipeout', {
-		-- pattern = tostring(winnr),
 		buffer = bufnr,
 		once = true,
 		callback = function()
-			-- time_checking()
-			-- Snacks.profiler.start()
 			vim.schedule(function()
 				-- set global variable 'ext_editor_done = true' to child neovim process
-				-- time_checking()
-				-- Snacks.profiler.stop()
 				if pchan then
 					pcall(vim.rpcnotify, pchan, 'nvim_set_var', 'ext_editor_done', true)
 				end
 
-				-- return to previous terminal
-				if vim.api.nvim_win_is_valid(prev_winnr) then
+				-- re-open Claude Code if it was open before,
+				if claude_hidden then
+					vim.cmd('ClaudeCode')
+				-- otherwise restore previous window
+				elseif vim.api.nvim_win_is_valid(prev_winnr) then
 					vim.api.nvim_set_current_win(prev_winnr)
-					vim.cmd.startinsert()
 				end
 			end)
 		end,
