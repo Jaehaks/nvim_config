@@ -44,10 +44,14 @@ return {
 			-- WARN: Don't insert EDITOR/VISUAL env in settings.json of claude code. use global environment variables
 			-- INFO: open external editor nvim buffer to current nvim instance.
 			EDITOR = 'nvim --clean -l ' .. require('jaehak.core.paths').nvim.ext_editor,
-			-- FIXME: when I use terminal nvim as external editor, close time is too long
-			-- FIXME: I don't know what is the reason. (lsp, gitsigns are not.)
 			-- EDITOR = 'nvim-qt',
 		},
+		diff_opts = {
+			layout = 'vertical',
+			open_in_new_tab = true, -- tab
+			hide_terminal_in_new_tab = true,
+			auto_resize_terminal = false,
+		}
 	},
 	cmd = {
 		"ClaudeCode",
