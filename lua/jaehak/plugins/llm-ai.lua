@@ -1,3 +1,28 @@
+--- highlight mentions in external editor
+local function set_claude_autocmd()
+	vim.api.nvim_set_hl(0, "ClaudeMention", { fg = "#81d02a", bold = true })
+
+	local pat = [[\v(^|\s)\zs\@\S+]]  -- @path, @path#L1-10
+
+	vim.api.nvim_create_autocmd("BufWinEnter", {
+		pattern = "*claude-prompt-*.md",
+		callback = function()
+			if not vim.w.claude_mention then
+				vim.w.claude_mention = vim.fn.matchadd("ClaudeMention", pat)
+			end
+		end,
+	})
+	vim.api.nvim_create_autocmd("BufWinLeave", {
+		pattern = "*claude-prompt-*.md",
+		callback = function()
+			if vim.w.claude_mention then
+				pcall(vim.fn.matchdelete, vim.w.claude_mention)
+				vim.w.claude_mention = nil
+			end
+		end,
+	})
+end
+
 return {
 {
 	"coder/claudecode.nvim",
@@ -99,6 +124,9 @@ return {
 
 		--- keymap
 		vim.keymap.set('x', '<leader>as', claudevisualadd, { desc = 'Send selection to Claude' })
+
+		--- autocmd
+		set_claude_autocmd()
 	end
 
 	-- <C-o> in claude : 'scroll mode' in terminal
