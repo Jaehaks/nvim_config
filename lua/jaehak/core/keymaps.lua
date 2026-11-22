@@ -39,7 +39,7 @@ vim.keymap.set({'i','c'}, '<C-a>', '<Home>', opts)
 vim.keymap.set({'i','c'}, '<C-e>', '<End>', opts)
 
 -- set action in terminal mode
-vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) -- out from terminal mode
+-- vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], opts) -- out from terminal mode
 vim.keymap.set({'i'},'<C-p>','<Nop>')              -- disable default completion next
 vim.keymap.set({'i'},'<C-n>','<Nop>')              -- disable default completion previous
 

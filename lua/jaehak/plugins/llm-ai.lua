@@ -1,10 +1,13 @@
---- highlight mentions in external editor
 local function set_claude_autocmd()
 	vim.api.nvim_set_hl(0, "ClaudeMention", { fg = "#81d02a", bold = true })
 
 	local pat = [[\v(^|\s)\zs\@\S+]]  -- @path, @path#L1-10
 
+	local claude_augroup = vim.api.nvim_create_augroup('ClaudeAUGroup', {clear = true})
+
+	--- highlight mentions in external editor
 	vim.api.nvim_create_autocmd("BufWinEnter", {
+		group = claude_augroup,
 		pattern = "*claude-prompt-*.md",
 		callback = function()
 			if not vim.w.claude_mention then
@@ -13,6 +16,7 @@ local function set_claude_autocmd()
 		end,
 	})
 	vim.api.nvim_create_autocmd("BufWinLeave", {
+		group = claude_augroup,
 		pattern = "*claude-prompt-*.md",
 		callback = function()
 			if vim.w.claude_mention then
@@ -21,6 +25,23 @@ local function set_claude_autocmd()
 			end
 		end,
 	})
+
+	--- send keymap directly to claude terminal
+	vim.api.nvim_create_autocmd("TermOpen", {
+	group = claude_augroup,
+	pattern = "*claude.EXE",
+	callback = function(ev)
+		local chan_id = vim.b[ev.buf].terminal_job_id -- get the terminal id
+		if not chan_id then return end
+		local opts = { buffer = ev.buf, silent = true, nowait = true }
+
+		-- When Alt entered, the sequence ESC (\27) is sent directly to the Claude CLI process
+		-- Without this, scroll keymap of claude doesn't work
+		vim.keymap.set("t", "<M-j>", function() vim.api.nvim_chan_send(chan_id, "\27j") end, opts)
+		vim.keymap.set("t", "<M-k>", function() vim.api.nvim_chan_send(chan_id, "\27k") end, opts)
+	end,
+})
+
 end
 
 return {
