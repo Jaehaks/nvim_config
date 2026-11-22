@@ -44,7 +44,6 @@ if vim.g.vscode == nil then
 		{import = 'jaehak.plugins.llm-ai'             , enabled = true},
 		{import = 'jaehak.plugins.marks'              , enabled = true},
 		{import = 'jaehak.plugins.neogit'             , enabled = true},
-		{import = 'jaehak.plugins.neominimap'         , enabled = true},
 		{import = 'jaehak.plugins.nvim-context-vt'    , enabled = true},
 		{import = 'jaehak.plugins.nvim-hlslens'       , enabled = true},
 		{import = 'jaehak.plugins.spelunk'            , enabled = false}, -- false

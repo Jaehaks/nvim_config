@@ -38,7 +38,6 @@
   "mini.pairs": { "branch": "main", "commit": "03eb1f0062a2cee5314d1ac3939246e4bb21352e" },
   "multicursor.nvim": { "branch": "1.0", "commit": "c574bfc1f7e63dfea3e64b8453c9f7c660127238" },
   "neogit": { "branch": "master", "commit": "697ad3ee86a73cf6b6758b838d7a7d76cf3b9f86" },
-  "neominimap.nvim": { "branch": "main", "commit": "0676085d898019f06044923934e38663f5efa290" },
   "nui-diagnostic.nvim": { "branch": "main", "commit": "f65ff0d224a3070449482d1555d135390907cded" },
   "nui.nvim": { "branch": "main", "commit": "10fc361835c856ba4233ef5ea135b919bf3dce97" },
   "nvim-FeMaco.lua": { "branch": "development", "commit": "65b0a935e667d6ad8bbe1626780e833102cff5ce" },
